@@ -20,7 +20,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^25.6.2",
+    "@types/node": "^25.9.0",
     "esbuild": "^0.28.0",
     "prettier": "^3.8.3",
     "tsx": "^4.21.0"
