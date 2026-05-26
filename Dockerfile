@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm build
 
 # ---- RUNNER ----
-FROM alpine:3.23 AS runner
+FROM alpine:3.23.4 AS runner
 
 RUN apk add --no-cache nginx nodejs supervisor
 
