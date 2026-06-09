@@ -21,7 +21,7 @@
     "@razzia/common": "workspace:*",
     "@razzia/socket": "workspace:*",
     "@tailwindcss/vite": "^4.3.0",
-    "@tanstack/react-router": "^1.170.8",
+    "@tanstack/react-router": "^1.170.10",
     "clsx": "^2.1.1",
     "i18next": "^26.3.0",
     "i18next-browser-languagedetector": "^8.2.1",
