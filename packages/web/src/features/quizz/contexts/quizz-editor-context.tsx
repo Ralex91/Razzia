@@ -58,7 +58,7 @@ export const QuizzEditorProvider = ({
       : [defaultQuestion()],
   )
   const [currentIndex, setCurrentIndex] = useState(0)
-  const currentQuestion = questions[currentIndex]
+  const currentQuestion = questions[currentIndex] ?? defaultQuestion()
 
   const addQuestion = () => {
     setQuestions((prev) => [...prev, defaultQuestion()])
