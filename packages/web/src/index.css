@@ -3,6 +3,10 @@
 @theme {
   --color-primary: #ff9900;
   --color-secondary: #1a140b;
+  --color-answer-1: #e69f00;
+  --color-answer-2: #56b4e9;
+  --color-answer-3: #3dbfa0;
+  --color-answer-4: #cc79a7;
   --font-display: "Rubik Variable", sans-serif;
 }
 
