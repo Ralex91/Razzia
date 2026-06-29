@@ -1,8 +1,7 @@
 import { EVENTS } from "@razzia/common/constants"
 import type { Status } from "@razzia/common/types/game/status"
-import defaultBackground from "@razzia/web/assets/background.png"
-import { getBranding } from "@razzia/web/branding/branding"
 import Button from "@razzia/web/components/Button"
+import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
 import {
   useEvent,
@@ -36,7 +35,6 @@ const GameWrapper = ({
   const { t } = useTranslation()
   const [isDisabled, setIsDisabled] = useState(false)
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
-  const background = getBranding()?.background ?? defaultBackground
 
   useEvent(EVENTS.GAME.UPDATE_QUESTION, ({ current, total }) => {
     setQuestionStates({
@@ -62,17 +60,7 @@ const GameWrapper = ({
 
   return (
     <section className="relative flex min-h-dvh">
-      <div className="fixed top-0 left-0 h-full w-full">
-        <img
-          className="pointer-events-none h-full w-full object-cover select-none"
-          src={background}
-          onError={(event) => {
-            event.currentTarget.onerror = null
-            event.currentTarget.src = defaultBackground
-          }}
-          alt="background"
-        />
-      </div>
+      <GameBackground />
 
       <div className="z-10 flex w-full flex-1 flex-col justify-between">
         {!isConnected && !statusName ? (

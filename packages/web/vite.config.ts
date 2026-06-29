@@ -34,7 +34,7 @@ const serveBranding = (
     return
   }
 
-  const relative = req.url.replace(/^\/branding\//, "").split("?")[0]
+  const [relative] = req.url.replace(/^\/branding\//, "").split("?")
   const filePath = path.join(brandingDir, relative)
 
   if (!filePath.startsWith(brandingDir) || !fs.existsSync(filePath)) {
@@ -81,8 +81,12 @@ export default defineConfig({
   resolve: {
     alias: {
       "@razzia/web": fileURLToPath(new URL("./src", import.meta.url)),
-      "@razzia/common": fileURLToPath(new URL("../common/src", import.meta.url)),
-      "@razzia/socket": fileURLToPath(new URL("../socket/src", import.meta.url)),
+      "@razzia/common": fileURLToPath(
+        new URL("../common/src", import.meta.url),
+      ),
+      "@razzia/socket": fileURLToPath(
+        new URL("../socket/src", import.meta.url),
+      ),
     },
   },
   server: {

@@ -171,7 +171,7 @@ Quiz Options:
 
 You can fully rebrand the app **without touching the code** by dropping files into a `config/branding/` folder. If it is absent, the default look is used.
 
-Create `config/branding/theme.json` (see [`branding.example/theme.json`](/branding.example/theme.json)):
+Create `config/branding/theme.json`:
 
 ```json
 {

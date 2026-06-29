@@ -1,5 +1,5 @@
 import defaultLogo from "@razzia/web/assets/logo.svg"
-import { getBranding } from "@razzia/web/branding/branding"
+import { getBranding, imageFallback } from "@razzia/web/branding"
 import GithubIcon from "@razzia/web/components/GithubIcon"
 import type { PropsWithChildren } from "react"
 
@@ -17,10 +17,7 @@ const Background = ({ children }: PropsWithChildren) => {
 
       <img
         src={logo}
-        onError={(event) => {
-          event.currentTarget.onerror = null
-          event.currentTarget.src = defaultLogo
-        }}
+        onError={imageFallback(defaultLogo)}
         className="mb-10 h-16"
         alt={appName}
       />
