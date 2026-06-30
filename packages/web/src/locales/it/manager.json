@@ -7,6 +7,7 @@
     "delete": "Elimina quiz",
     "deleteConfirm": "Sei sicuro di voler eliminare \"{{name}}\"? Questa azione non può essere annullata.",
     "deleted": "Quiz eliminato",
+    "export": "Esporta quiz come JSON",
     "import": "Importa quiz da JSON",
     "none": "Nessun quiz creato ancora",
     "notFound": "Nessun quiz trovato",

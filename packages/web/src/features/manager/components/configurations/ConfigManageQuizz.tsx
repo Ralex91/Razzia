@@ -7,10 +7,24 @@ import {
 } from "@razzia/web/features/game/contexts/socket-context"
 import { useConfig } from "@razzia/web/features/manager/contexts/config-context"
 import { useNavigate } from "@tanstack/react-router"
-import { SquarePen, Trash2, Upload } from "lucide-react"
-import { type ChangeEvent, useRef } from "react"
+import { Download, SquarePen, Trash2, Upload } from "lucide-react"
+import { type ChangeEvent, useCallback, useRef } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+
+const downloadJson = (data: unknown, filename: string) => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement("a")
+
+  a.href = url
+  a.download = filename
+  a.click()
+
+  URL.revokeObjectURL(url)
+}
 
 const ConfigManageQuizz = () => {
   const { quizz } = useConfig()
@@ -18,14 +32,34 @@ const ConfigManageQuizz = () => {
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
+  const pendingExportId = useRef<string | null>(null)
 
   useEvent(EVENTS.QUIZZ.ERROR, (message) => {
     toast.error(t(message))
   })
 
+  useEvent(
+    EVENTS.QUIZZ.DATA,
+    useCallback((data) => {
+      if (data.id !== pendingExportId.current) {
+        return
+      }
+
+      pendingExportId.current = null
+
+      const { id: _id, ...quizzData } = data
+      downloadJson(quizzData, `${data.subject}.json`)
+    }, []),
+  )
+
   const handleDelete = (id: string) => () => {
     socket.emit(EVENTS.QUIZZ.DELETE, id)
     toast.success(t("manager:quizz.deleted"))
+  }
+
+  const handleExport = (id: string) => () => {
+    pendingExportId.current = id
+    socket.emit(EVENTS.QUIZZ.GET, id)
   }
 
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
@@ -92,6 +126,14 @@ const ConfigManageQuizz = () => {
                 }
               >
                 <SquarePen className="size-4" />
+              </button>
+
+              <button
+                className="rounded-sm p-2 text-gray-600 hover:bg-gray-600/10"
+                onClick={handleExport(q.id)}
+                title={t("manager:quizz.export")}
+              >
+                <Download className="size-4" />
               </button>
 
               <AlertDialog
