@@ -1,7 +1,7 @@
 import { EVENTS } from "@razzia/common/constants"
 import type { Status } from "@razzia/common/types/game/status"
-import background from "@razzia/web/assets/background.png"
 import Button from "@razzia/web/components/Button"
+import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
 import {
   useEvent,
@@ -60,13 +60,7 @@ const GameWrapper = ({
 
   return (
     <section className="relative flex min-h-dvh">
-      <div className="fixed top-0 left-0 h-full w-full">
-        <img
-          className="pointer-events-none h-full w-full object-cover select-none"
-          src={background}
-          alt="background"
-        />
-      </div>
+      <GameBackground />
 
       <div className="z-10 flex w-full flex-1 flex-col justify-between">
         {!isConnected && !statusName ? (

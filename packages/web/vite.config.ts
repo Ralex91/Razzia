@@ -1,9 +1,67 @@
 import tailwindcss from "@tailwindcss/vite"
 import { tanstackRouter } from "@tanstack/router-plugin/vite"
 import react from "@vitejs/plugin-react"
+import fs from "node:fs"
+import type { IncomingMessage, ServerResponse } from "node:http"
+import path from "node:path"
 import { fileURLToPath } from "url"
-import { defineConfig } from "vite"
+import { defineConfig, type Plugin } from "vite"
 import { version } from "../../package.json"
+
+const brandingDir = fileURLToPath(
+  new URL("../../config/branding", import.meta.url),
+)
+
+const brandingMimeTypes: Record<string, string> = {
+  ".json": "application/json",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".css": "text/css",
+  ".woff2": "font/woff2",
+}
+
+const serveBranding = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  next: () => void,
+): void => {
+  if (!req.url?.startsWith("/branding/")) {
+    next()
+
+    return
+  }
+
+  const [relative] = req.url.replace(/^\/branding\//, "").split("?")
+  const filePath = path.join(brandingDir, relative)
+
+  if (!filePath.startsWith(brandingDir) || !fs.existsSync(filePath)) {
+    res.statusCode = 404
+    res.end()
+
+    return
+  }
+
+  res.setHeader(
+    "Content-Type",
+    brandingMimeTypes[path.extname(filePath)] ?? "application/octet-stream",
+  )
+
+  fs.createReadStream(filePath).pipe(res)
+}
+
+/** Serves the optional `config/branding` folder at `/branding/` in `vite dev` and `vite preview` (nginx does this in prod). */
+const brandingServer = (): Plugin => ({
+  name: "razzia-branding-server",
+  configureServer(server) {
+    server.middlewares.use(serveBranding)
+  },
+  configurePreviewServer(server) {
+    server.middlewares.use(serveBranding)
+  },
+})
 
 export default defineConfig({
   define: {
@@ -18,6 +76,7 @@ export default defineConfig({
     }),
     react(),
     tailwindcss(),
+    brandingServer(),
   ],
   resolve: {
     alias: {

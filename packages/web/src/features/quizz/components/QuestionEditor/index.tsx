@@ -1,4 +1,4 @@
-import background from "@razzia/web/assets/background.png"
+import GameBackground from "@razzia/web/components/GameBackground"
 import QuestionEditorAnswers from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorAnswers"
 import QuestionEditorConfig from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig"
 import QuestionEditorMedia from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorMedia"
@@ -11,13 +11,7 @@ const QuestionEditor = () => (
       <QuestionEditorMedia />
       <QuestionEditorAnswers />
 
-      <div className="fixed top-0 left-0 h-full w-full">
-        <img
-          className="pointer-events-none h-full w-full object-cover select-none"
-          src={background}
-          alt="background"
-        />
-      </div>
+      <GameBackground />
     </main>
     <QuestionEditorConfig />
   </div>
