@@ -61,6 +61,17 @@ export const EVENTS = {
 
 export const NO_TIME_LIMIT = -1
 
+export const QUESTION_TYPES = {
+  SINGLE: "single",
+  MULTI: "multi",
+} as const
+
+export const SCORING_MODES = {
+  STRICT: "strict",
+  BALANCED: "balanced",
+  LENIENT: "lenient",
+} as const
+
 export const MEDIA_TYPES = {
   IMAGE: "image",
   VIDEO: "video",

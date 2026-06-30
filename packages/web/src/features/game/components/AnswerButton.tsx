@@ -6,6 +6,7 @@ type Props = PropsWithChildren &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     label: string
     correct?: boolean
+    selected?: boolean
   }
 
 const AnswerButton = ({
@@ -13,6 +14,7 @@ const AnswerButton = ({
   label,
   children,
   correct,
+  selected,
   ...otherProps
 }: Props) => {
   const CorrectIcon = correct ? Check : X
@@ -33,6 +35,16 @@ const AnswerButton = ({
       </p>
       {correct !== undefined && (
         <CorrectIcon className="size-4 stroke-6 md:size-6" />
+      )}
+      {selected !== undefined && correct === undefined && (
+        <span
+          className={clsx(
+            "flex size-5 shrink-0 items-center justify-center rounded-md text-gray-700 md:size-6",
+            selected ? "bg-white" : "bg-white/20",
+          )}
+        >
+          {selected && <Check className="size-3 stroke-5 md:size-4" />}
+        </span>
       )}
     </button>
   )

@@ -13,7 +13,15 @@
       "noTimeLimitHint": "ポイントは回答順に付与されます。回答に制限時間はありません。",
       "questionDisplay": "問題表示",
       "questionDisplayHint": "回答が表示されるまでの時間",
-      "timings": "タイミング"
+      "timings": "タイミング",
+      "answerMode": "回答モード",
+      "scoringMode": "採点モード",
+      "scoringMode.strict": "厳格",
+      "scoringMode.balanced": "バランス",
+      "scoringMode.lenient": "寛大",
+      "scoringModeHint.strict": "すべての正解を選び、不正解を選ばない場合のみポイント獲得",
+      "scoringModeHint.balanced": "部分点：正解数から不正解数を引いた割合",
+      "scoringModeHint.lenient": "正解ごとにポイント、不正解への罰則なし"
     },
     "deleteQuestion": "この質問を削除",
     "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
@@ -27,5 +35,9 @@
   },
   "quizzSaved": "クイズを保存しました",
   "quizzUpdated": "クイズを更新しました",
+  "questionType": {
+    "single": "単一選択",
+    "multi": "複数選択"
+  },
   "titleQuizzPlaceholder": "クイズのタイトル..."
 }

@@ -37,12 +37,11 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
   const totalPlayers = result.players.length
 
   const answeredCount = questionResult.playerAnswers.filter(
-    (pa) => pa.answerId !== null,
+    (pa) => pa.answerIds !== null && pa.answerIds.length > 0,
   ).length
 
-  const correctCount = questionResult.playerAnswers.filter(
-    (pa) =>
-      pa.answerId !== null && questionResult.solutions.includes(pa.answerId),
+  const correctCount = questionResult.playerAnswers.filter((pa) =>
+    pa.answerIds?.some((id) => questionResult.solutions.includes(id)),
   ).length
 
   const correctPct =
@@ -52,7 +51,8 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     1,
     ...questionResult.answers.map(
       (_, ai) =>
-        questionResult.playerAnswers.filter((pa) => pa.answerId === ai).length,
+        questionResult.playerAnswers.filter((pa) => pa.answerIds?.includes(ai))
+          .length,
     ),
   )
 

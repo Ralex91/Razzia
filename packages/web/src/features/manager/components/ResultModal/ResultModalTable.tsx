@@ -27,28 +27,34 @@ const ResultModalTable = () => {
       </thead>
       <tbody className="divide-y divide-gray-100">
         {questionResult.playerAnswers.map((pa, i) => {
+          const hasAnswer = pa.answerIds !== null && pa.answerIds.length > 0
           const isCorrect =
-            pa.answerId !== null &&
-            questionResult.solutions.includes(pa.answerId)
-          const answerLabel =
-            pa.answerId !== null ? ANSWERS_LABELS[pa.answerId % 4] : null
+            pa.answerIds?.some((id) => questionResult.solutions.includes(id)) ??
+            false
 
           return (
             <tr key={i} className="hover:bg-gray-50">
               <td className="px-5 py-2.5 font-medium">{pa.playerName}</td>
               <td className="px-4 py-2.5">
-                {pa.answerId !== null && answerLabel ? (
-                  <span
-                    className={clsx(
-                      "inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-white",
-                      ANSWERS_COLORS[pa.answerId % 4],
-                    )}
-                  >
-                    <span className="font-bold">{answerLabel}</span>
-                    <span className="max-w-30 truncate">
-                      {questionResult.answers[pa.answerId]}
-                    </span>
-                  </span>
+                {hasAnswer ? (
+                  <div className="flex flex-wrap gap-1">
+                    {pa.answerIds?.map((id) => (
+                      <span
+                        key={id}
+                        className={clsx(
+                          "inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-white",
+                          ANSWERS_COLORS[id % 4],
+                        )}
+                      >
+                        <span className="font-bold">
+                          {ANSWERS_LABELS[id % 4]}
+                        </span>
+                        <span className="max-w-30 truncate">
+                          {questionResult.answers[id]}
+                        </span>
+                      </span>
+                    ))}
+                  </div>
                 ) : (
                   <span className="text-xs text-gray-400">—</span>
                 )}

@@ -2,18 +2,13 @@ import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { QuestionMediaType } from "@razzia/common/types/game"
 import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 import QuestionMedia from "@razzia/web/components/QuestionMedia"
-import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
 import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
-import {
-  ANSWERS_COLORS,
-  ANSWERS_LABELS,
-  SFX,
-} from "@razzia/web/features/game/utils/constants"
-import clsx from "clsx"
+import { SFX } from "@razzia/web/features/game/utils/constants"
+import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import useSound from "use-sound"
@@ -23,7 +18,7 @@ interface Props {
 }
 
 const Answers = ({
-  data: { question, answers, media, time, totalPlayer },
+  data: { question, answers, media, time, totalPlayer, questionType, options },
 }: Props) => {
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
@@ -42,7 +37,7 @@ const Answers = ({
     loop: true,
   })
 
-  const handleAnswer = (answerKey: number) => () => {
+  const handleSubmit = (answerKeys: number[]) => {
     if (!player || !gameId) {
       return
     }
@@ -50,17 +45,17 @@ const Answers = ({
     socket.emit(EVENTS.PLAYER.SELECTED_ANSWER, {
       gameId,
       data: {
-        answerKey,
+        answerKeys,
       },
     })
     sfxPop()
   }
 
   useEffect(() => {
-    const disabledMusicMedia = [
+    const disabledMusicMedia: QuestionMediaType[] = [
       MEDIA_TYPES.AUDIO,
       MEDIA_TYPES.VIDEO,
-    ] as QuestionMediaType[]
+    ]
 
     if (disabledMusicMedia.includes(media?.type)) {
       return
@@ -82,6 +77,8 @@ const Answers = ({
     setTotalAnswer(count)
     sfxPop()
   })
+
+  const { AnswerComponent } = QUESTION_REGISTRY[questionType]
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
@@ -113,18 +110,12 @@ const Answers = ({
           </div>
         </div>
 
-        <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 text-lg font-bold text-white md:text-xl">
-          {answers.map((answer, key) => (
-            <AnswerButton
-              key={key}
-              className={clsx(ANSWERS_COLORS[key])}
-              label={ANSWERS_LABELS[key]}
-              onClick={handleAnswer(key)}
-            >
-              {answer}
-            </AnswerButton>
-          ))}
-        </div>
+        <AnswerComponent
+          answers={answers}
+          options={options}
+          onSubmit={handleSubmit}
+          readOnly={!player}
+        />
       </div>
     </div>
   )

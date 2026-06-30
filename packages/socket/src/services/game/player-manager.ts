@@ -2,6 +2,7 @@ import { EVENTS } from "@razzia/common/constants"
 import type { Player } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import { usernameValidator } from "@razzia/common/validators/auth"
+import { getClientId } from "@razzia/socket/utils/socket"
 
 export class PlayerManager {
   private readonly io: Server
@@ -16,7 +17,7 @@ export class PlayerManager {
   }
 
   join(socket: Socket, username: string): void {
-    const clientId = socket.handshake.auth.clientId as string
+    const clientId = getClientId(socket)
 
     if (this.findByClientId(clientId)) {
       socket.emit(

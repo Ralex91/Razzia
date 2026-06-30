@@ -60,8 +60,9 @@ const ResultModalAnswers = () => {
   const rows: AnswerRow[] = [
     ...questionResult.answers.map((label, ai) => ({
       label,
-      count: questionResult.playerAnswers.filter((pa) => pa.answerId === ai)
-        .length,
+      count: questionResult.playerAnswers.filter((pa) =>
+        pa.answerIds?.includes(ai),
+      ).length,
       isCorrect: questionResult.solutions.includes(ai),
       color: ANSWERS_COLORS[ai % 4],
       answerLabel: ANSWERS_LABELS[ai % 4],
@@ -79,13 +80,20 @@ const ResultModalAnswers = () => {
     <div className="flex flex-col border-b border-gray-100 md:flex-row">
       <div className="flex shrink-0 flex-row items-center gap-4 border-b border-gray-100 bg-gray-50 p-4 md:w-66 md:flex-col md:justify-center md:border-r md:border-b-0">
         <MediaPreview media={questionResult.media} />
-        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+        <div className="flex items-center gap-2 text-xs text-gray-500">
           <Clock className="size-3.5" />
           <span>
             {questionResult.time === NO_TIME_LIMIT
               ? "∞"
               : `${questionResult.time}${t("manager:result.timeLimitSuffix")}`}
           </span>
+          {questionResult.options?.scoringMode && (
+            <div className="rounded-md bg-gray-200 px-2 py-0.5 font-semibold text-gray-600">
+              {t(
+                `quizz:question.config.scoringMode.${questionResult.options.scoringMode}`,
+              )}
+            </div>
+          )}
         </div>
       </div>
 

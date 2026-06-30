@@ -13,7 +13,15 @@
       "noTimeLimitHint": "I punti vengono assegnati in base all'ordine di risposta. Non c'è limite di tempo per rispondere.",
       "questionDisplay": "Visualizzazione domanda",
       "questionDisplayHint": "Durata prima che appaiano le risposte",
-      "timings": "Tempi"
+      "timings": "Tempi",
+      "answerMode": "Modalità risposta",
+      "scoringMode": "Modalità punteggio",
+      "scoringMode.strict": "Rigoroso",
+      "scoringMode.balanced": "Bilanciato",
+      "scoringMode.lenient": "Permissivo",
+      "scoringModeHint.strict": "Punti solo se tutte le risposte corrette sono selezionate e nessuna sbagliata",
+      "scoringModeHint.balanced": "Punti parziali: selezioni corrette meno quelle sbagliate",
+      "scoringModeHint.lenient": "Punti per risposta corretta, nessuna penalità per quelle sbagliate"
     },
     "deleteQuestion": "Elimina domanda",
     "deleteQuestionConfirm": "Sei sicuro di voler eliminare questa domanda?",
@@ -27,5 +35,9 @@
   },
   "quizzSaved": "Quiz salvato con successo",
   "quizzUpdated": "Quiz aggiornato con successo",
+  "questionType": {
+    "single": "Scelta singola",
+    "multi": "Scelta multipla"
+  },
   "titleQuizzPlaceholder": "Titolo del quiz..."
 }

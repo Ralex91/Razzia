@@ -23,5 +23,6 @@
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
   "waitingForPlayers": "プレイヤーを待っています",
-  "wrong": "残念！"
+  "wrong": "残念！",
+  "confirm": "確認"
 }

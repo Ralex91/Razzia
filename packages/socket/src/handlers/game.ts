@@ -5,10 +5,11 @@ import { getQuizz } from "@razzia/socket/services/config"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
 import { withGame } from "@razzia/socket/utils/game"
+import { getClientId } from "@razzia/socket/utils/socket"
 
 export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   const registry = Registry.getInstance()
-  const clientId = socket.handshake.auth.clientId as string
+  const clientId = getClientId(socket)
 
   const handleManagerLeave = (game: Game) => {
     game.setManagerDisconnected()
@@ -110,7 +111,7 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
 
   socket.on(EVENTS.PLAYER.SELECTED_ANSWER, ({ gameId, data }) =>
     withGame(gameId, socket, (game) =>
-      game.selectAnswer(socket, data.answerKey),
+      game.selectAnswer(socket, data.answerKeys),
     ),
   )
 

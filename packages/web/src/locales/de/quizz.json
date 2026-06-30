@@ -13,7 +13,15 @@
       "noTimeLimitHint": "Punkte werden nach Antwortreihenfolge vergeben. Es gibt kein Zeitlimit zum Antworten.",
       "questionDisplay": "Frageanzeige",
       "questionDisplayHint": "Dauer bevor Antworten erscheinen",
-      "timings": "Zeiten"
+      "timings": "Zeiten",
+      "answerMode": "Antwortmodus",
+      "scoringMode": "Bewertungsmodus",
+      "scoringMode.strict": "Streng",
+      "scoringMode.balanced": "Ausgewogen",
+      "scoringMode.lenient": "Nachsichtig",
+      "scoringModeHint.strict": "Punkte nur wenn alle richtigen Antworten gewählt und keine falschen",
+      "scoringModeHint.balanced": "Teilpunkte: richtige Auswahlen minus falsche",
+      "scoringModeHint.lenient": "Punkte pro richtiger Antwort, keine Strafe für falsche"
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -27,5 +35,9 @@
   },
   "quizzSaved": "Quiz erfolgreich gespeichert",
   "quizzUpdated": "Quiz erfolgreich aktualisiert",
+  "questionType": {
+    "single": "Einzelauswahl",
+    "multi": "Mehrfachauswahl"
+  },
   "titleQuizzPlaceholder": "Quiz-Titel..."
 }

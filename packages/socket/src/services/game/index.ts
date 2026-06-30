@@ -12,6 +12,7 @@ import { PlayerManager } from "@razzia/socket/services/game/player-manager"
 import { RoundManager } from "@razzia/socket/services/game/round-manager"
 import Registry from "@razzia/socket/services/registry"
 import { createInviteCode } from "@razzia/socket/utils/game"
+import { getClientId } from "@razzia/socket/utils/socket"
 import { v7 as uuid } from "uuid"
 
 const registry = Registry.getInstance()
@@ -44,7 +45,7 @@ class Game {
   >()
 
   constructor(io: Server, socket: Socket, quizz: Quizz) {
-    const clientId = socket.handshake.auth.clientId as string
+    const clientId = getClientId(socket)
 
     this.io = io
     this.gameId = uuid()
@@ -182,7 +183,7 @@ class Game {
   }
 
   private reconnectPlayer(socket: Socket) {
-    const clientId = socket.handshake.auth.clientId as string
+    const clientId = getClientId(socket)
     const player = this.playerManager.findByClientId(clientId)
 
     if (!player) {
@@ -259,8 +260,8 @@ class Game {
     await this.round.start(socket)
   }
 
-  selectAnswer(socket: Socket, answerId: number) {
-    this.round.selectAnswer(socket, answerId)
+  selectAnswer(socket: Socket, answerIds: number[]) {
+    this.round.selectAnswer(socket, answerIds)
   }
 
   nextRound(socket: Socket) {

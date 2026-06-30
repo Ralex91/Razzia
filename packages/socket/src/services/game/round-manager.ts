@@ -16,6 +16,7 @@ import {
 } from "@razzia/common/types/game/status"
 import { CooldownTimer } from "@razzia/socket/services/game/cooldown-timer"
 import { PlayerManager } from "@razzia/socket/services/game/player-manager"
+import { QUESTION_SCORING } from "@razzia/socket/services/scoring"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import sleep from "@razzia/socket/utils/sleep"
 import { nanoid } from "nanoid"
@@ -146,6 +147,8 @@ export class RoundManager {
       media: question.media,
       time: question.time,
       totalPlayer: this.opts.players.count(),
+      questionType: question.type,
+      options: question.options,
     })
 
     await this.opts.cooldown.start(question.time)
@@ -168,14 +171,13 @@ export class RoundManager {
       return this.leaderboard.map((p) => ({ ...p }))
     })()
 
-    const totalType = this.playersAnswers.reduce(
-      (acc: Record<number, number>, { answerId }) => {
-        acc[answerId] = (acc[answerId] || 0) + 1
+    const answerCounts = this.playersAnswers
+      .flatMap(({ answerIds }) => answerIds)
+      .reduce<Record<number, number>>((acc, id) => {
+        acc[id] = (acc[id] ?? 0) + 1
 
         return acc
-      },
-      {},
-    )
+      }, {})
 
     const sortedPlayers = currentPlayers
       .map((player) => {
@@ -183,12 +185,18 @@ export class RoundManager {
           (a) => a.playerId === player.id,
         )
 
-        const isCorrect = playerAnswer
-          ? question.solutions.includes(playerAnswer.answerId)
-          : false
+        const scoreMultiplier = (() => {
+          if (!playerAnswer) {
+            return 0
+          }
 
-        const points =
-          playerAnswer && isCorrect ? Math.round(playerAnswer.points) : 0
+          const scoring = QUESTION_SCORING[question.type]
+
+          return scoring(question, playerAnswer.answerIds)
+        })()
+
+        const points = Math.round((playerAnswer?.points ?? 0) * scoreMultiplier)
+        const isCorrect = points > 0
 
         player.points += points
         player.streak = isCorrect ? player.streak + 1 : 0
@@ -215,16 +223,16 @@ export class RoundManager {
 
     this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
       ...question,
-      responses: totalType,
+      responses: answerCounts,
     })
 
     this.questionsHistory.push({
       ...question,
       playerAnswers: currentPlayers.map((player) => ({
         playerName: player.username,
-        answerId:
-          this.playersAnswers.find((a) => a.playerId === player.id)?.answerId ??
-          null,
+        answerIds:
+          this.playersAnswers.find((a) => a.playerId === player.id)
+            ?.answerIds ?? null,
       })),
     })
 
@@ -233,7 +241,7 @@ export class RoundManager {
     this.playersAnswers = []
   }
 
-  selectAnswer(socket: Socket, answerId: number): void {
+  selectAnswer(socket: Socket, answerIds: number[]): void {
     const player = this.opts.players.findById(socket.id)
     const question = this.opts.quizz.questions[this.currentQuestion]
 
@@ -258,7 +266,7 @@ export class RoundManager {
 
     this.playersAnswers.push({
       playerId: player.id,
-      answerId,
+      answerIds,
       points,
     })
 

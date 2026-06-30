@@ -1,3 +1,4 @@
+import { QUESTION_TYPES } from "@razzia/common/constants"
 import type { Question, QuizzWithId } from "@razzia/common/types/game"
 import {
   createContext,
@@ -29,6 +30,7 @@ const QuizzEditorContext = createContext<QuizzEditorContextType | null>(null)
 
 const defaultQuestion = (): QuestionWithId => ({
   id: uuid(),
+  type: QUESTION_TYPES.SINGLE,
   question: "",
   answers: ["", ""],
   solutions: [0],

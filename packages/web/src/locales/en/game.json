@@ -23,5 +23,6 @@
   "usernamePlaceholder": "Username here",
   "waitingForAnswers": "Waiting for the players to answer",
   "waitingForPlayers": "Waiting for players",
-  "wrong": "Too bad"
+  "wrong": "Too bad",
+  "confirm": "Confirm"
 }

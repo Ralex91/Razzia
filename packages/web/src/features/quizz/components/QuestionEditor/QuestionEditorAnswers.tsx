@@ -2,14 +2,18 @@ import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
+import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
-import { Check, Minus, Plus } from "lucide-react"
+import { Minus, Plus } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorAnswers = () => {
   const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
   const { t } = useTranslation()
+
+  const questionType = currentQuestion.type
+  const { SolutionPicker } = QUESTION_REGISTRY[questionType]
 
   const updateAnswer = (index: number, value: string) => {
     const next = [...currentQuestion.answers]
@@ -38,19 +42,6 @@ const QuestionEditorAnswers = () => {
       answers: next,
       solutions: nextSolution.length > 0 ? nextSolution : [0],
     })
-  }
-
-  const toggleSolution = (index: number) => {
-    const current = currentQuestion.solutions
-
-    if (current.includes(index)) {
-      const next = current.filter((s) => s !== index)
-      updateQuestion(currentIndex, {
-        solutions: next.length > 0 ? next : [index],
-      })
-    } else {
-      updateQuestion(currentIndex, { solutions: [...current, index] })
-    }
   }
 
   return (
@@ -100,18 +91,7 @@ const QuestionEditorAnswers = () => {
                   value={answer}
                   onChange={(e) => updateAnswer(i, e.target.value)}
                 />
-                <button
-                  type="button"
-                  onClick={() => toggleSolution(i)}
-                  className={clsx(
-                    "flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
-                    isSelected
-                      ? "border-white bg-white text-green-600"
-                      : "border-white/60 bg-transparent",
-                  )}
-                >
-                  {isSelected && <Check className="size-4 stroke-5" />}
-                </button>
+                <SolutionPicker index={i} isSelected={isSelected} />
               </div>
             </div>
           )
