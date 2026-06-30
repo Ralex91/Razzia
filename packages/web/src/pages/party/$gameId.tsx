@@ -51,6 +51,7 @@ const PlayerGamePage = () => {
   })
 
   useEvent(EVENTS.GAME.RESET, (message) => {
+    localStorage.removeItem("game_pin")
     navigate({ to: "/" })
     reset()
     setQuestionStates(null)

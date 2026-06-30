@@ -1,3 +1,4 @@
+import Reconnect from "@razzia/web/features/game/components/join/Reconnect"
 import Room from "@razzia/web/features/game/components/join/Room"
 import Username from "@razzia/web/features/game/components/join/Username"
 import {
@@ -29,7 +30,12 @@ const PlayerAuthPage = () => {
     return <Username />
   }
 
-  return <Room />
+  return (
+    <>
+      <Room />
+      <Reconnect />
+    </>
+  )
 }
 
 export const Route = createFileRoute("/(auth)/")({

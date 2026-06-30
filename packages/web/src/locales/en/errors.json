@@ -10,6 +10,7 @@
     "managerAlreadyConnected": "Manager already connected",
     "managerDisconnected": "Manager disconnected",
     "noPlayersConnected": "No players connected",
+    "managerCannotJoin": "You cannot join your own game",
     "notFound": "Game not found",
     "playerAlreadyConnected": "Player already connected"
   },

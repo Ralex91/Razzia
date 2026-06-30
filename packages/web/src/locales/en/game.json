@@ -8,6 +8,8 @@
   "joinInstruction": "Join the game at",
   "leaderboard": "Leaderboard",
   "pinLabel": "PIN Code",
+  "reconnect": "Reconnect",
+  "reconnectTitle": "You were in a game",
   "playersJoined": "Players Joined: ",
   "questionPrefix": "Question #",
   "rank": {

@@ -10,6 +10,7 @@
     "managerAlreadyConnected": "管理者はすでに接続されています",
     "managerDisconnected": "管理者が切断されました",
     "noPlayersConnected": "接続中のプレイヤーがいません",
+    "managerCannotJoin": "自分のゲームには参加できません",
     "notFound": "ゲームが見つかりません",
     "playerAlreadyConnected": "プレイヤーはすでに接続されています"
   },

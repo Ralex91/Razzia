@@ -8,6 +8,8 @@
   "joinInstruction": "Rejoins la partie sur",
   "leaderboard": "Classement",
   "pinLabel": "Code PIN",
+  "reconnect": "Reconnecter",
+  "reconnectTitle": "Vous étiez dans une partie",
   "playersJoined": "Joueurs connectés : ",
   "questionPrefix": "Question n°",
   "rank": {

@@ -8,6 +8,8 @@
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
   "pinLabel": "PINコード",
+  "reconnect": "再接続",
+  "reconnectTitle": "ゲームに参加していました",
   "playersJoined": "参加プレイヤー数: ",
   "questionPrefix": "問題 #",
   "rank": {

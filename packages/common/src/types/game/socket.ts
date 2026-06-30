@@ -50,6 +50,7 @@ export interface ServerToClientEvents {
   [EVENTS.GAME.PLAYER_ANSWER]: (_count: number) => void
 
   // Player events
+  [EVENTS.PLAYER.CHECK_PIN_RESULT]: (_data: { valid: boolean }) => void
   [EVENTS.PLAYER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
     status: { name: Status; data: StatusDataMap[Status] }
@@ -114,6 +115,7 @@ export interface ClientToServerEvents {
   [EVENTS.QUIZZ.DELETE]: (_id: string) => void
 
   // Player actions
+  [EVENTS.PLAYER.CHECK_PIN]: (_inviteCode: string) => void
   [EVENTS.PLAYER.JOIN]: (_inviteCode: string) => void
   [EVENTS.PLAYER.LOGIN]: (
     _message: MessageWithoutStatus<{ username: string }>,

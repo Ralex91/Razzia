@@ -24,6 +24,12 @@ const Room = () => {
   }
 
   useEvent(EVENTS.GAME.SUCCESS_ROOM, (gameId) => {
+    const pinToSave = invitation.replace(/\s/gu, "") || pin
+
+    if (pinToSave) {
+      localStorage.setItem("game_pin", pinToSave)
+    }
+
     join(gameId)
   })
 

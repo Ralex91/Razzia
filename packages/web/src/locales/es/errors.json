@@ -10,6 +10,7 @@
     "managerAlreadyConnected": "El administrador ya está conectado",
     "managerDisconnected": "El administrador se ha desconectado",
     "noPlayersConnected": "No hay jugadores conectados",
+    "managerCannotJoin": "No puedes unirte a tu propio juego",
     "notFound": "Partida no encontrada",
     "playerAlreadyConnected": "El jugador ya está conectado"
   },

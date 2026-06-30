@@ -20,6 +20,8 @@ export const EVENTS = {
     RECONNECT: "player:reconnect",
     LEAVE: "player:leave",
     SELECTED_ANSWER: "player:selectedAnswer",
+    CHECK_PIN: "player:checkPin",
+    CHECK_PIN_RESULT: "player:checkPinResult",
   },
   MANAGER: {
     SUCCESS_RECONNECT: "manager:successReconnect",
