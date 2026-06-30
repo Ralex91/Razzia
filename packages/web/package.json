@@ -38,7 +38,7 @@
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0",
     "use-sound": "^5.0.0",
-    "uuid": "^14.0.0",
+    "uuid": "^14.0.1",
     "zod": "^4.4.3",
     "zustand": "^5.0.14"
   },

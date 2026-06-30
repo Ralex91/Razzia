@@ -16,7 +16,7 @@
     "nanoid": "^5.1.11",
     "socket.io": "^4.8.3",
     "typescript": "^6.0.3",
-    "uuid": "^14.0.0",
+    "uuid": "^14.0.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
