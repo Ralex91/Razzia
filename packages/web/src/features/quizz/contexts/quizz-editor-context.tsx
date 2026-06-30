@@ -43,6 +43,9 @@ const toQuestionWithId = (q: Question): QuestionWithId => ({
   id: uuid(),
 })
 
+const clampIndex = (index: number, array: unknown[]) =>
+  Math.max(0, Math.min(index, array.length - 1))
+
 type QuizzEditorProviderProps = PropsWithChildren<{
   initialData?: QuizzWithId
 }>
@@ -60,7 +63,7 @@ export const QuizzEditorProvider = ({
       : [defaultQuestion()],
   )
   const [currentIndex, setCurrentIndex] = useState(0)
-  const currentQuestion = questions[currentIndex]
+  const currentQuestion = questions[clampIndex(currentIndex, questions)]
 
   const addQuestion = () => {
     setQuestions((prev) => [...prev, defaultQuestion()])
@@ -69,13 +72,19 @@ export const QuizzEditorProvider = ({
 
   const removeQuestion = (index: number) => {
     const next = questions.filter((_, i) => i !== index)
+
     setQuestions(next)
-    setCurrentIndex((current) =>
-      Math.min(
-        Math.max(0, current >= index ? current - 1 : current),
-        next.length - 1,
-      ),
-    )
+    setCurrentIndex((current) => {
+      if (current < index) {
+        return current
+      }
+
+      if (current > index) {
+        return current - 1
+      }
+
+      return clampIndex(current, next)
+    })
   }
 
   const reorderQuestions = (from: number, to: number) => {
