@@ -8,6 +8,8 @@
   "joinInstruction": "Únete al juego en",
   "leaderboard": "Clasificación",
   "pinLabel": "Código PIN",
+  "reconnect": "Reconectar",
+  "reconnectTitle": "Estabas en una partida",
   "playersJoined": "Jugadores conectados: ",
   "questionPrefix": "Pregunta #",
   "rank": {

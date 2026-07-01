@@ -10,6 +10,7 @@
     "managerAlreadyConnected": "Gestore già connesso",
     "managerDisconnected": "Gestore disconnesso",
     "noPlayersConnected": "Nessun giocatore connesso",
+    "managerCannotJoin": "Non puoi unirti alla tua stessa partita",
     "notFound": "Partita non trovata",
     "playerAlreadyConnected": "Giocatore già connesso"
   },

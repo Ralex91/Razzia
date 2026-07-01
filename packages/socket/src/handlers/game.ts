@@ -77,6 +77,12 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     registry.addGame(game)
   })
 
+  socket.on(EVENTS.PLAYER.CHECK_PIN, (inviteCode) => {
+    const game = registry.getGameByInviteCode(inviteCode)
+
+    socket.emit(EVENTS.PLAYER.CHECK_PIN_RESULT, { valid: Boolean(game) })
+  })
+
   socket.on(EVENTS.PLAYER.JOIN, (inviteCode) => {
     const result = inviteCodeValidator.safeParse(inviteCode)
 
@@ -90,6 +96,18 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
 
     if (!game) {
       socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.notFound")
+
+      return
+    }
+
+    if (game.manager.clientId === clientId) {
+      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.managerCannotJoin")
+
+      return
+    }
+
+    if (game.players.some((p) => p.clientId === clientId)) {
+      game.reconnect(socket)
 
       return
     }

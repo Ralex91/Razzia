@@ -8,6 +8,8 @@
   "joinInstruction": "Tritt dem Spiel bei auf",
   "leaderboard": "Bestenliste",
   "pinLabel": "PIN-Code",
+  "reconnect": "Erneut verbinden",
+  "reconnectTitle": "Du warst in einem Spiel",
   "playersJoined": "Verbundene Spieler: ",
   "questionPrefix": "Frage #",
   "rank": {

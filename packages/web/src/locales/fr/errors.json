@@ -10,6 +10,7 @@
     "managerAlreadyConnected": "Un manager est déjà connecté",
     "managerDisconnected": "Le manager s'est déconnecté",
     "noPlayersConnected": "Aucun joueur connecté",
+    "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",
     "notFound": "Partie introuvable",
     "playerAlreadyConnected": "Ce joueur est déjà connecté"
   },

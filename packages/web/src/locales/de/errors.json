@@ -10,6 +10,7 @@
     "managerAlreadyConnected": "Manager bereits verbunden",
     "managerDisconnected": "Manager getrennt",
     "noPlayersConnected": "Keine Spieler verbunden",
+    "managerCannotJoin": "Du kannst deinem eigenen Spiel nicht beitreten",
     "notFound": "Spiel nicht gefunden",
     "playerAlreadyConnected": "Spieler bereits verbunden"
   },
