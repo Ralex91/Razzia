@@ -7,6 +7,7 @@
     "delete": "Eliminar cuestionario",
     "deleteConfirm": "¿Estás seguro de que quieres eliminar \"{{name}}\"? Esta acción no se puede deshacer.",
     "deleted": "Cuestionario eliminado",
+    "export": "Exportar cuestionario como JSON",
     "import": "Importar cuestionario desde JSON",
     "none": "Aún no se ha creado ningún cuestionario",
     "notFound": "No se encontró ningún cuestionario",

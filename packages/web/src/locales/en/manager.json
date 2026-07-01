@@ -7,6 +7,7 @@
     "delete": "Delete quizz",
     "deleteConfirm": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
     "deleted": "Quizz deleted",
+    "export": "Export quizz as JSON",
     "import": "Import quizz from JSON",
     "none": "No quizz created yet",
     "notFound": "No quizz found",
