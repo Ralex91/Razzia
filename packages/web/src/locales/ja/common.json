@@ -5,12 +5,12 @@
   "delete": "削除",
   "exit": "退出",
   "language": {
-    "de": "ドイツ語",
-    "en": "英語",
-    "es": "スペイン語",
-    "fr": "フランス語",
-    "it": "イタリア語",
-    "ja": "日本語"
+    "de": "Deutsch - ドイツ語",
+    "en": "English - 英語",
+    "es": "Español - スペイン語",
+    "fr": "Français - フランス語",
+    "it": "Italiano - イタリア語",
+    "ja": "日本語 - 日本語"
   },
   "loading": "読み込み中...",
   "next": "次へ",

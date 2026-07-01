@@ -5,12 +5,12 @@
   "delete": "Löschen",
   "exit": "Beenden",
   "language": {
-    "de": "Deutsch",
-    "en": "Englisch",
-    "es": "Spanisch",
-    "fr": "Französisch",
-    "it": "Italienisch",
-    "ja": "Japanisch"
+    "de": "Deutsch - Deutsch",
+    "en": "English - Englisch",
+    "es": "Español - Spanisch",
+    "fr": "Français - Französisch",
+    "it": "Italiano - Italienisch",
+    "ja": "日本語 - Japanisch"
   },
   "loading": "Laden...",
   "next": "Weiter",
