@@ -197,11 +197,16 @@ export class RoundManager {
 
         const points = Math.round((playerAnswer?.points ?? 0) * scoreMultiplier)
         const isCorrect = points > 0
+        const penalty = !isCorrect && playerAnswer ? (question.penalty ?? 0) : 0
 
-        player.points += points
+        player.points = Math.max(0, player.points + points - penalty)
         player.streak = isCorrect ? player.streak + 1 : 0
 
-        return { ...player, lastCorrect: isCorrect, lastPoints: points }
+        return {
+          ...player,
+          lastCorrect: isCorrect,
+          lastPoints: isCorrect ? points : -penalty,
+        }
       })
       .sort((a, b) => b.points - a.points)
 

@@ -18,6 +18,8 @@
       "scoring": "スコア",
       "maxPoints": "最大ポイント",
       "maxPointsHint": "正解に対して付与される最大ポイント数",
+      "penalty": "ペナルティ",
+      "penaltyHint": "不正解時に差し引かれるポイント（合計は0以下にはなりません）",
       "scoringMode": "採点モード",
       "scoringMode.strict": "厳格",
       "scoringMode.balanced": "バランス",

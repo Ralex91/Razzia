@@ -47,6 +47,7 @@ export interface Question {
   cooldown: number
   time: number
   maxPoints?: number
+  penalty?: number
   options?: QuestionOptions
 }
 

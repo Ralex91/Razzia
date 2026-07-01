@@ -167,6 +167,7 @@ Quiz Options:
   - `cooldown`: Time in seconds before answers are revealed (3-15)
   - `time`: Time in seconds allowed to answer (5-120)
   - `maxPoints`: Maximum points awarded for a correct answer (default: `1000`, min: `0`)
+  - `penalty`: Points deducted for a wrong answer (default: none, min: `0`). The player's total cannot go below 0. Unanswered questions are not penalised.
 
 ### 3. Custom branding (`config/branding/`) — optional
 

@@ -18,6 +18,8 @@
       "scoring": "Scoring",
       "maxPoints": "Max points",
       "maxPointsHint": "Maximum points awarded for a correct answer",
+      "penalty": "Penalty",
+      "penaltyHint": "Points deducted for a wrong answer (total cannot go below 0)",
       "scoringMode": "Scoring mode",
       "scoringMode.strict": "Strict",
       "scoringMode.balanced": "Balanced",

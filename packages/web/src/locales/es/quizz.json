@@ -18,6 +18,8 @@
       "scoring": "Puntuación",
       "maxPoints": "Puntos máx.",
       "maxPointsHint": "Puntos máximos otorgados por una respuesta correcta",
+      "penalty": "Penalización",
+      "penaltyHint": "Puntos deducidos por una respuesta incorrecta (el total no puede bajar de 0)",
       "scoringMode": "Modo de puntuación",
       "scoringMode.strict": "Estricto",
       "scoringMode.balanced": "Equilibrado",
