@@ -258,10 +258,11 @@ export class RoundManager {
         return orderToPoint(
           this.playersAnswers.length,
           this.opts.players.count(),
+          question.maxPoints,
         )
       }
 
-      return timeToPoint(this.startTime, question.time)
+      return timeToPoint(this.startTime, question)
     })()
 
     this.playersAnswers.push({

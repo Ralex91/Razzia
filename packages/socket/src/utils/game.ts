@@ -1,3 +1,5 @@
+import { MAX_POINTS } from "@razzia/common/constants"
+import type { Question } from "@razzia/common/types/game"
 import type { Socket } from "@razzia/common/types/game/socket"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
@@ -54,25 +56,26 @@ export const normalizeFilename = (subject: string) => {
   return `${slug}-${shortId}`
 }
 
-const MAX_POINTS = 1000
-
-export const orderToPoint = (index: number, totalPlayers: number): number => {
+export const orderToPoint = (
+  index: number,
+  totalPlayers: number,
+  maxPoints = MAX_POINTS,
+): number => {
   if (totalPlayers <= 1) {
-    return MAX_POINTS
+    return maxPoints
   }
 
-  return Math.round(
-    MAX_POINTS - (index / (totalPlayers - 1)) * (MAX_POINTS / 2),
-  )
+  return Math.round(maxPoints - (index / (totalPlayers - 1)) * (maxPoints / 2))
 }
 
-export const timeToPoint = (startTime: number, secondes: number): number => {
-  let points = MAX_POINTS
+export const timeToPoint = (startTime: number, question: Question): number => {
+  const maxPoints = question.maxPoints ?? MAX_POINTS
+  let points = maxPoints
 
   const actualTime = Date.now()
   const tempsPasseEnSecondes = (actualTime - startTime) / 1000
 
-  points -= (MAX_POINTS / secondes) * tempsPasseEnSecondes
+  points -= (maxPoints / question.time) * tempsPasseEnSecondes
   points = Math.max(0, points)
 
   return points

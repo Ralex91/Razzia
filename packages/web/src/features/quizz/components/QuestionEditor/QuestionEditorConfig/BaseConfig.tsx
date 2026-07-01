@@ -1,5 +1,5 @@
 import * as Switch from "@radix-ui/react-switch"
-import { NO_TIME_LIMIT } from "@razzia/common/constants"
+import { MAX_POINTS, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { ScoringMode } from "@razzia/common/types/game"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
@@ -7,7 +7,7 @@ import ConfigNumberInput from "@razzia/web/features/quizz/components/QuestionEdi
 import ConfigSection from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import ConfigSelect from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSelect"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { Clock, ListChecks, Timer } from "lucide-react"
+import { Clock, ListChecks, Star, Timer } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const DEFAULT_TIME = 20
@@ -40,22 +40,40 @@ const BaseConfig = () => {
 
   return (
     <>
-      {scoringModes && scoringMode && (
+      <ConfigSection title={t("quizz:question.config.scoring")}>
         <ConfigField>
           <ConfigField.Label
-            icon={<ListChecks className="size-4" />}
-            label={t("quizz:question.config.scoringMode")}
+            icon={<Star className="size-4" />}
+            label={t("quizz:question.config.maxPoints")}
+            unit="pts"
           />
-          <ConfigSelect
-            value={scoringMode}
-            options={scoringOptions ?? []}
-            onValueChange={handleScoringModeChange}
+          <ConfigNumberInput
+            value={currentQuestion.maxPoints ?? MAX_POINTS}
+            min={0}
+            onChange={handleUpdateQuestion("maxPoints")}
           />
           <ConfigField.Description>
-            {t(`quizz:question.config.scoringModeHint.${scoringMode}`)}
+            {t("quizz:question.config.maxPointsHint")}
           </ConfigField.Description>
         </ConfigField>
-      )}
+
+        {scoringModes && scoringMode && (
+          <ConfigField>
+            <ConfigField.Label
+              icon={<ListChecks className="size-4" />}
+              label={t("quizz:question.config.scoringMode")}
+            />
+            <ConfigSelect
+              value={scoringMode}
+              options={scoringOptions ?? []}
+              onValueChange={handleScoringModeChange}
+            />
+            <ConfigField.Description>
+              {t(`quizz:question.config.scoringModeHint.${scoringMode}`)}
+            </ConfigField.Description>
+          </ConfigField>
+        )}
+      </ConfigSection>
 
       <ConfigSection title={t("quizz:question.config.timings")}>
         <ConfigField>

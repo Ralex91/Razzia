@@ -63,6 +63,8 @@ export const EVENTS = {
 
 export const NO_TIME_LIMIT = -1
 
+export const MAX_POINTS = 1000
+
 export const QUESTION_TYPES = {
   SINGLE: "single",
   MULTI: "multi",

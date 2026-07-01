@@ -46,6 +46,7 @@ export interface Question {
   solutions: number[]
   cooldown: number
   time: number
+  maxPoints?: number
   options?: QuestionOptions
 }
 
