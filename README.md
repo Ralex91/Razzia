@@ -166,6 +166,7 @@ Quiz Options:
   - `solutions`: Array of correct answer indices (0-based). Use multiple indices for multi-answer questions
   - `cooldown`: Time in seconds before answers are revealed (3-15)
   - `time`: Time in seconds allowed to answer (5-120)
+  - `maxPoints`: Maximum points awarded for a correct answer (default: `1000`, min: `0`)
 
 ### 3. Custom branding (`config/branding/`) — optional
 
@@ -178,7 +179,10 @@ Create `config/branding/theme.json`:
   "appName": "My Quiz",
   "colors": { "primary": "#ff9900", "secondary": "#1a140b" },
   "answerColors": ["#e69f00", "#56b4e9", "#3dbfa0", "#cc79a7"],
-  "font": { "family": "Rubik", "url": "https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap" },
+  "font": {
+    "family": "Rubik",
+    "url": "https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap"
+  },
   "logo": "/branding/logo.svg",
   "favicon": "/branding/favicon.svg",
   "background": "/branding/background.png"
