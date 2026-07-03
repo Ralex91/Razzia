@@ -1,4 +1,3 @@
-import * as Switch from "@radix-ui/react-switch"
 import { MAX_POINTS, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { ScoringMode } from "@razzia/common/types/game"
 import {
@@ -8,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@razzia/web/components/Select"
+import Switch from "@razzia/web/components/Switch"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
 import ConfigNumberInput from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigNumberInput"
@@ -77,13 +77,10 @@ const BaseConfig = () => {
             label={t("quizz:question.config.penalty")}
             unit={isPenaltyEnabled ? "pts" : undefined}
             action={
-              <Switch.Root
+              <Switch
                 checked={isPenaltyEnabled}
                 onCheckedChange={handleTogglePenalty}
-                className="data-[state=checked]:bg-primary focus-visible:outline-primary bg-accent relative h-5 w-9 cursor-pointer rounded-full transition-colors focus-visible:outline-2"
-              >
-                <Switch.Thumb className="block size-4 translate-x-0.5 rounded-full bg-white shadow-sm transition-transform data-[state=checked]:translate-x-4.5" />
-              </Switch.Root>
+              />
             }
           />
           {isPenaltyEnabled && (
@@ -146,13 +143,10 @@ const BaseConfig = () => {
             label={t("quizz:question.config.answerTime")}
             unit={isTimeLimitEnabled ? "sec" : undefined}
             action={
-              <Switch.Root
+              <Switch
                 checked={isTimeLimitEnabled}
                 onCheckedChange={handleToggleTimeLimit}
-                className="data-[state=checked]:bg-primary focus-visible:outline-primary bg-accent relative h-5 w-9 cursor-pointer rounded-full transition-colors focus-visible:outline-2"
-              >
-                <Switch.Thumb className="block size-4 translate-x-0.5 rounded-full bg-white shadow-sm transition-transform data-[state=checked]:translate-x-4.5" />
-              </Switch.Root>
+              />
             }
           />
           {isTimeLimitEnabled && (
