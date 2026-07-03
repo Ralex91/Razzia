@@ -1,5 +1,5 @@
 # ---- BASE ----
-FROM node:25-alpine AS base
+FROM node:26-alpine AS base
 RUN npm install -g pnpm
 
 # ---- BUILDER ----
@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm build
 
 # ---- RUNNER ----
-FROM alpine:3.23.4 AS runner
+FROM alpine:3.24.1 AS runner
 
 RUN apk add --no-cache nginx nodejs supervisor
 

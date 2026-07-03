@@ -10,6 +10,7 @@
     "start": "pnpm -r --parallel run start",
     "clean": "pnpm -r exec rm -rf dist node_modules",
     "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "format": "prettier --check . --log-level warn",
     "format:fix": "prettier --write . --log-level warn"
   },
@@ -18,7 +19,7 @@
     "dotenv-cli": "^11.0.0",
     "oxlint": "latest",
     "oxlint-tsgolint": "^0.23.0",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.5",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "typescript": "^6.0.3"
   }
