@@ -25,7 +25,7 @@ Choose one of the following deployment methods:
 
 ### Without Docker
 
-- Node.js : version 22 or higher
+- Node.js : version 24 or higher
 - PNPM : version 10.16 or higher (learn more [here](https://pnpm.io/))
 
 ### With Docker
@@ -214,4 +214,4 @@ For bug reports or feature requests, please [create an issue](https://github.com
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Ralex91/Razzia&type=date&legend=bottom-right)](https://www.star-history.com/#Ralex91/Razzia&type=date&legend=bottom-right)
+[![Star History Chart](https://api.star-history.com/svg?repos=Ralex91/Razzia&type=date&logscale=&legend=bottom-right)](https://www.star-history.com/#Ralex91/Razzia&type=date&logscale=&legend=bottom-right)
