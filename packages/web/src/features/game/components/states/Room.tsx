@@ -103,9 +103,9 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
             >
               <button
                 onClick={handleCloseQrCode}
-                className="absolute -top-3 -right-3 rounded-full bg-white p-1.5 shadow-md hover:bg-gray-100"
+                className="hover:bg-muted absolute -top-3 -right-3 rounded-full bg-white p-1.5 shadow-md"
               >
-                <X className="size-6 text-gray-700" />
+                <X className="text-foreground size-6" />
               </button>
               <QRCodeSVG
                 className="size-56 md:size-70 lg:size-95"

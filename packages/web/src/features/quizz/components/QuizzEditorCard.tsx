@@ -15,11 +15,11 @@ const SlideMedia = ({ media }: { media?: QuestionMedia }) => {
   }
 
   if (media?.type === MEDIA_TYPES.VIDEO) {
-    return <Video className="mx-auto size-10 text-gray-400" />
+    return <Video className="text-muted-foreground mx-auto size-10" />
   }
 
   if (media?.type === MEDIA_TYPES.AUDIO) {
-    return <Music className="mx-auto size-10 text-gray-400" />
+    return <Music className="text-muted-foreground mx-auto size-10" />
   }
 
   return null
@@ -49,17 +49,17 @@ const QuizzEditorCard = ({
       onClick={onClick}
       className={twMerge(
         clsx(
-          "group relative flex h-36 cursor-pointer flex-col justify-between gap-1 rounded-lg border-2 border-gray-200 bg-white px-6 py-2",
+          "group border-accent bg-background relative flex h-36 cursor-pointer flex-col justify-between gap-1 rounded-lg border-2 px-6 py-2",
           {
             "border-primary": isActive,
           },
         ),
       )}
     >
-      <span className="absolute top-2 left-2 text-xs font-semibold text-gray-400">
+      <span className="text-muted-foreground absolute top-2 left-2 text-xs font-semibold">
         {index + 1}
       </span>
-      <p className="truncate text-center text-xs font-semibold text-gray-700">
+      <p className="text-foreground truncate text-center text-xs font-semibold">
         {question.question || t("quizz:noQuestionYet")}
       </p>
 
@@ -69,7 +69,7 @@ const QuizzEditorCard = ({
         {question.answers.map((_, i) => (
           <div
             key={i}
-            className="flex h-4 flex-1 items-center rounded-md border border-gray-300 px-0.5"
+            className="border-accent flex h-4 flex-1 items-center rounded-md border px-0.5"
           >
             {question.solutions.includes(i) && (
               <div className="ml-auto size-1.5 rounded-full bg-green-400" />
@@ -83,7 +83,7 @@ const QuizzEditorCard = ({
           trigger={
             <button
               onClick={(e) => e.stopPropagation()}
-              className="absolute top-1.5 right-1.5 hidden rounded-sm bg-white p-1 text-gray-400 group-hover:block hover:bg-red-50 hover:text-red-500"
+              className="text-muted-foreground bg-background absolute top-1.5 right-1.5 hidden rounded-sm p-1 group-hover:block hover:bg-red-50 hover:text-red-500"
             >
               <Trash2 className="size-3.5" />
             </button>

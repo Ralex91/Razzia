@@ -17,12 +17,12 @@ const ErrorPage = ({ error }: { error: Error }) => {
           <h1 className="text-xl font-bold text-gray-800">
             {t("errors:route.title")}
           </h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-muted-foreground text-sm">
             {t("errors:route.description")}
           </p>
         </div>
         {error.message && (
-          <pre className="max-h-60 overflow-auto rounded-md bg-gray-200 px-3 py-2 text-left font-mono text-sm wrap-break-word">
+          <pre className="bg-accent max-h-60 overflow-auto rounded-md px-3 py-2 text-left font-mono text-sm wrap-break-word">
             {error.message}
           </pre>
         )}

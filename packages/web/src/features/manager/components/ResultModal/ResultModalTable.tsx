@@ -14,7 +14,7 @@ const ResultModalTable = () => {
   return (
     <table className="w-full text-sm">
       <thead className="sticky top-0">
-        <tr className="border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold tracking-wide text-gray-500 uppercase">
+        <tr className="border-accent bg-muted text-muted-foreground border-b-2 text-left text-xs font-semibold tracking-wide uppercase">
           <th className="px-5 py-2.5">{t("manager:result.table.player")}</th>
           <th className="px-4 py-2.5">{t("manager:result.table.answered")}</th>
           <th className="px-4 py-2.5">
@@ -25,7 +25,7 @@ const ResultModalTable = () => {
           </th>
         </tr>
       </thead>
-      <tbody className="divide-y-2 divide-gray-100">
+      <tbody className="divide-muted divide-y-2">
         {questionResult.playerAnswers.map((pa, i) => {
           const hasAnswer = pa.answerIds !== null && pa.answerIds.length > 0
           const isCorrect =
@@ -56,7 +56,7 @@ const ResultModalTable = () => {
                     ))}
                   </div>
                 ) : (
-                  <span className="text-xs text-gray-400">-</span>
+                  <span className="text-muted-foreground text-xs">-</span>
                 )}
               </td>
               <td className="px-4 py-2.5">
@@ -72,7 +72,7 @@ const ResultModalTable = () => {
                   </span>
                 )}
               </td>
-              <td className="px-4 py-2.5 text-right font-semibold text-gray-700">
+              <td className="text-foreground px-4 py-2.5 text-right font-semibold">
                 {getPlayerPoints(pa.playerName)}
               </td>
             </tr>

@@ -58,7 +58,7 @@ const Configurations = ({ data }: Props) => {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
             <button
-              className="rounded-sm p-1.5 text-gray-400 hover:bg-gray-200 hover:text-gray-600"
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-sm p-1.5"
               onClick={handleLogout}
               title={t("manager:logout")}
             >
@@ -66,7 +66,7 @@ const Configurations = ({ data }: Props) => {
             </button>
           </div>
         </div>
-        <div className="flex shrink-0 overflow-hidden rounded-lg bg-gray-100">
+        <div className="bg-muted flex shrink-0 overflow-hidden rounded-lg">
           {tabs.map((tab, index) => (
             <ConfigTabButton
               key={tab.nameKey}
@@ -77,7 +77,7 @@ const Configurations = ({ data }: Props) => {
             </ConfigTabButton>
           ))}
         </div>
-        <hr className="my-4 border text-gray-100" />
+        <hr className="text-muted my-4 border" />
         <div className="flex min-h-0 flex-1 flex-col">
           <TabComponent />
         </div>

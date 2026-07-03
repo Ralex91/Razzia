@@ -44,7 +44,7 @@ const QuizzEditorHeader = () => {
   })
 
   return (
-    <header className="z-20 flex h-14 items-center justify-between gap-4 bg-white px-4 shadow-sm">
+    <header className="bg-background z-20 flex h-14 items-center justify-between gap-4 px-4 shadow-sm">
       <div className="flex items-center gap-6">
         <Input
           variant="sm"
@@ -57,7 +57,7 @@ const QuizzEditorHeader = () => {
 
       <div className="flex gap-2">
         <Button
-          className="text-md bg-gray-200 px-4 py-2 font-semibold text-gray-600"
+          className="text-md bg-accent text-accent-foreground px-4 py-2 font-semibold"
           onClick={() => navigate({ to: "/manager" })}
         >
           {t("common:exit")}

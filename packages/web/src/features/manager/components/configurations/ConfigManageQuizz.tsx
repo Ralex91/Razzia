@@ -94,7 +94,7 @@ const ConfigManageQuizz = () => {
           {t("manager:quizz.create")}
         </Button>
         <Button
-          className="aspect-square bg-gray-200 px-3 text-gray-600"
+          className="bg-accent text-accent-foreground aspect-square px-3"
           onClick={() => fileInputRef.current?.click()}
           title={t("manager:quizz.import")}
         >
@@ -112,12 +112,12 @@ const ConfigManageQuizz = () => {
         {quizz.map((q) => (
           <div
             key={q.id}
-            className="flex h-12 w-full items-center justify-between rounded-md border-2 border-gray-200 p-3 pr-1.5"
+            className="border-accent flex h-12 w-full items-center justify-between rounded-md border-2 p-3 pr-1.5"
           >
-            <p className="truncate font-medium text-gray-700">{q.subject}</p>
+            <p className="text-foreground truncate font-medium">{q.subject}</p>
             <div className="flex gap-0.5">
               <button
-                className="rounded-sm p-2 text-gray-600 hover:bg-gray-600/10"
+                className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
                 onClick={() =>
                   navigate({
                     to: "/manager/quizz/$quizzId",
@@ -129,7 +129,7 @@ const ConfigManageQuizz = () => {
               </button>
 
               <button
-                className="rounded-sm p-2 text-gray-600 hover:bg-gray-600/10"
+                className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
                 onClick={handleExport(q.id)}
                 title={t("manager:quizz.export")}
               >
@@ -153,7 +153,7 @@ const ConfigManageQuizz = () => {
           </div>
         ))}
         {quizz.length === 0 && (
-          <p className="my-8 text-center text-gray-500">
+          <p className="text-muted-foreground my-8 text-center">
             {t("manager:quizz.none")}
           </p>
         )}

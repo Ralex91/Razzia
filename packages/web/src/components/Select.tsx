@@ -21,7 +21,7 @@ export const SelectTrigger = ({
   <RadixSelect.Trigger
     className={twMerge(
       clsx(
-        "focus:border-primary flex w-full cursor-pointer items-center justify-between rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 focus:outline-none",
+        "focus:border-primary border-accent text-foreground bg-background flex w-full cursor-pointer items-center justify-between rounded-lg border-2 px-3 py-2 text-sm font-semibold focus:outline-none",
         className,
       ),
     )}
@@ -30,7 +30,7 @@ export const SelectTrigger = ({
     {children}
     {!hideChevron && (
       <RadixSelect.Icon>
-        <ChevronDown className="size-4 text-gray-400" />
+        <ChevronDown className="text-muted-foreground size-4" />
       </RadixSelect.Icon>
     )}
   </RadixSelect.Trigger>
@@ -49,7 +49,7 @@ export const SelectContent = ({
       sideOffset={4}
       className={twMerge(
         clsx(
-          "z-50 w-(--radix-select-trigger-width) overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md",
+          "border-accent bg-background z-50 w-(--radix-select-trigger-width) overflow-hidden rounded-lg border shadow-md",
           className,
         ),
       )}
@@ -70,7 +70,7 @@ export const SelectItem = ({
   <RadixSelect.Item
     className={twMerge(
       clsx(
-        "flex cursor-pointer items-center justify-between gap-3 rounded-sm px-3 py-1.5 text-sm text-gray-700 outline-none hover:bg-gray-100 focus:bg-gray-100 data-[state=checked]:font-semibold",
+        "text-foreground hover:bg-muted focus:bg-muted flex cursor-pointer items-center justify-between gap-3 rounded-sm px-3 py-1.5 text-sm outline-none data-[state=checked]:font-semibold",
         className,
       ),
     )}
@@ -78,7 +78,7 @@ export const SelectItem = ({
   >
     <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
     <RadixSelect.ItemIndicator>
-      <Check className="size-3.5 text-gray-500" />
+      <Check className="text-muted-foreground size-3.5" />
     </RadixSelect.ItemIndicator>
   </RadixSelect.Item>
 )

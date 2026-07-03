@@ -28,9 +28,9 @@ const LanguageSwitcher = () => {
     >
       <SelectTrigger
         hideChevron
-        className="w-auto gap-1.5 border px-2 py-1.5 text-gray-600"
+        className="text-accent-foreground w-auto gap-1.5 border px-2 py-1.5"
       >
-        <Globe className="size-4 text-gray-500" />
+        <Globe className="text-muted-foreground size-4" />
         <SelectValue>{normalizedLanguage.toUpperCase()}</SelectValue>
       </SelectTrigger>
       <SelectContent className="w-auto min-w-32">

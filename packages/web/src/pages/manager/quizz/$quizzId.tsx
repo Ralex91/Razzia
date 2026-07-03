@@ -29,7 +29,7 @@ const QuizzEditPage = () => {
 
   if (!quizz) {
     return (
-      <div className="flex h-svh items-center justify-center bg-gray-50">
+      <div className="bg-muted flex h-svh items-center justify-center">
         <Loader className="text-background max-h-23" />
       </div>
     )
@@ -37,7 +37,7 @@ const QuizzEditPage = () => {
 
   return (
     <QuizzEditorProvider initialData={quizz}>
-      <div className="relative flex h-svh flex-col bg-gray-50">
+      <div className="bg-muted relative flex h-svh flex-col">
         <QuizzEditorHeader />
         <div className="flex flex-1 overflow-hidden">
           <QuizzEditorSidebar />

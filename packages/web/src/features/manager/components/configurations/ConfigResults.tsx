@@ -48,14 +48,16 @@ const ConfigResults = () => {
         {results.map((r) => (
           <div
             key={r.id}
-            className="flex h-14 w-full items-center justify-between rounded-md border-2 border-gray-200 p-3"
+            className="border-accent flex h-14 w-full items-center justify-between rounded-md border-2 p-3"
           >
             <button
               className="min-w-0 flex-1 text-left"
               onClick={handleOpen(r.id)}
             >
-              <p className="truncate font-medium text-gray-700">{r.subject}</p>
-              <p className="text-xs text-gray-400">
+              <p className="text-foreground truncate font-medium">
+                {r.subject}
+              </p>
+              <p className="text-muted-foreground text-xs">
                 {formatDate(r.date)} -{" "}
                 {t("manager:result.playerCount", { count: r.playerCount })}
               </p>
@@ -77,7 +79,7 @@ const ConfigResults = () => {
         ))}
 
         {results.length === 0 && (
-          <p className="my-8 text-center text-gray-500">
+          <p className="text-muted-foreground my-8 text-center">
             {t("manager:result.none")}
           </p>
         )}

@@ -47,7 +47,7 @@ const QuestionEditorAnswers = () => {
   return (
     <div className="z-10 flex flex-col gap-3">
       <div className="flex items-center justify-between px-1">
-        <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
+        <div className="text-muted-foreground bg-background rounded-lg px-2 py-1 text-sm font-semibold">
           {currentQuestion.answers.length}
           {t("quizz:answersCountSuffix")}
         </div>
@@ -55,14 +55,14 @@ const QuestionEditorAnswers = () => {
           <button
             onClick={removeAnswer}
             disabled={currentQuestion.answers.length <= 2}
-            className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
+            className="bg-accent text-accent-foreground hover:bg-accent flex size-7 items-center justify-center rounded-lg disabled:opacity-40"
           >
             <Minus className="size-4" />
           </button>
           <button
             onClick={addAnswer}
             disabled={currentQuestion.answers.length >= 4}
-            className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
+            className="bg-accent text-accent-foreground hover:bg-accent flex size-7 items-center justify-center rounded-lg disabled:opacity-40"
           >
             <Plus className="size-4" />
           </button>

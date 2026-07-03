@@ -7,6 +7,15 @@
   --color-answer-2: #56b4e9;
   --color-answer-3: #3dbfa0;
   --color-answer-4: #cc79a7;
+
+  --color-background: var(--color-white);
+
+  --color-muted: var(--color-gray-100);
+  --color-muted-foreground: var(--color-gray-500);
+  --color-accent: var(--color-gray-300);
+  --color-accent-foreground: var(--color-gray-600);
+  --color-foreground: var(--color-gray-700);
+
   --font-display: "Rubik Variable", sans-serif;
 }
 
