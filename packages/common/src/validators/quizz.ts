@@ -45,6 +45,8 @@ const questionValidator = z.preprocess(
       .transform((v) => (Array.isArray(v) ? v : [v])),
     cooldown: z.number().int().min(3).max(15),
     time: z.number().int().min(-1),
+    maxPoints: z.number().int().min(0).optional(),
+    penalty: z.number().int().min(0).optional(),
     options: multiOptionsValidator.optional(),
   }),
 )
