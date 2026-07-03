@@ -4,10 +4,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "node esbuild.config.js",
-    "start": "node dist/index.cjs",
-    "types": "tsc --noEmit",
-    "format": "prettier --check . --log-level warn",
-    "format:fix": "prettier --write . --log-level warn"
+    "start": "node dist/index.cjs"
   },
   "license": "ISC",
   "dependencies": {
@@ -22,7 +19,6 @@
   "devDependencies": {
     "@types/node": "^25.9.2",
     "esbuild": "^0.28.1",
-    "prettier": "^3.8.3",
     "tsx": "^4.22.4"
   }
 }

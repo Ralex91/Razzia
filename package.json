@@ -1,6 +1,7 @@
 {
   "name": "razzia",
   "version": "3.0.0",
+  "type": "module",
   "scripts": {
     "dev": "dotenv -e .env -- pnpm -r --parallel dev",
     "dev:web": "dotenv -e .env -- pnpm --filter web dev",
@@ -8,9 +9,9 @@
     "build": "pnpm -r run build",
     "start": "pnpm -r --parallel run start",
     "clean": "pnpm -r exec rm -rf dist node_modules",
-    "lint": "pnpm -r --parallel run types && oxlint",
-    "format": "pnpm -r --parallel run format",
-    "format:fix": "pnpm -r --parallel run format:fix"
+    "lint": "oxlint",
+    "format": "prettier --check . --log-level warn",
+    "format:fix": "prettier --write . --log-level warn"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",

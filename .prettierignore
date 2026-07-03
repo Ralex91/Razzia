@@ -1,0 +1,7 @@
+/config
+
+**/node_modules
+**/dist
+**/route.gen.ts
+pnpm-lock.yaml
+
