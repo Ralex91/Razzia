@@ -112,9 +112,9 @@ const ConfigManageQuizz = () => {
         {quizz.map((q) => (
           <div
             key={q.id}
-            className="flex h-12 w-full items-center justify-between rounded-md pr-1.5 pl-3 outline outline-gray-300"
+            className="flex h-12 w-full items-center justify-between rounded-md border-2 border-gray-200 p-3 pr-1.5"
           >
-            <p className="truncate">{q.subject}</p>
+            <p className="truncate font-medium text-gray-700">{q.subject}</p>
             <div className="flex gap-0.5">
               <button
                 className="rounded-sm p-2 text-gray-600 hover:bg-gray-600/10"

@@ -13,8 +13,8 @@ const ResultModalTable = () => {
 
   return (
     <table className="w-full text-sm">
-      <thead className="sticky top-0 shadow-sm">
-        <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs font-semibold tracking-wide text-gray-500 uppercase">
+      <thead className="sticky top-0">
+        <tr className="border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold tracking-wide text-gray-500 uppercase">
           <th className="px-5 py-2.5">{t("manager:result.table.player")}</th>
           <th className="px-4 py-2.5">{t("manager:result.table.answered")}</th>
           <th className="px-4 py-2.5">
@@ -25,7 +25,7 @@ const ResultModalTable = () => {
           </th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-gray-100">
+      <tbody className="divide-y-2 divide-gray-100">
         {questionResult.playerAnswers.map((pa, i) => {
           const hasAnswer = pa.answerIds !== null && pa.answerIds.length > 0
           const isCorrect =
@@ -33,7 +33,7 @@ const ResultModalTable = () => {
             false
 
           return (
-            <tr key={i} className="hover:bg-gray-50">
+            <tr key={i}>
               <td className="px-5 py-2.5 font-medium">{pa.playerName}</td>
               <td className="px-4 py-2.5">
                 {hasAnswer ? (
@@ -56,18 +56,18 @@ const ResultModalTable = () => {
                     ))}
                   </div>
                 ) : (
-                  <span className="text-xs text-gray-400">—</span>
+                  <span className="text-xs text-gray-400">-</span>
                 )}
               </td>
               <td className="px-4 py-2.5">
                 {isCorrect ? (
                   <span className="flex items-center gap-1 text-green-600">
-                    <Check className="size-3.5" />{" "}
+                    <Check className="size-4 stroke-4" />{" "}
                     {t("manager:result.table.correct")}
                   </span>
                 ) : (
                   <span className="flex items-center gap-1 text-red-500">
-                    <X className="size-3.5" />{" "}
+                    <X className="size-4 stroke-4" />{" "}
                     {t("manager:result.table.incorrect")}
                   </span>
                 )}

@@ -1,5 +1,11 @@
-import * as Select from "@radix-ui/react-select"
-import { Check, Globe } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@razzia/web/components/Select"
+import { Globe } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const LANGUAGES = [
@@ -16,38 +22,25 @@ const LanguageSwitcher = () => {
   const normalizedLanguage = i18n.language.slice(0, 2)
 
   return (
-    <Select.Root
+    <Select
       value={normalizedLanguage}
       onValueChange={(lang) => i18n.changeLanguage(lang)}
     >
-      <Select.Trigger className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-semibold text-gray-600 hover:border-gray-300 focus:outline-none">
+      <SelectTrigger
+        hideChevron
+        className="w-auto gap-1.5 border px-2 py-1.5 text-gray-600"
+      >
         <Globe className="size-4 text-gray-500" />
-        <Select.Value>{normalizedLanguage.toUpperCase()}</Select.Value>
-      </Select.Trigger>
-
-      <Select.Portal>
-        <Select.Content
-          position="popper"
-          sideOffset={4}
-          className="z-50 min-w-32 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md"
-        >
-          <Select.Viewport className="p-1">
-            {LANGUAGES.map((l) => (
-              <Select.Item
-                key={l.code}
-                value={l.code}
-                className="flex cursor-pointer items-center justify-between gap-3 rounded-sm px-3 py-1.5 text-sm text-gray-700 outline-none hover:bg-gray-100 focus:bg-gray-100 data-[state=checked]:font-semibold"
-              >
-                <Select.ItemText>{t(l.label)}</Select.ItemText>
-                <Select.ItemIndicator>
-                  <Check className="size-3.5 text-gray-500" />
-                </Select.ItemIndicator>
-              </Select.Item>
-            ))}
-          </Select.Viewport>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
+        <SelectValue>{normalizedLanguage.toUpperCase()}</SelectValue>
+      </SelectTrigger>
+      <SelectContent className="w-auto min-w-32">
+        {LANGUAGES.map((l) => (
+          <SelectItem key={l.code} value={l.code}>
+            {t(l.label)}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 

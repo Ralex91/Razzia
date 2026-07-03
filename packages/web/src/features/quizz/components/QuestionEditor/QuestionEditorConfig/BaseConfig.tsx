@@ -1,11 +1,17 @@
 import * as Switch from "@radix-ui/react-switch"
 import { MAX_POINTS, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { ScoringMode } from "@razzia/common/types/game"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@razzia/web/components/Select"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
 import ConfigNumberInput from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigNumberInput"
 import ConfigSection from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
-import ConfigSelect from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSelect"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { ArrowBigDownDash, Clock, ListChecks, Star, Timer } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -98,11 +104,18 @@ const BaseConfig = () => {
               icon={<ListChecks className="size-4" />}
               label={t("quizz:question.config.scoringMode")}
             />
-            <ConfigSelect
-              value={scoringMode}
-              options={scoringOptions ?? []}
-              onValueChange={handleScoringModeChange}
-            />
+            <Select value={scoringMode} onValueChange={handleScoringModeChange}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {scoringOptions?.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <ConfigField.Description>
               {t(`quizz:question.config.scoringModeHint.${scoringMode}`)}
             </ConfigField.Description>

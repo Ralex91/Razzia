@@ -8,8 +8,8 @@ const ResultModalHeader = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="flex shrink-0 items-center gap-3 border-b border-gray-200 px-5 py-3">
-      <h2 className="flex-1 truncate text-base font-bold text-gray-900">
+    <div className="flex shrink-0 items-center gap-3 border-b-2 border-gray-200 px-5 py-3">
+      <h2 className="flex-1 truncate text-base font-bold text-gray-700">
         {result.subject}
       </h2>
       <div className="flex shrink-0 items-center gap-1">

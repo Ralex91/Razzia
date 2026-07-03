@@ -43,19 +43,21 @@ const ConfigSelectQuizz = () => {
         {quizzList.map((quizz) => (
           <button
             key={quizz.id}
-            className="flex w-full items-center justify-between rounded-md p-3 outline outline-gray-300"
+            className="flex h-12 w-full items-center justify-between rounded-md border-2 border-gray-200 p-3"
             onClick={handleSelect(quizz.id)}
           >
-            {quizz.subject}
+            <p className="truncate font-medium text-gray-700">
+              {quizz.subject}
+            </p>
 
             <div
               className={clsx(
-                "size-5 rounded p-0.5 outline outline-offset-3 outline-gray-300",
+                "size-6 rounded bg-gray-100",
                 selected === quizz.id && "bg-primary border-primary/80",
               )}
             >
               {selected === quizz.id && (
-                <Check className="size-full stroke-4 text-white" />
+                <Check className="size-full stroke-4 p-1 text-white" />
               )}
             </div>
           </button>

@@ -66,7 +66,7 @@ const Configurations = ({ data }: Props) => {
             </button>
           </div>
         </div>
-        <div className="flex shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-100">
+        <div className="flex shrink-0 overflow-hidden rounded-lg bg-gray-100">
           {tabs.map((tab, index) => (
             <ConfigTabButton
               key={tab.nameKey}
@@ -77,7 +77,7 @@ const Configurations = ({ data }: Props) => {
             </ConfigTabButton>
           ))}
         </div>
-        <hr className="my-4 text-gray-100" />
+        <hr className="my-4 border text-gray-100" />
         <div className="flex min-h-0 flex-1 flex-col">
           <TabComponent />
         </div>

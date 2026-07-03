@@ -1,10 +1,16 @@
 import type { QuestionType } from "@razzia/common/types/game"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@razzia/web/components/Select"
+import {
   QUESTION_REGISTRY,
   QUESTION_TYPE_LIST,
 } from "@razzia/web/features/questions"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
-import ConfigSelect from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSelect"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { LayoutList } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -35,11 +41,18 @@ const QuestionEditorConfig = () => {
           icon={<LayoutList className="size-4" />}
           label={t("quizz:question.config.answerMode")}
         />
-        <ConfigSelect
-          value={questionType}
-          options={typeOptions}
-          onValueChange={handleTypeChange}
-        />
+        <Select value={questionType} onValueChange={handleTypeChange}>
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {typeOptions.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </ConfigField>
 
       <ConfigComponent />
