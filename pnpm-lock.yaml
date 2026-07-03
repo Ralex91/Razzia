@@ -21,11 +21,11 @@ importers:
         specifier: ^0.23.0
         version: 0.23.0
       prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
+        specifier: ^3.8.5
+        version: 3.8.5
       prettier-plugin-tailwindcss:
         specifier: ^0.8.0
-        version: 0.8.0(prettier@3.8.3)
+        version: 0.8.0(prettier@3.8.5)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -1395,7 +1395,6 @@ packages:
   '@tanstack/router-plugin@1.168.18':
     resolution: {integrity: sha512-MofS28/axfnfnhOD2RSgJEaU882aX5RsAzhGz5Vc4XhAmvCjy919u9JrNs4QsTWFbTD1P7IJ8WFlFVsrg0pStg==}
     engines: {node: '>=20.19'}
-    hasBin: true
     peerDependencies:
       '@rsbuild/core': '>=1.0.2 || ^2.0.0'
       '@tanstack/react-router': ^1.170.15
@@ -1482,6 +1481,11 @@ packages:
 
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.17.0:
+    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -2088,8 +2092,8 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.8.3:
-    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+  prettier@3.8.5:
+    resolution: {integrity: sha512-zxcTTCedNGJM4R8sj/Cq/F0W/c4iE0afWBcBwMTRtw4WHYP9TWkYjdiH3npPRUYsXQCPR0hTU9yjovOu+E6EQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3333,7 +3337,7 @@ snapshots:
       '@tanstack/virtual-file-routes': 1.162.0
       jiti: 2.7.0
       magic-string: 0.30.21
-      prettier: 3.8.3
+      prettier: 3.8.5
       zod: 4.4.3
     transitivePeerDependencies:
       - supports-color
@@ -3419,7 +3423,13 @@ snapshots:
     dependencies:
       acorn: 8.16.0
 
+  acorn-jsx@5.3.2(acorn@8.17.0):
+    dependencies:
+      acorn: 8.17.0
+
   acorn@8.16.0: {}
+
+  acorn@8.17.0: {}
 
   ajv@6.15.0:
     dependencies:
@@ -3675,8 +3685,8 @@ snapshots:
 
   espree@11.2.0:
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.17.0
+      acorn-jsx: 5.3.2(acorn@8.17.0)
       eslint-visitor-keys: 5.0.1
 
   esquery@1.7.0:
@@ -3966,11 +3976,11 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.8.0(prettier@3.8.3):
+  prettier-plugin-tailwindcss@0.8.0(prettier@3.8.5):
     dependencies:
-      prettier: 3.8.3
+      prettier: 3.8.5
 
-  prettier@3.8.3: {}
+  prettier@3.8.5: {}
 
   punycode@2.3.1: {}
 
