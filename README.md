@@ -73,7 +73,7 @@ The `-v ./config:/app/config` option mounts a local `config` folder to persist y
 
 The folder will be created automatically on first run with an example quiz to get you started.
 
-The application will be available at http://localhost:3000
+The application will be available at http://localhost:3000 and the admin page at http://localhost:3000/manager
 
 ### 🛠️ Without Docker
 
