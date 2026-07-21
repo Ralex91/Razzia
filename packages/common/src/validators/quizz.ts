@@ -40,6 +40,7 @@ const questionValidator = z.preprocess(
       .array(z.string().min(1, "errors:quizz.answerEmpty"))
       .min(2, "errors:quizz.tooFewAnswers")
       .max(4, "errors:quizz.tooManyAnswers"),
+    answerImages: z.array(z.string()).optional(),
     solutions: z
       .union([z.number().int().min(0), z.array(z.number().int().min(0)).min(1)])
       .transform((v) => (Array.isArray(v) ? v : [v])),

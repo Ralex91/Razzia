@@ -52,6 +52,8 @@ export const EVENTS = {
     UPDATE: "quizz:update",
     UPDATE_SUCCESS: "quizz:updateSuccess",
     DELETE: "quizz:delete",
+    IMPORT_FROM_KAHOOT: "quizz:importFromKahoot",
+    IMPORT_FROM_KAHOOT_RESULT: "quizz:importFromKahootResult",
     ERROR: "quizz:error",
   },
   RESULTS: {
@@ -68,6 +70,8 @@ export const MAX_POINTS = 1000
 export const QUESTION_TYPES = {
   SINGLE: "single",
   MULTI: "multi",
+  ORDER: "order",
+  TEXT: "text",
 } as const
 
 export const SCORING_MODES = {

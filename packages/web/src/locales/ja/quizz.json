@@ -42,7 +42,30 @@
   "quizzUpdated": "クイズを更新しました",
   "questionType": {
     "single": "単一選択",
-    "multi": "複数選択"
+    "multi": "複数選択",
+    "order": "順序",
+    "text": "回答を入力",
+    "textCorrectAnswer": "正解"
   },
-  "titleQuizzPlaceholder": "クイズのタイトル..."
+  "titleQuizzPlaceholder": "Titre du quizz...",
+  "kahootImport": {
+    "button": "Import from Kahoot",
+    "title": "Import from Kahoot",
+    "placeholder": "Paste Kahoot URL...",
+    "import": "Import",
+    "importing": "Importing...",
+    "invalidUrl": "Invalid Kahoot URL",
+    "noQuestions": "No questions found in this Kahoot",
+    "success": "{{count}} questions imported",
+    "failed": "Failed to import from Kahoot",
+    "skipped": "{{count}} 件スキップ (動画/コンテンツ)"
+  },
+  "textInput": {
+    "correctAnswerPlaceholder": "正解を入力...",
+    "placeholder": "回答を入力...",
+    "answerWas": "正解は:"
+  },
+  "flushQuestions": "すべての質問を削除",
+  "flushQuestionsConfirmTitle": "すべての質問を削除しますか？",
+  "flushQuestionsConfirmDesc": "最初の質問を除くすべての質問が削除されます。この操作は元に戻せません。"
 }

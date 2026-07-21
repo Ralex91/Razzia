@@ -68,6 +68,7 @@ export interface ServerToClientEvents {
   }) => void
   [EVENTS.MANAGER.CONFIG]: (_config: ManagerConfig) => void
   [EVENTS.QUIZZ.DATA]: (_quizz: QuizzWithId) => void
+  [EVENTS.QUIZZ.IMPORT_FROM_KAHOOT_RESULT]: (_data: { title?: string; questions: unknown[]; skippedCount?: number }) => void
   [EVENTS.MANAGER.GAME_CREATED]: (_data: {
     gameId: string
     inviteCode: string
@@ -93,7 +94,7 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
   // Manager actions
-  [EVENTS.GAME.CREATE]: (_quizzId: string) => void
+  [EVENTS.GAME.CREATE]: (_data: string | { quizzId: string; autoAdvance?: boolean; autoAdvanceDelay?: number; shuffle?: boolean }) => void
   [EVENTS.MANAGER.AUTH]: (_password: string) => void
   [EVENTS.MANAGER.RECONNECT]: (_message: { gameId: string }) => void
   [EVENTS.MANAGER.LEAVE]: (_message: { gameId: string }) => void
@@ -113,6 +114,7 @@ export interface ClientToServerEvents {
   [EVENTS.QUIZZ.SAVE]: (_quizz: unknown) => void
   [EVENTS.QUIZZ.UPDATE]: (_data: QuizzWithId) => void
   [EVENTS.QUIZZ.DELETE]: (_id: string) => void
+  [EVENTS.QUIZZ.IMPORT_FROM_KAHOOT]: (_url: string) => void
 
   // Player actions
   [EVENTS.PLAYER.CHECK_PIN]: (_inviteCode: string) => void

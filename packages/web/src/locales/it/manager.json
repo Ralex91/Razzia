@@ -41,5 +41,8 @@
     "play": "Gioca",
     "quizz": "Quiz",
     "results": "Risultati"
-  }
+  },
+  "autoAdvance": "Avanzamento automatico",
+  "autoAdvanceDelay": "Attesa",
+  "shuffle": "Mischia domande"
 }

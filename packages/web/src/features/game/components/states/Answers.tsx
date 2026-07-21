@@ -83,7 +83,7 @@ const Answers = ({
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
       <div className="mx-auto inline-flex h-full w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
-        <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
+        <h2 className="whitespace-pre-line text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {question}
         </h2>
 

@@ -5,7 +5,7 @@ import Card from "@razzia/web/components/Card"
 import Input from "@razzia/web/components/Input"
 import QuestionMedia from "@razzia/web/components/QuestionMedia"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { Image, ImageOff, Music, Video } from "lucide-react"
+import { Image, ImageOff, Music, Upload, Video } from "lucide-react"
 import { type ChangeEvent } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -54,13 +54,36 @@ const QuestionEditorMedia = () => {
           <p className="text-accent-foreground text-center text-sm">
             {t("quizz:question.addMediaHint")}
           </p>
-          <Input
-            variant="sm"
-            className="w-full max-w-md"
-            placeholder={t("quizz:question.mediaUrlPlaceholder")}
-            value={questionMedia?.url ?? ""}
-            onChange={handleChangeMedia}
-          />
+          <div className="flex w-full max-w-md items-center gap-2">
+            <Input
+              variant="sm"
+              className="flex-1"
+              placeholder={t("quizz:question.mediaUrlPlaceholder")}
+              value={questionMedia?.url ?? ""}
+              onChange={handleChangeMedia}
+            />
+            <label className="bg-accent text-accent-foreground hover:bg-accent flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition-colors">
+              <Upload className="size-4" />
+              <input
+                type="file"
+                accept="image/*,video/*,audio/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (!file) return
+                  const reader = new FileReader()
+                  reader.onload = () => {
+                    const url = reader.result as string
+                    updateQuestion(currentIndex, {
+                      media: { url },
+                    })
+                  }
+                  reader.readAsDataURL(file)
+                  e.target.value = ""
+                }}
+              />
+            </label>
+          </div>
           <div className="flex flex-wrap justify-center gap-2">
             <Button
               onClick={hadnleChangeMediaType("image")}

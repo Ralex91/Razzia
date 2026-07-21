@@ -8,3 +8,11 @@ allowBuilds:
 
 minimumReleaseAge: 10080
 blockExoticSubdeps: true
+minimumReleaseAgeExclude:
+  - '@oxlint-tsgolint/darwin-arm64@0.25.0'
+  - '@oxlint-tsgolint/darwin-x64@0.25.0'
+  - '@oxlint-tsgolint/linux-arm64@0.25.0'
+  - '@oxlint-tsgolint/linux-x64@0.25.0'
+  - '@oxlint-tsgolint/win32-arm64@0.25.0'
+  - '@oxlint-tsgolint/win32-x64@0.25.0'
+  - oxlint-tsgolint@0.25.0

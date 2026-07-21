@@ -66,7 +66,11 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
 
   socket.on(
     EVENTS.GAME.CREATE,
-    manager.withAuth(socket, (quizzId: string) => {
+    manager.withAuth(socket, (data: string | { quizzId: string; autoAdvance?: boolean; autoAdvanceDelay?: number; shuffle?: boolean }) => {
+      const quizzId = typeof data === "string" ? data : data.quizzId
+      const autoAdvance = typeof data === "string" ? false : (data.autoAdvance ?? false)
+      const autoAdvanceDelay = typeof data === "string" ? undefined : data.autoAdvanceDelay
+      const shuffle = typeof data === "string" ? false : (data.shuffle ?? false)
       const quizzList = getQuizz()
       const quizz = quizzList.find((q) => q.id === quizzId)
 
@@ -76,7 +80,7 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
         return
       }
 
-      const game = new Game(io, socket, quizz)
+      const game = new Game(io, socket, quizz, autoAdvance, autoAdvanceDelay, shuffle)
       registry.addGame(game)
     }),
   )

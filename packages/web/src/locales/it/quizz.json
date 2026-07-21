@@ -42,7 +42,30 @@
   "quizzUpdated": "Quiz aggiornato con successo",
   "questionType": {
     "single": "Scelta singola",
-    "multi": "Scelta multipla"
+    "multi": "Scelta multipla",
+    "order": "Ordinamento",
+    "text": "Risposta scritta",
+    "textCorrectAnswer": "Risposta corretta"
   },
-  "titleQuizzPlaceholder": "Titolo del quiz..."
+  "titleQuizzPlaceholder": "Titolo del quiz...",
+  "kahootImport": {
+    "button": "Importa da Kahoot",
+    "title": "Importa da Kahoot",
+    "placeholder": "Incolla URL Kahoot...",
+    "import": "Importa",
+    "importing": "Importazione...",
+    "invalidUrl": "URL Kahoot non valido",
+    "noQuestions": "Nessuna domanda trovata in questo Kahoot",
+    "success": "{{count}} domande importate",
+    "failed": "Importazione da Kahoot fallita",
+    "skipped": "{{count}} domanda/e saltate (video/contenuto)"
+  },
+  "textInput": {
+    "correctAnswerPlaceholder": "Inserisci la risposta corretta...",
+    "placeholder": "Scrivi la risposta...",
+    "answerWas": "La risposta corretta era:"
+  },
+  "flushQuestions": "Cancella tutte le domande",
+  "flushQuestionsConfirmTitle": "Cancellare tutte le domande?",
+  "flushQuestionsConfirmDesc": "Verranno rimosse tutte le domande tranne la prima. Azione irreversibile."
 }

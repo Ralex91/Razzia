@@ -41,5 +41,8 @@
     "play": "プレイ",
     "quizz": "クイズ",
     "results": "結果"
-  }
+  },
+  "autoAdvance": "自動進行",
+  "autoAdvanceDelay": "遅延",
+  "shuffle": "質問をシャッフル"
 }

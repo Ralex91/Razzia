@@ -4,7 +4,9 @@ import type {
   ScoringMode,
 } from "@razzia/common/types/game"
 import * as multi from "@razzia/web/features/questions/multi"
+import * as order from "@razzia/web/features/questions/order"
 import * as single from "@razzia/web/features/questions/single"
+import * as text from "@razzia/web/features/questions/text"
 import type {
   AnswerComponentProps,
   SolutionPickerProps,
@@ -23,6 +25,8 @@ interface QuestionRegistryEntry {
 export const QUESTION_REGISTRY: Record<QuestionType, QuestionRegistryEntry> = {
   single,
   multi,
+  order,
+  text,
 }
 
 export const QUESTION_TYPE_LIST = Object.keys(

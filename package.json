@@ -18,7 +18,7 @@
     "@stylistic/eslint-plugin": "latest",
     "dotenv-cli": "^11.0.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^0.23.0",
+    "oxlint-tsgolint": "^0.25.0",
     "prettier": "^3.8.5",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "typescript": "^6.0.3"

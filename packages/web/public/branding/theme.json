@@ -1,0 +1,14 @@
+{
+  "appName": "Razzia",
+  "background": "/branding/background.png",
+  "logo": "/branding/logo.svg",
+  "colors": {
+    "primary": "#6366f1",
+    "accent": "#e5e7eb",
+    "muted": "#f3f4f6",
+    "background": "#ffffff",
+    "foreground": "#111827",
+    "accent-foreground": "#6b7280",
+    "muted-foreground": "#9ca3af"
+  }
+}

@@ -21,7 +21,9 @@ interface QuizzEditorContextType {
   currentQuestion: QuestionWithId
   setCurrentIndex: (_index: number) => void
   addQuestion: () => void
+  addQuestions: (_questions: QuestionWithId[]) => void
   removeQuestion: (_index: number) => void
+  flushQuestions: () => void
   reorderQuestions: (_from: number, _to: number) => void
   updateQuestion: (_index: number, _updates: Partial<QuestionWithId>) => void
 }
@@ -70,6 +72,11 @@ export const QuizzEditorProvider = ({
     setCurrentIndex(questions.length)
   }
 
+  const addQuestions = (newQuestions: QuestionWithId[]) => {
+    setQuestions((prev) => [...prev, ...newQuestions])
+    setCurrentIndex(questions.length)
+  }
+
   const removeQuestion = (index: number) => {
     const next = questions.filter((_, i) => i !== index)
 
@@ -85,6 +92,13 @@ export const QuizzEditorProvider = ({
 
       return clampIndex(current, next)
     })
+  }
+
+  const flushQuestions = () => {
+    const [first] = questions
+
+    setQuestions(first ? [first] : [defaultQuestion()])
+    setCurrentIndex(0)
   }
 
   const reorderQuestions = (from: number, to: number) => {
@@ -115,7 +129,9 @@ export const QuizzEditorProvider = ({
         currentQuestion,
         setCurrentIndex,
         addQuestion,
+        addQuestions,
         removeQuestion,
+        flushQuestions,
         reorderQuestions,
         updateQuestion,
       }}

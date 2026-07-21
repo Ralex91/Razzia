@@ -43,6 +43,7 @@ export interface Question {
   question: string
   media?: QuestionMedia
   answers: string[]
+  answerImages?: string[]
   solutions: number[]
   cooldown: number
   time: number

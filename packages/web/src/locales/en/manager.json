@@ -41,5 +41,8 @@
     "play": "Play",
     "quizz": "Quizz",
     "results": "Results"
-  }
+  },
+  "autoAdvance": "Auto-advance",
+  "autoAdvanceDelay": "Delay",
+  "shuffle": "Shuffle questions"
 }

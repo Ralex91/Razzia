@@ -7,6 +7,7 @@ type Props = PropsWithChildren &
     label: string
     correct?: boolean
     selected?: boolean
+    image?: string
   }
 
 const AnswerButton = ({
@@ -15,6 +16,7 @@ const AnswerButton = ({
   children,
   correct,
   selected,
+  image,
   ...otherProps
 }: Props) => {
   const CorrectIcon = correct ? Check : X
@@ -30,6 +32,13 @@ const AnswerButton = ({
       <span className="flex size-5 shrink-0 items-center justify-center rounded bg-black/20 text-sm font-bold sm:size-7 sm:rounded-md md:size-8 md:text-base">
         {label}
       </span>
+      {image && (
+        <img
+          src={image}
+          alt=""
+          className="size-10 shrink-0 rounded-md object-cover md:size-12"
+        />
+      )}
       <p className="w-full flex-1 text-sm break-all drop-shadow-md md:text-lg">
         {children}
       </p>

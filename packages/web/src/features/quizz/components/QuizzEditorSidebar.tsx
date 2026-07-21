@@ -16,14 +16,16 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import AlertDialog from "@razzia/web/components/AlertDialog"
 import Button from "@razzia/web/components/Button"
+import KahootImport from "@razzia/web/features/quizz/components/KahootImport"
 import QuizzEditorCard from "@razzia/web/features/quizz/components/QuizzEditorCard"
 import {
   useQuizzEditor,
   type QuestionWithId,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
-import { Plus } from "lucide-react"
+import { Plus, Trash2 } from "lucide-react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -80,6 +82,7 @@ const QuizzEditorSidebar = () => {
     setCurrentIndex,
     addQuestion,
     removeQuestion,
+    flushQuestions,
     reorderQuestions,
   } = useQuizzEditor()
   const { t } = useTranslation()
@@ -115,6 +118,21 @@ const QuizzEditorSidebar = () => {
 
   return (
     <aside className="bg-background z-10 m-3 flex w-72 shrink-0 flex-col gap-2 overflow-auto rounded-xl p-3 shadow-sm">
+      {questions.length > 1 && (
+        <AlertDialog
+          trigger={
+            <button className="text-muted-foreground hover:text-foreground mb-1 flex w-full items-center justify-center gap-2 rounded-lg p-2 text-xs font-medium transition-colors">
+              <Trash2 className="size-3.5" />
+              {t("quizz:flushQuestions")}
+            </button>
+          }
+          title={t("quizz:flushQuestionsConfirmTitle")}
+          description={t("quizz:flushQuestionsConfirmDesc")}
+          confirmLabel={t("common:delete")}
+          onConfirm={flushQuestions}
+        />
+      )}
+
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -143,6 +161,8 @@ const QuizzEditorSidebar = () => {
           </div>
         </SortableContext>
       </DndContext>
+
+      <KahootImport />
 
       <Button
         onClick={addQuestion}

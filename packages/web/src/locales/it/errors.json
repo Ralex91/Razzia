@@ -35,7 +35,10 @@
     "questionEmpty": "La domanda non può essere vuota",
     "subjectEmpty": "Il soggetto non può essere vuoto",
     "tooFewAnswers": "Una domanda deve avere almeno 2 risposte",
-    "tooManyAnswers": "Una domanda non può avere più di 4 risposte"
+    "tooManyAnswers": "Una domanda non può avere più di 4 risposte",
+    "invalidKahootUrl": "URL Kahoot non valido",
+    "noKahootQuestions": "Nessuna domanda trovata in questo Kahoot",
+    "kahootImportFailed": "Importazione da Kahoot fallita"
   },
   "route": {
     "back": "Torna alla home",

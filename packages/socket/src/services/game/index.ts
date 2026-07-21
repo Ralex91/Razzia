@@ -44,8 +44,26 @@ class Game {
     { name: Status; data: StatusDataMap[Status] }
   >()
 
-  constructor(io: Server, socket: Socket, quizz: Quizz) {
+  constructor(
+    io: Server,
+    socket: Socket,
+    quizz: Quizz,
+    autoAdvance = false,
+    autoAdvanceDelay?: number,
+    shuffle = false,
+  ) {
     const clientId = getClientId(socket)
+
+    if (shuffle) {
+      const qs = [...quizz.questions]
+
+      for (let i = qs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[qs[i], qs[j]] = [qs[j], qs[i]]
+      }
+
+      quizz = { ...quizz, questions: qs }
+    }
 
     this.io = io
     this.gameId = uuid()
@@ -78,6 +96,8 @@ class Game {
         this.managerStatus = null
       },
       onGameFinished: saveResult,
+      autoAdvance,
+      autoAdvanceDelay,
     })
 
     socket.join(this.gameId)

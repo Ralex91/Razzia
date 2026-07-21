@@ -35,7 +35,10 @@
     "questionEmpty": "Question cannot be empty",
     "subjectEmpty": "Subject cannot be empty",
     "tooFewAnswers": "A question must have at least 2 answers",
-    "tooManyAnswers": "A question cannot have more than 4 answers"
+    "tooManyAnswers": "A question cannot have more than 4 answers",
+    "invalidKahootUrl": "Invalid Kahoot URL",
+    "noKahootQuestions": "No questions found in this Kahoot",
+    "kahootImportFailed": "Failed to import from Kahoot"
   },
   "route": {
     "back": "Go back home",

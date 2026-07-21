@@ -42,6 +42,8 @@ export interface RoundManagerOptions {
   send: SendFn
   onNewQuestion: () => void
   onGameFinished: (_result: GameResult) => void
+  autoAdvance?: boolean
+  autoAdvanceDelay?: number
 }
 
 export class RoundManager {
@@ -158,6 +160,12 @@ export class RoundManager {
     }
 
     this.showResults(question)
+
+    // In auto mode, show responses then auto-advance
+    if (this.opts.autoAdvance) {
+      const delay = this.opts.autoAdvanceDelay ?? 4
+      void sleep(delay).then(() => this.autoShowLeaderboard())
+    }
   }
 
   private showResults(question: Question): void {
@@ -299,6 +307,14 @@ export class RoundManager {
       return
     }
 
+    this.autoNextQuestion()
+  }
+
+  private autoNextQuestion(): void {
+    if (!this.started) {
+      return
+    }
+
     if (!this.opts.quizz.questions[this.currentQuestion + 1]) {
       return
     }
@@ -324,6 +340,10 @@ export class RoundManager {
       return
     }
 
+    this.autoShowLeaderboard()
+  }
+
+  private autoShowLeaderboard(): void {
     const isLastRound =
       this.currentQuestion + 1 === this.opts.quizz.questions.length
 
@@ -368,5 +388,11 @@ export class RoundManager {
     })
 
     this.tempOldLeaderboard = null
+
+    // In auto mode, advance to next question after a short pause
+    if (this.opts.autoAdvance) {
+      const delay = this.opts.autoAdvanceDelay ?? 4
+      void sleep(delay).then(() => this.autoNextQuestion())
+    }
   }
 }

@@ -7,6 +7,7 @@ import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
 
 const SingleAnswers = ({
   answers,
+  answerImages,
   onSubmit,
   readOnly,
 }: AnswerComponentProps) => {
@@ -19,6 +20,7 @@ const SingleAnswers = ({
           key={key}
           className={ANSWERS_COLORS[key]}
           label={ANSWERS_LABELS[key]}
+          image={answerImages?.[key]}
           onClick={() => handleSubmit(key)}
           disabled={readOnly}
         >

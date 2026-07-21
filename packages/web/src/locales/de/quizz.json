@@ -42,7 +42,30 @@
   "quizzUpdated": "Quiz erfolgreich aktualisiert",
   "questionType": {
     "single": "Einzelauswahl",
-    "multi": "Mehrfachauswahl"
+    "multi": "Mehrfachauswahl",
+    "order": "Reihenfolge",
+    "text": "Antwort eingeben",
+    "textCorrectAnswer": "Richtige Antwort"
   },
-  "titleQuizzPlaceholder": "Quiz-Titel..."
+  "titleQuizzPlaceholder": "Titre du quizz...",
+  "kahootImport": {
+    "button": "Import from Kahoot",
+    "title": "Import from Kahoot",
+    "placeholder": "Paste Kahoot URL...",
+    "import": "Import",
+    "importing": "Importing...",
+    "invalidUrl": "Invalid Kahoot URL",
+    "noQuestions": "No questions found in this Kahoot",
+    "success": "{{count}} questions imported",
+    "failed": "Failed to import from Kahoot",
+    "skipped": "{{count}} Frage(n) übersprungen (Video/Inhalt)"
+  },
+  "textInput": {
+    "correctAnswerPlaceholder": "Geben Sie die richtige Antwort ein...",
+    "placeholder": "Geben Sie Ihre Antwort ein...",
+    "answerWas": "Die richtige Antwort war:"
+  },
+  "flushQuestions": "Alle Fragen löschen",
+  "flushQuestionsConfirmTitle": "Alle Fragen löschen?",
+  "flushQuestionsConfirmDesc": "Alle Fragen bis auf die erste werden entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
 }
