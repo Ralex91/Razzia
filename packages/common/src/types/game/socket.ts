@@ -7,11 +7,32 @@ import type {
 } from "@razzia/common/types/game"
 import type { Status, StatusDataMap } from "@razzia/common/types/game/status"
 import type { ManagerConfig } from "@razzia/common/types/manager"
+import type { User } from "@razzia/common/types/user"
 import { Server as ServerIO, Socket as SocketIO } from "socket.io"
 
-export type Server = ServerIO<ClientToServerEvents, ServerToClientEvents>
+export interface InterServerEvents {}
 
-export type Socket = SocketIO<ClientToServerEvents, ServerToClientEvents>
+/** Per-connection server state populated by the session handshake middleware. */
+export interface SocketData {
+  /** Authenticated manager/admin, or null for anonymous players. */
+  user: User | null
+  /** Anonymous client id used for player reconnection. */
+  clientId: string
+}
+
+export type Server = ServerIO<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>
+
+export type Socket = SocketIO<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>
 
 export interface Message<K extends keyof StatusDataMap = keyof StatusDataMap> {
   gameId?: string
@@ -94,7 +115,7 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
   // Manager actions
   [EVENTS.GAME.CREATE]: (_quizzId: string) => void
-  [EVENTS.MANAGER.AUTH]: (_password: string) => void
+  [EVENTS.MANAGER.AUTH]: () => void
   [EVENTS.MANAGER.RECONNECT]: (_message: { gameId: string }) => void
   [EVENTS.MANAGER.LEAVE]: (_message: { gameId: string }) => void
   [EVENTS.MANAGER.KICK_PLAYER]: (_message: {
@@ -113,6 +134,7 @@ export interface ClientToServerEvents {
   [EVENTS.QUIZZ.SAVE]: (_quizz: unknown) => void
   [EVENTS.QUIZZ.UPDATE]: (_data: QuizzWithId) => void
   [EVENTS.QUIZZ.DELETE]: (_id: string) => void
+  [EVENTS.QUIZZ.CLONE]: (_id: string) => void
 
   // Player actions
   [EVENTS.PLAYER.CHECK_PIN]: (_inviteCode: string) => void

@@ -1,14 +1,17 @@
 import { EVENTS } from "@razzia/common/constants"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import Button from "@razzia/web/components/Button"
+import { can, isOwner } from "@razzia/web/features/auth/permissions"
 import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import QuizzBadge from "@razzia/web/features/manager/components/configurations/QuizzBadge"
+import ShareDialog from "@razzia/web/features/manager/components/configurations/ShareDialog"
 import { useConfig } from "@razzia/web/features/manager/contexts/config-context"
 import { useNavigate } from "@tanstack/react-router"
-import { Download, SquarePen, Trash2, Upload } from "lucide-react"
-import { type ChangeEvent, useCallback, useRef } from "react"
+import { Copy, Download, Share2, SquarePen, Trash2, Upload } from "lucide-react"
+import { type ChangeEvent, useCallback, useRef, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
@@ -33,6 +36,10 @@ const ConfigManageQuizz = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
   const pendingExportId = useRef<string | null>(null)
+  const [shareTarget, setShareTarget] = useState<{
+    id: string
+    ownerId?: string
+  } | null>(null)
 
   useEvent(EVENTS.QUIZZ.ERROR, (message) => {
     toast.error(t(message))
@@ -55,6 +62,11 @@ const ConfigManageQuizz = () => {
   const handleDelete = (id: string) => () => {
     socket.emit(EVENTS.QUIZZ.DELETE, id)
     toast.success(t("manager:quizz.deleted"))
+  }
+
+  const handleClone = (id: string) => () => {
+    socket.emit(EVENTS.QUIZZ.CLONE, id)
+    toast.success(t("manager:quizz.cloned"))
   }
 
   const handleExport = (id: string) => () => {
@@ -114,18 +126,34 @@ const ConfigManageQuizz = () => {
             key={q.id}
             className="border-accent flex h-12 w-full items-center justify-between rounded-md border-2 p-3 pr-1.5"
           >
-            <p className="text-foreground truncate font-medium">{q.subject}</p>
+            <span className="flex min-w-0 items-center gap-2">
+              <span className="text-foreground truncate font-medium">
+                {q.subject}
+              </span>
+              <QuizzBadge quizz={q} />
+            </span>
             <div className="flex gap-0.5">
+              {can(q, "edit") && (
+                <button
+                  className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
+                  onClick={() =>
+                    navigate({
+                      to: "/manager/quizz/$quizzId",
+                      params: { quizzId: q.id },
+                    })
+                  }
+                  title={t("manager:quizz.edit")}
+                >
+                  <SquarePen className="size-4" />
+                </button>
+              )}
+
               <button
                 className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
-                onClick={() =>
-                  navigate({
-                    to: "/manager/quizz/$quizzId",
-                    params: { quizzId: q.id },
-                  })
-                }
+                onClick={handleClone(q.id)}
+                title={t("manager:quizz.clone")}
               >
-                <SquarePen className="size-4" />
+                <Copy className="size-4" />
               </button>
 
               <button
@@ -136,19 +164,33 @@ const ConfigManageQuizz = () => {
                 <Download className="size-4" />
               </button>
 
-              <AlertDialog
-                trigger={
-                  <button className="rounded-sm p-2 hover:bg-red-600/10">
-                    <Trash2 className="size-4 stroke-red-500" />
+              {isOwner(q) && (
+                <>
+                  <button
+                    className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
+                    onClick={() =>
+                      setShareTarget({ id: q.id, ownerId: q.ownerId })
+                    }
+                    title={t("manager:share.title")}
+                  >
+                    <Share2 className="size-4" />
                   </button>
-                }
-                title={t("manager:quizz.delete")}
-                description={t("manager:quizz.deleteConfirm", {
-                  name: q.subject,
-                })}
-                confirmLabel={t("common:delete")}
-                onConfirm={handleDelete(q.id)}
-              />
+
+                  <AlertDialog
+                    trigger={
+                      <button className="rounded-sm p-2 hover:bg-red-600/10">
+                        <Trash2 className="size-4 stroke-red-500" />
+                      </button>
+                    }
+                    title={t("manager:quizz.delete")}
+                    description={t("manager:quizz.deleteConfirm", {
+                      name: q.subject,
+                    })}
+                    confirmLabel={t("common:delete")}
+                    onConfirm={handleDelete(q.id)}
+                  />
+                </>
+              )}
             </div>
           </div>
         ))}
@@ -158,6 +200,14 @@ const ConfigManageQuizz = () => {
           </p>
         )}
       </div>
+
+      {shareTarget && (
+        <ShareDialog
+          quizzId={shareTarget.id}
+          ownerId={shareTarget.ownerId}
+          onClose={() => setShareTarget(null)}
+        />
+      )}
     </div>
   )
 }

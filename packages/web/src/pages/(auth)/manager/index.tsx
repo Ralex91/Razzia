@@ -1,37 +1,74 @@
 import { EVENTS } from "@razzia/common/constants"
+import type { PublicUser } from "@razzia/common/types/user"
+import Loader from "@razzia/web/components/Loader"
+import { me } from "@razzia/web/features/auth/api"
+import ManagerAuth from "@razzia/web/features/auth/components/ManagerAuth"
+import { useAuthStore } from "@razzia/web/features/auth/store"
 import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
-import ManagerPassword from "@razzia/web/features/manager/components/ManagerPassword"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 const ManagerAuthPage = () => {
   const { setConfig } = useManagerStore()
+  const { user, setUser } = useAuthStore()
   const navigate = useNavigate()
-  const { socket, isConnected } = useSocket()
+  const { socket, isConnected, reconnect } = useSocket()
+  const [probed, setProbed] = useState(false)
 
+  // Probe an existing session so returning managers skip the prompt.
   useEffect(() => {
-    if (!isConnected) {
-      return
-    }
+    let active = true
 
-    socket.emit(EVENTS.MANAGER.GET_CONFIG)
+    me().then((existing) => {
+      if (!active) {
+        return
+      }
+
+      if (existing) {
+        setUser(existing)
+      }
+
+      setProbed(true)
+    })
+
+    return () => {
+      active = false
+    }
+  }, [setUser])
+
+  // Once authenticated and the socket carries the cookie, request the config.
+  useEffect(() => {
+    if (user && isConnected) {
+      socket.emit(EVENTS.MANAGER.GET_CONFIG)
+    }
     // oxlint-disable-next-line
-  }, [isConnected])
+  }, [user, isConnected])
 
   useEvent(EVENTS.MANAGER.CONFIG, (data) => {
     setConfig(data)
     navigate({ to: "/manager/config" })
   })
 
-  const handleAuth = (password: string) => {
-    socket.emit(EVENTS.MANAGER.AUTH, password)
+  useEvent(EVENTS.MANAGER.UNAUTHORIZED, () => {
+    // Session is stale/absent — fall back to the auth screen.
+    setUser(null)
+  })
+
+  const handleAuthed = (authedUser: PublicUser) => {
+    setUser(authedUser)
+    // Re-run the WS handshake so socket.data.user is populated from the cookie.
+    reconnect()
   }
 
-  return <ManagerPassword onSubmit={handleAuth} />
+  if (!probed || user) {
+    return <Loader className="h-23" />
+  }
+
+  return <ManagerAuth onAuthed={handleAuthed} />
 }
 
 export const Route = createFileRoute("/(auth)/manager/")({

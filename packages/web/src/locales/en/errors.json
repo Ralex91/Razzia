@@ -2,7 +2,14 @@
   "auth": {
     "invalidInviteCode": "Invalid invite code",
     "usernameTooLong": "Username cannot exceed 20 characters",
-    "usernameTooShort": "Username cannot be less than 4 characters"
+    "usernameTooShort": "Username cannot be less than 4 characters",
+    "challengeExpired": "Your sign-in request expired. Please try again.",
+    "invalidInvite": "This invite is invalid or has expired",
+    "loginFailed": "Sign in failed. Please try again.",
+    "registrationFailed": "Registration failed. Please try again.",
+    "unauthenticated": "You need to sign in first",
+    "userNotFound": "Account not found",
+    "usernameTaken": "That username is already taken"
   },
   "game": {
     "expired": "Game expired",
@@ -35,11 +42,21 @@
     "questionEmpty": "Question cannot be empty",
     "subjectEmpty": "Subject cannot be empty",
     "tooFewAnswers": "A question must have at least 2 answers",
-    "tooManyAnswers": "A question cannot have more than 4 answers"
+    "tooManyAnswers": "A question cannot have more than 4 answers",
+    "invalid": "The quiz data is invalid",
+    "failedToClone": "Failed to clone quiz"
   },
   "route": {
     "back": "Go back home",
     "description": "An unexpected error occurred. Please try again.",
     "title": "Something went wrong"
+  },
+  "unexpected": "An unexpected error occurred",
+  "authz": {
+    "adminOnly": "This action requires an administrator",
+    "forbidden": "You don't have permission to do that"
+  },
+  "admin": {
+    "cannotDeleteSelf": "You cannot delete your own account"
   }
 }

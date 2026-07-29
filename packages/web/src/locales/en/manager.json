@@ -13,7 +13,25 @@
     "notFound": "No quizz found",
     "pleaseCreate": "Please create a quizz first",
     "pleaseSelect": "Please select a quizz",
-    "startGame": "Start game"
+    "startGame": "Start game",
+    "badge": {
+      "owner": "Owner",
+      "sharedBy": "Shared by {{name}} · {{perm}}"
+    },
+    "perm": {
+      "view": "View",
+      "run": "Run",
+      "edit": "Edit",
+      "owner": "Owner"
+    },
+    "actions": {
+      "clone": "Duplicate",
+      "share": "Share"
+    },
+    "clone": "Clone",
+    "cloned": "Quiz cloned",
+    "edit": "Edit",
+    "runNotAllowed": "You don't have permission to run this quiz"
   },
   "result": {
     "delete": "Delete result",
@@ -41,5 +59,28 @@
     "play": "Play",
     "quizz": "Quizz",
     "results": "Results"
+  },
+  "share": {
+    "title": "Share quiz",
+    "user": "User",
+    "permission": "Permission",
+    "confirm": "Share",
+    "success": "Quiz shared",
+    "pickUser": "Select a user",
+    "noDirectory": "You don't have permission to list users."
+  },
+  "admin": {
+    "title": "Admin console",
+    "invites": "Create invite",
+    "generate": "Generate invite",
+    "copy": "Copy",
+    "inviteCopied": "Invite copied to clipboard",
+    "users": "Users",
+    "disabled": "disabled",
+    "enable": "Enable",
+    "disable": "Disable",
+    "delete": "Delete",
+    "confirmDelete": "Delete {{name}}? This cannot be undone.",
+    "link": "Admin"
   }
 }

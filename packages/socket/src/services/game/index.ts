@@ -1,5 +1,5 @@
 import { EVENTS } from "@razzia/common/constants"
-import type { Player, Quizz } from "@razzia/common/types/game"
+import type { Player, QuizzWithId } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import {
   STATUS,
@@ -31,6 +31,10 @@ class Game {
   private readonly round: RoundManager
   private readonly cooldown: CooldownTimer
 
+  /** User who created/hosts this game; results are attributed to them. */
+  private readonly ownerUserId: string
+  private readonly quizzId: string
+
   private lastBroadcastStatus: {
     name: Status
     data: StatusDataMap[Status]
@@ -44,10 +48,17 @@ class Game {
     { name: Status; data: StatusDataMap[Status] }
   >()
 
-  constructor(io: Server, socket: Socket, quizz: Quizz) {
+  constructor(
+    io: Server,
+    socket: Socket,
+    quizz: QuizzWithId,
+    ownerUserId: string,
+  ) {
     const clientId = getClientId(socket)
 
     this.io = io
+    this.ownerUserId = ownerUserId
+    this.quizzId = quizz.id
     this.gameId = uuid()
     this.inviteCode = createInviteCode()
     this._manager = {
@@ -77,7 +88,8 @@ class Game {
         this.playerStatus.clear()
         this.managerStatus = null
       },
-      onGameFinished: saveResult,
+      onGameFinished: (result) =>
+        saveResult(result, this.ownerUserId, this.quizzId),
     })
 
     socket.join(this.gameId)

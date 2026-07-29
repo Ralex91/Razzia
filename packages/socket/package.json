@@ -9,7 +9,10 @@
   "license": "ISC",
   "dependencies": {
     "@razzia/common": "workspace:*",
+    "@simplewebauthn/server": "^13.1.0",
+    "better-sqlite3": "^11.8.1",
     "dayjs": "^1.11.21",
+    "fastify": "^5.2.1",
     "nanoid": "^5.1.16",
     "socket.io": "^4.8.3",
     "typescript": "^6.0.3",
@@ -17,6 +20,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^26.0.1",
     "esbuild": "^0.28.1",
     "tsx": "^4.22.4"

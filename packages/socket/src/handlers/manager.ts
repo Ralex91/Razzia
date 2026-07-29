@@ -1,9 +1,19 @@
 import { EVENTS } from "@razzia/common/constants"
 import type { SocketContext } from "@razzia/socket/handlers/types"
-import { getGameConfig } from "@razzia/socket/services/config"
 import manager, { emitConfig } from "@razzia/socket/services/manager"
 
+/**
+ * Manager auth now happens over HTTP via passkeys (see services/auth/http.ts).
+ * By the time the socket connects, the session cookie has been resolved by the
+ * handshake middleware into socket.data.user. These handlers only surface the
+ * authenticated state and scoped config; they never handle credentials.
+ */
 export const managerSocketHandlers = ({ socket }: SocketContext) => {
+  // Announce auth state immediately on connect so the client can route.
+  if (manager.isLogged(socket)) {
+    emitConfig(socket)
+  }
+
   socket.on(
     EVENTS.MANAGER.GET_CONFIG,
     manager.withAuth(socket, () => {
@@ -11,37 +21,15 @@ export const managerSocketHandlers = ({ socket }: SocketContext) => {
     }),
   )
 
-  socket.on(EVENTS.MANAGER.LOGOUT, () => {
-    manager.logout(socket)
-  })
-
-  socket.on(EVENTS.MANAGER.AUTH, (password) => {
-    try {
-      const config = getGameConfig()
-
-      if (config.managerPassword === "PASSWORD") {
-        socket.emit(
-          EVENTS.MANAGER.ERROR_MESSAGE,
-          "errors:manager.passwordNotConfigured",
-        )
-
-        return
-      }
-
-      if (password !== config.managerPassword) {
-        socket.emit(
-          EVENTS.MANAGER.ERROR_MESSAGE,
-          "errors:manager.invalidPassword",
-        )
-
-        return
-      }
-
-      manager.login(socket)
+  // Re-check the session (e.g. after the client completes an HTTP login and
+  // reconnects the socket carrying the new cookie).
+  socket.on(EVENTS.MANAGER.AUTH, () => {
+    if (manager.isLogged(socket)) {
       emitConfig(socket)
-    } catch (error) {
-      console.error("Failed to read game config:", error)
-      socket.emit(EVENTS.MANAGER.ERROR_MESSAGE, "errors:failedToReadConfig")
+
+      return
     }
+
+    socket.emit(EVENTS.MANAGER.UNAUTHORIZED)
   })
 }

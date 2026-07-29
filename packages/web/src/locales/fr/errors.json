@@ -2,7 +2,14 @@
   "auth": {
     "invalidInviteCode": "Code d'invitation invalide",
     "usernameTooLong": "Le pseudo ne peut pas dépasser 20 caractères",
-    "usernameTooShort": "Le pseudo doit faire au moins 4 caractères"
+    "usernameTooShort": "Le pseudo doit faire au moins 4 caractères",
+    "challengeExpired": "Votre demande de connexion a expiré. Veuillez réessayer.",
+    "invalidInvite": "Cette invitation est invalide ou a expiré",
+    "loginFailed": "Échec de la connexion. Veuillez réessayer.",
+    "registrationFailed": "Échec de l'inscription. Veuillez réessayer.",
+    "unauthenticated": "Vous devez d'abord vous connecter",
+    "userNotFound": "Compte introuvable",
+    "usernameTaken": "Ce nom d'utilisateur est déjà pris"
   },
   "game": {
     "expired": "La partie a expiré",
@@ -35,11 +42,21 @@
     "questionEmpty": "La question ne peut pas être vide",
     "subjectEmpty": "Le sujet ne peut pas être vide",
     "tooFewAnswers": "Une question doit avoir au moins 2 réponses",
-    "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses"
+    "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses",
+    "invalid": "Les données du quiz sont invalides",
+    "failedToClone": "Échec du clonage du quiz"
   },
   "route": {
     "back": "Retour à l'accueil",
     "description": "Une erreur inattendue s'est produite. Veuillez réessayer.",
     "title": "Une erreur est survenue"
+  },
+  "unexpected": "Une erreur inattendue s'est produite",
+  "authz": {
+    "adminOnly": "Cette action nécessite un administrateur",
+    "forbidden": "Vous n'avez pas la permission de faire cela"
+  },
+  "admin": {
+    "cannotDeleteSelf": "Vous ne pouvez pas supprimer votre propre compte"
   }
 }

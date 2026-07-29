@@ -61,6 +61,11 @@ export type QuizzWithId = Quizz & { id: string }
 export interface QuizzMeta {
   id: string
   subject: string
+  // Multi-tenant annotations (optional for backward compatibility).
+  ownerId?: string
+  ownerName?: string
+  shared?: boolean
+  permission?: "owner" | "view" | "run" | "edit"
 }
 
 export interface GameUpdateQuestion {

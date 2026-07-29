@@ -13,7 +13,25 @@
     "notFound": "Aucun quizz trouvé",
     "pleaseCreate": "Veuillez d'abord créer un quizz",
     "pleaseSelect": "Veuillez sélectionner un quizz",
-    "startGame": "Démarrer la partie"
+    "startGame": "Démarrer la partie",
+    "badge": {
+      "owner": "Propriétaire",
+      "sharedBy": "Partagé par {{name}} · {{perm}}"
+    },
+    "perm": {
+      "view": "Lecture",
+      "run": "Animer",
+      "edit": "Édition",
+      "owner": "Propriétaire"
+    },
+    "actions": {
+      "clone": "Dupliquer",
+      "share": "Partager"
+    },
+    "clone": "Dupliquer",
+    "cloned": "Quiz dupliqué",
+    "edit": "Modifier",
+    "runNotAllowed": "Vous n'avez pas la permission de lancer ce quiz"
   },
   "result": {
     "delete": "Supprimer le résultat",
@@ -41,5 +59,28 @@
     "play": "Jouer",
     "quizz": "Quizz",
     "results": "Résultats"
+  },
+  "share": {
+    "title": "Partager le quiz",
+    "user": "Utilisateur",
+    "permission": "Permission",
+    "confirm": "Partager",
+    "success": "Quiz partagé",
+    "pickUser": "Sélectionner un utilisateur",
+    "noDirectory": "Vous n'avez pas la permission de lister les utilisateurs."
+  },
+  "admin": {
+    "title": "Console d'administration",
+    "invites": "Créer une invitation",
+    "generate": "Générer une invitation",
+    "copy": "Copier",
+    "inviteCopied": "Invitation copiée dans le presse-papiers",
+    "users": "Utilisateurs",
+    "disabled": "désactivé",
+    "enable": "Activer",
+    "disable": "Désactiver",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer {{name}} ? Cette action est irréversible.",
+    "link": "Admin"
   }
 }
