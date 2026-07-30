@@ -14,6 +14,7 @@ export type QuestionWithId = Question & {
 
 interface QuizzEditorContextType {
   quizzId: string | null
+  ownerId: string | null
   subject: string
   setSubject: (_subject: string) => void
   questions: QuestionWithId[]
@@ -108,6 +109,7 @@ export const QuizzEditorProvider = ({
     <QuizzEditorContext.Provider
       value={{
         quizzId: initialData?.id ?? null,
+        ownerId: initialData?.ownerId ?? null,
         subject,
         setSubject,
         questions,

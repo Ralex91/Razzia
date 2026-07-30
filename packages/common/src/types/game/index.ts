@@ -56,7 +56,7 @@ export interface Quizz {
   questions: Question[]
 }
 
-export type QuizzWithId = Quizz & { id: string }
+export type QuizzWithId = Quizz & { id: string; ownerId?: string }
 
 export interface QuizzMeta {
   id: string

@@ -52,6 +52,7 @@ export const EVENTS = {
     UPDATE: "quizz:update",
     UPDATE_SUCCESS: "quizz:updateSuccess",
     DELETE: "quizz:delete",
+    DELETE_SUCCESS: "quizz:deleteSuccess",
     CLONE: "quizz:clone",
     ERROR: "quizz:error",
   },

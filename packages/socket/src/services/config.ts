@@ -94,7 +94,7 @@ export const getQuizzById = (id: string, user: User): QuizzWithId => {
     throw new Error(`Quizz "${id}" not found`)
   }
 
-  return toQuizzWithId(quizz)
+  return { ...toQuizzWithId(quizz), ownerId: quizz.ownerId }
 }
 
 export const saveQuizz = (data: unknown, ownerId: string): { id: string } => {
