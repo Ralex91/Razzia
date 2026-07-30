@@ -64,7 +64,7 @@ const Configurations = ({ data }: Props) => {
 
   return (
     <ConfigProvider data={data}>
-      <Card className="max-h-[80svh] w-full max-w-md">
+      <Card className="max-h-[80svh] w-full max-w-md sm:max-w-lg lg:max-w-2xl">
         <div className="mb-4 flex items-center justify-between">
           <p className="text-lg font-semibold">
             {t("manager:configurationsTitle")}
