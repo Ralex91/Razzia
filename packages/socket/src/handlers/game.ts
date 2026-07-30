@@ -5,12 +5,19 @@ import { getQuizzById } from "@razzia/socket/services/config"
 import Game from "@razzia/socket/services/game"
 import manager from "@razzia/socket/services/manager"
 import Registry from "@razzia/socket/services/registry"
+import { isRateLimited } from "@razzia/socket/utils/rate-limit"
 import { withGame } from "@razzia/socket/utils/game"
 import { getClientId } from "@razzia/socket/utils/socket"
 
 export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   const registry = Registry.getInstance()
   const clientId = getClientId(socket)
+
+  // Game PINs are only 6 digits (1e6 possibilities); without a throttle a
+  // client can script-guess active PINs to hijack/disrupt someone else's
+  // game. Cap PIN-guessing attempts per remote address.
+  const pinGuessKey = `pin:${socket.handshake.address}`
+  const isPinGuessRateLimited = () => isRateLimited(pinGuessKey, 20, 60 * 1000)
 
   const handleManagerLeave = (game: Game) => {
     game.setManagerDisconnected()
@@ -84,12 +91,24 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   )
 
   socket.on(EVENTS.PLAYER.CHECK_PIN, (inviteCode) => {
+    if (isPinGuessRateLimited()) {
+      socket.emit(EVENTS.PLAYER.CHECK_PIN_RESULT, { valid: false })
+
+      return
+    }
+
     const game = registry.getGameByInviteCode(inviteCode)
 
     socket.emit(EVENTS.PLAYER.CHECK_PIN_RESULT, { valid: Boolean(game) })
   })
 
   socket.on(EVENTS.PLAYER.JOIN, (inviteCode) => {
+    if (isPinGuessRateLimited()) {
+      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.tooManyAttempts")
+
+      return
+    }
+
     const result = inviteCodeValidator.safeParse(inviteCode)
 
     if (result.error) {

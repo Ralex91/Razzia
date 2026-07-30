@@ -9,7 +9,8 @@
     "registrationFailed": "Registration failed. Please try again.",
     "unauthenticated": "You need to sign in first",
     "userNotFound": "Account not found",
-    "usernameTaken": "That username is already taken"
+    "usernameTaken": "That username is already taken",
+    "registrationExpired": "Your registration session expired. Please start again."
   },
   "game": {
     "expired": "Game expired",
@@ -19,7 +20,8 @@
     "noPlayersConnected": "No players connected",
     "managerCannotJoin": "You cannot join your own game",
     "notFound": "Game not found",
-    "playerAlreadyConnected": "Player already connected"
+    "playerAlreadyConnected": "Player already connected",
+    "tooManyAttempts": "Too many attempts, please wait a moment and try again"
   },
   "manager": {
     "failedToReadConfig": "Failed to read game config",

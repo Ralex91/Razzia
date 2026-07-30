@@ -13,8 +13,11 @@ import {
   SESSION_COOKIE,
 } from "@razzia/socket/services/auth/session"
 import Registry from "@razzia/socket/services/registry"
+import rateLimit from "@fastify/rate-limit"
 import Fastify from "fastify"
 import { Server as ServerIO } from "socket.io"
+
+const isProduction = process.env.NODE_ENV === "production"
 
 const PORT = 3001
 
@@ -44,12 +47,32 @@ const start = async () => {
     },
   )
 
-  // Surface real errors instead of an opaque 500 — logs the full stack to the
-  // socket console and returns the message/name so the client network tab shows it.
+  // Always log the full error server-side. In development, surface the raw
+  // message/name too (handy for the network tab); in production, return only
+  // a generic message so internal details (DB schema, stack traces, library
+  // internals) are never leaked to a client. Fastify-native errors (4xx from
+  // validation, rate-limit, etc.) already carry a safe, client-appropriate
+  // message, so those are passed through as-is regardless of environment.
   app.setErrorHandler((err, _req, reply) => {
     console.error("[api] unhandled error:", err)
+
     const status = (err as { statusCode?: number }).statusCode ?? 500
-    reply.code(status).send({ error: err.message, name: err.name })
+    const isClientError = status >= 400 && status < 500
+    const safeToExpose = !isProduction || isClientError
+
+    reply.code(status).send({
+      error: safeToExpose ? err.message : "errors:unexpected",
+      name: safeToExpose ? err.name : "InternalServerError",
+    })
+  })
+
+  // Global baseline throttle (defense-in-depth against blunt abuse/DoS);
+  // the auth routes in registerHttpRoutes() additionally set tighter,
+  // route-specific limits via the `config.rateLimit` route option.
+  await app.register(rateLimit, {
+    global: true,
+    max: 300,
+    timeWindow: "1 minute",
   })
 
   registerHttpRoutes(app)

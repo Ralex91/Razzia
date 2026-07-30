@@ -2,7 +2,8 @@
   "auth": {
     "invalidInviteCode": "招待コードが無効です",
     "usernameTooLong": "ユーザー名は20文字以内にしてください",
-    "usernameTooShort": "ユーザー名は4文字以上にしてください"
+    "usernameTooShort": "ユーザー名は4文字以上にしてください",
+    "registrationExpired": "登録セッションの有効期限が切れました。もう一度お試しください。"
   },
   "game": {
     "expired": "ゲームの有効期限が切れました",
@@ -12,7 +13,8 @@
     "noPlayersConnected": "接続中のプレイヤーがいません",
     "managerCannotJoin": "自分のゲームには参加できません",
     "notFound": "ゲームが見つかりません",
-    "playerAlreadyConnected": "プレイヤーはすでに接続されています"
+    "playerAlreadyConnected": "プレイヤーはすでに接続されています",
+    "tooManyAttempts": "試行回数が多すぎます。少し待ってから再度お試しください"
   },
   "manager": {
     "failedToReadConfig": "ゲーム設定の読み込みに失敗しました",
@@ -41,5 +43,6 @@
     "back": "ホームに戻る",
     "description": "予期しないエラーが発生しました。もう一度お試しください。",
     "title": "問題が発生しました"
-  }
+  },
+  "unexpected": "予期しないエラーが発生しました"
 }

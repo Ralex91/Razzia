@@ -2,7 +2,6 @@ packages:
   - "packages/*"
 
 allowBuilds:
-  better-sqlite3: false
   esbuild: true
   oxlint: true
   oxlint-tsgolint: true

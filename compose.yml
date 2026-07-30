@@ -1,7 +1,24 @@
 services:
   razzia:
-    image: ralex91/razzia:latest
+    # Build locally from the Dockerfile. Tag it so it can be pushed/saved
+    # for deployment to another server.
+    build: .
+    image: razzia:latest
     ports:
       - "3000:3000"
     volumes:
+      # SQLite DB (razzia.db), branding and legacy quiz JSON live here.
+      # This is what must be backed up / persisted.
       - ./config:/app/config
+    environment:
+      # --- WebAuthn / passkey settings (REQUIRED in production) ---
+      # RP_ID: the bare domain users browse to (no scheme, no port).
+      # RP_ORIGIN: the exact origin in the browser address bar.
+      # Passkeys require HTTPS (or http://localhost) - see notes below.
+      RP_ID: "quiz2.kktrum.xyz"
+      RP_ORIGIN: "https://quiz2.kktrum.xyz"
+      RP_NAME: "Razzia"
+      # Optional: pin the first-run admin invite token instead of reading it
+      # from the container logs. Remove it after the first admin registers.
+      # ADMIN_BOOTSTRAP_TOKEN: "some-one-time-token"
+    restart: unless-stopped

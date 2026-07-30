@@ -1,5 +1,4 @@
-import type { User } from "@razzia/common/types/user"
-import { credentialsRepo, usersRepo } from "@razzia/socket/db/repositories"
+import { usersRepo } from "@razzia/socket/db/repositories"
 import {
   generateAuthenticationOptions,
   generateRegistrationOptions,
@@ -38,33 +37,57 @@ const recall = (key: string): PendingChallenge | null => {
 
 /* --------------------------- Registration -------------------------- */
 
-export const registrationOptions = async (user: User) => {
-  const existing = credentialsRepo.byUser(user.id)
+// `identity` is intentionally NOT required to correspond to a real row in the
+// `users` table yet. Registration is a two-step WebAuthn ceremony, and the
+// caller (http.ts) defers creating the permanent user / consuming the invite
+// until step 2 actually proves possession of the passkey (see verifyRegistration
+// below) — so at options-time this is keyed by a short-lived pending-registration
+// id, not a persisted user id.
+interface Identity {
+  id: string
+  username: string
+  displayName: string
+}
 
+export const registrationOptions = async (identity: Identity) => {
   const options = await generateRegistrationOptions({
     rpName,
     rpID,
-    userName: user.username,
-    userDisplayName: user.displayName,
+    userName: identity.username,
+    userDisplayName: identity.displayName,
     attestationType: "none",
-    excludeCredentials: existing.map((c) => ({ id: c.id })),
+    // A brand-new (not-yet-created) account has no existing credentials to
+    // exclude.
+    excludeCredentials: [],
     authenticatorSelection: {
       residentKey: "preferred",
       userVerification: "preferred",
     },
   })
 
-  remember(`reg:${user.id}`, { challenge: options.challenge, userId: user.id })
+  remember(`reg:${identity.id}`, { challenge: options.challenge, userId: identity.id })
 
   return options
 }
 
+export interface VerifiedRegistration {
+  credentialId: string
+  publicKey: Buffer
+  counter: number
+  transports?: string[]
+}
+
+/**
+ * Verifies the attestation for a pending registration and returns the
+ * resulting credential — it does NOT persist anything. The caller is
+ * responsible for creating the real user row (only after this resolves
+ * successfully) and then writing the credential against that real user id.
+ */
 export const verifyRegistration = async (
-  user: User,
+  identity: Pick<Identity, "id">,
   response: unknown,
-  deviceLabel?: string,
-): Promise<boolean> => {
-  const ctx = recall(`reg:${user.id}`)
+): Promise<VerifiedRegistration | null> => {
+  const ctx = recall(`reg:${identity.id}`)
 
   if (!ctx) {
     throw new Error("errors:auth.challengeExpired")
@@ -81,21 +104,17 @@ export const verifyRegistration = async (
   })
 
   if (!verification.verified || !verification.registrationInfo) {
-    return false
+    return null
   }
 
   const { credential } = verification.registrationInfo
 
-  credentialsRepo.create({
-    id: credential.id,
-    userId: user.id,
+  return {
+    credentialId: credential.id,
     publicKey: Buffer.from(credential.publicKey),
     counter: credential.counter,
     transports: credential.transports,
-    deviceLabel,
-  })
-
-  return true
+  }
 }
 
 /* -------------------------- Authentication ------------------------- */

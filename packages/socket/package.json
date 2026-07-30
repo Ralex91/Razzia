@@ -9,6 +9,7 @@
   "license": "ISC",
   "dependencies": {
     "@razzia/common": "workspace:*",
+    "@fastify/rate-limit": "^10.2.2",
     "@simplewebauthn/server": "^13.1.0",
     "better-sqlite3": "^11.8.1",
     "dayjs": "^1.11.21",

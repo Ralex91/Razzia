@@ -2,7 +2,8 @@
   "auth": {
     "invalidInviteCode": "Código de invitación inválido",
     "usernameTooLong": "El nombre de usuario no puede superar los 20 caracteres",
-    "usernameTooShort": "El nombre de usuario no puede tener menos de 4 caracteres"
+    "usernameTooShort": "El nombre de usuario no puede tener menos de 4 caracteres",
+    "registrationExpired": "Tu sesión de registro ha expirado. Por favor, empieza de nuevo."
   },
   "game": {
     "expired": "Partida expirada",
@@ -12,7 +13,8 @@
     "noPlayersConnected": "No hay jugadores conectados",
     "managerCannotJoin": "No puedes unirte a tu propio juego",
     "notFound": "Partida no encontrada",
-    "playerAlreadyConnected": "El jugador ya está conectado"
+    "playerAlreadyConnected": "El jugador ya está conectado",
+    "tooManyAttempts": "Demasiados intentos, espera un momento y vuelve a intentarlo"
   },
   "manager": {
     "failedToReadConfig": "Error al leer la configuración del juego",
@@ -41,5 +43,6 @@
     "back": "Volver al inicio",
     "description": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
     "title": "Algo salió mal"
-  }
+  },
+  "unexpected": "Ocurrió un error inesperado"
 }

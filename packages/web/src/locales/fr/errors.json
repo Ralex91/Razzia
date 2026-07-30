@@ -9,7 +9,8 @@
     "registrationFailed": "Échec de l'inscription. Veuillez réessayer.",
     "unauthenticated": "Vous devez d'abord vous connecter",
     "userNotFound": "Compte introuvable",
-    "usernameTaken": "Ce nom d'utilisateur est déjà pris"
+    "usernameTaken": "Ce nom d'utilisateur est déjà pris",
+    "registrationExpired": "Votre session d'inscription a expiré. Veuillez recommencer."
   },
   "game": {
     "expired": "La partie a expiré",
@@ -19,7 +20,8 @@
     "noPlayersConnected": "Aucun joueur connecté",
     "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",
     "notFound": "Partie introuvable",
-    "playerAlreadyConnected": "Ce joueur est déjà connecté"
+    "playerAlreadyConnected": "Ce joueur est déjà connecté",
+    "tooManyAttempts": "Trop de tentatives, veuillez patienter puis réessayer"
   },
   "manager": {
     "failedToReadConfig": "Impossible de lire la configuration",

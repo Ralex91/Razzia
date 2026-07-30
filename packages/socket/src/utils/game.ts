@@ -4,6 +4,7 @@ import type { Socket } from "@razzia/common/types/game/socket"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
 import { nanoid } from "nanoid"
+import crypto from "crypto"
 
 export const withGame = (
   gameId: string | undefined,
@@ -29,12 +30,15 @@ export const withGame = (
 }
 
 export const createInviteCode = (length = 6) => {
+  // Use a CSPRNG (not Math.random) for invite/game PINs — defense-in-depth
+  // even though the primary mitigation for PIN guessing is the rate limiter
+  // on PLAYER.CHECK_PIN / PLAYER.JOIN (see handlers/game.ts).
   let result = ""
   const characters = "0123456789"
   const charactersLength = characters.length
 
   for (let i = 0; i < length; i += 1) {
-    const randomIndex = Math.floor(Math.random() * charactersLength)
+    const randomIndex = crypto.randomInt(charactersLength)
     result += characters.charAt(randomIndex)
   }
 

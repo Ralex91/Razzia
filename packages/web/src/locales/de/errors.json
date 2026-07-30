@@ -2,7 +2,8 @@
   "auth": {
     "invalidInviteCode": "Ungültiger Einladungscode",
     "usernameTooLong": "Der Benutzername darf nicht mehr als 20 Zeichen haben",
-    "usernameTooShort": "Der Benutzername muss mindestens 4 Zeichen haben"
+    "usernameTooShort": "Der Benutzername muss mindestens 4 Zeichen haben",
+    "registrationExpired": "Deine Registrierungssitzung ist abgelaufen. Bitte beginne erneut."
   },
   "game": {
     "expired": "Spiel abgelaufen",
@@ -12,7 +13,8 @@
     "noPlayersConnected": "Keine Spieler verbunden",
     "managerCannotJoin": "Du kannst deinem eigenen Spiel nicht beitreten",
     "notFound": "Spiel nicht gefunden",
-    "playerAlreadyConnected": "Spieler bereits verbunden"
+    "playerAlreadyConnected": "Spieler bereits verbunden",
+    "tooManyAttempts": "Zu viele Versuche, bitte warte einen Moment und versuche es erneut"
   },
   "manager": {
     "failedToReadConfig": "Spielkonfiguration konnte nicht gelesen werden",
@@ -41,5 +43,6 @@
     "back": "Zurück zur Startseite",
     "description": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
     "title": "Etwas ist schiefgelaufen"
-  }
+  },
+  "unexpected": "Ein unerwarteter Fehler ist aufgetreten"
 }

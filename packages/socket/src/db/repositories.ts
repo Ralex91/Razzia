@@ -211,6 +211,28 @@ export const sessionsRepo = {
 /* ----------------------------- Invites ---------------------------- */
 
 export const invitesRepo = {
+  /**
+   * Checks whether an invite is currently valid WITHOUT consuming it. Used
+   * at the start of registration to give fast feedback (bad/expired invite)
+   * before the passkey ceremony begins — the invite is only actually
+   * consumed by `consume()` once the passkey attestation succeeds.
+   */
+  peek(idHash: string): { role: Role; username: string | null } | null {
+    const row = getDb()
+      .prepare("SELECT * FROM invites WHERE id = ?")
+      .get(idHash) as Record<string, unknown> | undefined
+
+    if (!row || row.used_at) {
+      return null
+    }
+
+    if (new Date(row.expires_at as string).getTime() < Date.now()) {
+      return null
+    }
+
+    return { role: row.role as Role, username: (row.username as string) ?? null }
+  },
+
   create(idHash: string, role: Role, ttlMs: number, username?: string): void {
     const created = new Date()
     const expires = new Date(created.getTime() + ttlMs)

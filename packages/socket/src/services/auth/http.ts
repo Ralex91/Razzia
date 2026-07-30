@@ -1,6 +1,7 @@
-import type { User } from "@razzia/common/types/user"
+import type { Role, User } from "@razzia/common/types/user"
 import { quizzValidator } from "@razzia/common/validators/quizz"
 import {
+  credentialsRepo,
   invitesRepo,
   quizzesRepo,
   sharesRepo,
@@ -28,6 +29,42 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
 
 const hash = (t: string) => crypto.createHash("sha256").update(t).digest("hex")
 
+// Short-lived store for registrations that are mid-ceremony: the invite has
+// been checked (but NOT consumed) and no user row exists yet. Only promoted
+// to a real, permanent account once the passkey attestation is verified in
+// step 2 — see the rationale on /api/auth/register/options below.
+interface PendingRegistration {
+  inviteHash: string
+  username: string
+  displayName: string
+  role: Role
+  expires: number
+}
+const pendingRegistrations = new Map<string, PendingRegistration>()
+const PENDING_REGISTRATION_TTL = 5 * 60 * 1000
+
+const rememberPendingRegistration = (
+  id: string,
+  data: Omit<PendingRegistration, "expires">,
+): void => {
+  pendingRegistrations.set(id, { ...data, expires: Date.now() + PENDING_REGISTRATION_TTL })
+}
+
+const recallPendingRegistration = (id: string): PendingRegistration | null => {
+  const entry = pendingRegistrations.get(id)
+  pendingRegistrations.delete(id)
+
+  if (!entry || entry.expires < Date.now()) {
+    return null
+  }
+
+  return entry
+}
+
+// Tight limits on the auth surface: these are the routes an attacker would
+// script against to brute-force logins or spam registrations/invites.
+const authRateLimit = { max: 10, timeWindow: "1 minute" }
+
 const currentUser = (req: FastifyRequest): User | null => {
   const cookies = parseCookies(req.headers.cookie)
 
@@ -51,78 +88,136 @@ export const registerHttpRoutes = (app: FastifyInstance): void => {
 
   /* ------------------------- Registration ------------------------- */
 
-  // Step 1: redeem invite, create the pending user, return creation options.
-  app.post("/api/auth/register/options", async (req, reply) => {
-    const body = req.body as {
-      invite: string
-      username: string
-      displayName: string
-    }
+  // Step 1: validate the invite (WITHOUT consuming it) and hand back WebAuthn
+  // creation options for a *pending* registration. Neither the invite nor the
+  // chosen username is committed yet — that only happens in step 2, once the
+  // client actually proves possession of a passkey. This prevents an
+  // abandoned/incomplete registration (dropped connection, or someone
+  // intentionally starting-but-not-finishing with a colleague's invite link)
+  // from permanently burning a one-time invite or squatting a username.
+  app.post(
+    "/api/auth/register/options",
+    { config: { rateLimit: authRateLimit } },
+    async (req, reply) => {
+      const body = req.body as {
+        invite: string
+        username: string
+        displayName: string
+      }
 
-    const invite = invitesRepo.consume(hash(body.invite))
+      const inviteHash = hash(body.invite)
+      const invite = invitesRepo.peek(inviteHash)
 
-    if (!invite) {
-      return reply.code(400).send({ error: "errors:auth.invalidInvite" })
-    }
+      if (!invite) {
+        return reply.code(400).send({ error: "errors:auth.invalidInvite" })
+      }
 
-    if (usersRepo.byUsername(body.username)) {
-      return reply.code(409).send({ error: "errors:auth.usernameTaken" })
-    }
+      if (usersRepo.byUsername(body.username)) {
+        return reply.code(409).send({ error: "errors:auth.usernameTaken" })
+      }
 
-    const isFirstUser = usersRepo.count() === 0
-    const user = usersRepo.create({
-      username: body.username,
-      displayName: body.displayName,
-      role: invite.role,
-    })
+      const pendingId = crypto.randomUUID()
 
-    if (isFirstUser || user.role === "admin") {
-      completeBootstrap(user.id)
-    }
+      rememberPendingRegistration(pendingId, {
+        inviteHash,
+        username: body.username,
+        displayName: body.displayName,
+        role: invite.role,
+      })
 
-    const options = await registrationOptions(user)
+      const options = await registrationOptions({
+        id: pendingId,
+        username: body.username,
+        displayName: body.displayName,
+      })
 
-    return { userId: user.id, options }
-  })
+      return { userId: pendingId, options }
+    },
+  )
 
-  // Step 2: verify attestation, issue session.
-  app.post("/api/auth/register/verify", async (req, reply) => {
-    const body = req.body as { userId: string; response: unknown; deviceLabel?: string }
-    const user = usersRepo.byId(body.userId)
+  // Step 2: verify the attestation, and ONLY on success — consume the invite,
+  // create the permanent user row, and persist the credential against it.
+  app.post(
+    "/api/auth/register/verify",
+    { config: { rateLimit: authRateLimit } },
+    async (req, reply) => {
+      const body = req.body as { userId: string; response: unknown; deviceLabel?: string }
+      const pendingReg = recallPendingRegistration(body.userId)
 
-    if (!user) {
-      return reply.code(404).send({ error: "errors:auth.userNotFound" })
-    }
+      if (!pendingReg) {
+        return reply.code(400).send({ error: "errors:auth.registrationExpired" })
+      }
 
-    const ok = await verifyRegistration(user, body.response, body.deviceLabel)
+      const registration = await verifyRegistration({ id: body.userId }, body.response)
 
-    if (!ok) {
-      return reply.code(400).send({ error: "errors:auth.registrationFailed" })
-    }
+      if (!registration) {
+        return reply.code(400).send({ error: "errors:auth.registrationFailed" })
+      }
 
-    const token = issueSession(user.id)
-    reply.header("Set-Cookie", buildSessionCookie(token))
+      // Re-check both invariants now, right before committing — they were
+      // only peeked (not locked) in step 1, so a race is still possible.
+      const invite = invitesRepo.consume(pendingReg.inviteHash)
 
-    return { user: publicUser(user) }
-  })
+      if (!invite) {
+        return reply.code(400).send({ error: "errors:auth.invalidInvite" })
+      }
+
+      if (usersRepo.byUsername(pendingReg.username)) {
+        return reply.code(409).send({ error: "errors:auth.usernameTaken" })
+      }
+
+      const isFirstUser = usersRepo.count() === 0
+      const user = usersRepo.create({
+        username: pendingReg.username,
+        displayName: pendingReg.displayName,
+        role: invite.role,
+      })
+
+      credentialsRepo.create({
+        id: registration.credentialId,
+        userId: user.id,
+        publicKey: registration.publicKey,
+        counter: registration.counter,
+        transports: registration.transports,
+        deviceLabel: body.deviceLabel,
+      })
+
+      if (isFirstUser || user.role === "admin") {
+        completeBootstrap(user.id)
+      }
+
+      const token = issueSession(user.id)
+      reply.header("Set-Cookie", buildSessionCookie(token))
+
+      return { user: publicUser(user) }
+    },
+  )
 
   /* ------------------------ Authentication ------------------------ */
 
-  app.post("/api/auth/login/options", async () => authenticationOptions())
+  app.post(
+    "/api/auth/login/options",
+    { config: { rateLimit: authRateLimit } },
+    async () => authenticationOptions(),
+  )
 
-  app.post("/api/auth/login/verify", async (req, reply) => {
-    const body = req.body as { response: never; challenge: string }
-    const user = await verifyAuthentication(body.response, body.challenge)
+  app.post(
+    "/api/auth/login/verify",
+    { config: { rateLimit: authRateLimit } },
+    async (req, reply) => {
+      const body = req.body as { response: never; challenge: string }
+      const user = await verifyAuthentication(body.response, body.challenge)
 
-    if (!user) {
-      return reply.code(401).send({ error: "errors:auth.loginFailed" })
-    }
+      if (!user) {
+        return reply.code(401).send({ error: "errors:auth.loginFailed" })
+      }
 
-    const token = issueSession(user.id)
-    reply.header("Set-Cookie", buildSessionCookie(token))
+      const token = issueSession(user.id)
+      reply.header("Set-Cookie", buildSessionCookie(token))
 
-    return { user: publicUser(user) }
-  })
+      return { user: publicUser(user) }
+    },
+  )
 
   app.post("/api/auth/logout", async (req, reply) => {
     const cookies = parseCookies(req.headers.cookie)
