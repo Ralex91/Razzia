@@ -12,6 +12,7 @@ import { PlayerManager } from "@razzia/socket/services/game/player-manager"
 import { RoundManager } from "@razzia/socket/services/game/round-manager"
 import Registry from "@razzia/socket/services/registry"
 import { createInviteCode } from "@razzia/socket/utils/game"
+import { shuffleQuizzAnswers } from "@razzia/socket/utils/shuffle"
 import { getClientId } from "@razzia/socket/utils/socket"
 import { v7 as uuid } from "uuid"
 
@@ -75,8 +76,13 @@ class Game {
       () => this._manager.id,
     )
 
+    // Shuffle each question's answer choices for this game. Works on a copy so
+    // the shared quizz (repo/registry) is never mutated and every game gets a
+    // fresh order. Solutions are remapped in lockstep, so scoring stays correct.
+    const shuffledQuizz = shuffleQuizzAnswers(quizz)
+
     this.round = new RoundManager({
-      quizz,
+      quizz: shuffledQuizz,
       players: this.playerManager,
       cooldown: this.cooldown,
       io,
