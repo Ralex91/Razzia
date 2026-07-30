@@ -1,4 +1,4 @@
-import { usersRepo } from "@razzia/socket/db/repositories"
+import { credentialsRepo, usersRepo } from "@razzia/socket/db/repositories"
 import {
   generateAuthenticationOptions,
   generateRegistrationOptions,

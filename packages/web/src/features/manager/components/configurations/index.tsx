@@ -1,7 +1,8 @@
-import { EVENTS } from "@razzia/common/constants"
 import type { ManagerConfig } from "@razzia/common/types/manager"
 import Card from "@razzia/web/components/Card"
 import LanguageSwitcher from "@razzia/web/components/LanguageSwitcher"
+import { logout } from "@razzia/web/features/auth/api"
+import { useAuthStore } from "@razzia/web/features/auth/store"
 import { useSocket } from "@razzia/web/features/game/contexts/socket-context"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import ConfigManageQuizz from "@razzia/web/features/manager/components/configurations/ConfigManageQuizz"
@@ -9,6 +10,7 @@ import ConfigResults from "@razzia/web/features/manager/components/configuration
 import ConfigSelectQuizz from "@razzia/web/features/manager/components/configurations/ConfigSelectQuizz"
 import ConfigTabButton from "@razzia/web/features/manager/components/configurations/ConfigTabButton"
 import { ConfigProvider } from "@razzia/web/features/manager/contexts/config-context"
+import { useNavigate } from "@tanstack/react-router"
 import { LogOut } from "lucide-react"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -35,7 +37,9 @@ interface Props {
 const Configurations = ({ data }: Props) => {
   const [selectedTab, setSelectedTab] = useState(0)
   const { reset } = useManagerStore()
-  const { socket } = useSocket()
+  const { setUser } = useAuthStore()
+  const { reconnect } = useSocket()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const TabComponent = tabs[selectedTab].component
 
@@ -43,9 +47,19 @@ const Configurations = ({ data }: Props) => {
     setSelectedTab(index)
   }
 
-  const handleLogout = () => {
-    socket.emit(EVENTS.MANAGER.LOGOUT)
-    reset()
+  const handleLogout = async () => {
+    try {
+      // Revoke the server-side session and clear the HttpOnly cookie.
+      await logout()
+    } catch {
+      // Even if the request fails, tear down local state below.
+    } finally {
+      reset()
+      setUser(null)
+      // Re-run the WS handshake so socket.data.user is reset to null.
+      reconnect()
+      navigate({ to: "/manager" })
+    }
   }
 
   return (
