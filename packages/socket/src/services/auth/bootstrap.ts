@@ -42,6 +42,23 @@ const importLegacyFiles = (ownerId: string): void => {
   const quizzDir = getPath("quizz")
 
   if (fs.existsSync(quizzDir)) {
+    // Content signature for a quiz (subject + its questions). Two legacy files
+    // that describe the same quiz collapse to the same signature, so a re-run
+    // — or a file that was already imported earlier — can never be inserted
+    // twice. This makes the import safe to call more than once.
+    const signature = (subject: string, questions: unknown): string =>
+      `${subject}\u0000${JSON.stringify(questions)}`
+
+    const seen = new Set(
+      quizzesRepo
+        .listAll()
+        .map((q) =>
+          signature(q.subject, (q.data as { questions: unknown }).questions),
+        ),
+    )
+
+    let imported = 0
+
     for (const file of fs.readdirSync(quizzDir)) {
       if (!file.endsWith(".json")) {
         continue
@@ -51,19 +68,30 @@ const importLegacyFiles = (ownerId: string): void => {
         const raw = JSON.parse(fs.readFileSync(join(quizzDir, file), "utf-8"))
         const parsed = quizzValidator.safeParse(raw)
 
-        if (parsed.success) {
-          quizzesRepo.create({
-            ownerId,
-            subject: parsed.data.subject,
-            data: { questions: parsed.data.questions },
-          })
+        if (!parsed.success) {
+          continue
         }
+
+        const sig = signature(parsed.data.subject, parsed.data.questions)
+
+        // Already present (from a prior import or an identical file) — skip.
+        if (seen.has(sig)) {
+          continue
+        }
+
+        quizzesRepo.create({
+          ownerId,
+          subject: parsed.data.subject,
+          data: { questions: parsed.data.questions },
+        })
+        seen.add(sig)
+        imported += 1
       } catch (error) {
         console.warn(`Skipped legacy quiz "${file}":`, error)
       }
     }
 
-    console.log("Imported legacy quizzes from config/quizz")
+    console.log(`Imported ${imported} legacy quiz(zes) from config/quizz`)
   }
 
   const resultsDir = getPath("results")
@@ -76,6 +104,13 @@ const importLegacyFiles = (ownerId: string): void => {
 
       try {
         const data = JSON.parse(fs.readFileSync(join(resultsDir, file), "utf-8"))
+
+        // Results carry a stable id (their primary key); skip any already
+        // imported so a re-run does not error out or duplicate.
+        if (resultsRepo.byId(data.id)) {
+          continue
+        }
+
         resultsRepo.create({
           id: data.id,
           quizId: null,

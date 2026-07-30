@@ -1,6 +1,7 @@
 import { EVENTS } from "@razzia/common/constants"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import Button from "@razzia/web/components/Button"
+import { useAuthStore } from "@razzia/web/features/auth/store"
 import { can, isOwner } from "@razzia/web/features/auth/permissions"
 import {
   useEvent,
@@ -31,6 +32,7 @@ const downloadJson = (data: unknown, filename: string) => {
 
 const ConfigManageQuizz = () => {
   const { quizz } = useConfig()
+  const { isAdmin } = useAuthStore()
   const { socket } = useSocket()
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -164,32 +166,32 @@ const ConfigManageQuizz = () => {
                 <Download className="size-4" />
               </button>
 
-              {isOwner(q) && (
-                <>
-                  <button
-                    className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
-                    onClick={() =>
-                      setShareTarget({ id: q.id, ownerId: q.ownerId })
-                    }
-                    title={t("manager:share.title")}
-                  >
-                    <Share2 className="size-4" />
-                  </button>
+              {(isOwner(q) || isAdmin()) && (
+                <button
+                  className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
+                  onClick={() =>
+                    setShareTarget({ id: q.id, ownerId: q.ownerId })
+                  }
+                  title={t("manager:share.title")}
+                >
+                  <Share2 className="size-4" />
+                </button>
+              )}
 
-                  <AlertDialog
-                    trigger={
-                      <button className="rounded-sm p-2 hover:bg-red-600/10">
-                        <Trash2 className="size-4 stroke-red-500" />
-                      </button>
-                    }
-                    title={t("manager:quizz.delete")}
-                    description={t("manager:quizz.deleteConfirm", {
-                      name: q.subject,
-                    })}
-                    confirmLabel={t("common:delete")}
-                    onConfirm={handleDelete(q.id)}
-                  />
-                </>
+              {(isOwner(q) || isAdmin()) && (
+                <AlertDialog
+                  trigger={
+                    <button className="rounded-sm p-2 hover:bg-red-600/10">
+                      <Trash2 className="size-4 stroke-red-500" />
+                    </button>
+                  }
+                  title={t("manager:quizz.delete")}
+                  description={t("manager:quizz.deleteConfirm", {
+                    name: q.subject,
+                  })}
+                  confirmLabel={t("common:delete")}
+                  onConfirm={handleDelete(q.id)}
+                />
               )}
             </div>
           </div>

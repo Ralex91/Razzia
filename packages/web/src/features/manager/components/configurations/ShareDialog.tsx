@@ -1,6 +1,6 @@
 import type { PublicUser } from "@razzia/common/types/user"
 import Button from "@razzia/web/components/Button"
-import { listUsers, shareQuizz } from "@razzia/web/features/auth/api"
+import { listShareCandidates, shareQuizz } from "@razzia/web/features/auth/api"
 import type { Perm } from "@razzia/web/features/auth/permissions"
 import { X } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
@@ -24,7 +24,7 @@ const ShareDialog = ({ quizzId, ownerId, onClose }: Props) => {
   const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
-    listUsers()
+    listShareCandidates()
       .then(setUsers)
       .catch(() => setLoadError(true))
   }, [])

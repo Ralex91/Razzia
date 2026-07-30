@@ -82,6 +82,16 @@ export const listUsers = async (): Promise<PublicUser[]> => {
   return users as PublicUser[]
 }
 
+/**
+ * Directory of users a quiz can be shared with. Unlike listUsers (admin-only),
+ * this is available to any authenticated owner so managers can share too.
+ */
+export const listShareCandidates = async (): Promise<PublicUser[]> => {
+  const { users } = await get("/api/directory")
+
+  return users as PublicUser[]
+}
+
 export const createInvite = async (role: Role): Promise<string> => {
   const { invite } = await post("/api/admin/invites", { role })
 

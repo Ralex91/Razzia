@@ -182,7 +182,10 @@ export const registerHttpRoutes = (app: FastifyInstance): void => {
         deviceLabel: body.deviceLabel,
       })
 
-      if (isFirstUser || user.role === "admin") {
+      // Only ever run on a genuinely empty instance. Previously this also
+      // fired for every admin registration, which re-imported the legacy
+      // config/quizz files each time and duplicated all imported quizzes.
+      if (isFirstUser) {
         completeBootstrap(user.id)
       }
 
@@ -335,6 +338,22 @@ export const registerHttpRoutes = (app: FastifyInstance): void => {
   })
 
   /* --------------------------- Sharing ---------------------------- */
+
+  // Minimal directory of share targets, available to ANY signed-in user.
+  // The full /api/admin/users list is admin-only, so a non-admin owner opening
+  // the share dialog previously hit a 403 and saw "no directory". Sharing only
+  // needs public fields (id / name / username), so expose those to everyone.
+  app.get("/api/directory", async (req, reply) => {
+    const user = requireUser(req, reply)
+    if (!user) return
+
+    return {
+      users: usersRepo
+        .all()
+        .filter((u) => !u.disabled && u.id !== user.id)
+        .map(publicUser),
+    }
+  })
 
   app.post("/api/quizzes/:id/share", async (req, reply) => {
     const user = requireUser(req, reply)
