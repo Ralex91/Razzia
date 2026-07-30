@@ -1,0 +1,48 @@
+{
+  "addAnswerPlaceholder": "Thêm câu trả lời...",
+  "addQuestion": "Thêm câu hỏi",
+  "answersCountSuffix": " câu trả lời",
+  "deleteQuestion": "Xóa câu hỏi",
+  "noQuestionYet": "Chưa có câu hỏi",
+  "question": {
+    "addMediaHint": "Thêm ảnh, video hoặc âm thanh vào câu hỏi",
+    "config": {
+      "answerTime": "Thời gian trả lời",
+      "answerTimeHint": "Thời gian người chơi có để trả lời",
+      "noTimeLimit": "Không giới hạn thời gian",
+      "noTimeLimitHint": "Điểm được tính theo thứ tự trả lời. Không có giới hạn thời gian để trả lời.",
+      "questionDisplay": "Hiển thị câu hỏi",
+      "questionDisplayHint": "Thời gian trước khi hiện câu trả lời",
+      "timings": "Thời gian",
+      "answerMode": "Chế độ trả lời",
+      "scoring": "Tính điểm",
+      "maxPoints": "Điểm tối đa",
+      "maxPointsHint": "Điểm tối đa khi trả lời đúng",
+      "penalty": "Phạt",
+      "penaltyHint": "Điểm bị trừ khi chọn đáp án sai (tổng điểm không dưới 0)",
+      "scoringMode": "Chế độ tính điểm",
+      "scoringMode.strict": "Nghiêm ngặt",
+      "scoringMode.balanced": "Cân bằng",
+      "scoringMode.lenient": "Dễ dàng",
+      "scoringModeHint.strict": "Điểm đầy đủ chỉ khi chọn đủ đáp án đúng và không chọn đáp án sai",
+      "scoringModeHint.balanced": "Điểm một phần: đáp án đúng, bị phạt đáp án sai",
+      "scoringModeHint.lenient": "Điểm theo từng đáp án đúng, không phạt đáp án sai"
+    },
+    "deleteQuestion": "Xóa câu hỏi",
+    "deleteQuestionConfirm": "Bạn có chắc muốn xóa câu hỏi này?",
+    "media": {
+      "audio": "Âm thanh",
+      "image": "Hình ảnh",
+      "video": "Video"
+    },
+    "mediaUrlPlaceholder": "Nhập URL...",
+    "placeholder": "Nhập câu hỏi của bạn..."
+  },
+  "quizzSaved": "Đã lưu trò chơi thành công",
+  "quizzUpdated": "Đã cập nhật trò chơi thành công",
+  "questionType": {
+    "single": "Chọn một đáp án",
+    "multi": "Chọn nhiều đáp án"
+  },
+  "titleQuizzPlaceholder": "Tiêu đề trò chơi..."
+}
