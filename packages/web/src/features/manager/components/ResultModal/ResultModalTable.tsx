@@ -43,11 +43,15 @@ const ResultModalTable = () => {
                         key={id}
                         className={clsx(
                           "inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-white",
-                          ANSWERS_COLORS[id % 4],
+                          id < ANSWERS_COLORS.length
+                            ? ANSWERS_COLORS[id]
+                            : "bg-gray-500",
                         )}
                       >
                         <span className="font-bold">
-                          {ANSWERS_LABELS[id % 4]}
+                          {id < ANSWERS_LABELS.length
+                            ? ANSWERS_LABELS[id]
+                            : id + 1}
                         </span>
                         <span className="max-w-30 truncate">
                           {questionResult.answers[id]}

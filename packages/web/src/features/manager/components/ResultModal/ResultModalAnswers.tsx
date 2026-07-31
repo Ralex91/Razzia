@@ -64,8 +64,12 @@ const ResultModalAnswers = () => {
         pa.answerIds?.includes(ai),
       ).length,
       isCorrect: questionResult.solutions.includes(ai),
-      color: ANSWERS_COLORS[ai % 4],
-      answerLabel: ANSWERS_LABELS[ai % 4],
+      // Wrapping with `% 4` would give a fifth answer the first answer's
+      // colour and letter, so two different options would look identical
+      // in the results. Falling back to null renders the neutral row the
+      // "no answer" case already uses.
+      color: ai < ANSWERS_COLORS.length ? ANSWERS_COLORS[ai] : null,
+      answerLabel: ai < ANSWERS_LABELS.length ? ANSWERS_LABELS[ai] : null,
     })),
     {
       label: t("manager:result.noAnswer"),
