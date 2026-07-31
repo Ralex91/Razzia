@@ -1,0 +1,15 @@
+# Every text file in this repository is stored with LF.
+#
+# Without this, a Windows checkout with the default core.autocrlf=true
+# rewrites them all to CRLF on clone. `pnpm lint` then fails with
+# @stylistic(linebreak-style) on every line of every file, and any
+# format-on-save produces a whole-repo diff, which makes a first
+# contribution from Windows effectively impossible.
+* text=auto eol=lf
+
+# Binary assets, never normalised.
+*.png binary
+*.jpg binary
+*.mp3 binary
+*.woff2 binary
+*.svg text eol=lf
