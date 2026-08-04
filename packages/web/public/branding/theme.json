@@ -1,0 +1,11 @@
+{
+  "appName": "Razzia",
+  "colors": {
+    "primary": "#3643ba",
+    "secondary": "#1a140b",
+    "answer-1": "#3643ba",
+    "answer-2": "#56b4e9",
+    "answer-3": "#3dbfa0",
+    "answer-4": "#cc79a7"
+  }
+}

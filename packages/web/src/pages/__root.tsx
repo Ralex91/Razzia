@@ -4,6 +4,7 @@ import {
   SocketProvider,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { AuthProvider } from "@razzia/web/features/auth/contexts/auth-context"
 import { createRootRoute, Outlet } from "@tanstack/react-router"
 import { useEffect } from "react"
 
@@ -34,7 +35,9 @@ const GameLayout = () => {
 export const Route = createRootRoute({
   component: () => (
     <SocketProvider>
-      <GameLayout />
+      <AuthProvider>
+        <GameLayout />
+      </AuthProvider>
     </SocketProvider>
   ),
   errorComponent: ({ error }) => (

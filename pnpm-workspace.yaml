@@ -5,6 +5,7 @@ allowBuilds:
   esbuild: true
   oxlint: true
   oxlint-tsgolint: true
+  sqlite3: false
 
 minimumReleaseAge: 10080
 blockExoticSubdeps: true
