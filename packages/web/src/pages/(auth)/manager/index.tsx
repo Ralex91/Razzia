@@ -24,15 +24,17 @@ const ManagerAuthPage = () => {
     let active = true
 
     me().then((existing) => {
-      if (!active) {
-        return
-      }
-
       if (existing) {
+        // Populate the global auth store even if this component has already
+        // unmounted: the socket CONFIG event can navigate to /manager/config
+        // before this probe resolves, and the user must survive that race so
+        // permission-gated UI (e.g. the share button) renders correctly.
         setUser(existing)
       }
 
-      setProbed(true)
+      if (active) {
+        setProbed(true)
+      }
     })
 
     return () => {
