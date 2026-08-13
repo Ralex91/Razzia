@@ -372,6 +372,51 @@ export const registerHttpRoutes = (app: FastifyInstance): void => {
 
     return { ok: true }
   })
+
+  // Current share grants for a quiz, enriched with public grantee info so the
+  // share dialog can list who it's shared with. Owner/admin only, like sharing.
+  app.get("/api/quizzes/:id/shares", async (req, reply) => {
+    const user = requireUser(req, reply)
+    if (!user) return
+
+    const { id } = req.params as { id: string }
+    const quiz = quizzesRepo.byId(id)
+
+    if (!quiz || (quiz.ownerId !== user.id && user.role !== "admin")) {
+      return reply.code(403).send({ error: "errors:authz.forbidden" })
+    }
+
+    const shares = sharesRepo.listForQuiz(id).map((share) => {
+      const grantee = usersRepo.byId(share.granteeId)
+
+      return {
+        granteeId: share.granteeId,
+        permission: share.permission,
+        displayName: grantee?.displayName ?? "unknown",
+        username: grantee?.username ?? "unknown",
+      }
+    })
+
+    return { shares }
+  })
+
+  // Revoke (un-share) a single grant. Owner/admin only. Idempotent: removing a
+  // grant that isn't there still succeeds.
+  app.delete("/api/quizzes/:id/share/:granteeId", async (req, reply) => {
+    const user = requireUser(req, reply)
+    if (!user) return
+
+    const { id, granteeId } = req.params as { id: string; granteeId: string }
+    const quiz = quizzesRepo.byId(id)
+
+    if (!quiz || (quiz.ownerId !== user.id && user.role !== "admin")) {
+      return reply.code(403).send({ error: "errors:authz.forbidden" })
+    }
+
+    sharesRepo.revoke(id, granteeId)
+
+    return { ok: true }
+  })
 }
 
 const publicUser = (user: User) => ({

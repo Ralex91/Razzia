@@ -67,7 +67,11 @@
     "confirm": "Share",
     "success": "Quiz shared",
     "pickUser": "Select a user",
-    "noDirectory": "You don't have permission to list users."
+    "noDirectory": "You don't have permission to list users.",
+    "currentShares": "Shared with",
+    "noShares": "Not shared with anyone yet",
+    "remove": "Remove access",
+    "removed": "Access removed"
   },
   "admin": {
     "title": "Admin console",

@@ -388,6 +388,21 @@ export const sharesRepo = {
 
     return row?.permission ?? null
   },
+
+  /** Everyone a quiz is currently shared with, oldest grant first. */
+  listForQuiz(quizId: string): { granteeId: string; permission: Permission }[] {
+    const rows = getDb()
+      .prepare(
+        `SELECT grantee_id, permission FROM quiz_shares
+          WHERE quiz_id = ? ORDER BY created_at ASC`,
+      )
+      .all(quizId) as { grantee_id: string; permission: Permission }[]
+
+    return rows.map((row) => ({
+      granteeId: row.grantee_id,
+      permission: row.permission,
+    }))
+  },
 }
 
 /* ----------------------------- Results ---------------------------- */

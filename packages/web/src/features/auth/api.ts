@@ -122,3 +122,24 @@ export const shareQuizz = (
   granteeId: string,
   permission: "view" | "run" | "edit",
 ) => post(`/api/quizzes/${id}/share`, { granteeId, permission })
+
+export interface QuizzShare {
+  granteeId: string
+  permission: "view" | "run" | "edit"
+  displayName: string
+  username: string
+}
+
+/** Who a quiz is currently shared with (owner/admin only). */
+export const listQuizzShares = async (id: string): Promise<QuizzShare[]> => {
+  const { shares } = await get(`/api/quizzes/${id}/shares`)
+
+  return shares as QuizzShare[]
+}
+
+/** Revoke a single grant (un-share). */
+export const unshareQuizz = (id: string, granteeId: string) =>
+  fetch(`/api/quizzes/${id}/share/${granteeId}`, {
+    method: "DELETE",
+    credentials: "include",
+  }).then(parse)
