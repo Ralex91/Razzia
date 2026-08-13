@@ -86,10 +86,21 @@ const start = async () => {
   })
 
   // Handshake middleware: resolve the session cookie -> authenticated user.
+  // socket.io does NOT wrap middleware in try/catch, so any throw here would
+  // crash the whole process (taking down every live game). Treat an
+  // unparseable handshake as an anonymous, unauthenticated connection rather
+  // than letting it bring the server down.
   io.use((socket, next) => {
-    const cookies = parseCookies(socket.handshake.headers.cookie)
-    socket.data.user = resolveSession(cookies[SESSION_COOKIE])
-    socket.data.clientId = (socket.handshake.auth.clientId as string) ?? ""
+    try {
+      const cookies = parseCookies(socket.handshake.headers.cookie)
+      socket.data.user = resolveSession(cookies[SESSION_COOKIE])
+      socket.data.clientId = (socket.handshake.auth.clientId as string) ?? ""
+    } catch (error) {
+      console.error("Handshake middleware error:", error)
+      socket.data.user = null
+      socket.data.clientId = ""
+    }
+
     next()
   })
 

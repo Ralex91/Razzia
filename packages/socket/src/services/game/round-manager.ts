@@ -254,6 +254,18 @@ export class RoundManager {
       return
     }
 
+    // The payload is client-controlled and only typed as number[] at compile
+    // time. A non-array (or non-numeric entries) would later blow up the
+    // scoring/aggregation pass — which runs off the cooldown promise chain,
+    // outside any handler try/catch — and crash the process. Drop anything
+    // that isn't a clean array of finite numbers.
+    if (
+      !Array.isArray(answerIds) ||
+      !answerIds.every((id) => Number.isFinite(id))
+    ) {
+      return
+    }
+
     if (this.playersAnswers.find((a) => a.playerId === socket.id)) {
       return
     }

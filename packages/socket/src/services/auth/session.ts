@@ -51,8 +51,19 @@ export const parseCookies = (header: string | undefined): Record<string, string>
   return Object.fromEntries(
     header.split(";").map((part) => {
       const [k, ...v] = part.trim().split("=")
+      const raw = v.join("=")
 
-      return [k, decodeURIComponent(v.join("="))]
+      // A malformed percent-encoding (e.g. a stray "%") makes
+      // decodeURIComponent throw. This runs inside the Socket.IO handshake
+      // middleware, which is NOT wrapped in try/catch by socket.io, so an
+      // uncaught throw here crashes the whole process. Fall back to the raw
+      // value instead — an attacker-supplied cookie must never take the
+      // server down.
+      try {
+        return [k, decodeURIComponent(raw)]
+      } catch {
+        return [k, raw]
+      }
     }),
   )
 }
