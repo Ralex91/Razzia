@@ -139,4 +139,4 @@ For bug reports or feature requests, please [create an issue](https://github.com
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Ralex91/Razzia&type=date&logscale=&legend=bottom-right)](https://www.star-history.com/#Ralex91/Razzia&type=date&logscale=&legend=bottom-right)
+[![Star History Chart](https://star-history.dera.page/svg?repos=Ralex91/Razzia&type=date&logscale=&legend=bottom-right)](https://star-history.dera.page/#Ralex91/Razzia&type=date&logscale=&legend=bottom-right)
