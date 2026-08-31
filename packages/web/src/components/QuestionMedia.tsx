@@ -12,7 +12,7 @@ const QuestionMedia = ({ media, alt = "" }: Props) => {
       <img
         alt={alt}
         src={media.url}
-        className="max-h-60 w-auto rounded-md sm:max-h-100"
+        className="max-h-[30svh] w-auto max-w-full rounded-md sm:max-h-100"
       />
     )
   }
@@ -20,7 +20,7 @@ const QuestionMedia = ({ media, alt = "" }: Props) => {
   if (media?.type === MEDIA_TYPES.VIDEO) {
     return (
       <video
-        className="m-4 mb-2 aspect-video max-h-60 w-auto rounded-md px-4 sm:max-h-100"
+        className="m-4 mb-2 aspect-video max-h-[30svh] w-auto max-w-full rounded-md px-4 sm:max-h-100"
         src={media.url}
         autoPlay
         controls

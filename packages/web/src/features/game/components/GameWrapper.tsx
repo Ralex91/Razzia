@@ -59,10 +59,10 @@ const GameWrapper = ({
   }
 
   return (
-    <section className="relative flex min-h-dvh">
+    <section className="relative flex h-dvh">
       <GameBackground />
 
-      <div className="z-10 flex w-full flex-1 flex-col justify-between">
+      <div className="z-10 flex w-full flex-1 touch-pan-y flex-col justify-between overflow-y-auto">
         {!isConnected && !statusName ? (
           <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
             <Loader className="h-30" />
