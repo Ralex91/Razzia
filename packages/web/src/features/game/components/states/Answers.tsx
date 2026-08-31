@@ -81,8 +81,8 @@ const Answers = ({
   const { AnswerComponent } = QUESTION_REGISTRY[questionType]
 
   return (
-    <div className="flex h-full flex-1 flex-col justify-between">
-      <div className="mx-auto inline-flex h-full w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
+    <div className="flex h-full min-h-0 flex-1 flex-col justify-between">
+      <div className="mx-auto inline-flex min-h-0 w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
         <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {question}
         </h2>
