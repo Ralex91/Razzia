@@ -27,4 +27,4 @@ All fields are optional: anything you omit keeps its default value.
 - `colors`: CSS color tokens (at least `primary` and `secondary`)
 - `answerColors`: up to 4 answer-button colors
 - `font`: a font family + an optional stylesheet URL (e.g. Google Fonts)
-- `logo` / `favicon` / `background`: drop the files in `config/branding/` and reference them here
+- `logo` / `favicon` / `background`: drop the files in `config/branding/` and reference them here. `background` is a full-screen image applied app-wide (landing, manager and in-game screens).
