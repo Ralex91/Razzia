@@ -45,6 +45,8 @@
     "mediaLibraryEmpty": "Nessun media caricato",
     "placeholder": "Inizia a scrivere la tua domanda...",
     "selectMedia": "Seleziona media",
+    "gridView": "Vista griglia",
+    "listView": "Vista elenco",
     "deleteMedia": "Elimina media",
     "deleteMediaWarning": "Questo media potrebbe essere usato in altri quiz — eliminarlo potrebbe comprometterli."
   },

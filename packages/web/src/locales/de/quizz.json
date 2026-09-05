@@ -45,6 +45,8 @@
     "mediaLibraryEmpty": "Noch keine Medien hochgeladen",
     "placeholder": "Beginne deine Frage zu tippen...",
     "selectMedia": "Medium auswählen",
+    "gridView": "Rasteransicht",
+    "listView": "Listenansicht",
     "deleteMedia": "Medium löschen",
     "deleteMediaWarning": "Dieses Medium wird möglicherweise in anderen Quizzen verwendet — durch das Löschen könnten sie beschädigt werden."
   },

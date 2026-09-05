@@ -45,6 +45,8 @@
     "mediaLibraryEmpty": "Aún no hay archivos multimedia subidos",
     "placeholder": "Empieza a escribir tu pregunta...",
     "selectMedia": "Seleccionar archivo",
+    "gridView": "Vista de cuadrícula",
+    "listView": "Vista de lista",
     "deleteMedia": "Eliminar archivo",
     "deleteMediaWarning": "Este archivo puede estar en uso en otros cuestionarios; eliminarlo podría romperlos."
   },

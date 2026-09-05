@@ -4,7 +4,7 @@ import { MediaError } from "@razzia/socket/services/media-errors"
 import { fileTypeFromBuffer } from "file-type"
 import fs from "fs"
 import { nanoid } from "nanoid"
-import { extname, resolve, sep } from "path"
+import { basename, extname, resolve, sep } from "path"
 
 /** Maximum accepted upload size, enforced by multer before the buffer completes. */
 export const MAX_MEDIA_BYTES = 20 * 1024 * 1024
@@ -32,12 +32,44 @@ export const ensureMediaDir = (): void => {
   }
 }
 
+/** Keeps the stored name readable while staying well under any path limit. */
+const MAX_BASE_LENGTH = 64
+
+/** Random part appended to the original name to keep stored names unique. */
+const SUFFIX_LENGTH = 6
+
+/**
+ * Reduces a browser-supplied name to the alphabet of MEDIA_NAME_PATTERN, so no
+ * path separator, dot segment or non-ASCII byte can survive into the filename.
+ * Multer decodes the name as latin1, hence the re-decode before folding accents.
+ */
+const sanitizeBaseName = (name: string): string => {
+  const decoded = Buffer.from(name, "latin1").toString("utf8")
+
+  return (
+    basename(decoded)
+      .replace(/\.[^.]*$/u, "")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .replace(/[^A-Za-z0-9_-]+/gu, "-")
+      .replace(/-{2,}/gu, "-")
+      .replace(/^[-_]+|[-_]+$/gu, "")
+      .slice(0, MAX_BASE_LENGTH) || "media"
+  )
+}
+
 /**
  * Detects the real type from the buffer's magic bytes (never the client-declared
  * MIME), rejects anything not in the accepted-media allowlist, and writes
- * `${nanoid()}${ext}`. Returns the file's relative URL and its media type.
+ * `${sanitized original name}_${nanoid()}${ext}` — the original name is kept so
+ * the media library stays browsable, the random suffix avoids collisions. The
+ * extension always comes from the magic bytes, never from the uploaded name.
+ * Returns the file's relative URL and its media type.
  */
-export const saveMedia = async (buffer: Buffer): Promise<StoredMedia> => {
+export const saveMedia = async (
+  buffer: Buffer,
+  originalName = "",
+): Promise<StoredMedia> => {
   const detected = await fileTypeFromBuffer(buffer)
   // Some containers report a codec parameter (e.g. "audio/ogg; codecs=opus");
   // the allowlist is keyed by the bare MIME, so strip it before the lookup.
@@ -52,7 +84,13 @@ export const saveMedia = async (buffer: Buffer): Promise<StoredMedia> => {
 
   ensureMediaDir()
 
-  const name = `${nanoid()}${accepted.ext}`
+  const base = sanitizeBaseName(originalName)
+  let name = `${base}_${nanoid(SUFFIX_LENGTH)}${accepted.ext}`
+
+  while (fs.existsSync(getMediaPath(name))) {
+    name = `${base}_${nanoid(SUFFIX_LENGTH)}${accepted.ext}`
+  }
+
   fs.writeFileSync(getMediaPath(name), buffer)
 
   return { url: `/media/${name}`, type: accepted.type }
@@ -90,8 +128,10 @@ export const listMedia = (): StoredMedia[] => {
   })
 }
 
-// The nanoid + one of the actually-produced extensions. Any slash, backslash
-// or ".." fails to match, so a browser-supplied name can never escape the dir.
+// A stored name (sanitized base + nanoid suffix, or a bare nanoid for files
+// uploaded before names were kept) plus one of the actually-produced extensions.
+// Any slash, backslash or ".." fails to match, so a browser-supplied name can
+// never escape the dir.
 const NAME_EXTENSIONS = [...EXTENSION_TYPES.keys()]
   .map((ext) => ext.slice(1))
   .join("|")

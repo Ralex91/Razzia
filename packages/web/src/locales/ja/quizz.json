@@ -45,6 +45,8 @@
     "mediaLibraryEmpty": "アップロードされたメディアはまだありません",
     "placeholder": "質問を入力してください...",
     "selectMedia": "メディアを選択",
+    "gridView": "グリッド表示",
+    "listView": "リスト表示",
     "deleteMedia": "メディアを削除",
     "deleteMediaWarning": "このメディアは他のクイズで使われている可能性があります。削除すると壊れることがあります。"
   },

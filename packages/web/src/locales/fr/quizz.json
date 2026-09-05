@@ -45,6 +45,8 @@
     "mediaLibraryEmpty": "Aucun média téléversé pour le moment",
     "placeholder": "Commencez à écrire votre question...",
     "selectMedia": "Sélectionner le média",
+    "gridView": "Vue grille",
+    "listView": "Vue liste",
     "deleteMedia": "Supprimer le média",
     "deleteMediaWarning": "Ce média est peut-être utilisé dans d’autres quizz — le supprimer pourrait les casser."
   },

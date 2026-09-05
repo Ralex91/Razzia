@@ -45,6 +45,8 @@
     "mediaLibraryEmpty": "No media uploaded yet",
     "placeholder": "Start typing your question...",
     "selectMedia": "Select media",
+    "gridView": "Grid view",
+    "listView": "List view",
     "deleteMedia": "Delete media",
     "deleteMediaWarning": "This media may be used in other quizzes — deleting it could break them."
   },

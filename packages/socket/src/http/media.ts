@@ -35,7 +35,7 @@ const handleUpload = async (
   }
 
   try {
-    const stored = await saveMedia(req.file.buffer)
+    const stored = await saveMedia(req.file.buffer, req.file.originalname)
 
     res.status(201).json(stored)
   } catch (error) {
