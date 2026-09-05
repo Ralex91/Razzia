@@ -17,7 +17,7 @@ interface Props {
 const Responses = ({
   data: { question, answers, responses, solutions },
 }: Props) => {
-  const [percentages, setPercentages] = useState<Record<string, string>>({})
+  const percentages = calculatePercentages(responses)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
 
   const [sfxResults] = useSound(SFX.RESULTS_SOUND, {
@@ -37,8 +37,6 @@ const Responses = ({
   useEffect(() => {
     stopMusic()
     sfxResults()
-
-    setPercentages(calculatePercentages(responses))
   }, [responses, playMusic, stopMusic, sfxResults])
 
   useEffect(() => {

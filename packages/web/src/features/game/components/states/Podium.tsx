@@ -11,7 +11,7 @@ interface Props {
 }
 
 const usePodiumAnimation = (topLength: number) => {
-  const [apparition, setApparition] = useState(0)
+  const [apparition, setApparition] = useState(() => (topLength < 3 ? 4 : 0))
 
   const [sfxtThree] = useSound(SFX.PODIUM.THREE, { volume: 0.1 })
   const [sfxSecond] = useSound(SFX.PODIUM.SECOND, { volume: 0.1 })
@@ -35,12 +35,6 @@ const usePodiumAnimation = (topLength: number) => {
   }, [apparition, sfxFirst, sfxSecond, sfxtThree, sfxRool, sfxRoolStop])
 
   useEffect(() => {
-    if (topLength < 3) {
-      setApparition(4)
-
-      return
-    }
-
     if (apparition >= 4) {
       return
     }
@@ -110,11 +104,9 @@ const Podium = ({ data: { subject, top } }: Props) => {
         />
       )}
 
-      {apparition >= 3 && top.length >= 3 && (
-        <div className="pointer-events-none absolute min-h-dvh w-full overflow-hidden">
-          <div className="spotlight"></div>
-        </div>
-      )}
+      <div className="pointer-events-none absolute min-h-dvh w-full overflow-hidden">
+        <div className="spotlight"></div>
+      </div>
       <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-between">
         <h2 className="anim-show text-center text-3xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {subject}

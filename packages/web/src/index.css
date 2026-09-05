@@ -47,7 +47,7 @@ button:not(:disabled),
     top: -20%;
   }
   30% {
-    opacity: 100;
+    opacity: 0.8;
     top: -80%;
     left: -80%;
   }
@@ -60,7 +60,7 @@ button:not(:disabled),
     left: -50%;
   }
   98% {
-    opacity: 1;
+    opacity: 0.8;
   }
   100% {
     opacity: 0;

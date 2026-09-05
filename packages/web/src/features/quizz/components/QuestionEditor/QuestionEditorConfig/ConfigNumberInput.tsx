@@ -1,5 +1,5 @@
 import Input from "@razzia/web/components/Input"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface Props {
   value: number
@@ -10,10 +10,6 @@ interface Props {
 
 const ConfigNumberInput = ({ value, min, max, onChange }: Props) => {
   const [input, setInput] = useState(String(value))
-
-  useEffect(() => {
-    setInput(String(value))
-  }, [value])
 
   const handleChange = (raw: string) => {
     setInput(raw)

@@ -55,7 +55,7 @@ const QuestionEditorConfig = () => {
         </Select>
       </ConfigField>
 
-      <ConfigComponent />
+      <ConfigComponent key={currentQuestion.id} />
     </aside>
   )
 }

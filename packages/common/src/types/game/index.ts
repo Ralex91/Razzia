@@ -30,8 +30,7 @@ export interface Answer {
 }
 
 export type QuestionMediaType =
-  | (typeof MEDIA_TYPES)[keyof typeof MEDIA_TYPES]
-  | undefined
+  (typeof MEDIA_TYPES)[keyof typeof MEDIA_TYPES] | undefined
 
 export interface QuestionMedia {
   type?: QuestionMediaType

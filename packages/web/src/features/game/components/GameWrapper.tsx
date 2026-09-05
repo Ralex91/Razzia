@@ -11,7 +11,7 @@ import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
 import { MANAGER_SKIP_BTN } from "@razzia/web/features/game/utils/constants"
 import clsx from "clsx"
-import { type PropsWithChildren, useEffect, useState } from "react"
+import { type PropsWithChildren, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
@@ -33,8 +33,11 @@ const GameWrapper = ({
   const { player } = usePlayerStore()
   const { questionStates, setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
-  const [isDisabled, setIsDisabled] = useState(false)
+  const [skippedStatusName, setSkippedStatusName] = useState<Status | null>(
+    null,
+  )
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
+  const isDisabled = skippedStatusName === statusName
 
   useEvent(EVENTS.GAME.UPDATE_QUESTION, ({ current, total }) => {
     setQuestionStates({
@@ -46,15 +49,11 @@ const GameWrapper = ({
   useEvent(EVENTS.GAME.ERROR_MESSAGE, (message) => {
     toast.error(t(message))
     console.log(t(message))
-    setIsDisabled(false)
+    setSkippedStatusName(null)
   })
 
-  useEffect(() => {
-    setIsDisabled(false)
-  }, [statusName])
-
   const handleNext = () => {
-    setIsDisabled(true)
+    setSkippedStatusName(statusName ?? null)
     onNext?.()
   }
 
