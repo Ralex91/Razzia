@@ -19,6 +19,15 @@
     "invalidPassword": "Invalid password",
     "passwordNotConfigured": "Manager password is not configured"
   },
+  "media": {
+    "invalidType": "Unsupported file type. Use an image (PNG, JPEG, WebP, GIF) or audio (MP3, OGG, WAV).",
+    "listFailed": "Failed to load the media library. Please try again.",
+    "tooLarge": "File is too large (maximum 20 MB).",
+    "unauthorized": "Your session has expired. Please sign in again.",
+    "uploadFailed": "Upload failed. Please try again.",
+    "videoUpload": "Videos can't be uploaded. Add a video by URL instead.",
+    "deleteFailed": "Failed to delete the file. Please try again."
+  },
   "notFound": {
     "back": "Go back home",
     "description": "The page you are looking for does not exist.",

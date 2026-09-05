@@ -4,12 +4,17 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "node esbuild.config.js",
-    "start": "node dist/index.cjs"
+    "start": "node dist/index.cjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "license": "ISC",
   "dependencies": {
     "@razzia/common": "workspace:*",
     "dayjs": "^1.11.21",
+    "express": "^5.2.1",
+    "file-type": "^22.0.2",
+    "multer": "^2.2.0",
     "nanoid": "^5.1.16",
     "socket.io": "^4.8.3",
     "typescript": "^6.0.3",
@@ -17,8 +22,13 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.2.0",
     "@types/node": "^26.0.1",
+    "@types/supertest": "^7.2.1",
     "esbuild": "^0.28.1",
-    "tsx": "^4.22.4"
+    "supertest": "^7.2.2",
+    "tsx": "^4.22.4",
+    "vitest": "^4.1.11"
   }
 }

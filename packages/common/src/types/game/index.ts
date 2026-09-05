@@ -1,5 +1,5 @@
 import type {
-  MEDIA_TYPES,
+  MediaType,
   QUESTION_TYPES,
   SCORING_MODES,
 } from "@razzia/common/constants"
@@ -29,13 +29,22 @@ export interface Answer {
   points: number
 }
 
-export type QuestionMediaType =
-  | (typeof MEDIA_TYPES)[keyof typeof MEDIA_TYPES]
-  | undefined
+export type QuestionMediaType = MediaType | undefined
 
 export interface QuestionMedia {
   type?: QuestionMediaType
   url: string
+}
+
+/**
+ * A hosted media file returned by the media HTTP API (`/api/media`): its
+ * relative URL and the type the server derived from the file's magic bytes.
+ * Shared between Socket (produces it) and Web (consumes it). Only image and
+ * audio are uploadable — video is external-URL only.
+ */
+export interface StoredMedia {
+  url: string
+  type: MediaType
 }
 
 export interface Question {

@@ -52,7 +52,7 @@ Quiz Options:
   - `answers`: Array of possible answers (2-4 options)
   - `media`: Optional media object displayed with the question:
     - `type`: `"image"`, `"video"`, or `"audio"`
-    - `url`: URL of the media
+    - `url`: URL of the media. Either a file uploaded through the editor (served under `/media/`) or an external URL. Images and audio can be uploaded; video is external-URL only.
   - `solutions`: Array of correct answer indices (0-based). Use multiple indices for multi-answer questions
   - `cooldown`: Time in seconds before answers are revealed (3-15)
   - `time`: Time in seconds allowed to answer (5-120)

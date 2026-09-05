@@ -19,6 +19,15 @@
     "invalidPassword": "Ungültiges Passwort",
     "passwordNotConfigured": "Manager-Passwort ist nicht konfiguriert"
   },
+  "media": {
+    "invalidType": "Nicht unterstützter Dateityp. Verwende ein Bild (PNG, JPEG, WebP, GIF) oder Audio (MP3, OGG, WAV).",
+    "listFailed": "Mediathek konnte nicht geladen werden. Bitte versuche es erneut.",
+    "tooLarge": "Datei ist zu groß (maximal 20 MB).",
+    "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+    "uploadFailed": "Upload fehlgeschlagen. Bitte versuche es erneut.",
+    "videoUpload": "Videos können nicht hochgeladen werden. Füge ein Video stattdessen per URL hinzu.",
+    "deleteFailed": "Die Datei konnte nicht gelöscht werden. Bitte versuche es erneut."
+  },
   "notFound": {
     "back": "Zurück zur Startseite",
     "description": "Die gesuchte Seite existiert nicht.",

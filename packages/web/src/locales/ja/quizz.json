@@ -36,7 +36,17 @@
       "video": "動画"
     },
     "mediaUrlPlaceholder": "URLを入力...",
-    "placeholder": "質問を入力してください..."
+    "addFromUrl": "URLから追加",
+    "addFromUrlTitle": "URLからメディアを追加",
+    "externalLinkNotice": "これは外部リンクを添付します。このメディアはプラットフォームでホストまたは保存されません。",
+    "uploadNote": "※ 画像または音声のみ — 動画はURLで追加してください",
+    "uploadMedia": "メディアをアップロード",
+    "mediaLibrary": "メディアライブラリ",
+    "mediaLibraryEmpty": "アップロードされたメディアはまだありません",
+    "placeholder": "質問を入力してください...",
+    "selectMedia": "メディアを選択",
+    "deleteMedia": "メディアを削除",
+    "deleteMediaWarning": "このメディアは他のクイズで使われている可能性があります。削除すると壊れることがあります。"
   },
   "quizzSaved": "クイズを保存しました",
   "quizzUpdated": "クイズを更新しました",

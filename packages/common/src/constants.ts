@@ -82,6 +82,28 @@ export const MEDIA_TYPES = {
   AUDIO: "audio",
 } as const
 
+export type MediaType = (typeof MEDIA_TYPES)[keyof typeof MEDIA_TYPES]
+
+/**
+ * Media accepted for upload, keyed by the MIME the server detects from magic
+ * bytes, each mapping to the extension written to disk and the media type. The
+ * single source of truth for MIME → extension → type: the server derives the
+ * type at save time and the client consumes it rather than guessing from the
+ * URL. Video is not uploadable — it is attachable only by external URL.
+ */
+export const ACCEPTED_MEDIA_TYPES: Record<
+  string,
+  { ext: string; type: MediaType }
+> = {
+  "image/png": { ext: ".png", type: MEDIA_TYPES.IMAGE },
+  "image/jpeg": { ext: ".jpg", type: MEDIA_TYPES.IMAGE },
+  "image/webp": { ext: ".webp", type: MEDIA_TYPES.IMAGE },
+  "image/gif": { ext: ".gif", type: MEDIA_TYPES.IMAGE },
+  "audio/mpeg": { ext: ".mp3", type: MEDIA_TYPES.AUDIO },
+  "audio/ogg": { ext: ".ogg", type: MEDIA_TYPES.AUDIO },
+  "audio/wav": { ext: ".wav", type: MEDIA_TYPES.AUDIO },
+}
+
 export const EXAMPLE_QUIZZ = {
   subject: "Example Quizz",
   questions: [

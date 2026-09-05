@@ -5,7 +5,7 @@ on:
 
 jobs:
   checks:
-    name: Lint & Format
+    name: Lint, Format & Test
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]' || contains(github.event.pull_request.labels.*.name, 'javascript')
     steps:
@@ -31,3 +31,6 @@ jobs:
 
       - name: Lint
         run: pnpm lint
+
+      - name: Test
+        run: pnpm test

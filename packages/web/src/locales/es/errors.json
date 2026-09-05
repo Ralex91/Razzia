@@ -19,6 +19,15 @@
     "invalidPassword": "Contraseña incorrecta",
     "passwordNotConfigured": "La contraseña del administrador no está configurada"
   },
+  "media": {
+    "invalidType": "Tipo de archivo no admitido. Usa una imagen (PNG, JPEG, WebP, GIF) o audio (MP3, OGG, WAV).",
+    "listFailed": "No se pudo cargar la biblioteca multimedia. Inténtalo de nuevo.",
+    "tooLarge": "El archivo es demasiado grande (máximo 20 MB).",
+    "unauthorized": "Tu sesión ha caducado. Inicia sesión de nuevo.",
+    "uploadFailed": "Error al subir el archivo. Inténtalo de nuevo.",
+    "videoUpload": "Los videos no se pueden subir. Añade el video por URL en su lugar.",
+    "deleteFailed": "No se pudo eliminar el archivo. Inténtalo de nuevo."
+  },
   "notFound": {
     "back": "Volver al inicio",
     "description": "La página que buscas no existe.",

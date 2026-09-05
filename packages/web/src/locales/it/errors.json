@@ -19,6 +19,15 @@
     "invalidPassword": "Password non valida",
     "passwordNotConfigured": "La password del gestore non è configurata"
   },
+  "media": {
+    "invalidType": "Tipo di file non supportato. Usa un'immagine (PNG, JPEG, WebP, GIF) o un audio (MP3, OGG, WAV).",
+    "listFailed": "Impossibile caricare la libreria multimediale. Riprova.",
+    "tooLarge": "Il file è troppo grande (massimo 20 MB).",
+    "unauthorized": "La tua sessione è scaduta. Effettua di nuovo l'accesso.",
+    "uploadFailed": "Caricamento non riuscito. Riprova.",
+    "videoUpload": "I video non possono essere caricati. Aggiungi il video tramite URL.",
+    "deleteFailed": "Impossibile eliminare il file. Riprova."
+  },
   "notFound": {
     "back": "Torna alla home",
     "description": "La pagina che cerchi non esiste.",

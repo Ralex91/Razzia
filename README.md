@@ -52,6 +52,7 @@ Or using Docker directly:
 docker run -d \
   -p 3000:3000 \
   -v ./config:/app/config \
+  -v ./media:/app/media \
   ralex91/razzia:latest
 ```
 
@@ -61,6 +62,7 @@ The image is also published on the GitHub Container Registry, if you prefer usin
 docker run -d \
   -p 3000:3000 \
   -v ./config:/app/config \
+  -v ./media:/app/media \
   ghcr.io/ralex91/razzia:latest
 ```
 
@@ -72,6 +74,9 @@ The `-v ./config:/app/config` option mounts a local `config` folder to persist y
 - Easily backup your quizzes and game configuration
 
 The folder will be created automatically on first run with an example quiz to get you started.
+
+**Media Volume:**
+The `-v ./media:/app/media` option mounts a local `media` folder where uploaded question media is stored, separate from your `config`. It persists across container restarts and updates, and can be backed up independently. Uploads accept images and audio up to 20 MB each; video is attached by external URL instead.
 
 The application will be available at http://localhost:3000
 

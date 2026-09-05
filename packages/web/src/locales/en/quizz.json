@@ -36,7 +36,17 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Enter URL...",
-    "placeholder": "Start typing your question..."
+    "addFromUrl": "Add from URL",
+    "addFromUrlTitle": "Add media from a URL",
+    "externalLinkNotice": "This attaches an external link. The platform does not host or store this media.",
+    "uploadNote": "* Images or audio only — add videos by URL",
+    "uploadMedia": "Upload media",
+    "mediaLibrary": "Media library",
+    "mediaLibraryEmpty": "No media uploaded yet",
+    "placeholder": "Start typing your question...",
+    "selectMedia": "Select media",
+    "deleteMedia": "Delete media",
+    "deleteMediaWarning": "This media may be used in other quizzes — deleting it could break them."
   },
   "quizzSaved": "Quizz saved successfully",
   "quizzUpdated": "Quizz updated successfully",

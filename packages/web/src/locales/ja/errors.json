@@ -19,6 +19,15 @@
     "invalidPassword": "パスワードが無効です",
     "passwordNotConfigured": "管理者パスワードが設定されていません"
   },
+  "media": {
+    "invalidType": "サポートされていないファイル形式です。画像（PNG、JPEG、WebP、GIF）または音声（MP3、OGG、WAV）を使用してください。",
+    "listFailed": "メディアライブラリの読み込みに失敗しました。もう一度お試しください。",
+    "tooLarge": "ファイルが大きすぎます（最大 20 MB）。",
+    "unauthorized": "セッションの有効期限が切れました。もう一度ログインしてください。",
+    "uploadFailed": "アップロードに失敗しました。もう一度お試しください。",
+    "videoUpload": "動画はアップロードできません。代わりにURLで追加してください。",
+    "deleteFailed": "ファイルの削除に失敗しました。もう一度お試しください。"
+  },
   "notFound": {
     "back": "ホームに戻る",
     "description": "お探しのページは存在しません。",

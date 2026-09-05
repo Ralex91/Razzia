@@ -5,11 +5,19 @@ import {
 } from "@razzia/common/constants"
 import { z } from "zod"
 
+const MEDIA_PATH_PREFIX = "/media/"
+
 export const questionMediaValidator = z.object({
   type: z
     .enum([MEDIA_TYPES.IMAGE, MEDIA_TYPES.VIDEO, MEDIA_TYPES.AUDIO])
     .optional(),
-  url: z.url("errors:quizz.invalidMediaUrl"),
+  url: z
+    .string()
+    .refine(
+      (value) =>
+        value.startsWith(MEDIA_PATH_PREFIX) || z.url().safeParse(value).success,
+      "errors:quizz.invalidMediaUrl",
+    ),
 })
 
 const multiOptionsValidator = z.object({

@@ -36,7 +36,17 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Introduce la URL...",
-    "placeholder": "Empieza a escribir tu pregunta..."
+    "addFromUrl": "Añadir desde URL",
+    "addFromUrlTitle": "Añadir archivo desde una URL",
+    "externalLinkNotice": "Esto adjunta un enlace externo. La plataforma no aloja ni almacena este archivo.",
+    "uploadNote": "* Solo imágenes o audio — añade videos por URL",
+    "uploadMedia": "Subir un archivo multimedia",
+    "mediaLibrary": "Biblioteca multimedia",
+    "mediaLibraryEmpty": "Aún no hay archivos multimedia subidos",
+    "placeholder": "Empieza a escribir tu pregunta...",
+    "selectMedia": "Seleccionar archivo",
+    "deleteMedia": "Eliminar archivo",
+    "deleteMediaWarning": "Este archivo puede estar en uso en otros cuestionarios; eliminarlo podría romperlos."
   },
   "quizzSaved": "Cuestionario guardado con éxito",
   "quizzUpdated": "Cuestionario actualizado con éxito",

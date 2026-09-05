@@ -1,5 +1,6 @@
 {
   "cancel": "Annuler",
+  "close": "Fermer",
   "confirm": "Confirmer",
   "connecting": "Connexion...",
   "delete": "Supprimer",
@@ -17,5 +18,6 @@
   "save": "Enregistrer",
   "seconds": "sec",
   "skip": "Passer",
-  "submit": "Valider"
+  "submit": "Valider",
+  "or": "ou"
 }

@@ -19,6 +19,15 @@
     "invalidPassword": "Mot de passe invalide",
     "passwordNotConfigured": "Mot de passe manager non configuré"
   },
+  "media": {
+    "invalidType": "Type de fichier non pris en charge. Utilisez une image (PNG, JPEG, WebP, GIF) ou un audio (MP3, OGG, WAV).",
+    "listFailed": "Échec du chargement de la médiathèque. Veuillez réessayer.",
+    "tooLarge": "Le fichier est trop volumineux (20 Mo maximum).",
+    "unauthorized": "Votre session a expiré. Veuillez vous reconnecter.",
+    "uploadFailed": "Échec du téléversement. Veuillez réessayer.",
+    "videoUpload": "Les vidéos ne peuvent pas être téléversées. Ajoutez plutôt la vidéo par URL.",
+    "deleteFailed": "Échec de la suppression du fichier. Veuillez réessayer."
+  },
   "notFound": {
     "back": "Retour à l'accueil",
     "description": "La page que vous recherchez n'existe pas.",
