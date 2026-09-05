@@ -1,9 +1,8 @@
 import { MEDIA_TYPES } from "@razzia/common/constants"
-import type { QuestionMedia } from "@razzia/common/types/game"
+import type { Question, QuestionMedia } from "@razzia/common/types/game"
 import AlertDialog from "@razzia/web/components/AlertDialog"
-import { type QuestionWithId } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
-import { Music, Trash2, Video } from "lucide-react"
+import { CircleAlert, Music, Trash2, Video } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
@@ -26,9 +25,10 @@ const SlideMedia = ({ media }: { media?: QuestionMedia }) => {
 }
 
 interface Props {
-  question: QuestionWithId
+  question: Question
   index: number
   isActive: boolean
+  isInvalid: boolean
   canDelete: boolean
   onClick: () => void
   onDelete: () => void
@@ -38,6 +38,7 @@ const QuizzEditorCard = ({
   question,
   index,
   isActive,
+  isInvalid,
   canDelete,
   onClick,
   onDelete,
@@ -52,14 +53,24 @@ const QuizzEditorCard = ({
           "group border-accent bg-background relative flex h-36 cursor-pointer flex-col justify-between gap-1 rounded-lg border-2 px-6 py-2",
           {
             "border-primary": isActive,
+            "border-red-500": isInvalid,
           },
         ),
       )}
     >
-      <span className="text-muted-foreground absolute top-2 left-2 text-xs font-semibold">
-        {index + 1}
-      </span>
-      <p className="text-foreground truncate text-center text-xs font-semibold">
+      <div className="absolute top-2 left-2 flex items-center gap-1">
+        <span className="text-muted-foreground text-xs font-semibold">
+          {index + 1}
+        </span>
+
+        {isInvalid && (
+          <CircleAlert
+            aria-label={t("quizz:questionHasErrors")}
+            className="size-3.5 text-red-500"
+          />
+        )}
+      </div>
+      <p className="text-foreground truncate px-3 text-center text-xs font-semibold">
         {question.question || t("quizz:noQuestionYet")}
       </p>
 

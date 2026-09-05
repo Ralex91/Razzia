@@ -38,11 +38,12 @@
     "mediaUrlPlaceholder": "URLを入力...",
     "placeholder": "質問を入力してください..."
   },
-  "quizzSaved": "クイズを保存しました",
-  "quizzUpdated": "クイズを更新しました",
+  "questionHasErrors": "この質問にはエラーがあります",
   "questionType": {
     "single": "単一選択",
     "multi": "複数選択"
   },
+  "quizzSaved": "クイズを保存しました",
+  "quizzUpdated": "クイズを更新しました",
   "titleQuizzPlaceholder": "クイズのタイトル..."
 }

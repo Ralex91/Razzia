@@ -38,11 +38,12 @@
     "mediaUrlPlaceholder": "URL eingeben...",
     "placeholder": "Beginne deine Frage zu tippen..."
   },
-  "quizzSaved": "Quiz erfolgreich gespeichert",
-  "quizzUpdated": "Quiz erfolgreich aktualisiert",
+  "questionHasErrors": "Diese Frage enthält Fehler",
   "questionType": {
     "single": "Einzelauswahl",
     "multi": "Mehrfachauswahl"
   },
+  "quizzSaved": "Quiz erfolgreich gespeichert",
+  "quizzUpdated": "Quiz erfolgreich aktualisiert",
   "titleQuizzPlaceholder": "Quiz-Titel..."
 }

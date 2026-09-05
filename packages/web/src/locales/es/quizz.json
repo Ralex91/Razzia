@@ -38,11 +38,12 @@
     "mediaUrlPlaceholder": "Introduce la URL...",
     "placeholder": "Empieza a escribir tu pregunta..."
   },
-  "quizzSaved": "Cuestionario guardado con éxito",
-  "quizzUpdated": "Cuestionario actualizado con éxito",
+  "questionHasErrors": "Esta pregunta contiene errores",
   "questionType": {
     "single": "Opción única",
     "multi": "Opción múltiple"
   },
+  "quizzSaved": "Cuestionario guardado con éxito",
+  "quizzUpdated": "Cuestionario actualizado con éxito",
   "titleQuizzPlaceholder": "Título del cuestionario..."
 }

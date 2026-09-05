@@ -1,25 +1,26 @@
+import FieldError from "@razzia/web/components/forms/FieldError"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
-import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+import {
+  useQuizzEditor,
+  type QuizzFormValues,
+} from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
 import { Minus, Plus } from "lucide-react"
+import { Controller, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorAnswers = () => {
-  const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
+  const { currentQuestion, currentIndex, updateQuestion, questionPath } =
+    useQuizzEditor()
+  const { control } = useFormContext<QuizzFormValues>()
   const { t } = useTranslation()
 
   const questionType = currentQuestion.type
   const { SolutionPicker } = QUESTION_REGISTRY[questionType]
-
-  const updateAnswer = (index: number, value: string) => {
-    const next = [...currentQuestion.answers]
-    next[index] = value
-    updateQuestion(currentIndex, { answers: next })
-  }
 
   const addAnswer = () => {
     if (currentQuestion.answers.length >= 4) {
@@ -70,30 +71,47 @@ const QuestionEditorAnswers = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        {currentQuestion.answers.map((answer, i) => {
+        {currentQuestion.answers.map((_, i) => {
           const isSelected = currentQuestion.solutions.includes(i)
 
           return (
-            <div
+            <Controller
               key={i}
-              className={clsx(
-                "flex items-center gap-3 rounded-2xl px-4 py-6",
-                ANSWERS_COLORS[i],
+              control={control}
+              name={questionPath(`answers.${i}`)}
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col gap-1">
+                  <div
+                    className={clsx(
+                      "flex items-center gap-3 rounded-2xl px-4 py-6",
+                      ANSWERS_COLORS[i],
+                      fieldState.invalid && "ring-2 ring-red-500",
+                    )}
+                  >
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-black/20 text-sm font-bold text-white md:size-8 md:text-base">
+                      {ANSWERS_LABELS[i]}
+                    </span>
+                    <div className="flex flex-1 items-center justify-between gap-1.5 drop-shadow-md">
+                      <input
+                        {...field}
+                        aria-invalid={fieldState.invalid}
+                        aria-describedby={
+                          fieldState.invalid ? `${field.name}-error` : undefined
+                        }
+                        className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none"
+                        placeholder={t("quizz:addAnswerPlaceholder")}
+                      />
+                      <SolutionPicker index={i} isSelected={isSelected} />
+                    </div>
+                  </div>
+                  <FieldError
+                    id={`${field.name}-error`}
+                    errors={[fieldState.error]}
+                    pill
+                  />
+                </div>
               )}
-            >
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-black/20 text-sm font-bold text-white md:size-8 md:text-base">
-                {ANSWERS_LABELS[i]}
-              </span>
-              <div className="flex flex-1 items-center justify-between gap-1.5 drop-shadow-md">
-                <input
-                  className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none"
-                  placeholder={t("quizz:addAnswerPlaceholder")}
-                  value={answer}
-                  onChange={(e) => updateAnswer(i, e.target.value)}
-                />
-                <SolutionPicker index={i} isSelected={isSelected} />
-              </div>
-            </div>
+            />
           )
         })}
       </div>

@@ -4,7 +4,10 @@ import type {
   GameResultMeta,
   QuizzWithId,
 } from "@razzia/common/types/game"
-import { quizzValidator } from "@razzia/common/validators/quizz"
+import {
+  normalizeLegacyQuizz,
+  quizzValidator,
+} from "@razzia/common/validators/quizz"
 import { normalizeFilename } from "@razzia/socket/utils/game"
 import fs from "fs"
 import { nanoid } from "nanoid"
@@ -161,7 +164,7 @@ export const getQuizz = (): QuizzWithId[] => {
         return []
       }
 
-      const result = quizzValidator.safeParse(data)
+      const result = quizzValidator.safeParse(normalizeLegacyQuizz(data))
 
       if (!result.success) {
         console.warn(`Invalid quizz config "${file}":`, result.error.issues)

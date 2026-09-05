@@ -16,7 +16,8 @@ import { LayoutList } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorConfig = () => {
-  const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
+  const { currentQuestion, currentQuestionId, currentIndex, updateQuestion } =
+    useQuizzEditor()
   const { t } = useTranslation()
   const questionType = currentQuestion.type
 
@@ -55,7 +56,7 @@ const QuestionEditorConfig = () => {
         </Select>
       </ConfigField>
 
-      <ConfigComponent key={currentQuestion.id} />
+      <ConfigComponent key={currentQuestionId} />
     </aside>
   )
 }

@@ -31,10 +31,6 @@ const BaseConfig = () => {
     updateQuestion(currentIndex, { options: { scoringMode: mode } })
   }
 
-  const handleUpdateQuestion = (key: string) => (value: string | number) => {
-    updateQuestion(currentIndex, { [key]: value })
-  }
-
   const handleToggleTimeLimit = (checked: boolean) => {
     updateQuestion(currentIndex, {
       time: checked ? DEFAULT_TIME : NO_TIME_LIMIT,
@@ -61,11 +57,7 @@ const BaseConfig = () => {
             label={t("quizz:question.config.maxPoints")}
             unit="pts"
           />
-          <ConfigNumberInput
-            value={currentQuestion.maxPoints ?? MAX_POINTS}
-            min={0}
-            onChange={handleUpdateQuestion("maxPoints")}
-          />
+          <ConfigNumberInput name="maxPoints" fallback={MAX_POINTS} min={1} />
           <ConfigField.Description>
             {t("quizz:question.config.maxPointsHint")}
           </ConfigField.Description>
@@ -85,9 +77,9 @@ const BaseConfig = () => {
           />
           {isPenaltyEnabled && (
             <ConfigNumberInput
-              value={currentQuestion.penalty ?? DEFAULT_PENALTY}
+              name="penalty"
+              fallback={DEFAULT_PENALTY}
               min={1}
-              onChange={handleUpdateQuestion("penalty")}
             />
           )}
           <ConfigField.Description>
@@ -127,11 +119,7 @@ const BaseConfig = () => {
             label={t("quizz:question.config.questionDisplay")}
             unit="sec"
           />
-          <ConfigNumberInput
-            value={currentQuestion.cooldown}
-            min={3}
-            onChange={handleUpdateQuestion("cooldown")}
-          />
+          <ConfigNumberInput name="cooldown" min={3} max={15} />
           <ConfigField.Description>
             {t("quizz:question.config.questionDisplayHint")}
           </ConfigField.Description>
@@ -149,13 +137,7 @@ const BaseConfig = () => {
               />
             }
           />
-          {isTimeLimitEnabled && (
-            <ConfigNumberInput
-              value={currentQuestion.time}
-              min={5}
-              onChange={handleUpdateQuestion("time")}
-            />
-          )}
+          {isTimeLimitEnabled && <ConfigNumberInput name="time" min={5} />}
           <ConfigField.Description>
             {isTimeLimitEnabled
               ? t("quizz:question.config.answerTimeHint")

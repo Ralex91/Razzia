@@ -1,7 +1,7 @@
 import clsx from "clsx"
 import React from "react"
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+type Props = React.ComponentProps<"input"> & {
   variant?: "sm" | "md"
 }
 

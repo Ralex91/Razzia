@@ -1,35 +1,49 @@
+import { zodResolver } from "@hookform/resolvers/zod"
 import { QUESTION_TYPES } from "@razzia/common/constants"
 import type { Question, QuizzWithId } from "@razzia/common/types/game"
+import {
+  quizzValidator,
+  type QuizzValidated,
+} from "@razzia/common/validators/quizz"
 import {
   createContext,
   useContext,
   useState,
   type PropsWithChildren,
 } from "react"
-import { v7 as uuid } from "uuid"
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useWatch,
+  type FieldPath,
+} from "react-hook-form"
 
-export type QuestionWithId = Question & {
-  id: string
+export interface QuizzFormValues {
+  subject: string
+  questions: Question[]
 }
 
 interface QuizzEditorContextType {
   quizzId: string | null
-  subject: string
-  setSubject: (_subject: string) => void
-  questions: QuestionWithId[]
+  questions: Question[]
+  questionIds: string[]
   currentIndex: number
-  currentQuestion: QuestionWithId
+  currentQuestion: Question
+  currentQuestionId: string
   setCurrentIndex: (_index: number) => void
   addQuestion: () => void
   removeQuestion: (_index: number) => void
   reorderQuestions: (_from: number, _to: number) => void
-  updateQuestion: (_index: number, _updates: Partial<QuestionWithId>) => void
+  updateQuestion: (_index: number, _updates: Partial<Question>) => void
+  questionPath: <K extends FieldPath<Question>>(
+    _field: K,
+  ) => `questions.${number}.${K}`
 }
 
 const QuizzEditorContext = createContext<QuizzEditorContextType | null>(null)
 
-const defaultQuestion = (): QuestionWithId => ({
-  id: uuid(),
+const defaultQuestion = (): Question => ({
   type: QUESTION_TYPES.SINGLE,
   question: "",
   answers: ["", ""],
@@ -38,13 +52,8 @@ const defaultQuestion = (): QuestionWithId => ({
   time: 20,
 })
 
-const toQuestionWithId = (q: Question): QuestionWithId => ({
-  ...q,
-  id: uuid(),
-})
-
-const clampIndex = (index: number, array: unknown[]) =>
-  Math.max(0, Math.min(index, array.length - 1))
+const clampIndex = (index: number, length: number) =>
+  Math.max(0, Math.min(index, length - 1))
 
 type QuizzEditorProviderProps = PropsWithChildren<{
   initialData?: QuizzWithId
@@ -54,26 +63,34 @@ export const QuizzEditorProvider = ({
   children,
   initialData,
 }: QuizzEditorProviderProps) => {
-  const [subject, setSubject] = useState(
-    initialData?.subject ?? "Untitled Quizz",
-  )
-  const [questions, setQuestions] = useState<QuestionWithId[]>(
-    initialData
-      ? initialData.questions.map(toQuestionWithId)
-      : [defaultQuestion()],
-  )
+  const form = useForm<QuizzFormValues, unknown, QuizzValidated>({
+    resolver: zodResolver(quizzValidator),
+    defaultValues: {
+      subject: initialData?.subject ?? "Untitled Quizz",
+      questions: initialData ? initialData.questions : [defaultQuestion()],
+    },
+  })
+
+  const { control, getValues, setValue, formState } = form
+  const { fields, append, remove, move } = useFieldArray({
+    control,
+    name: "questions",
+  })
   const [currentIndex, setCurrentIndex] = useState(0)
-  const currentQuestion = questions[clampIndex(currentIndex, questions)]
+
+  const questions = useWatch({ control, name: "questions" })
+  const safeIndex = clampIndex(currentIndex, questions.length)
+  const currentQuestion = questions[safeIndex]
+  const questionIds = fields.map((field) => field.id)
 
   const addQuestion = () => {
-    setQuestions((prev) => [...prev, defaultQuestion()])
+    append(defaultQuestion())
     setCurrentIndex(questions.length)
   }
 
   const removeQuestion = (index: number) => {
-    const next = questions.filter((_, i) => i !== index)
+    remove(index)
 
-    setQuestions(next)
     setCurrentIndex((current) => {
       if (current < index) {
         return current
@@ -83,45 +100,47 @@ export const QuizzEditorProvider = ({
         return current - 1
       }
 
-      return clampIndex(current, next)
+      return clampIndex(current, questions.length - 1)
     })
   }
 
   const reorderQuestions = (from: number, to: number) => {
-    setQuestions((prev) => {
-      const next = [...prev]
-      const [moved] = next.splice(from, 1)
-      next.splice(to, 0, moved)
-
-      return next
-    })
+    move(from, to)
     setCurrentIndex(to)
   }
 
-  const updateQuestion = (index: number, updates: Partial<QuestionWithId>) => {
-    setQuestions((prev) =>
-      prev.map((q, i) => (i === index ? { ...q, ...updates } : q)),
+  const questionPath = <K extends FieldPath<Question>>(field: K) =>
+    `questions.${currentIndex}.${field}` as const
+
+  const updateQuestion = (index: number, updates: Partial<Question>) => {
+    setValue(
+      `questions.${index}`,
+      { ...getValues(`questions.${index}`), ...updates },
+      { shouldValidate: formState.isSubmitted, shouldDirty: true },
     )
   }
 
   return (
-    <QuizzEditorContext.Provider
-      value={{
-        quizzId: initialData?.id ?? null,
-        subject,
-        setSubject,
-        questions,
-        currentIndex,
-        currentQuestion,
-        setCurrentIndex,
-        addQuestion,
-        removeQuestion,
-        reorderQuestions,
-        updateQuestion,
-      }}
-    >
-      {children}
-    </QuizzEditorContext.Provider>
+    <FormProvider {...form}>
+      <QuizzEditorContext.Provider
+        value={{
+          quizzId: initialData?.id ?? null,
+          questions,
+          questionIds,
+          currentIndex,
+          currentQuestion,
+          currentQuestionId: questionIds[safeIndex],
+          setCurrentIndex,
+          addQuestion,
+          removeQuestion,
+          reorderQuestions,
+          updateQuestion,
+          questionPath,
+        }}
+      >
+        {children}
+      </QuizzEditorContext.Provider>
+    </FormProvider>
   )
 }
 

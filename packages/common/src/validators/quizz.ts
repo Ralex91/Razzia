@@ -13,43 +13,28 @@ export const questionMediaValidator = z.object({
 })
 
 const multiOptionsValidator = z.object({
-  scoringMode: z.enum(SCORING_MODES).default(SCORING_MODES.BALANCED),
+  scoringMode: z.enum(SCORING_MODES),
 })
 
-// Backward compat: questions saved before type was required default to "single"
-const questionValidator = z.preprocess(
-  (data) => {
-    if (
-      typeof data === "object" &&
-      data !== null &&
-      !("type" in (data as Record<string, unknown>))
-    ) {
-      return {
-        ...(data as Record<string, unknown>),
-        type: QUESTION_TYPES.SINGLE,
-      }
-    }
-
-    return data
-  },
-  z.object({
-    type: z.enum(QUESTION_TYPES),
-    question: z.string().min(1, "errors:quizz.questionEmpty"),
-    media: questionMediaValidator.optional(),
-    answers: z
-      .array(z.string().min(1, "errors:quizz.answerEmpty"))
-      .min(2, "errors:quizz.tooFewAnswers")
-      .max(4, "errors:quizz.tooManyAnswers"),
-    solutions: z
-      .union([z.number().int().min(0), z.array(z.number().int().min(0)).min(1)])
-      .transform((v) => (Array.isArray(v) ? v : [v])),
-    cooldown: z.number().int().min(3).max(15),
-    time: z.number().int().min(-1),
-    maxPoints: z.number().int().min(0).optional(),
-    penalty: z.number().int().min(0).optional(),
-    options: multiOptionsValidator.optional(),
-  }),
-)
+const questionValidator = z.object({
+  type: z.enum(QUESTION_TYPES),
+  question: z.string().min(1, "errors:quizz.questionEmpty"),
+  media: questionMediaValidator.optional(),
+  answers: z
+    .array(z.string().min(1, "errors:quizz.answerEmpty"))
+    .min(2, "errors:quizz.tooFewAnswers")
+    .max(4, "errors:quizz.tooManyAnswers"),
+  solutions: z.array(z.number().int().min(0)).min(1),
+  cooldown: z
+    .number()
+    .int()
+    .min(3, "errors:quizz.cooldownTooShort")
+    .max(15, "errors:quizz.cooldownTooLong"),
+  time: z.number().int().min(-1),
+  maxPoints: z.number().int().min(1, "errors:quizz.maxPointsTooLow").optional(),
+  penalty: z.number().int().min(0, "errors:quizz.penaltyNegative").optional(),
+  options: multiOptionsValidator.optional(),
+})
 
 export const quizzValidator = z.object({
   subject: z.string().min(1, "errors:quizz.subjectEmpty"),
@@ -57,3 +42,42 @@ export const quizzValidator = z.object({
 })
 
 export type QuizzValidated = z.infer<typeof quizzValidator>
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null
+
+/**
+ * Upgrades quizz files written by older versions: questions without a `type`,
+ * a scalar `solutions`, or options without a `scoringMode`.
+ */
+export const normalizeLegacyQuizz = (data: unknown): unknown => {
+  if (!isRecord(data) || !Array.isArray(data.questions)) {
+    return data
+  }
+
+  return {
+    ...data,
+    questions: data.questions.map((question: unknown) => {
+      if (!isRecord(question)) {
+        return question
+      }
+
+      return {
+        ...question,
+        type: question.type ?? QUESTION_TYPES.SINGLE,
+        solutions:
+          question.solutions === undefined || Array.isArray(question.solutions)
+            ? question.solutions
+            : [question.solutions],
+        ...(isRecord(question.options)
+          ? {
+              options: {
+                scoringMode: SCORING_MODES.BALANCED,
+                ...question.options,
+              },
+            }
+          : {}),
+      }
+    }),
+  }
+}
