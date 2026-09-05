@@ -1,5 +1,6 @@
 {
   "cancel": "Abbrechen",
+  "close": "Schließen",
   "confirm": "Bestätigen",
   "connecting": "Verbinden...",
   "delete": "Löschen",
@@ -17,5 +18,6 @@
   "save": "Speichern",
   "seconds": "Sek",
   "skip": "Überspringen",
-  "submit": "Absenden"
+  "submit": "Absenden",
+  "or": "oder"
 }

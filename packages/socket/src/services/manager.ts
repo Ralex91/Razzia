@@ -11,10 +11,14 @@ export const emitConfig = (socket: SocketContext["socket"]) =>
   })
 
 class Manager {
-  private loggedClients = new Set()
+  private loggedClients = new Set<string>()
+
+  isClientLogged(clientId: string): boolean {
+    return this.loggedClients.has(clientId)
+  }
 
   isLogged(socket: Socket) {
-    return this.loggedClients.has(getClientId(socket))
+    return this.isClientLogged(getClientId(socket))
   }
 
   login(socket: Socket) {

@@ -4,6 +4,7 @@
 
 # gitignored / secrets - must never enter the build context
 config
+media
 .env
 .secrets
 release.json

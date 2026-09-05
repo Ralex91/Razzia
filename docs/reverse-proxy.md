@@ -67,6 +67,6 @@ quiz.example.com {
 
 Any reverse proxy works as long as it:
 
-- Forwards all paths (`/`, `/branding/`, `/ws`) to the container's port `3000`
+- Forwards all paths (`/`, `/branding/`, `/ws`, `/api/`, `/media/`) to the container's port `3000` — the media API and uploaded images are served internally on `3000`, so there is no extra external requirement
 - Passes through `Upgrade` and `Connection` headers for WebSocket upgrades on `/ws`
 - Uses a generous read/idle timeout (players stay connected for the whole game, potentially longer than a default 60s timeout)

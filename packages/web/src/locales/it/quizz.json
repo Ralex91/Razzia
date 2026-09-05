@@ -36,7 +36,19 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Inserisci URL...",
-    "placeholder": "Inizia a scrivere la tua domanda..."
+    "addFromUrl": "Aggiungi da URL",
+    "addFromUrlTitle": "Aggiungi media da un URL",
+    "externalLinkNotice": "Questo allega un link esterno. La piattaforma non ospita né archivia questo media.",
+    "uploadNote": "* Solo immagini o audio — aggiungi i video tramite URL",
+    "uploadMedia": "Carica un media",
+    "mediaLibrary": "Libreria multimediale",
+    "mediaLibraryEmpty": "Nessun media caricato",
+    "placeholder": "Inizia a scrivere la tua domanda...",
+    "selectMedia": "Seleziona media",
+    "gridView": "Vista griglia",
+    "listView": "Vista elenco",
+    "deleteMedia": "Elimina media",
+    "deleteMediaWarning": "Questo media potrebbe essere usato in altri quiz — eliminarlo potrebbe comprometterli."
   },
   "quizzSaved": "Quiz salvato con successo",
   "quizzUpdated": "Quiz aggiornato con successo",
