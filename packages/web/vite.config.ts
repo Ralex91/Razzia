@@ -6,7 +6,7 @@ import type { IncomingMessage, ServerResponse } from "node:http"
 import path from "node:path"
 import { fileURLToPath } from "url"
 import { defineConfig, type Plugin } from "vite"
-import { version } from "../../package.json"
+import { version } from "../../package.json" with { type: "json" }
 
 const brandingDir = fileURLToPath(
   new URL("../../config/branding", import.meta.url),

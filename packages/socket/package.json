@@ -9,16 +9,16 @@
   "license": "ISC",
   "dependencies": {
     "@razzia/common": "workspace:*",
-    "dayjs": "^1.11.21",
-    "nanoid": "^5.1.16",
+    "dayjs": "^1.11.23",
+    "nanoid": "^6.0.1",
     "socket.io": "^4.8.3",
-    "typescript": "^6.0.3",
-    "uuid": "^14.0.1",
-    "zod": "^4.4.3"
+    "typescript": "^7.0.2",
+    "uuid": "^14.0.2",
+    "zod": "^4.5.2"
   },
   "devDependencies": {
-    "@types/node": "^26.0.1",
-    "esbuild": "^0.28.1",
-    "tsx": "^4.22.4"
+    "@types/node": "^26.4.0",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.12"
   }
 }
