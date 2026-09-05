@@ -4,6 +4,7 @@ import Toaster from "@razzia/web/components/Toaster"
 import { socketClient } from "@razzia/web/features/game/contexts/socket-context"
 import "@razzia/web/i18n"
 import "@razzia/web/index.css"
+import { installMediaUnlock } from "@razzia/web/hooks/media-unlock"
 import { routeTree } from "@razzia/web/route.gen"
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { StrictMode } from "react"
@@ -24,6 +25,7 @@ if (!root) {
 }
 
 applyBranding(await loadBranding())
+installMediaUnlock()
 
 createRoot(root).render(
   <StrictMode>

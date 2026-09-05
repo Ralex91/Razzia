@@ -149,6 +149,10 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     withGame(gameId, socket, (game) => game.showLeaderboard(socket)),
   )
 
+  socket.on(EVENTS.MANAGER.MEDIA_ENDED, ({ gameId, questionIndex }) =>
+    withGame(gameId, socket, (game) => game.mediaEnded(socket, questionIndex)),
+  )
+
   socket.on(EVENTS.MANAGER.LEAVE, ({ gameId }) => {
     const game = registry.getManagerGame(gameId, clientId)
 

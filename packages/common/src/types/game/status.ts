@@ -27,6 +27,7 @@ export interface CommonStatusDataMap {
     question: string
     media?: QuestionMedia
     cooldown: number
+    questionIndex: number
   }
   SELECT_ANSWER: {
     question: string
