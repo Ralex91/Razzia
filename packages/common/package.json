@@ -3,7 +3,7 @@
   "type": "module",
   "dependencies": {
     "socket.io": "^4.8.3",
-    "zod": "^4.5.2"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
