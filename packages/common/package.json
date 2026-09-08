@@ -2,11 +2,11 @@
   "name": "@razzia/common",
   "type": "module",
   "dependencies": {
-    "socket.io": "^4.8.3",
-    "zod": "^4.5.4"
+    "socket.io": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^26.4.0",
-    "typescript": "^7.0.2"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   }
 }

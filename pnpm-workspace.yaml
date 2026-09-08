@@ -1,6 +1,14 @@
 packages:
   - "packages/*"
 
+catalog:
+  "@types/node": "^26.4.0"
+  socket.io: "^4.8.3"
+  socket.io-client: "^4.8.3"
+  typescript: "^7.0.2"
+  uuid: "^14.0.2"
+  zod: "^4.5.4"
+
 allowBuilds:
   esbuild: true
   oxlint: true
