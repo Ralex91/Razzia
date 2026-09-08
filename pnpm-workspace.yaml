@@ -14,5 +14,5 @@ allowBuilds:
   oxlint: true
   oxlint-tsgolint: true
 
-minimumReleaseAge: 10080
+minimumReleaseAge: 4320
 blockExoticSubdeps: true
