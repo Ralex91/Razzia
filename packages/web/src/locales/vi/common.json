@@ -1,0 +1,22 @@
+{
+  "cancel": "Hủy",
+  "confirm": "Xác nhận",
+  "connecting": "Đang kết nối...",
+  "delete": "Xóa",
+  "exit": "Thoát",
+  "language": {
+    "de": "Deutsch - Tiếng Đức",
+    "en": "English - Tiếng Anh",
+    "es": "Español - Tiếng Tây Ban Nha",
+    "fr": "Français - Tiếng Pháp",
+    "it": "Italiano - Tiếng Ý",
+    "ja": "日本語 - Tiếng Nhật",
+    "vi": "Tiếng Việt - Vietnamese"
+  },
+  "loading": "Đang tải...",
+  "next": "Tiếp",
+  "save": "Lưu",
+  "seconds": "giây",
+  "skip": "Bỏ qua",
+  "submit": "Gửi"
+}

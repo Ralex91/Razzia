@@ -1,0 +1,30 @@
+{
+  "correct": "Chính xác!",
+  "gamePinLabel": "Mã PIN trò chơi:",
+  "hud": {
+    "answers": "Câu trả lời",
+    "time": "Thời gian"
+  },
+  "joinInstruction": "Tham gia trò chơi tại",
+  "leaderboard": "Bảng xếp hạng",
+  "pinLabel": "Mã PIN",
+  "reconnect": "Kết nối lại",
+  "reconnectTitle": "Bạn đang ở trong một trò chơi",
+  "playersJoined": "Người chơi đã tham gia: ",
+  "questionPrefix": "Câu hỏi #",
+  "rank": {
+    "1": "Top 1",
+    "2": "Top 2",
+    "3": "Top 3",
+    "other": "Top {{rank}}"
+  },
+  "rankSuffix": "",
+  "resultBehind": ", sau ",
+  "resultTop": "Bạn xếp ",
+  "startGame": "Bắt đầu trò chơi",
+  "usernamePlaceholder": "Nhập tên người dùng",
+  "waitingForAnswers": "Đang chờ người chơi trả lời",
+  "waitingForPlayers": "Đang chờ người chơi",
+  "wrong": "Sai rồi",
+  "confirm": "Xác nhận"
+}

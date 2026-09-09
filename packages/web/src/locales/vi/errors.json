@@ -1,0 +1,45 @@
+{
+  "auth": {
+    "invalidInviteCode": "Mã tham dự không hợp lệ",
+    "usernameTooLong": "Tên người dùng không được vượt quá 20 ký tự",
+    "usernameTooShort": "Tên người dùng không được ngắn hơn 4 ký tự"
+  },
+  "game": {
+    "expired": "Trò chơi đã hết hạn",
+    "kickedByManager": "Bạn đã bị quản trị viên mời ra khỏi phòng",
+    "managerAlreadyConnected": "Quản trị viên đã kết nối",
+    "managerDisconnected": "Quản trị viên đã ngắt kết nối",
+    "noPlayersConnected": "Không có người chơi nào kết nối",
+    "managerCannotJoin": "Bạn không thể tham gia trò chơi của chính mình",
+    "notFound": "Không tìm thấy trò chơi",
+    "playerAlreadyConnected": "Người chơi đã kết nối"
+  },
+  "manager": {
+    "failedToReadConfig": "Không đọc được cấu hình trò chơi",
+    "invalidPassword": "Mật khẩu không hợp lệ",
+    "passwordNotConfigured": "Mật khẩu quản trị viên chưa được cấu hình"
+  },
+  "notFound": {
+    "back": "Về trang chủ",
+    "description": "Trang bạn đang tìm không tồn tại.",
+    "title": "Không tìm thấy trang"
+  },
+  "quizz": {
+    "answerEmpty": "Đáp án không được để trống",
+    "failedToDelete": "Xóa trò chơi thất bại",
+    "failedToSave": "Trò chơi chưa hoàn chỉnh, hãy đảm bảo mọi câu hỏi đều có tiêu đề và ít nhất một đáp án đúng",
+    "failedToUpdate": "Cập nhật trò chơi thất bại",
+    "invalidMediaUrl": "URL media phải là một URL hợp lệ",
+    "noQuestions": "Trò chơi phải có ít nhất một câu hỏi",
+    "notFound": "Không tìm thấy trò chơi",
+    "questionEmpty": "Câu hỏi không được để trống",
+    "subjectEmpty": "Chủ đề không được để trống",
+    "tooFewAnswers": "Một câu hỏi phải có ít nhất 2 câu trả lời",
+    "tooManyAnswers": "Một câu hỏi không được có quá 4 câu trả lời"
+  },
+  "route": {
+    "back": "Về trang chủ",
+    "description": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.",
+    "title": "Đã có lỗi xảy ra"
+  }
+}
