@@ -1,6 +1,15 @@
 {
+  "api": {
+    "notFound": "Die angeforderte Ressource existiert nicht",
+    "serverError": "Auf dem Server ist ein Fehler aufgetreten, bitte erneut versuchen"
+  },
   "auth": {
     "invalidInviteCode": "Ungültiger Einladungscode",
+    "joinTicketInvalid": "Deine Beitrittsanfrage ist abgelaufen, gib den PIN erneut ein",
+    "sessionFailed": "Sitzung konnte nicht gestartet werden, bitte Seite neu laden",
+    "tokenInvalid": "Ungültiges Sitzungstoken",
+    "tokenMissing": "Sitzungstoken fehlt",
+    "unauthorized": "Nicht autorisiert",
     "usernameTooLong": "Der Benutzername darf nicht mehr als 20 Zeichen haben",
     "usernameTooShort": "Der Benutzername muss mindestens 4 Zeichen haben"
   },
@@ -14,6 +23,7 @@
     "notFound": "Spiel nicht gefunden",
     "playerAlreadyConnected": "Spieler bereits verbunden"
   },
+  "invalidRequest": "Ungültige Anfrage",
   "manager": {
     "failedToReadConfig": "Spielkonfiguration konnte nicht gelesen werden",
     "invalidPassword": "Ungültiges Passwort",
@@ -40,6 +50,9 @@
     "subjectEmpty": "Das Thema darf nicht leer sein",
     "tooFewAnswers": "Eine Frage muss mindestens 2 Antworten haben",
     "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben"
+  },
+  "result": {
+    "notFound": "Ergebnis nicht gefunden"
   },
   "route": {
     "back": "Zurück zur Startseite",
