@@ -72,9 +72,6 @@ const getClaims = (): SessionClaims | null => {
 
 export const getClientId = (): string => getClaims()?.sub ?? ""
 
-export const getRole = (): SessionRole =>
-  getClaims()?.role ?? SESSION_ROLES.PLAYER
-
 export const isExpired = (skew = EXPIRY_SKEW_SECONDS): boolean => {
   const claims = getClaims()
 
@@ -83,6 +80,14 @@ export const isExpired = (skew = EXPIRY_SKEW_SECONDS): boolean => {
   }
 
   return claims.exp - skew <= Math.floor(Date.now() / 1000)
+}
+
+export const getRole = (): SessionRole => {
+  if (isExpired()) {
+    return SESSION_ROLES.PLAYER
+  }
+
+  return getClaims()?.role ?? SESSION_ROLES.PLAYER
 }
 
 const requestSession = async (token: string | null) => {

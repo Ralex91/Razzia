@@ -30,6 +30,10 @@ const QuizzEditorHeader = () => {
   const queryClient = useQueryClient()
   const { t } = useTranslation()
 
+  const handleExit = () => {
+    navigate({ to: "/manager/config" })
+  }
+
   const onError = (error: Error) => {
     toast.error(
       t(error instanceof ApiError ? error.key : "errors:quizz.failedToSave"),
@@ -39,7 +43,7 @@ const QuizzEditorHeader = () => {
   const onSaved = (messageKey: string) => {
     queryClient.invalidateQueries({ queryKey: quizzKeys.all })
     toast.success(t(messageKey))
-    navigate({ to: "/manager/config" })
+    handleExit()
   }
 
   const { mutate: create } = useMutation({
@@ -108,7 +112,7 @@ const QuizzEditorHeader = () => {
       <div className="flex gap-2">
         <Button
           className="text-md bg-accent text-accent-foreground px-4 py-2 font-semibold"
-          onClick={() => navigate({ to: "/manager" })}
+          onClick={handleExit}
         >
           {t("common:exit")}
         </Button>

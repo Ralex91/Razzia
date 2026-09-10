@@ -1,9 +1,10 @@
+import { SESSION_ROLES } from "@razzia/common/constants"
 import ManagerPassword from "@razzia/web/features/manager/components/ManagerPassword"
 import { managerLogin } from "@razzia/web/features/manager/queries"
 import { ApiError } from "@razzia/web/lib/api"
-import { setToken } from "@razzia/web/lib/session"
+import { getRole, setToken } from "@razzia/web/lib/session"
 import { useMutation } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
@@ -28,5 +29,11 @@ const ManagerAuthPage = () => {
 }
 
 export const Route = createFileRoute("/(auth)/manager/")({
+  beforeLoad: () => {
+    if (getRole() === SESSION_ROLES.MANAGER) {
+      // oxlint-disable-next-line typescript/only-throw-error
+      throw redirect({ to: "/manager/config" })
+    }
+  },
   component: ManagerAuthPage,
 })
