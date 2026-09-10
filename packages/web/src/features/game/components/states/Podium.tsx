@@ -10,8 +10,12 @@ interface Props {
   data: ManagerStatusDataMap["FINISHED"]
 }
 
+const SUSPENSE_MIN_PLAYERS = 3
+const SUSPENSE_SPOTLIGHT_STEP = 3
+
 const usePodiumAnimation = (topLength: number) => {
-  const [apparition, setApparition] = useState(() => (topLength < 3 ? 4 : 0))
+  const hasSuspense = topLength >= SUSPENSE_MIN_PLAYERS
+  const [apparition, setApparition] = useState(() => (hasSuspense ? 0 : 4))
 
   const [sfxtThree] = useSound(SFX.PODIUM.THREE, { volume: 0.1 })
   const [sfxSecond] = useSound(SFX.PODIUM.SECOND, { volume: 0.1 })
@@ -46,7 +50,7 @@ const usePodiumAnimation = (topLength: number) => {
     return () => clearInterval(interval)
   }, [apparition, topLength])
 
-  return apparition
+  return { apparition, hasSuspense }
 }
 
 const medalColor = [
@@ -90,7 +94,7 @@ const Medal = ({ rank }: { rank: number }) => {
 }
 
 const Podium = ({ data: { subject, top } }: Props) => {
-  const apparition = usePodiumAnimation(top.length)
+  const { apparition, hasSuspense } = usePodiumAnimation(top.length)
 
   const { width, height } = useScreenSize()
 
@@ -104,9 +108,11 @@ const Podium = ({ data: { subject, top } }: Props) => {
         />
       )}
 
-      <div className="pointer-events-none absolute min-h-dvh w-full overflow-hidden">
-        <div className="spotlight"></div>
-      </div>
+      {hasSuspense && apparition >= SUSPENSE_SPOTLIGHT_STEP && (
+        <div className="pointer-events-none absolute min-h-dvh w-full overflow-hidden">
+          <div className="spotlight"></div>
+        </div>
+      )}
       <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-between">
         <h2 className="anim-show text-center text-3xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {subject}
