@@ -8,8 +8,12 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@hono/zod-validator": "^0.9.1",
     "@razzia/common": "workspace:*",
     "dayjs": "^1.11.23",
+    "hono": "catalog:",
+    "http-status-codes": "catalog:",
     "nanoid": "^6.0.1",
     "socket.io": "catalog:",
     "typescript": "catalog:",
