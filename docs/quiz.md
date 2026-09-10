@@ -53,8 +53,9 @@ Quiz Options:
   - `media`: Optional media object displayed with the question:
     - `type`: `"image"`, `"video"`, or `"audio"`
     - `url`: URL of the media
+    - Images are shown during the question countdown and the answer phase. Audio and video play during the question phase (autoplaying) and stay available on the answer screen with a replay control, no longer autoplaying there. Audio uses an in-app player with no download control.
   - `solutions`: Array of correct answer indices (0-based). Use multiple indices for multi-answer questions
-  - `cooldown`: Time in seconds before answers are revealed (3-15)
+  - `cooldown`: Time in seconds before answers are revealed (3-15). For image and no-media questions this is the fixed length of the question phase. For audio/video questions it is the **minimum** length: the phase holds for at least `cooldown` (so a short clip still gets the full window), then ends when the media finishes playing, bounded by a safety cap of `cooldown + 120` seconds so a blocked or missing autoplay never stalls the game. The manager can also press **Skip** during the question phase to end it once `cooldown` has elapsed (useful when the browser blocks autoplay).
   - `time`: Time in seconds allowed to answer (5-120)
   - `maxPoints`: Maximum points awarded for a correct answer (default: `1000`, min: `0`)
   - `penalty`: Points deducted for a wrong answer (default: none, min: `0`). The player's total cannot go below 0. Unanswered questions are not penalised.

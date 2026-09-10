@@ -1,12 +1,21 @@
 import { MEDIA_TYPES } from "@razzia/common/constants"
+import AudioPlayer from "@razzia/web/components/AudioPlayer"
+import VideoPlayer from "@razzia/web/components/VideoPlayer"
 import type { QuestionMedia as QuestionMediaType } from "@razzia/common/types/game"
 
 interface Props {
   media?: QuestionMediaType
   alt?: string
+  autoPlay?: boolean
+  onEnded?: () => void
 }
 
-const QuestionMedia = ({ media, alt = "" }: Props) => {
+const QuestionMedia = ({
+  media,
+  alt = "",
+  autoPlay = false,
+  onEnded,
+}: Props) => {
   if (media?.type === MEDIA_TYPES.IMAGE) {
     return (
       <img
@@ -18,25 +27,11 @@ const QuestionMedia = ({ media, alt = "" }: Props) => {
   }
 
   if (media?.type === MEDIA_TYPES.VIDEO) {
-    return (
-      <video
-        className="m-4 mb-2 aspect-video max-h-60 w-auto rounded-md px-4 sm:max-h-100"
-        src={media.url}
-        autoPlay
-        controls
-      />
-    )
+    return <VideoPlayer src={media.url} autoPlay={autoPlay} onEnded={onEnded} />
   }
 
   if (media?.type === MEDIA_TYPES.AUDIO) {
-    return (
-      <audio
-        className="m-4 mb-2 w-auto rounded-md"
-        src={media.url}
-        autoPlay
-        controls
-      />
-    )
+    return <AudioPlayer src={media.url} autoPlay={autoPlay} onEnded={onEnded} />
   }
 
   return null

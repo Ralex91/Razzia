@@ -1,5 +1,9 @@
 // oxlint-disable typescript/no-unnecessary-condition
-import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
+import {
+  EVENTS,
+  isPlayableMedia,
+  NO_TIME_LIMIT,
+} from "@razzia/common/constants"
 import type {
   Answer,
   GameResult,
@@ -20,6 +24,9 @@ import { QUESTION_SCORING } from "@razzia/socket/services/scoring"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import sleep from "@razzia/socket/utils/sleep"
 import { nanoid } from "nanoid"
+
+/** Safety cap (seconds) added on top of `cooldown` for audio/video questions. */
+const MEDIA_SAFETY_CAP = 120
 
 type BroadcastFn = <T extends Status>(
   _status: T,
@@ -53,6 +60,7 @@ export class RoundManager {
   private leaderboard: Player[] = []
   private tempOldLeaderboard: Player[] | null = null
   private questionsHistory: QuestionResult[] = []
+  private mediaEndedResolve: (() => void) | null = null
 
   constructor(opts: RoundManagerOptions) {
     this.opts = opts
@@ -70,7 +78,7 @@ export class RoundManager {
   }
 
   async start(socket: Socket): Promise<void> {
-    if (this.opts.getManagerId() !== socket.id) {
+    if (!this.isManager(socket)) {
       return
     }
 
@@ -124,16 +132,14 @@ export class RoundManager {
       return
     }
 
-    const imageMedia =
-      question.media?.type === MEDIA_TYPES.IMAGE ? question.media : undefined
-
     this.opts.broadcast(STATUS.SHOW_QUESTION, {
       question: question.question,
-      media: imageMedia,
+      media: question.media,
       cooldown: question.cooldown,
+      questionIndex: this.currentQuestion,
     })
 
-    await sleep(question.cooldown)
+    await this.awaitQuestionPhase(question)
 
     if (!this.started) {
       return
@@ -158,6 +164,47 @@ export class RoundManager {
     }
 
     this.showResults(question)
+  }
+
+  /** Semantics documented in docs/quiz.md ("cooldown" for media questions). */
+  private async awaitQuestionPhase(question: Question): Promise<void> {
+    if (!isPlayableMedia(question.media?.type)) {
+      await sleep(question.cooldown)
+
+      return
+    }
+
+    const ended = new Promise<void>((resolve) => {
+      this.mediaEndedResolve = resolve
+    })
+
+    await sleep(question.cooldown)
+
+    const cap = setTimeout(() => this.endMediaPhase(), MEDIA_SAFETY_CAP * 1000)
+    await ended
+    clearTimeout(cap)
+  }
+
+  private endMediaPhase(): void {
+    this.mediaEndedResolve?.()
+    this.mediaEndedResolve = null
+  }
+
+  /** Ignores a stale index (previous question, refreshed client). */
+  mediaEnded(socket: Socket, questionIndex: number): void {
+    if (!this.isManager(socket)) {
+      return
+    }
+
+    if (questionIndex !== this.currentQuestion) {
+      return
+    }
+
+    this.endMediaPhase()
+  }
+
+  private isManager(socket: Socket): boolean {
+    return socket.id === this.opts.getManagerId()
   }
 
   private showResults(question: Question): void {
@@ -295,7 +342,7 @@ export class RoundManager {
       return
     }
 
-    if (socket.id !== this.opts.getManagerId()) {
+    if (!this.isManager(socket)) {
       return
     }
 
@@ -312,15 +359,16 @@ export class RoundManager {
       return
     }
 
-    if (socket.id !== this.opts.getManagerId()) {
+    if (!this.isManager(socket)) {
       return
     }
 
+    this.endMediaPhase()
     this.opts.cooldown.abort()
   }
 
   showLeaderboard(socket: Socket): void {
-    if (socket.id !== this.opts.getManagerId()) {
+    if (!this.isManager(socket)) {
       return
     }
 

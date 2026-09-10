@@ -272,6 +272,10 @@ class Game {
     this.round.abortQuestion(socket)
   }
 
+  mediaEnded(socket: Socket, questionIndex: number) {
+    this.round.mediaEnded(socket, questionIndex)
+  }
+
   showLeaderboard(socket: Socket) {
     this.round.showLeaderboard(socket)
   }

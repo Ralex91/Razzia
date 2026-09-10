@@ -87,7 +87,7 @@ const Answers = ({
           {question}
         </h2>
 
-        <QuestionMedia media={media} alt={question} />
+        <QuestionMedia media={media} alt={question} autoPlay={false} />
       </div>
 
       <div>
