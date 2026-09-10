@@ -5,7 +5,7 @@ import type {
   SessionRole,
 } from "@razzia/common/types/auth"
 
-const TOKEN_KEY = "razzia_token"
+const TOKEN_KEY = "token"
 
 const EXPIRY_SKEW_SECONDS = 30
 
