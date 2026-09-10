@@ -1,37 +1,30 @@
-import { EVENTS } from "@razzia/common/constants"
-import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import ManagerPassword from "@razzia/web/features/manager/components/ManagerPassword"
+import { managerLogin } from "@razzia/web/features/manager/queries"
+import { ApiError } from "@razzia/web/lib/api"
+import { setToken } from "@razzia/web/lib/session"
+import { useMutation } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useEffect } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 
 const ManagerAuthPage = () => {
-  const { setConfig } = useManagerStore()
   const navigate = useNavigate()
-  const { socket, isConnected } = useSocket()
+  const { t } = useTranslation()
 
-  useEffect(() => {
-    if (!isConnected) {
-      return
-    }
-
-    socket.emit(EVENTS.MANAGER.GET_CONFIG)
-    // oxlint-disable-next-line
-  }, [isConnected])
-
-  useEvent(EVENTS.MANAGER.CONFIG, (data) => {
-    setConfig(data)
-    navigate({ to: "/manager/config" })
+  const { mutate, isPending } = useMutation({
+    mutationFn: managerLogin,
+    onSuccess: (session) => {
+      setToken(session.token)
+      navigate({ to: "/manager/config" })
+    },
+    onError: (error) => {
+      toast.error(
+        t(error instanceof ApiError ? error.key : "errors:route.description"),
+      )
+    },
   })
 
-  const handleAuth = (password: string) => {
-    socket.emit(EVENTS.MANAGER.AUTH, password)
-  }
-
-  return <ManagerPassword onSubmit={handleAuth} />
+  return <ManagerPassword onSubmit={mutate} disabled={isPending} />
 }
 
 export const Route = createFileRoute("/(auth)/manager/")({

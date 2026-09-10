@@ -1,14 +1,16 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { GameResult } from "@razzia/common/types/game"
 import AlertDialog from "@razzia/web/components/AlertDialog"
-import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
+import Loader from "@razzia/web/components/Loader"
 import ResultModal from "@razzia/web/features/manager/components/ResultModal"
-import { useConfig } from "@razzia/web/features/manager/contexts/config-context"
+import {
+  deleteResult,
+  resultKeys,
+  resultQuery,
+  resultsListQuery,
+} from "@razzia/web/features/manager/queries"
+import { ApiError } from "@razzia/web/lib/api"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Trash2 } from "lucide-react"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
@@ -23,24 +25,34 @@ const formatDate = (iso: string) => {
 }
 
 const ConfigResults = () => {
-  const { socket } = useSocket()
-  const { results } = useConfig()
-  const [selectedResult, setSelectedResult] = useState<GameResult | null>(null)
+  const { data, isPending } = useQuery(resultsListQuery())
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const queryClient = useQueryClient()
   const { t } = useTranslation()
 
-  useEvent(
-    EVENTS.RESULTS.DATA,
-    useCallback((data) => setSelectedResult(data), []),
-  )
+  const { data: selectedResult } = useQuery({
+    ...resultQuery(selectedId ?? ""),
+    enabled: Boolean(selectedId),
+  })
 
-  const handleOpen = (id: string) => () => {
-    socket.emit(EVENTS.RESULTS.GET, id)
+  const { mutate: remove } = useMutation({
+    mutationFn: deleteResult,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: resultKeys.all })
+      toast.success(t("manager:result.deleted"))
+    },
+    onError: (error) => {
+      toast.error(
+        t(error instanceof ApiError ? error.key : "errors:result.notFound"),
+      )
+    },
+  })
+
+  if (isPending) {
+    return <Loader className="text-primary mx-auto my-8 max-h-16" />
   }
 
-  const handleDelete = (id: string) => () => {
-    socket.emit(EVENTS.RESULTS.DELETE, id)
-    toast.success(t("manager:result.deleted"))
-  }
+  const results = data?.results ?? []
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -52,7 +64,7 @@ const ConfigResults = () => {
           >
             <button
               className="min-w-0 flex-1 text-left"
-              onClick={handleOpen(r.id)}
+              onClick={() => setSelectedId(r.id)}
             >
               <p className="text-foreground truncate font-medium">
                 {r.subject}
@@ -73,7 +85,7 @@ const ConfigResults = () => {
                 name: r.subject,
               })}
               confirmLabel={t("common:delete")}
-              onConfirm={handleDelete(r.id)}
+              onConfirm={() => remove(r.id)}
             />
           </div>
         ))}
@@ -85,10 +97,10 @@ const ConfigResults = () => {
         )}
       </div>
 
-      {selectedResult && (
+      {selectedId && selectedResult && (
         <ResultModal
           result={selectedResult}
-          onClose={() => setSelectedResult(null)}
+          onClose={() => setSelectedId(null)}
         />
       )}
     </div>

@@ -1,14 +1,18 @@
-import { EVENTS } from "@razzia/common/constants"
+import type { QuizzValidated } from "@razzia/common/validators/quizz"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import Button from "@razzia/web/components/Button"
+import Loader from "@razzia/web/components/Loader"
 import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { useConfig } from "@razzia/web/features/manager/contexts/config-context"
+  createQuizz,
+  deleteQuizz,
+  quizzKeys,
+  quizzListQuery,
+} from "@razzia/web/features/manager/queries"
+import { api, ApiError, unwrap } from "@razzia/web/lib/api"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 import { Download, SquarePen, Trash2, Upload } from "lucide-react"
-import { type ChangeEvent, useCallback, useRef } from "react"
+import { type ChangeEvent, useRef } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
@@ -27,39 +31,47 @@ const downloadJson = (data: unknown, filename: string) => {
 }
 
 const ConfigManageQuizz = () => {
-  const { quizz } = useConfig()
-  const { socket } = useSocket()
+  const { data, isPending } = useQuery(quizzListQuery())
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
-  const pendingExportId = useRef<string | null>(null)
 
-  useEvent(EVENTS.QUIZZ.ERROR, (message) => {
-    toast.error(t(message))
-  })
+  const invalidate = () =>
+    queryClient.invalidateQueries({ queryKey: quizzKeys.all })
 
-  useEvent(
-    EVENTS.QUIZZ.DATA,
-    useCallback((data) => {
-      if (data.id !== pendingExportId.current) {
-        return
-      }
-
-      pendingExportId.current = null
-
-      const { id: _id, ...quizzData } = data
-      downloadJson(quizzData, `${data.subject}.json`)
-    }, []),
-  )
-
-  const handleDelete = (id: string) => () => {
-    socket.emit(EVENTS.QUIZZ.DELETE, id)
-    toast.success(t("manager:quizz.deleted"))
+  const onError = (error: Error, fallback: string) => {
+    toast.error(t(error instanceof ApiError ? error.key : fallback))
   }
 
-  const handleExport = (id: string) => () => {
-    pendingExportId.current = id
-    socket.emit(EVENTS.QUIZZ.GET, id)
+  const { mutate: remove } = useMutation({
+    mutationFn: deleteQuizz,
+    onSuccess: () => {
+      invalidate()
+      toast.success(t("manager:quizz.deleted"))
+    },
+    onError: (error) => onError(error, "errors:quizz.failedToDelete"),
+  })
+
+  const { mutate: importQuizz } = useMutation({
+    mutationFn: createQuizz,
+    onSuccess: () => {
+      invalidate()
+      toast.success(t("quizz:quizzSaved"))
+    },
+    onError: (error) => onError(error, "errors:quizz.failedToSave"),
+  })
+
+  const handleExport = (id: string) => async () => {
+    try {
+      const { id: _id, ...quizz } = await unwrap(
+        api.quizz[":id"].$get({ param: { id } }),
+      )
+
+      downloadJson(quizz, `${quizz.subject}.json`)
+    } catch (error) {
+      onError(error as Error, "errors:quizz.notFound")
+    }
   }
 
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,8 +85,9 @@ const ConfigManageQuizz = () => {
 
     reader.onload = (event) => {
       try {
-        const data: unknown = JSON.parse(event.target?.result as string)
-        socket.emit(EVENTS.QUIZZ.SAVE, data)
+        importQuizz(
+          JSON.parse(event.target?.result as string) as QuizzValidated,
+        )
       } catch {
         toast.error("Invalid JSON file")
       }
@@ -83,6 +96,12 @@ const ConfigManageQuizz = () => {
     reader.readAsText(file)
     e.target.value = ""
   }
+
+  if (isPending) {
+    return <Loader className="text-primary mx-auto my-8 max-h-16" />
+  }
+
+  const quizz = data?.quizz ?? []
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -130,7 +149,7 @@ const ConfigManageQuizz = () => {
 
               <button
                 className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
-                onClick={handleExport(q.id)}
+                onClick={() => handleExport(q.id)()}
                 title={t("manager:quizz.export")}
               >
                 <Download className="size-4" />
@@ -147,7 +166,7 @@ const ConfigManageQuizz = () => {
                   name: q.subject,
                 })}
                 confirmLabel={t("common:delete")}
-                onConfirm={handleDelete(q.id)}
+                onConfirm={() => remove(q.id)}
               />
             </div>
           </div>

@@ -1,38 +1,46 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { QuizzWithId } from "@razzia/common/types/game"
 import Loader from "@razzia/web/components/Loader"
-import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
+import { quizzQuery } from "@razzia/web/features/manager/queries"
 import QuestionEditor from "@razzia/web/features/quizz/components/QuestionEditor"
 import QuizzEditorHeader from "@razzia/web/features/quizz/components/QuizzEditorHeader"
 import QuizzEditorSidebar from "@razzia/web/features/quizz/components/QuizzEditorSidebar"
 import { QuizzEditorProvider } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { createFileRoute } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
+import { ApiError } from "@razzia/web/lib/api"
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { useEffect, useRef } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 
 const QuizzEditPage = () => {
   const { quizzId } = Route.useParams()
-  const { socket } = useSocket()
-  const [quizz, setQuizz] = useState<QuizzWithId | null>(null)
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const { data: quizz, isPending, error } = useQuery(quizzQuery(quizzId))
+
+  const hasNotifiedRef = useRef(false)
 
   useEffect(() => {
-    socket.emit(EVENTS.QUIZZ.GET, quizzId)
-  }, [socket, quizzId])
-
-  useEvent(EVENTS.QUIZZ.DATA, (data) => {
-    if (data.id === quizzId) {
-      setQuizz(data)
+    if (!error || hasNotifiedRef.current) {
+      return
     }
-  })
 
-  if (!quizz) {
+    hasNotifiedRef.current = true
+    toast.error(
+      t(error instanceof ApiError ? error.key : "errors:quizz.notFound"),
+    )
+    navigate({ to: "/manager/config" })
+  }, [error, navigate, t])
+
+  if (isPending) {
     return (
       <div className="bg-muted flex h-svh items-center justify-center">
-        <Loader className="text-background max-h-23" />
+        <Loader className="text-primary max-h-23" />
       </div>
     )
+  }
+
+  if (!quizz) {
+    return <div className="bg-muted h-svh" />
   }
 
   return (

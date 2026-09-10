@@ -1,7 +1,14 @@
-import { EVENTS } from "@razzia/common/constants"
+import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
-import { useSocket } from "@razzia/web/features/game/contexts/socket-context"
-import { useConfig } from "@razzia/web/features/manager/contexts/config-context"
+import Loader from "@razzia/web/components/Loader"
+import { useManagerStore } from "@razzia/web/features/game/stores/manager"
+import {
+  createGame,
+  quizzListQuery,
+} from "@razzia/web/features/manager/queries"
+import { ApiError } from "@razzia/web/lib/api"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
 import clsx from "clsx"
 import { Check } from "lucide-react"
 import { useState } from "react"
@@ -9,10 +16,28 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const ConfigSelectQuizz = () => {
-  const { socket } = useSocket()
-  const { quizz: quizzList } = useConfig()
+  const { data, isPending } = useQuery(quizzListQuery())
+  const { setGameId, setStatus } = useManagerStore()
   const [selected, setSelected] = useState<string | null>(null)
+  const navigate = useNavigate()
   const { t } = useTranslation()
+
+  const { mutate: start } = useMutation({
+    mutationFn: createGame,
+    onSuccess: ({ gameId, inviteCode }) => {
+      setGameId(gameId)
+      setStatus(STATUS.SHOW_ROOM, {
+        text: "game:waitingForPlayers",
+        inviteCode,
+      })
+      navigate({ to: "/party/manager/$gameId", params: { gameId } })
+    },
+    onError: (error) => {
+      toast.error(
+        t(error instanceof ApiError ? error.key : "errors:quizz.notFound"),
+      )
+    },
+  })
 
   const handleSelect = (id: string) => () => {
     if (selected === id) {
@@ -29,8 +54,14 @@ const ConfigSelectQuizz = () => {
       return
     }
 
-    socket.emit(EVENTS.GAME.CREATE, selected)
+    start(selected)
   }
+
+  if (isPending) {
+    return <Loader className="text-primary mx-auto my-8 max-h-16" />
+  }
+
+  const quizzList = data?.quizz ?? []
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">

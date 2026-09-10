@@ -1,21 +1,23 @@
-import { EVENTS } from "@razzia/common/constants"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
 import Input from "@razzia/web/components/Input"
-import { useEvent } from "@razzia/web/features/game/contexts/socket-context"
 import { type KeyboardEvent, useState } from "react"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 interface Props {
   onSubmit: (_password: string) => void
+  disabled?: boolean
 }
 
-const ManagerPassword = ({ onSubmit }: Props) => {
+const ManagerPassword = ({ onSubmit, disabled }: Props) => {
   const [password, setPassword] = useState("")
   const { t } = useTranslation()
 
   const handleSubmit = () => {
+    if (disabled) {
+      return
+    }
+
     onSubmit(password)
   }
 
@@ -24,10 +26,6 @@ const ManagerPassword = ({ onSubmit }: Props) => {
       handleSubmit()
     }
   }
-
-  useEvent(EVENTS.MANAGER.ERROR_MESSAGE, (message) => {
-    toast.error(t(message))
-  })
 
   return (
     <Card>
