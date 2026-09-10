@@ -1,5 +1,5 @@
 import AlertDialog from "@razzia/web/components/AlertDialog"
-import Loader from "@razzia/web/components/Loader"
+import { SkeletonRows } from "@razzia/web/components/Skeleton"
 import ResultModal from "@razzia/web/features/manager/components/ResultModal"
 import {
   deleteResult,
@@ -49,7 +49,13 @@ const ConfigResults = () => {
   })
 
   if (isPending) {
-    return <Loader className="text-primary mx-auto my-8 max-h-16" />
+    return (
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div className="min-h-0 flex-1 space-y-2 p-0.5">
+          <SkeletonRows className="h-14" />
+        </div>
+      </div>
+    )
   }
 
   const results = data?.results ?? []

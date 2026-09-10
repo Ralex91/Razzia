@@ -1,7 +1,7 @@
 import type { QuizzValidated } from "@razzia/common/validators/quizz"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import Button from "@razzia/web/components/Button"
-import Loader from "@razzia/web/components/Loader"
+import { SkeletonRows } from "@razzia/web/components/Skeleton"
 import {
   createQuizz,
   deleteQuizz,
@@ -97,10 +97,6 @@ const ConfigManageQuizz = () => {
     e.target.value = ""
   }
 
-  if (isPending) {
-    return <Loader className="text-primary mx-auto my-8 max-h-16" />
-  }
-
   const quizz = data?.quizz ?? []
 
   return (
@@ -128,6 +124,8 @@ const ConfigManageQuizz = () => {
         />
       </div>
       <div className="min-h-0 flex-1 space-y-2 overflow-auto p-0.5">
+        {isPending && <SkeletonRows className="h-12" />}
+
         {quizz.map((q) => (
           <div
             key={q.id}
@@ -171,7 +169,7 @@ const ConfigManageQuizz = () => {
             </div>
           </div>
         ))}
-        {quizz.length === 0 && (
+        {!isPending && quizz.length === 0 && (
           <p className="text-muted-foreground my-8 text-center">
             {t("manager:quizz.none")}
           </p>

@@ -1,6 +1,6 @@
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
-import Loader from "@razzia/web/components/Loader"
+import Skeleton, { SkeletonRows } from "@razzia/web/components/Skeleton"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import {
   createGame,
@@ -58,7 +58,14 @@ const ConfigSelectQuizz = () => {
   }
 
   if (isPending) {
-    return <Loader className="text-primary mx-auto my-8 max-h-16" />
+    return (
+      <div className="flex min-h-0 flex-1 flex-col">
+        <Skeleton className="mb-4 h-11 shrink-0" />
+        <div className="min-h-0 flex-1 space-y-2 p-0.5">
+          <SkeletonRows className="h-12" />
+        </div>
+      </div>
+    )
   }
 
   const quizzList = data?.quizz ?? []
