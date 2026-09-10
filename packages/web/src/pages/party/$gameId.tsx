@@ -1,10 +1,12 @@
 import { EVENTS } from "@razzia/common/constants"
+import { STATUS } from "@razzia/common/types/game/status"
 import GameWrapper from "@razzia/web/features/game/components/GameWrapper"
 import {
   socketClient,
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { useSocketConnection } from "@razzia/web/features/game/hooks/useSocketConnection"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
 import {
@@ -12,21 +14,50 @@ import {
   isKeyOf,
 } from "@razzia/web/features/game/utils/constants"
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
+import { useEffect, useRef } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const PlayerGamePage = () => {
   const navigate = useNavigate()
-  const { socket } = useSocket()
+  const { socket, isConnected } = useSocket()
   const { gameId: gameIdParam } = useParams({ from: "/party/$gameId" })
-  const { status, setPlayer, setGameId, setStatus, reset } = usePlayerStore()
+  const { status, setPlayer, setGameId, setStatus, setJoinTicket, reset } =
+    usePlayerStore()
   const { setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
+  const syncedRef = useRef(false)
 
-  useEvent("connect", () => {
-    if (gameIdParam) {
-      socket.emit(EVENTS.PLAYER.RECONNECT, { gameId: gameIdParam })
+  useSocketConnection()
+
+  useEffect(() => {
+    if (!isConnected) {
+      syncedRef.current = false
+
+      return
     }
+
+    if (syncedRef.current) {
+      return
+    }
+
+    syncedRef.current = true
+
+    const { joinTicket } = usePlayerStore.getState()
+
+    if (joinTicket) {
+      socket.emit(EVENTS.PLAYER.LOGIN, { ticket: joinTicket })
+
+      return
+    }
+
+    socket.emit(EVENTS.PLAYER.RECONNECT, { gameId: gameIdParam })
+  }, [isConnected, gameIdParam, socket])
+
+  useEvent(EVENTS.GAME.SUCCESS_JOIN, (joinedGameId) => {
+    setGameId(joinedGameId)
+    setJoinTicket(null)
+    setStatus(STATUS.WAIT, { text: "game:waitingForPlayers" })
   })
 
   useEvent(
@@ -52,6 +83,7 @@ const PlayerGamePage = () => {
 
   useEvent(EVENTS.GAME.RESET, (message) => {
     localStorage.removeItem("game_pin")
+    localStorage.removeItem("game_id")
     navigate({ to: "/" })
     reset()
     setQuestionStates(null)

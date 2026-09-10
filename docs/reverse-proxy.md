@@ -1,6 +1,6 @@
 # Reverse Proxy
 
-Razzia's container serves everything on a single port (`3000`): static assets, the manager UI, and a WebSocket endpoint at `/ws` (used by [Socket.IO](https://socket.io/)) which is proxied internally to the socket server.
+Razzia's container serves everything on a single port (`3000`): static assets, the manager UI, an HTTP API at `/api`, and a WebSocket endpoint at `/ws` (used by [Socket.IO](https://socket.io/)). Both `/api` and `/ws` are proxied internally to the socket server.
 
 If you put Razzia behind your own reverse proxy (to add a domain name, HTTPS, or run several apps on one host), the only requirement is that the proxy forwards **WebSocket upgrade requests** through to the container. Without this, the app loads but never connects (players stay stuck on "connecting").
 
@@ -67,6 +67,6 @@ quiz.example.com {
 
 Any reverse proxy works as long as it:
 
-- Forwards all paths (`/`, `/branding/`, `/ws`) to the container's port `3000`
+- Forwards all paths (`/`, `/branding/`, `/api`, `/ws`) to the container's port `3000`
 - Passes through `Upgrade` and `Connection` headers for WebSocket upgrades on `/ws`
 - Uses a generous read/idle timeout (players stay connected for the whole game, potentially longer than a default 60s timeout)

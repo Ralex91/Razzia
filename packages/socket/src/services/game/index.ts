@@ -44,16 +44,14 @@ class Game {
     { name: Status; data: StatusDataMap[Status] }
   >()
 
-  constructor(io: Server, socket: Socket, quizz: Quizz) {
-    const clientId = getClientId(socket)
-
+  constructor(io: Server, managerClientId: string, quizz: Quizz) {
     this.io = io
     this.gameId = uuid()
     this.inviteCode = createInviteCode()
     this._manager = {
-      id: socket.id,
-      clientId,
-      connected: true,
+      id: "",
+      clientId: managerClientId,
+      connected: false,
     }
 
     this.cooldown = new CooldownTimer(io, this.gameId)
@@ -78,12 +76,6 @@ class Game {
         this.managerStatus = null
       },
       onGameFinished: saveResult,
-    })
-
-    socket.join(this.gameId)
-    socket.emit(EVENTS.MANAGER.GAME_CREATED, {
-      gameId: this.gameId,
-      inviteCode: this.inviteCode,
     })
 
     console.log(
@@ -129,12 +121,12 @@ class Game {
 
   // Player actions
 
-  join(socket: Socket, username: string) {
-    this.playerManager.join(socket, username)
+  join(socket: Socket, username: string): string | null {
+    return this.playerManager.join(socket, username)
   }
 
-  kickPlayer(socket: Socket, playerId: string) {
-    if (this.playerManager.kick(socket, playerId)) {
+  kickPlayer(playerId: string) {
+    if (this.playerManager.kick(playerId)) {
       this.playerStatus.delete(playerId)
     }
   }
@@ -142,7 +134,7 @@ class Game {
   // Reconnect
 
   reconnect(socket: Socket) {
-    const { clientId } = socket.handshake.auth
+    const clientId = getClientId(socket)
 
     if (this._manager.clientId === clientId) {
       this.reconnectManager(socket)
@@ -164,11 +156,23 @@ class Game {
     this._manager.id = socket.id
     this._manager.connected = true
 
-    const status = this.managerStatus ??
-      this.lastBroadcastStatus ?? {
-        name: STATUS.WAIT,
-        data: { text: "game:waitingForPlayers" },
+    const status = (() => {
+      if (this.managerStatus) {
+        return this.managerStatus
       }
+
+      if (this.lastBroadcastStatus) {
+        return this.lastBroadcastStatus
+      }
+
+      return {
+        name: STATUS.SHOW_ROOM,
+        data: {
+          text: "game:waitingForPlayers",
+          inviteCode: this.inviteCode,
+        },
+      }
+    })()
 
     socket.emit(EVENTS.MANAGER.SUCCESS_RECONNECT, {
       gameId: this.gameId,
@@ -264,16 +268,16 @@ class Game {
     this.round.selectAnswer(socket, answerIds)
   }
 
-  nextRound(socket: Socket) {
-    this.round.nextQuestion(socket)
+  nextRound() {
+    this.round.nextQuestion()
   }
 
-  abortRound(socket: Socket) {
-    this.round.abortQuestion(socket)
+  abortRound() {
+    this.round.abortQuestion()
   }
 
-  showLeaderboard(socket: Socket) {
-    this.round.showLeaderboard(socket)
+  showLeaderboard() {
+    this.round.showLeaderboard()
   }
 }
 

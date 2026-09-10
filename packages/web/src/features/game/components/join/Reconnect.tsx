@@ -1,77 +1,48 @@
-import { EVENTS } from "@razzia/common/constants"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
-import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { usePlayerStore } from "@razzia/web/features/game/stores/player"
-import { useQuestionStore } from "@razzia/web/features/game/stores/question"
+import { inviteCodeQuery } from "@razzia/web/features/game/queries"
+import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 import { X } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
-import toast from "react-hot-toast"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
+const clearSavedGame = () => {
+  localStorage.removeItem("game_pin")
+  localStorage.removeItem("game_id")
+}
+
 const Reconnect = () => {
-  const { isConnected, socket } = useSocket()
-  const { setGameId, setPlayer, setStatus } = usePlayerStore()
-  const { setQuestionStates } = useQuestionStore()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const [savedPin, setSavedPin] = useState(() =>
-    localStorage.getItem("game_pin"),
-  )
-  const [isChecking, setIsChecking] = useState(
-    Boolean(localStorage.getItem("game_pin")),
-  )
-  const hasCheckedRef = useRef(false)
+  const [saved, setSaved] = useState(() => ({
+    pin: localStorage.getItem("game_pin"),
+    gameId: localStorage.getItem("game_id"),
+  }))
 
-  useEffect(() => {
-    if (!isConnected || hasCheckedRef.current || !savedPin) {
-      return
-    }
-
-    hasCheckedRef.current = true
-    socket.emit(EVENTS.PLAYER.CHECK_PIN, savedPin)
-  }, [isConnected, savedPin, socket])
-
-  useEvent(EVENTS.PLAYER.CHECK_PIN_RESULT, ({ valid }) => {
-    setIsChecking(false)
-
-    if (!valid) {
-      localStorage.removeItem("game_pin")
-      setSavedPin(null)
-    }
+  const { data, isPending } = useQuery({
+    ...inviteCodeQuery(saved.pin ?? ""),
+    enabled: Boolean(saved.pin && saved.gameId),
   })
 
+  useEffect(() => {
+    if (data && !data.valid) {
+      clearSavedGame()
+    }
+  }, [data])
+
   const handleReconnect = () => {
-    if (savedPin) {
-      socket.emit(EVENTS.PLAYER.JOIN, savedPin)
+    if (saved.gameId) {
+      navigate({ to: "/party/$gameId", params: { gameId: saved.gameId } })
     }
   }
 
   const handleDismiss = () => {
-    localStorage.removeItem("game_pin")
-    setSavedPin(null)
+    clearSavedGame()
+    setSaved({ pin: null, gameId: null })
   }
 
-  useEvent(EVENTS.GAME.RESET, (message) => {
-    toast.error(t(message))
-  })
-
-  useEvent(
-    EVENTS.PLAYER.SUCCESS_RECONNECT,
-    ({ gameId, status, player, currentQuestion }) => {
-      setGameId(gameId)
-      setStatus(status.name, status.data)
-      setPlayer(player)
-      setQuestionStates(currentQuestion)
-      navigate({ to: "/party/$gameId", params: { gameId } })
-    },
-  )
-
-  if (!savedPin || isChecking) {
+  if (!saved.pin || !saved.gameId || isPending || !data?.valid) {
     return null
   }
 

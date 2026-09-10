@@ -2,6 +2,7 @@ import type {
   ClientToServerEvents,
   ServerToClientEvents,
 } from "@razzia/common/types/game/socket"
+import { clearToken, ensureSession } from "@razzia/web/lib/session"
 import React, {
   createContext,
   useCallback,
@@ -9,8 +10,9 @@ import React, {
   useEffect,
   useState,
 } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { io, Socket } from "socket.io-client"
-import { v7 as uuid } from "uuid"
 
 type TypedSocket = Socket<ServerToClientEvents, ClientToServerEvents>
 
@@ -23,24 +25,7 @@ interface SocketContextValue {
   reconnect: () => void
 }
 
-const getClientId = (): string => {
-  try {
-    const stored = localStorage.getItem("client_id")
-
-    if (stored) {
-      return stored
-    }
-
-    const newId = uuid()
-    localStorage.setItem("client_id", newId)
-
-    return newId
-  } catch {
-    return uuid()
-  }
-}
-
-const clientId = getClientId()
+const MAX_AUTH_RETRIES = 2
 
 export const socketClient: TypedSocket = io("/", {
   path: "/ws",
@@ -48,13 +33,17 @@ export const socketClient: TypedSocket = io("/", {
   reconnection: true,
   reconnectionAttempts: Infinity,
   reconnectionDelay: 1000,
-  auth: { clientId },
+  auth: (cb) => {
+    ensureSession()
+      .then((session) => cb({ token: session.token }))
+      .catch(() => cb({ token: "" }))
+  },
 })
 
 const SocketContext = createContext<SocketContextValue>({
   socket: socketClient,
   isConnected: false,
-  clientId,
+  clientId: "",
   connect: () => {
     /* Empty */
   },
@@ -68,18 +57,60 @@ const SocketContext = createContext<SocketContextValue>({
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [isConnected, setIsConnected] = useState(false)
+  const [clientId, setClientId] = useState("")
+  const { t } = useTranslation()
 
   useEffect(() => {
-    socketClient.on("connect", () => setIsConnected(true))
-    socketClient.on("disconnect", () => setIsConnected(false))
-    socketClient.on("connect_error", (err) => {
+    ensureSession().then((session) => setClientId(session.clientId))
+  }, [])
+
+  useEffect(() => {
+    let authRetries = 0
+
+    const handleConnect = () => {
+      authRetries = 0
+      setIsConnected(true)
+    }
+
+    const handleDisconnect = () => setIsConnected(false)
+
+    const handleError = (err: Error & { data?: { code?: string } }) => {
       console.error("Connection error:", err.message)
-    })
+
+      const code = err.data?.code
+
+      if (!code?.startsWith("TOKEN_")) {
+        return
+      }
+
+      if (authRetries >= MAX_AUTH_RETRIES) {
+        toast.error(t("errors:auth.sessionFailed"))
+
+        return
+      }
+
+      authRetries += 1
+      clearToken()
+
+      ensureSession()
+        .then((session) => {
+          setClientId(session.clientId)
+          socketClient.connect()
+        })
+        .catch(() => toast.error(t("errors:auth.sessionFailed")))
+    }
+
+    socketClient.on("connect", handleConnect)
+    socketClient.on("disconnect", handleDisconnect)
+    socketClient.on("connect_error", handleError)
 
     return () => {
+      socketClient.off("connect", handleConnect)
+      socketClient.off("disconnect", handleDisconnect)
+      socketClient.off("connect_error", handleError)
       socketClient.disconnect()
     }
-  }, [])
+  }, [t])
 
   const connect = useCallback(() => {
     if (!socketClient.connected) {
