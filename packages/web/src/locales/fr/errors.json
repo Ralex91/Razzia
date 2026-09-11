@@ -1,6 +1,15 @@
 {
+  "api": {
+    "notFound": "La ressource demandée n'existe pas",
+    "serverError": "Le serveur a rencontré une erreur, réessayez"
+  },
   "auth": {
     "invalidInviteCode": "Code d'invitation invalide",
+    "joinTicketInvalid": "Votre demande a expiré, saisissez à nouveau le PIN",
+    "sessionFailed": "Impossible de démarrer une session, rechargez la page",
+    "tokenInvalid": "Jeton de session invalide",
+    "tokenMissing": "Jeton de session manquant",
+    "unauthorized": "Vous n'êtes pas autorisé",
     "usernameTooLong": "Le pseudo ne peut pas dépasser 20 caractères",
     "usernameTooShort": "Le pseudo doit faire au moins 4 caractères"
   },
@@ -14,6 +23,7 @@
     "notFound": "Partie introuvable",
     "playerAlreadyConnected": "Ce joueur est déjà connecté"
   },
+  "invalidRequest": "Requête invalide",
   "manager": {
     "failedToReadConfig": "Impossible de lire la configuration",
     "invalidPassword": "Mot de passe invalide",
@@ -40,6 +50,9 @@
     "subjectEmpty": "Le sujet ne peut pas être vide",
     "tooFewAnswers": "Une question doit avoir au moins 2 réponses",
     "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses"
+  },
+  "result": {
+    "notFound": "Résultat introuvable"
   },
   "route": {
     "back": "Retour à l'accueil",

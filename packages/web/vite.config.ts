@@ -97,11 +97,23 @@ export default defineConfig({
         target: "http://localhost:3001",
         ws: true,
       },
+      "/api": {
+        target: "http://localhost:3001",
+      },
     },
   },
   preview: {
     port: 3000,
     host: "0.0.0.0",
+    proxy: {
+      "/ws": {
+        target: "http://localhost:3001",
+        ws: true,
+      },
+      "/api": {
+        target: "http://localhost:3001",
+      },
+    },
   },
   build: {
     chunkSizeWarningLimit: 2000,

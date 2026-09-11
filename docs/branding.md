@@ -1,6 +1,6 @@
 # Custom Branding
 
-Optional, lives in `config/branding/` (alongside `config/game.json`, see [Configuration](configuration.md)).
+Optional, lives in `config/branding/`, see [Configuration](configuration.md).
 
 You can fully rebrand the app **without touching the code** by dropping files into a `config/branding/` folder. If it is absent, the default look is used.
 

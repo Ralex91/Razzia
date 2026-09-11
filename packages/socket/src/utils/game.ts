@@ -3,24 +3,51 @@ import type { Question } from "@razzia/common/types/game"
 import type { Socket } from "@razzia/common/types/game/socket"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
+import { getClientId } from "@razzia/socket/utils/socket"
 import { nanoid } from "nanoid"
 
-export const withGame = (
+type GameCallback = (_game: Game) => void | Promise<void>
+
+const resolveGame = (gameId: string | undefined): Game | undefined =>
+  gameId ? Registry.getInstance().getGameById(gameId) : undefined
+
+export const withManagerGame = (
   gameId: string | undefined,
   socket: Socket,
-  callback: (_game: Game) => void | Promise<void>,
+  callback: GameCallback,
 ): void => {
-  if (!gameId) {
+  const game = resolveGame(gameId)
+
+  if (!game) {
     socket.emit("game:errorMessage", "errors:game.notFound")
 
     return
   }
 
-  const registry = Registry.getInstance()
-  const game = registry.getGameById(gameId)
+  if (game.manager.clientId !== getClientId(socket)) {
+    socket.emit("game:errorMessage", "errors:auth.unauthorized")
+
+    return
+  }
+
+  callback(game)
+}
+
+export const withPlayerGame = (
+  gameId: string | undefined,
+  socket: Socket,
+  callback: GameCallback,
+): void => {
+  const game = resolveGame(gameId)
 
   if (!game) {
     socket.emit("game:errorMessage", "errors:game.notFound")
+
+    return
+  }
+
+  if (!game.players.some((p) => p.clientId === getClientId(socket))) {
+    socket.emit("game:errorMessage", "errors:auth.unauthorized")
 
     return
   }

@@ -3,6 +3,7 @@ import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type {
   Answer,
   GameResult,
+  GameUpdateQuestion,
   Player,
   Question,
   QuestionResult,
@@ -62,7 +63,11 @@ export class RoundManager {
     return this.started
   }
 
-  getReconnectInfo() {
+  getReconnectInfo(): GameUpdateQuestion | null {
+    if (!this.started) {
+      return null
+    }
+
     return {
       current: this.currentQuestion + 1,
       total: this.opts.quizz.questions.length,
@@ -70,10 +75,6 @@ export class RoundManager {
   }
 
   async start(socket: Socket): Promise<void> {
-    if (this.opts.getManagerId() !== socket.id) {
-      return
-    }
-
     if (this.started) {
       return
     }
@@ -290,12 +291,8 @@ export class RoundManager {
     }
   }
 
-  nextQuestion(socket: Socket): void {
+  nextQuestion(): void {
     if (!this.started) {
-      return
-    }
-
-    if (socket.id !== this.opts.getManagerId()) {
       return
     }
 
@@ -307,23 +304,15 @@ export class RoundManager {
     void this.newQuestion()
   }
 
-  abortQuestion(socket: Socket): void {
+  abortQuestion(): void {
     if (!this.started) {
-      return
-    }
-
-    if (socket.id !== this.opts.getManagerId()) {
       return
     }
 
     this.opts.cooldown.abort()
   }
 
-  showLeaderboard(socket: Socket): void {
-    if (socket.id !== this.opts.getManagerId()) {
-      return
-    }
-
+  showLeaderboard(): void {
     const isLastRound =
       this.currentQuestion + 1 === this.opts.quizz.questions.length
 

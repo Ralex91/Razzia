@@ -1,6 +1,6 @@
 # Quiz Configuration
 
-Quizzes live in `config/quizz/*.json` (alongside `config/game.json`, see [Configuration](configuration.md)).
+Quizzes live in `config/quizz/*.json`, see [Configuration](configuration.md).
 
 Quizzes can be created in two ways:
 

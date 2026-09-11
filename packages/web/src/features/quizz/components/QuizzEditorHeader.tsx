@@ -1,16 +1,18 @@
-import { EVENTS } from "@razzia/common/constants"
 import type { QuizzValidated } from "@razzia/common/validators/quizz"
 import Button from "@razzia/web/components/Button"
 import FieldError from "@razzia/web/components/forms/FieldError"
 import Input from "@razzia/web/components/Input"
 import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
+  createQuizz,
+  quizzKeys,
+  updateQuizz,
+} from "@razzia/web/features/manager/queries"
 import {
   useQuizzEditor,
   type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+import { ApiError } from "@razzia/web/lib/api"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 import clsx from "clsx"
 import { Controller, useFormContext } from "react-hook-form"
@@ -24,19 +26,47 @@ const QuizzEditorHeader = () => {
     unknown,
     QuizzValidated
   >()
-  const { socket } = useSocket()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { t } = useTranslation()
+
+  const handleExit = () => {
+    navigate({ to: "/manager/config" })
+  }
+
+  const onError = (error: Error) => {
+    toast.error(
+      t(error instanceof ApiError ? error.key : "errors:quizz.failedToSave"),
+    )
+  }
+
+  const onSaved = (messageKey: string) => {
+    queryClient.invalidateQueries({ queryKey: quizzKeys.all })
+    toast.success(t(messageKey))
+    handleExit()
+  }
+
+  const { mutate: create } = useMutation({
+    mutationFn: createQuizz,
+    onSuccess: () => onSaved("quizz:quizzSaved"),
+    onError,
+  })
+
+  const { mutate: update } = useMutation({
+    mutationFn: updateQuizz,
+    onSuccess: () => onSaved("quizz:quizzUpdated"),
+    onError,
+  })
 
   const handleSave = handleSubmit(
     (values) => {
       if (quizzId) {
-        socket.emit(EVENTS.QUIZZ.UPDATE, { id: quizzId, ...values })
+        update({ id: quizzId, json: values })
 
         return
       }
 
-      socket.emit(EVENTS.QUIZZ.SAVE, values)
+      create(values)
     },
     (invalid) => {
       if (!Array.isArray(invalid.questions)) {
@@ -50,20 +80,6 @@ const QuizzEditorHeader = () => {
       }
     },
   )
-
-  useEvent(EVENTS.QUIZZ.SAVE_SUCCESS, () => {
-    toast.success(t("quizz:quizzSaved"))
-    navigate({ to: "/manager/config" })
-  })
-
-  useEvent(EVENTS.QUIZZ.UPDATE_SUCCESS, (_data) => {
-    toast.success(t("quizz:quizzUpdated"))
-    navigate({ to: "/manager/config" })
-  })
-
-  useEvent(EVENTS.QUIZZ.ERROR, (message) => {
-    toast.error(t(message))
-  })
 
   return (
     <header className="bg-background z-20 flex h-14 items-center justify-between gap-4 px-4 shadow-sm">
@@ -96,7 +112,7 @@ const QuizzEditorHeader = () => {
       <div className="flex gap-2">
         <Button
           className="text-md bg-accent text-accent-foreground px-4 py-2 font-semibold"
-          onClick={() => navigate({ to: "/manager" })}
+          onClick={handleExit}
         >
           {t("common:exit")}
         </Button>

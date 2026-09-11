@@ -16,24 +16,17 @@ export class PlayerManager {
     this.getManagerId = getManagerId
   }
 
-  join(socket: Socket, username: string): void {
+  join(socket: Socket, username: string): string | null {
     const clientId = getClientId(socket)
 
     if (this.findByClientId(clientId)) {
-      socket.emit(
-        EVENTS.GAME.ERROR_MESSAGE,
-        "errors:game.playerAlreadyConnected",
-      )
-
-      return
+      return "errors:game.playerAlreadyConnected"
     }
 
     const result = usernameValidator.safeParse(username)
 
     if (result.error) {
-      socket.emit(EVENTS.GAME.ERROR_MESSAGE, result.error.issues[0].message)
-
-      return
+      return result.error.issues[0].message
     }
 
     socket.join(this.gameId)
@@ -51,13 +44,11 @@ export class PlayerManager {
     this.io.to(this.getManagerId()).emit(EVENTS.MANAGER.NEW_PLAYER, player)
     this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.players.length)
     socket.emit(EVENTS.GAME.SUCCESS_JOIN, this.gameId)
+
+    return null
   }
 
-  kick(socket: Socket, playerId: string): boolean {
-    if (this.getManagerId() !== socket.id) {
-      return false
-    }
-
+  kick(playerId: string): boolean {
     const player = this.findById(playerId)
 
     if (!player) {

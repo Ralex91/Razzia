@@ -1,11 +1,9 @@
 import { EVENTS } from "@razzia/common/constants"
-import { inviteCodeValidator } from "@razzia/common/validators/auth"
 import type { SocketContext } from "@razzia/socket/handlers/types"
-import { getQuizz } from "@razzia/socket/services/config"
+import { verifyJoinTicket } from "@razzia/socket/services/auth"
 import Game from "@razzia/socket/services/game"
-import manager from "@razzia/socket/services/manager"
 import Registry from "@razzia/socket/services/registry"
-import { withGame } from "@razzia/socket/utils/game"
+import { withManagerGame, withPlayerGame } from "@razzia/socket/utils/game"
 import { getClientId } from "@razzia/socket/utils/socket"
 
 export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
@@ -64,89 +62,58 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     socket.emit(EVENTS.GAME.RESET, "errors:game.expired")
   })
 
-  socket.on(
-    EVENTS.GAME.CREATE,
-    manager.withAuth(socket, (quizzId: string) => {
-      const quizzList = getQuizz()
-      const quizz = quizzList.find((q) => q.id === quizzId)
+  socket.on(EVENTS.PLAYER.LOGIN, ({ ticket }) => {
+    verifyJoinTicket(ticket)
+      .then((claims) => {
+        if (claims.sub !== clientId) {
+          socket.emit(EVENTS.GAME.RESET, "errors:auth.unauthorized")
 
-      if (!quizz) {
-        socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:quizz.notFound")
+          return
+        }
 
-        return
-      }
+        const game = registry.getGameById(claims.gameId)
 
-      const game = new Game(io, socket, quizz)
-      registry.addGame(game)
-    }),
-  )
+        if (!game) {
+          socket.emit(EVENTS.GAME.RESET, "errors:game.notFound")
 
-  socket.on(EVENTS.PLAYER.CHECK_PIN, (inviteCode) => {
-    const game = registry.getGameByInviteCode(inviteCode)
+          return
+        }
 
-    socket.emit(EVENTS.PLAYER.CHECK_PIN_RESULT, { valid: Boolean(game) })
+        const error = game.join(socket, claims.username)
+
+        if (error) {
+          socket.emit(EVENTS.GAME.RESET, error)
+        }
+      })
+      .catch(() => {
+        socket.emit(EVENTS.GAME.RESET, "errors:auth.joinTicketInvalid")
+      })
   })
-
-  socket.on(EVENTS.PLAYER.JOIN, (inviteCode) => {
-    const result = inviteCodeValidator.safeParse(inviteCode)
-
-    if (result.error) {
-      socket.emit(EVENTS.GAME.ERROR_MESSAGE, result.error.issues[0].message)
-
-      return
-    }
-
-    const game = registry.getGameByInviteCode(inviteCode)
-
-    if (!game) {
-      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.notFound")
-
-      return
-    }
-
-    if (game.manager.clientId === clientId) {
-      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.managerCannotJoin")
-
-      return
-    }
-
-    if (game.players.some((p) => p.clientId === clientId)) {
-      game.reconnect(socket)
-
-      return
-    }
-
-    socket.emit(EVENTS.GAME.SUCCESS_ROOM, game.gameId)
-  })
-
-  socket.on(EVENTS.PLAYER.LOGIN, ({ gameId, data }) =>
-    withGame(gameId, socket, (game) => game.join(socket, data.username)),
-  )
 
   socket.on(EVENTS.MANAGER.KICK_PLAYER, ({ gameId, playerId }) =>
-    withGame(gameId, socket, (game) => game.kickPlayer(socket, playerId)),
+    withManagerGame(gameId, socket, (game) => game.kickPlayer(playerId)),
   )
 
   socket.on(EVENTS.MANAGER.START_GAME, ({ gameId }) =>
-    withGame(gameId, socket, (game) => game.start(socket)),
+    withManagerGame(gameId, socket, (game) => game.start(socket)),
   )
 
   socket.on(EVENTS.PLAYER.SELECTED_ANSWER, ({ gameId, data }) =>
-    withGame(gameId, socket, (game) =>
+    withPlayerGame(gameId, socket, (game) =>
       game.selectAnswer(socket, data.answerKeys),
     ),
   )
 
   socket.on(EVENTS.MANAGER.ABORT_QUIZ, ({ gameId }) =>
-    withGame(gameId, socket, (game) => game.abortRound(socket)),
+    withManagerGame(gameId, socket, (game) => game.abortRound()),
   )
 
   socket.on(EVENTS.MANAGER.NEXT_QUESTION, ({ gameId }) =>
-    withGame(gameId, socket, (game) => game.nextRound(socket)),
+    withManagerGame(gameId, socket, (game) => game.nextRound()),
   )
 
   socket.on(EVENTS.MANAGER.SHOW_LEADERBOARD, ({ gameId }) =>
-    withGame(gameId, socket, (game) => game.showLeaderboard(socket)),
+    withManagerGame(gameId, socket, (game) => game.showLeaderboard()),
   )
 
   socket.on(EVENTS.MANAGER.LEAVE, ({ gameId }) => {

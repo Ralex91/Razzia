@@ -6,6 +6,7 @@ import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { useSocketConnection } from "@razzia/web/features/game/hooks/useSocketConnection"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
 import {
@@ -14,17 +15,20 @@ import {
   isKeyOf,
 } from "@razzia/web/features/game/utils/constants"
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
+import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const ManagerGamePage = () => {
   const navigate = useNavigate()
   const { gameId: gameIdParam } = useParams({ from: "/party/manager/$gameId" })
-  const { socket } = useSocket()
+  const { socket, isConnected } = useSocket()
   const { gameId, status, setGameId, setStatus, setPlayers, reset } =
     useManagerStore()
   const { setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
+
+  useSocketConnection()
 
   useEvent(EVENTS.GAME.STATUS, ({ name, data }) => {
     if (name in GAME_STATE_COMPONENTS_MANAGER) {
@@ -32,11 +36,11 @@ const ManagerGamePage = () => {
     }
   })
 
-  useEvent("connect", () => {
-    if (gameIdParam) {
+  useEffect(() => {
+    if (isConnected && gameIdParam) {
       socket.emit(EVENTS.MANAGER.RECONNECT, { gameId: gameIdParam })
     }
-  })
+  }, [isConnected, gameIdParam, socket])
 
   useEvent(
     EVENTS.MANAGER.SUCCESS_RECONNECT,

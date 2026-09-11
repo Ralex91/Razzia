@@ -1,6 +1,5 @@
 import type { Player } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
-import type { ManagerConfig } from "@razzia/common/types/manager"
 import {
   createStatus,
   type Status,
@@ -8,13 +7,10 @@ import {
 import { create } from "zustand"
 
 interface ManagerStore<T> {
-  config: ManagerConfig | null
-
   gameId: string | null
   status: Status<T> | null
   players: Player[]
 
-  setConfig: (_config: ManagerConfig) => void
   setGameId: (_gameId: string | null) => void
   setStatus: <K extends keyof T>(_name: K, _data: T[K]) => void
   resetStatus: () => void
@@ -24,7 +20,6 @@ interface ManagerStore<T> {
 }
 
 const initialState = {
-  config: null,
   gameId: null,
   status: null,
   players: [],
@@ -32,8 +27,6 @@ const initialState = {
 
 export const useManagerStore = create<ManagerStore<StatusDataMap>>((set) => ({
   ...initialState,
-
-  setConfig: (config) => set({ config }),
 
   setGameId: (gameId) => set({ gameId }),
 

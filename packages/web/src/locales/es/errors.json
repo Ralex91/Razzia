@@ -1,6 +1,15 @@
 {
+  "api": {
+    "notFound": "El recurso solicitado no existe",
+    "serverError": "El servidor encontró un error, inténtalo de nuevo"
+  },
   "auth": {
     "invalidInviteCode": "Código de invitación inválido",
+    "joinTicketInvalid": "Tu solicitud ha caducado, introduce el PIN de nuevo",
+    "sessionFailed": "No se pudo iniciar la sesión, recarga la página",
+    "tokenInvalid": "Token de sesión inválido",
+    "tokenMissing": "Falta el token de sesión",
+    "unauthorized": "No estás autorizado",
     "usernameTooLong": "El nombre de usuario no puede superar los 20 caracteres",
     "usernameTooShort": "El nombre de usuario no puede tener menos de 4 caracteres"
   },
@@ -14,6 +23,7 @@
     "notFound": "Partida no encontrada",
     "playerAlreadyConnected": "El jugador ya está conectado"
   },
+  "invalidRequest": "Solicitud inválida",
   "manager": {
     "failedToReadConfig": "Error al leer la configuración del juego",
     "invalidPassword": "Contraseña incorrecta",
@@ -40,6 +50,9 @@
     "subjectEmpty": "El tema no puede estar vacío",
     "tooFewAnswers": "Una pregunta debe tener al menos 2 respuestas",
     "tooManyAnswers": "Una pregunta no puede tener más de 4 respuestas"
+  },
+  "result": {
+    "notFound": "Resultado no encontrado"
   },
   "route": {
     "back": "Volver al inicio",

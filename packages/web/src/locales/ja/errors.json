@@ -1,6 +1,15 @@
 {
+  "api": {
+    "notFound": "リクエストされたリソースは存在しません",
+    "serverError": "サーバーでエラーが発生しました。もう一度お試しください"
+  },
   "auth": {
     "invalidInviteCode": "招待コードが無効です",
+    "joinTicketInvalid": "参加リクエストの有効期限が切れました。PINを再入力してください",
+    "sessionFailed": "セッションを開始できませんでした。ページを再読み込みしてください",
+    "tokenInvalid": "セッショントークンが無効です",
+    "tokenMissing": "セッショントークンがありません",
+    "unauthorized": "権限がありません",
     "usernameTooLong": "ユーザー名は20文字以内にしてください",
     "usernameTooShort": "ユーザー名は4文字以上にしてください"
   },
@@ -14,6 +23,7 @@
     "notFound": "ゲームが見つかりません",
     "playerAlreadyConnected": "プレイヤーはすでに接続されています"
   },
+  "invalidRequest": "リクエストが無効です",
   "manager": {
     "failedToReadConfig": "ゲーム設定の読み込みに失敗しました",
     "invalidPassword": "パスワードが無効です",
@@ -40,6 +50,9 @@
     "subjectEmpty": "主題は空にできません",
     "tooFewAnswers": "質問には少なくとも2つの回答が必要です",
     "tooManyAnswers": "質問に設定できる回答は4つまでです"
+  },
+  "result": {
+    "notFound": "結果が見つかりません"
   },
   "route": {
     "back": "ホームに戻る",

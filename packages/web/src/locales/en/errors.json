@@ -1,6 +1,15 @@
 {
+  "api": {
+    "notFound": "The requested resource does not exist",
+    "serverError": "The server encountered an error, please try again"
+  },
   "auth": {
     "invalidInviteCode": "Invalid invite code",
+    "joinTicketInvalid": "Your join request expired, please enter the PIN again",
+    "sessionFailed": "Could not start a session, please reload the page",
+    "tokenInvalid": "Invalid session token",
+    "tokenMissing": "Missing session token",
+    "unauthorized": "You are not authorized",
     "usernameTooLong": "Username cannot exceed 20 characters",
     "usernameTooShort": "Username cannot be less than 4 characters"
   },
@@ -14,6 +23,7 @@
     "notFound": "Game not found",
     "playerAlreadyConnected": "Player already connected"
   },
+  "invalidRequest": "Invalid request",
   "manager": {
     "failedToReadConfig": "Failed to read game config",
     "invalidPassword": "Invalid password",
@@ -40,6 +50,9 @@
     "subjectEmpty": "Subject cannot be empty",
     "tooFewAnswers": "A question must have at least 2 answers",
     "tooManyAnswers": "A question cannot have more than 4 answers"
+  },
+  "result": {
+    "notFound": "Result not found"
   },
   "route": {
     "back": "Go back home",
