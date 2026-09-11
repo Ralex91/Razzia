@@ -21,7 +21,7 @@ const Result = ({
     2: "game:rank.2",
     3: "game:rank.3",
   }
-  const rankKey = rankKeyMap[rank] ?? "rank.other"
+  const rankKey = rankKeyMap[rank] ?? "game:rank.other"
 
   const [sfxResults] = useSound(SFX.RESULTS_SOUND, {
     volume: 0.2,

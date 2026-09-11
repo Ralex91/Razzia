@@ -30,7 +30,7 @@ const AnswerButton = ({
       <span className="flex size-5 shrink-0 items-center justify-center rounded bg-black/20 text-sm font-bold sm:size-7 sm:rounded-md md:size-8 md:text-base">
         {label}
       </span>
-      <p className="w-full flex-1 text-sm break-all drop-shadow-md md:text-lg">
+      <p className="break-word w-full flex-1 text-sm drop-shadow-md md:text-lg">
         {children}
       </p>
       {correct !== undefined && (

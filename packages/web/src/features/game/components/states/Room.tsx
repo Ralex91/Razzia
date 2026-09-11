@@ -66,7 +66,7 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
           <div className="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-4 md:flex-row">
             <div>
               <p className="text-2xl font-bold">{t("game:joinInstruction")}</p>
-              <p className="max-w-64 text-lg font-extrabold break-all">
+              <p className="break-word max-w-64 text-lg font-extrabold">
                 {webUrl}
               </p>
             </div>
