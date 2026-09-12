@@ -4,6 +4,7 @@ import Button from "@razzia/web/components/Button"
 import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
 import Tooltip from "@razzia/web/components/Tooltip"
+import GameSettingsModal from "@razzia/web/features/game/components/GameSettingsModal"
 import {
   useEvent,
   useSocket,
@@ -132,6 +133,8 @@ const GameWrapper = ({
                     {totalPlayers ?? players.length}
                   </div>
                 </Tooltip>
+
+                {statusName === STATUS.SHOW_ROOM && <GameSettingsModal />}
 
                 <Tooltip
                   content={t(

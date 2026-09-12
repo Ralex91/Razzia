@@ -23,6 +23,13 @@
   "reconnectTitle": "Estabas en una partida",
   "resultBehind": ", detrás de ",
   "resultTop": "Terminaste ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Generar apodos",
+      "hint": "Los jugadores eligen entre nombres generados en vez de escribirlos."
+    },
+    "title": "Ajustes de la partida"
+  },
   "startGame": "Iniciar juego",
   "usernamePlaceholder": "Nombre de usuario aquí",
   "waitingForAnswers": "Esperando que los jugadores respondan",

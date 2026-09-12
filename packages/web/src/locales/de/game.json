@@ -23,6 +23,13 @@
   "reconnectTitle": "Du warst in einem Spiel",
   "resultBehind": ", hinter ",
   "resultTop": "Du hast ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Spitznamen generieren",
+      "hint": "Spieler wählen aus generierten Namen, statt selbst zu tippen."
+    },
+    "title": "Spieleinstellungen"
+  },
   "startGame": "Spiel starten",
   "usernamePlaceholder": "Benutzername hier",
   "waitingForAnswers": "Warten auf die Antworten der Spieler",

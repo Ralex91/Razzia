@@ -23,6 +23,13 @@
   "reconnectTitle": "Eri in una partita",
   "resultBehind": ", dietro ",
   "resultTop": "Hai terminato ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Genera soprannomi",
+      "hint": "I giocatori scelgono tra nomi generati invece di scriverli."
+    },
+    "title": "Impostazioni partita"
+  },
   "startGame": "Inizia il gioco",
   "usernamePlaceholder": "Nome utente qui",
   "waitingForAnswers": "In attesa delle risposte dei giocatori",

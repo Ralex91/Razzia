@@ -23,6 +23,13 @@
   "reconnectTitle": "You were in a game",
   "resultBehind": ", behind ",
   "resultTop": "You finished ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Generate nicknames",
+      "hint": "Players pick from generated names instead of typing their own."
+    },
+    "title": "Game settings"
+  },
   "startGame": "Start Game",
   "usernamePlaceholder": "Username here",
   "waitingForAnswers": "Waiting for the players to answer",

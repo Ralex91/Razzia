@@ -23,6 +23,13 @@
   "reconnectTitle": "Vous étiez dans une partie",
   "resultBehind": ", derrière ",
   "resultTop": "Tu es ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Générer les pseudos",
+      "hint": "Les joueurs choisissent parmi des pseudos générés au lieu de les saisir."
+    },
+    "title": "Réglages de la partie"
+  },
   "startGame": "Demarrer la partie",
   "usernamePlaceholder": "Pseudo",
   "waitingForAnswers": "En attente des réponses des joueurs",

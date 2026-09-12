@@ -23,6 +23,13 @@
   "reconnectTitle": "ゲームに参加していました",
   "resultBehind": "、差は ",
   "resultTop": "あなたの順位は ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "ニックネームを生成",
+      "hint": "プレイヤーは自分で入力する代わりに生成された名前から選びます。"
+    },
+    "title": "ゲーム設定"
+  },
   "startGame": "ゲーム開始",
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
