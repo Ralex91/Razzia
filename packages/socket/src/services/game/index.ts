@@ -176,6 +176,7 @@ class Game {
 
     socket.emit(EVENTS.MANAGER.SUCCESS_RECONNECT, {
       gameId: this.gameId,
+      inviteCode: this.inviteCode,
       currentQuestion: this.round.getReconnectInfo(),
       status,
       players: this.playerManager.getAll(),

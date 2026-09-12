@@ -28,6 +28,7 @@ const ConfigSelectQuizz = () => {
     onSuccess: ({ gameId, inviteCode }) => {
       updateManager({
         gameId,
+        inviteCode,
         status: createStatus(STATUS.SHOW_ROOM, {
           text: "game:waitingForPlayers",
           inviteCode,

@@ -74,6 +74,7 @@ export interface ServerToClientEvents {
   // Manager events
   [EVENTS.MANAGER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
+    inviteCode: string
     status: { name: Status; data: StatusDataMap[Status] }
     players: Player[]
     currentQuestion: GameUpdateQuestion | null

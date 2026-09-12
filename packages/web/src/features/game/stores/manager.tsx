@@ -5,6 +5,7 @@ import { create } from "zustand"
 
 interface ManagerState<T> {
   gameId: string | null
+  inviteCode: string | null
   status: Status<T> | null
   players: Player[]
 }
@@ -16,6 +17,7 @@ type ManagerStore<T> = ManagerState<T> & {
 
 const initialState: ManagerState<StatusDataMap> = {
   gameId: null,
+  inviteCode: null,
   status: null,
   players: [],
 }

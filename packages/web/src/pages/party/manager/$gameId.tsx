@@ -46,12 +46,14 @@ const ManagerGamePage = () => {
     EVENTS.MANAGER.SUCCESS_RECONNECT,
     ({
       gameId: reconnectGameId,
+      inviteCode,
       status: reconnectStatus,
       players,
       currentQuestion,
     }) => {
       updateManager({
         gameId: reconnectGameId,
+        inviteCode,
         status: createStatus(reconnectStatus.name, reconnectStatus.data),
         players,
       })
