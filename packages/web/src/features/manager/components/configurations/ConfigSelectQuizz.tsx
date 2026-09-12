@@ -2,6 +2,7 @@ import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Skeleton, { SkeletonRows } from "@razzia/web/components/Skeleton"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import {
   createGame,
   quizzListQuery,
@@ -17,7 +18,7 @@ import { useTranslation } from "react-i18next"
 
 const ConfigSelectQuizz = () => {
   const { data, isPending } = useQuery(quizzListQuery())
-  const { setGameId, setStatus } = useManagerStore()
+  const { updateManager } = useManagerStore()
   const [selected, setSelected] = useState<string | null>(null)
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -25,10 +26,12 @@ const ConfigSelectQuizz = () => {
   const { mutate: start } = useMutation({
     mutationFn: createGame,
     onSuccess: ({ gameId, inviteCode }) => {
-      setGameId(gameId)
-      setStatus(STATUS.SHOW_ROOM, {
-        text: "game:waitingForPlayers",
-        inviteCode,
+      updateManager({
+        gameId,
+        status: createStatus(STATUS.SHOW_ROOM, {
+          text: "game:waitingForPlayers",
+          inviteCode,
+        }),
       })
       navigate({ to: "/party/manager/$gameId", params: { gameId } })
     },

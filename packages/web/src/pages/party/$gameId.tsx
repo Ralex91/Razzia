@@ -13,6 +13,7 @@ import {
   GAME_STATE_COMPONENTS,
   isKeyOf,
 } from "@razzia/web/features/game/utils/constants"
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
 import { useEffect, useRef } from "react"
 import toast from "react-hot-toast"
@@ -22,8 +23,7 @@ const PlayerGamePage = () => {
   const navigate = useNavigate()
   const { socket, isConnected } = useSocket()
   const { gameId: gameIdParam } = useParams({ from: "/party/$gameId" })
-  const { status, setPlayer, setGameId, setStatus, setJoinTicket, reset } =
-    usePlayerStore()
+  const { status, updatePlayer, resetPlayer } = usePlayerStore()
   const { setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
   const syncedRef = useRef(false)
@@ -55,9 +55,11 @@ const PlayerGamePage = () => {
   }, [isConnected, gameIdParam, socket])
 
   useEvent(EVENTS.GAME.SUCCESS_JOIN, (joinedGameId) => {
-    setGameId(joinedGameId)
-    setJoinTicket(null)
-    setStatus(STATUS.WAIT, { text: "game:waitingForPlayers" })
+    updatePlayer({
+      gameId: joinedGameId,
+      joinTicket: null,
+      status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
+    })
   })
 
   useEvent(
@@ -68,16 +70,18 @@ const PlayerGamePage = () => {
       player,
       currentQuestion,
     }) => {
-      setGameId(reconnectGameId)
-      setStatus(reconnectStatus.name, reconnectStatus.data)
-      setPlayer(player)
+      updatePlayer({
+        gameId: reconnectGameId,
+        status: createStatus(reconnectStatus.name, reconnectStatus.data),
+        player,
+      })
       setQuestionStates(currentQuestion)
     },
   )
 
   useEvent(EVENTS.GAME.STATUS, ({ name, data }) => {
     if (name in GAME_STATE_COMPONENTS) {
-      setStatus(name, data)
+      updatePlayer({ status: createStatus(name, data) })
     }
   })
 
@@ -85,7 +89,7 @@ const PlayerGamePage = () => {
     localStorage.removeItem("game_pin")
     localStorage.removeItem("game_id")
     navigate({ to: "/" })
-    reset()
+    resetPlayer()
     setQuestionStates(null)
     toast.error(t(message))
   })

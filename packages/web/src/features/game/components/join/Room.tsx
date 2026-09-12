@@ -11,7 +11,7 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Room = () => {
-  const { setInviteCode } = usePlayerStore()
+  const { updatePlayer } = usePlayerStore()
   const [invitation, setInvitation] = useState("")
   const { pin } = useSearch({ from: "/(auth)/" })
   const hasCheckedRef = useRef(false)
@@ -26,7 +26,7 @@ const Room = () => {
         return
       }
 
-      setInviteCode(code)
+      updatePlayer({ inviteCode: code })
     },
     onError: (error) => {
       toast.error(

@@ -4,6 +4,7 @@ import Card from "@razzia/web/components/Card"
 import Input from "@razzia/web/components/Input"
 import { joinGame } from "@razzia/web/features/game/queries"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import { ApiError } from "@razzia/web/lib/api"
 import { useMutation } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
@@ -13,7 +14,7 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Username = () => {
-  const { inviteCode, startJoin, setStatus, setInviteCode } = usePlayerStore()
+  const { inviteCode, updatePlayer } = usePlayerStore()
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const { t } = useTranslation()
@@ -27,8 +28,12 @@ const Username = () => {
         localStorage.setItem("game_pin", inviteCode)
       }
 
-      startJoin({ gameId, ticket, username })
-      setStatus(STATUS.WAIT, { text: "game:waitingForPlayers" })
+      updatePlayer({
+        gameId,
+        joinTicket: ticket,
+        player: { username, points: 0 },
+        status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
+      })
       navigate({ to: "/party/$gameId", params: { gameId } })
     },
     onError: (error) => {
@@ -37,7 +42,7 @@ const Username = () => {
       )
 
       if (error instanceof ApiError && error.status === StatusCodes.NOT_FOUND) {
-        setInviteCode(null)
+        updatePlayer({ inviteCode: null })
       }
     },
   })
