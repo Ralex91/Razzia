@@ -1,4 +1,3 @@
-import * as AlertDialog from "@radix-ui/react-alert-dialog"
 import { EVENTS } from "@razzia/common/constants"
 import type { Player } from "@razzia/common/types/game"
 import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
@@ -10,6 +9,7 @@ import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useOnClickOutside } from "@razzia/web/hooks/useOnClickOutside"
 import { Maximize2, X } from "lucide-react"
 import { QRCodeSVG } from "qrcode.react"
+import { AlertDialog } from "radix-ui"
 import { useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -18,12 +18,10 @@ interface Props {
 }
 
 const Room = ({ data: { text, inviteCode } }: Props) => {
-  const { gameId } = useManagerStore()
+  const { gameId, players } = useManagerStore()
   const { socket } = useSocket()
   const webUrl = window.location.origin
-  const { players } = useManagerStore()
   const [playerList, setPlayerList] = useState<Player[]>(players)
-  const [totalPlayers, setTotalPlayers] = useState(0)
   const [qrOpen, setQrOpen] = useState(false)
   const qrContentRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
@@ -40,10 +38,6 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
 
   useEvent(EVENTS.MANAGER.PLAYER_KICKED, (playerId) => {
     setPlayerList(playerList.filter((p) => p.id !== playerId))
-  })
-
-  useEvent(EVENTS.GAME.TOTAL_PLAYERS, (total) => {
-    setTotalPlayers(total)
   })
 
   const handleKick = (playerId: string) => () => {
@@ -116,16 +110,9 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
         </AlertDialog.Root>
       </div>
 
-      <h2 className="mb-4 text-4xl font-bold text-white drop-shadow-lg">
+      <h2 className="mb-6 text-4xl font-bold text-white drop-shadow-lg">
         {t(text)}
       </h2>
-
-      <div className="mb-6 flex items-center justify-center rounded-lg bg-black/40 px-6 py-3">
-        <span className="text-2xl font-bold text-white drop-shadow-md">
-          {t("game:playersJoined")}
-          {totalPlayers}
-        </span>
-      </div>
 
       <div className="flex flex-wrap gap-3">
         {playerList.map((player) => (

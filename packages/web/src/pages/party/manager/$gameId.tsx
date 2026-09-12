@@ -9,6 +9,7 @@ import {
 import { useSocketConnection } from "@razzia/web/features/game/hooks/useSocketConnection"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import {
   GAME_STATE_COMPONENTS_MANAGER,
   MANAGER_SKIP_EVENTS,
@@ -23,8 +24,7 @@ const ManagerGamePage = () => {
   const navigate = useNavigate()
   const { gameId: gameIdParam } = useParams({ from: "/party/manager/$gameId" })
   const { socket, isConnected } = useSocket()
-  const { gameId, status, setGameId, setStatus, setPlayers, reset } =
-    useManagerStore()
+  const { gameId, status, updateManager, resetManager } = useManagerStore()
   const { setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
 
@@ -32,7 +32,7 @@ const ManagerGamePage = () => {
 
   useEvent(EVENTS.GAME.STATUS, ({ name, data }) => {
     if (name in GAME_STATE_COMPONENTS_MANAGER) {
-      setStatus(name, data)
+      updateManager({ status: createStatus(name, data) })
     }
   })
 
@@ -46,20 +46,26 @@ const ManagerGamePage = () => {
     EVENTS.MANAGER.SUCCESS_RECONNECT,
     ({
       gameId: reconnectGameId,
+      inviteCode,
+      settings,
       status: reconnectStatus,
       players,
       currentQuestion,
     }) => {
-      setGameId(reconnectGameId)
-      setStatus(reconnectStatus.name, reconnectStatus.data)
-      setPlayers(players)
+      updateManager({
+        gameId: reconnectGameId,
+        inviteCode,
+        settings,
+        status: createStatus(reconnectStatus.name, reconnectStatus.data),
+        players,
+      })
       setQuestionStates(currentQuestion)
     },
   )
 
   useEvent(EVENTS.GAME.RESET, (message) => {
     navigate({ to: "/manager/config" })
-    reset()
+    resetManager()
     setQuestionStates(null)
     toast.error(t(message))
   })
@@ -71,7 +77,7 @@ const ManagerGamePage = () => {
 
     if (status.name === STATUS.FINISHED) {
       navigate({ to: "/manager/config" })
-      reset()
+      resetManager()
       setQuestionStates(null)
 
       return
@@ -88,7 +94,7 @@ const ManagerGamePage = () => {
 
   const handleBack = () => {
     navigate({ to: "/manager/config" })
-    reset()
+    resetManager()
     setQuestionStates(null)
   }
 

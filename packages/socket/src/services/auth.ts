@@ -54,7 +54,7 @@ const JOIN_TICKET_TTL = 60 * 5
 export const mintJoinTicket = (
   sub: string,
   gameId: string,
-  username: string,
+  username?: string,
 ): Promise<string> => {
   const iat = Math.floor(Date.now() / 1000)
 

@@ -14,7 +14,7 @@ interface Props {
 const Result = ({
   data: { correct, message, points, myPoints, rank, aheadOfMe },
 }: Props) => {
-  const player = usePlayerStore()
+  const { updatePlayer } = usePlayerStore()
   const { t } = useTranslation()
   const rankKeyMap: Record<number, string> = {
     1: "game:rank.1",
@@ -28,7 +28,7 @@ const Result = ({
   })
 
   useEffect(() => {
-    player.updatePoints(myPoints)
+    updatePlayer(({ player }) => ({ player: { ...player, points: myPoints } }))
 
     sfxResults()
     // oxlint-disable-next-line

@@ -4,6 +4,8 @@
   "connecting": "Connecting...",
   "delete": "Delete",
   "exit": "Exit",
+  "exitFullscreen": "Exit fullscreen",
+  "fullscreen": "Fullscreen",
   "language": {
     "de": "Deutsch - German",
     "en": "English - English",

@@ -62,6 +62,10 @@ export interface QuizzMeta {
   subject: string
 }
 
+export interface GameSettings {
+  generatedUsernames: boolean
+}
+
 export interface GameUpdateQuestion {
   current: number
   total: number

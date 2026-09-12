@@ -10,16 +10,17 @@
     "tokenInvalid": "Jeton de session invalide",
     "tokenMissing": "Jeton de session manquant",
     "unauthorized": "Vous n'êtes pas autorisé",
-    "usernameTooLong": "Le pseudo ne peut pas dépasser 20 caractères",
+    "usernameTooLong": "Le pseudo ne peut pas dépasser 24 caractères",
     "usernameTooShort": "Le pseudo doit faire au moins 4 caractères"
   },
   "game": {
+    "alreadyStarted": "La partie a déjà commencé",
     "expired": "La partie a expiré",
     "kickedByManager": "Vous avez été expulsé par le manager",
     "managerAlreadyConnected": "Un manager est déjà connecté",
+    "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",
     "managerDisconnected": "Le manager s'est déconnecté",
     "noPlayersConnected": "Aucun joueur connecté",
-    "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",
     "notFound": "Partie introuvable",
     "playerAlreadyConnected": "Ce joueur est déjà connecté"
   },

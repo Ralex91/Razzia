@@ -1,44 +1,36 @@
+import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
+import type { GameSettings } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
-import {
-  createStatus,
-  type Status,
-} from "@razzia/web/features/game/utils/createStatus"
+import type { Status } from "@razzia/web/features/game/utils/createStatus"
 import { create } from "zustand"
 
-interface PlayerState {
+interface PlayerInfo {
   username?: string
   points?: number
 }
 
-interface JoinPayload {
-  gameId: string
-  ticket: string | null
-  username: string
-}
-
-interface PlayerStore<T> {
+interface PlayerState<T> {
   gameId: string | null
   inviteCode: string | null
+  settings: GameSettings
   joinTicket: string | null
-  player: PlayerState | null
+  player: PlayerInfo | null
   status: Status<T> | null
-
-  setGameId: (_gameId: string | null) => void
-  setInviteCode: (_inviteCode: string | null) => void
-  setJoinTicket: (_ticket: string | null) => void
-
-  setPlayer: (_state: PlayerState) => void
-  startJoin: (_payload: JoinPayload) => void
-  updatePoints: (_points: number) => void
-
-  setStatus: <K extends keyof T>(_name: K, _data: T[K]) => void
-
-  reset: () => void
 }
 
-const initialState = {
+type PlayerStore<T> = PlayerState<T> & {
+  updatePlayer: (
+    _state:
+      | Partial<PlayerState<T>>
+      | ((_state: PlayerState<T>) => Partial<PlayerState<T>>),
+  ) => void
+  resetPlayer: () => void
+}
+
+const initialState: PlayerState<StatusDataMap> = {
   gameId: null,
   inviteCode: null,
+  settings: { ...DEFAULT_GAME_SETTINGS },
   joinTicket: null,
   player: null,
   status: null,
@@ -47,25 +39,7 @@ const initialState = {
 export const usePlayerStore = create<PlayerStore<StatusDataMap>>((set) => ({
   ...initialState,
 
-  setGameId: (gameId) => set({ gameId }),
-  setInviteCode: (inviteCode) => set({ inviteCode }),
-  setJoinTicket: (joinTicket) => set({ joinTicket }),
+  updatePlayer: (state) => set(state),
 
-  setPlayer: (player: PlayerState) => set({ player }),
-
-  startJoin: ({ gameId, ticket, username }) =>
-    set({
-      gameId,
-      joinTicket: ticket,
-      player: { username, points: 0 },
-    }),
-
-  updatePoints: (points) =>
-    set((state) => ({
-      player: { ...state.player, points },
-    })),
-
-  setStatus: (name, data) => set({ status: createStatus(name, data) }),
-
-  reset: () => set(initialState),
+  resetPlayer: () => set(initialState),
 }))

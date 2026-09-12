@@ -4,7 +4,7 @@ import z from "zod"
 export const usernameValidator = z
   .string()
   .min(1, "errors:auth.usernameTooShort")
-  .max(20, "errors:auth.usernameTooLong")
+  .max(24, "errors:auth.usernameTooLong")
 
 export const inviteCodeValidator = z
   .string()
@@ -20,7 +20,7 @@ export const sessionClaimsValidator = z.object({
 export const joinTicketClaimsValidator = z.object({
   sub: z.string().min(1),
   gameId: z.string().min(1),
-  username: usernameValidator,
+  username: usernameValidator.optional(),
   iat: z.number(),
   exp: z.number(),
 })

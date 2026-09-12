@@ -1,6 +1,8 @@
 {
+  "confirm": "Conferma",
   "correct": "Bravo!",
   "gamePinLabel": "PIN del gioco:",
+  "generatedUsernameNotice": "Riceverai un soprannome casuale quando entri.",
   "hud": {
     "answers": "Risposte",
     "time": "Tempo"
@@ -8,9 +10,7 @@
   "joinInstruction": "Unisciti al gioco su",
   "leaderboard": "Classifica",
   "pinLabel": "Codice PIN",
-  "reconnect": "Riconnetti",
-  "reconnectTitle": "Eri in una partita",
-  "playersJoined": "Giocatori connessi: ",
+  "playersJoined": "Giocatori connessi",
   "questionPrefix": "Domanda #",
   "rank": {
     "1": "1° posto",
@@ -19,12 +19,20 @@
     "other": "{{rank}}° posto"
   },
   "rankSuffix": "° posto",
+  "reconnect": "Riconnetti",
+  "reconnectTitle": "Eri in una partita",
   "resultBehind": ", dietro ",
   "resultTop": "Hai terminato ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Genera soprannomi",
+      "hint": "I giocatori scelgono tra nomi generati invece di scriverli."
+    },
+    "title": "Impostazioni partita"
+  },
   "startGame": "Inizia il gioco",
   "usernamePlaceholder": "Nome utente qui",
   "waitingForAnswers": "In attesa delle risposte dei giocatori",
   "waitingForPlayers": "In attesa di giocatori",
-  "wrong": "Peccato",
-  "confirm": "Conferma"
+  "wrong": "Peccato"
 }

@@ -1,9 +1,11 @@
+import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
 import Input from "@razzia/web/components/Input"
 import { joinGame } from "@razzia/web/features/game/queries"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import { ApiError } from "@razzia/web/lib/api"
 import { useMutation } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
@@ -13,22 +15,26 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Username = () => {
-  const { inviteCode, startJoin, setStatus, setInviteCode } = usePlayerStore()
+  const { inviteCode, settings, updatePlayer } = usePlayerStore()
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const { t } = useTranslation()
 
   const { mutate: join, isPending } = useMutation({
     mutationFn: joinGame,
-    onSuccess: ({ gameId, ticket }) => {
+    onSuccess: ({ gameId, ticket, username: name }) => {
       localStorage.setItem("game_id", gameId)
 
       if (inviteCode) {
         localStorage.setItem("game_pin", inviteCode)
       }
 
-      startJoin({ gameId, ticket, username })
-      setStatus(STATUS.WAIT, { text: "game:waitingForPlayers" })
+      updatePlayer({
+        gameId,
+        joinTicket: ticket,
+        player: name ? { username: name, points: 0 } : null,
+        status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
+      })
       navigate({ to: "/party/$gameId", params: { gameId } })
     },
     onError: (error) => {
@@ -37,7 +43,10 @@ const Username = () => {
       )
 
       if (error instanceof ApiError && error.status === StatusCodes.NOT_FOUND) {
-        setInviteCode(null)
+        updatePlayer({
+          inviteCode: null,
+          settings: { ...DEFAULT_GAME_SETTINGS },
+        })
       }
     },
   })
@@ -47,13 +56,29 @@ const Username = () => {
       return
     }
 
-    join({ inviteCode, username })
+    join({
+      inviteCode,
+      username: settings.generatedUsernames ? undefined : username,
+    })
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       handleLogin()
     }
+  }
+
+  if (settings.generatedUsernames) {
+    return (
+      <Card>
+        <p className="mb-4 text-center text-lg font-semibold">
+          {t("game:generatedUsernameNotice")}
+        </p>
+        <Button onClick={handleLogin} disabled={isPending}>
+          {t("common:submit")}
+        </Button>
+      </Card>
+    )
   }
 
   return (

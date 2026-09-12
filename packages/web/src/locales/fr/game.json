@@ -1,6 +1,8 @@
 {
+  "confirm": "Valider",
   "correct": "Bravo !",
   "gamePinLabel": "PIN de la partie :",
+  "generatedUsernameNotice": "Un pseudo aléatoire te sera attribué en rejoignant.",
   "hud": {
     "answers": "Réponses",
     "time": "Temps"
@@ -8,9 +10,7 @@
   "joinInstruction": "Rejoins la partie sur",
   "leaderboard": "Classement",
   "pinLabel": "Code PIN",
-  "reconnect": "Reconnecter",
-  "reconnectTitle": "Vous étiez dans une partie",
-  "playersJoined": "Joueurs connectés : ",
+  "playersJoined": "Joueurs connectés",
   "questionPrefix": "Question n°",
   "rank": {
     "1": "1er",
@@ -19,12 +19,20 @@
     "other": "{{rank}}ème place"
   },
   "rankSuffix": "e place",
+  "reconnect": "Reconnecter",
+  "reconnectTitle": "Vous étiez dans une partie",
   "resultBehind": ", derrière ",
   "resultTop": "Tu es ",
+  "settings": {
+    "generatedUsernames": {
+      "label": "Générer les pseudos",
+      "hint": "Les joueurs choisissent parmi des pseudos générés au lieu de les saisir."
+    },
+    "title": "Réglages de la partie"
+  },
   "startGame": "Demarrer la partie",
   "usernamePlaceholder": "Pseudo",
   "waitingForAnswers": "En attente des réponses des joueurs",
   "waitingForPlayers": "En attente des joueurs",
-  "wrong": "Dommage",
-  "confirm": "Valider"
+  "wrong": "Dommage"
 }

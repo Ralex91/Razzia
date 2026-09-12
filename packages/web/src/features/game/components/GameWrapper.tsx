@@ -1,16 +1,21 @@
 import { EVENTS } from "@razzia/common/constants"
-import type { Status } from "@razzia/common/types/game/status"
+import { STATUS, type Status } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
+import Tooltip from "@razzia/web/components/Tooltip"
+import GameSettingsModal from "@razzia/web/features/game/components/GameSettingsModal"
 import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
 import { MANAGER_SKIP_BTN } from "@razzia/web/features/game/utils/constants"
+import { useFullscreen } from "@razzia/web/hooks/useFullscreen"
 import clsx from "clsx"
+import { Maximize, Minimize, Users } from "lucide-react"
 import { type PropsWithChildren, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -31,11 +36,14 @@ const GameWrapper = ({
 }: Props) => {
   const { isConnected } = useSocket()
   const { player } = usePlayerStore()
+  const { players, inviteCode } = useManagerStore()
   const { questionStates, setQuestionStates } = useQuestionStore()
+  const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
   const { t } = useTranslation()
   const [skippedStatusName, setSkippedStatusName] = useState<Status | null>(
     null,
   )
+  const [totalPlayers, setTotalPlayers] = useState<number | null>(null)
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
   const isDisabled = skippedStatusName === statusName
 
@@ -44,6 +52,10 @@ const GameWrapper = ({
       current,
       total,
     })
+  })
+
+  useEvent(EVENTS.GAME.TOTAL_PLAYERS, (total) => {
+    setTotalPlayers(total)
   })
 
   useEvent(EVENTS.GAME.ERROR_MESSAGE, (message) => {
@@ -101,7 +113,49 @@ const GameWrapper = ({
 
             {children}
 
-            {!manager && (
+            {manager ? (
+              <div
+                className={clsx("z-50 flex items-stretch gap-3 p-4", {
+                  "absolute inset-x-0 bottom-0": statusName === STATUS.FINISHED,
+                })}
+              >
+                {inviteCode && statusName !== STATUS.SHOW_ROOM && (
+                  <div className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md">
+                    <span>{window.location.host}</span>
+                    <span className="h-5 w-px bg-white/40" />
+                    <span>{inviteCode}</span>
+                  </div>
+                )}
+
+                <Tooltip content={t("game:playersJoined")}>
+                  <div className="ml-auto flex items-center gap-2 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md">
+                    <Users className="size-5" />
+                    {totalPlayers ?? players.length}
+                  </div>
+                </Tooltip>
+
+                {statusName === STATUS.SHOW_ROOM && <GameSettingsModal />}
+
+                <Tooltip
+                  content={t(
+                    isFullscreen
+                      ? "common:exitFullscreen"
+                      : "common:fullscreen",
+                  )}
+                >
+                  <button
+                    onClick={toggleFullscreen}
+                    className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60"
+                  >
+                    {isFullscreen ? (
+                      <Minimize className="size-5" />
+                    ) : (
+                      <Maximize className="size-5" />
+                    )}
+                  </button>
+                </Tooltip>
+              </div>
+            ) : (
               <div className="z-50 flex items-center justify-between bg-white px-4 py-2 text-lg font-bold text-white">
                 <p className="text-gray-800">{player?.username}</p>
                 <div className="rounded-lg bg-gray-800 px-3 py-1 text-lg">

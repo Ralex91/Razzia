@@ -10,16 +10,17 @@
     "tokenInvalid": "Token de sesión inválido",
     "tokenMissing": "Falta el token de sesión",
     "unauthorized": "No estás autorizado",
-    "usernameTooLong": "El nombre de usuario no puede superar los 20 caracteres",
+    "usernameTooLong": "El nombre de usuario no puede superar los 24 caracteres",
     "usernameTooShort": "El nombre de usuario no puede tener menos de 4 caracteres"
   },
   "game": {
+    "alreadyStarted": "La partida ya ha comenzado",
     "expired": "Partida expirada",
     "kickedByManager": "Has sido expulsado por el administrador",
     "managerAlreadyConnected": "El administrador ya está conectado",
+    "managerCannotJoin": "No puedes unirte a tu propio juego",
     "managerDisconnected": "El administrador se ha desconectado",
     "noPlayersConnected": "No hay jugadores conectados",
-    "managerCannotJoin": "No puedes unirte a tu propio juego",
     "notFound": "Partida no encontrada",
     "playerAlreadyConnected": "El jugador ya está conectado"
   },

@@ -43,7 +43,7 @@ export class PlayerManager {
     this.players.push(player)
     this.io.to(this.getManagerId()).emit(EVENTS.MANAGER.NEW_PLAYER, player)
     this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.players.length)
-    socket.emit(EVENTS.GAME.SUCCESS_JOIN, this.gameId)
+    socket.emit(EVENTS.GAME.SUCCESS_JOIN, { gameId: this.gameId, username })
 
     return null
   }

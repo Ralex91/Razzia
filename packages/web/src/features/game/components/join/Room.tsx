@@ -11,7 +11,7 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Room = () => {
-  const { setInviteCode } = usePlayerStore()
+  const { updatePlayer } = usePlayerStore()
   const [invitation, setInvitation] = useState("")
   const { pin } = useSearch({ from: "/(auth)/" })
   const hasCheckedRef = useRef(false)
@@ -19,14 +19,14 @@ const Room = () => {
 
   const { mutate: check, isPending } = useMutation({
     mutationFn: checkInviteCode,
-    onSuccess: ({ valid }, code) => {
+    onSuccess: ({ valid, settings }, code) => {
       if (!valid) {
         toast.error(t("errors:game.notFound"))
 
         return
       }
 
-      setInviteCode(code)
+      updatePlayer({ inviteCode: code, settings })
     },
     onError: (error) => {
       toast.error(

@@ -1,26 +1,26 @@
-import type { Player } from "@razzia/common/types/game"
+import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
+import type { GameSettings, Player } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
-import {
-  createStatus,
-  type Status,
-} from "@razzia/web/features/game/utils/createStatus"
+import type { Status } from "@razzia/web/features/game/utils/createStatus"
 import { create } from "zustand"
 
-interface ManagerStore<T> {
+interface ManagerState<T> {
   gameId: string | null
+  inviteCode: string | null
+  settings: GameSettings
   status: Status<T> | null
   players: Player[]
-
-  setGameId: (_gameId: string | null) => void
-  setStatus: <K extends keyof T>(_name: K, _data: T[K]) => void
-  resetStatus: () => void
-  setPlayers: (_players: Player[]) => void
-
-  reset: () => void
 }
 
-const initialState = {
+type ManagerStore<T> = ManagerState<T> & {
+  updateManager: (_state: Partial<ManagerState<T>>) => void
+  resetManager: () => void
+}
+
+const initialState: ManagerState<StatusDataMap> = {
   gameId: null,
+  inviteCode: null,
+  settings: { ...DEFAULT_GAME_SETTINGS },
   status: null,
   players: [],
 }
@@ -28,12 +28,7 @@ const initialState = {
 export const useManagerStore = create<ManagerStore<StatusDataMap>>((set) => ({
   ...initialState,
 
-  setGameId: (gameId) => set({ gameId }),
+  updateManager: (state) => set(state),
 
-  setStatus: (name, data) => set({ status: createStatus(name, data) }),
-  resetStatus: () => set({ status: null }),
-
-  setPlayers: (players) => set({ players }),
-
-  reset: () => set(initialState),
+  resetManager: () => set(initialState),
 }))
