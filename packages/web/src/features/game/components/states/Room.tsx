@@ -1,4 +1,3 @@
-import * as AlertDialog from "@radix-ui/react-alert-dialog"
 import { EVENTS } from "@razzia/common/constants"
 import type { Player } from "@razzia/common/types/game"
 import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
@@ -10,6 +9,7 @@ import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useOnClickOutside } from "@razzia/web/hooks/useOnClickOutside"
 import { Maximize2, X } from "lucide-react"
 import { QRCodeSVG } from "qrcode.react"
+import { AlertDialog } from "radix-ui"
 import { useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
