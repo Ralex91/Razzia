@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tailwindcss-animated";
 
 @theme {
   --color-primary: #ff9900;
@@ -17,6 +18,8 @@
   --color-foreground: var(--color-gray-700);
 
   --font-display: "Rubik Variable", sans-serif;
+
+  --animate-fade: fade 150ms ease both;
 }
 
 button:not(:disabled),

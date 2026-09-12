@@ -3,6 +3,7 @@ import { STATUS, type Status } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
+import Tooltip from "@razzia/web/components/Tooltip"
 import {
   useEvent,
   useSocket,
@@ -125,29 +126,31 @@ const GameWrapper = ({
                   </div>
                 )}
 
-                <div
-                  className="ml-auto flex items-center gap-2 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md"
-                  title={t("game:playersJoined")}
-                >
-                  <Users className="size-5" />
-                  {totalPlayers ?? players.length}
-                </div>
+                <Tooltip content={t("game:playersJoined")}>
+                  <div className="ml-auto flex items-center gap-2 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md">
+                    <Users className="size-5" />
+                    {totalPlayers ?? players.length}
+                  </div>
+                </Tooltip>
 
-                <button
-                  onClick={toggleFullscreen}
-                  className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60"
-                  title={t(
+                <Tooltip
+                  content={t(
                     isFullscreen
                       ? "common:exitFullscreen"
                       : "common:fullscreen",
                   )}
                 >
-                  {isFullscreen ? (
-                    <Minimize className="size-5" />
-                  ) : (
-                    <Maximize className="size-5" />
-                  )}
-                </button>
+                  <button
+                    onClick={toggleFullscreen}
+                    className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60"
+                  >
+                    {isFullscreen ? (
+                      <Minimize className="size-5" />
+                    ) : (
+                      <Maximize className="size-5" />
+                    )}
+                  </button>
+                </Tooltip>
               </div>
             ) : (
               <div className="z-50 flex items-center justify-between bg-white px-4 py-2 text-lg font-bold text-white">
