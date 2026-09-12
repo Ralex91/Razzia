@@ -41,6 +41,10 @@ export const SESSION_ROLES = {
 
 export const NO_TIME_LIMIT = -1
 
+export const DEFAULT_GAME_SETTINGS = {
+  generatedUsernames: false,
+} as const
+
 export const MAX_POINTS = 1000
 
 export const QUESTION_TYPES = {

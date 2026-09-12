@@ -1,6 +1,8 @@
 {
+  "confirm": "Confirm",
   "correct": "Nice!",
   "gamePinLabel": "Game PIN:",
+  "generatedUsernameNotice": "You will be given a random nickname when you join.",
   "hud": {
     "answers": "Answers",
     "time": "Time"
@@ -8,8 +10,6 @@
   "joinInstruction": "Join the game at",
   "leaderboard": "Leaderboard",
   "pinLabel": "PIN Code",
-  "reconnect": "Reconnect",
-  "reconnectTitle": "You were in a game",
   "playersJoined": "Players joined",
   "questionPrefix": "Question #",
   "rank": {
@@ -19,12 +19,13 @@
     "other": "{{rank}}th place"
   },
   "rankSuffix": " place",
+  "reconnect": "Reconnect",
+  "reconnectTitle": "You were in a game",
   "resultBehind": ", behind ",
   "resultTop": "You finished ",
   "startGame": "Start Game",
   "usernamePlaceholder": "Username here",
   "waitingForAnswers": "Waiting for the players to answer",
   "waitingForPlayers": "Waiting for players",
-  "wrong": "Too bad",
-  "confirm": "Confirm"
+  "wrong": "Too bad"
 }

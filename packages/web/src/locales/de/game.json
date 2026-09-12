@@ -1,6 +1,8 @@
 {
+  "confirm": "Bestätigen",
   "correct": "Richtig!",
   "gamePinLabel": "Spiel-PIN:",
+  "generatedUsernameNotice": "Du bekommst beim Beitreten einen zufälligen Spitznamen.",
   "hud": {
     "answers": "Antworten",
     "time": "Zeit"
@@ -8,8 +10,6 @@
   "joinInstruction": "Tritt dem Spiel bei auf",
   "leaderboard": "Bestenliste",
   "pinLabel": "PIN-Code",
-  "reconnect": "Erneut verbinden",
-  "reconnectTitle": "Du warst in einem Spiel",
   "playersJoined": "Verbundene Spieler",
   "questionPrefix": "Frage #",
   "rank": {
@@ -19,12 +19,13 @@
     "other": "{{rank}}. Platz"
   },
   "rankSuffix": ". Platz",
+  "reconnect": "Erneut verbinden",
+  "reconnectTitle": "Du warst in einem Spiel",
   "resultBehind": ", hinter ",
   "resultTop": "Du hast ",
   "startGame": "Spiel starten",
   "usernamePlaceholder": "Benutzername hier",
   "waitingForAnswers": "Warten auf die Antworten der Spieler",
   "waitingForPlayers": "Warten auf Spieler",
-  "wrong": "Schade",
-  "confirm": "Bestätigen"
+  "wrong": "Schade"
 }

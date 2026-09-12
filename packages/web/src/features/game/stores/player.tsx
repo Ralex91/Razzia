@@ -1,3 +1,5 @@
+import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
+import type { GameSettings } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
 import type { Status } from "@razzia/web/features/game/utils/createStatus"
 import { create } from "zustand"
@@ -10,6 +12,7 @@ interface PlayerInfo {
 interface PlayerState<T> {
   gameId: string | null
   inviteCode: string | null
+  settings: GameSettings
   joinTicket: string | null
   player: PlayerInfo | null
   status: Status<T> | null
@@ -27,6 +30,7 @@ type PlayerStore<T> = PlayerState<T> & {
 const initialState: PlayerState<StatusDataMap> = {
   gameId: null,
   inviteCode: null,
+  settings: { ...DEFAULT_GAME_SETTINGS },
   joinTicket: null,
   player: null,
   status: null,

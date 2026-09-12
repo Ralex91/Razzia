@@ -1,6 +1,8 @@
 {
+  "confirm": "確認",
   "correct": "正解！",
   "gamePinLabel": "ゲームPIN:",
+  "generatedUsernameNotice": "参加するとランダムなニックネームが割り当てられます。",
   "hud": {
     "answers": "回答数",
     "time": "時間"
@@ -8,8 +10,6 @@
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
   "pinLabel": "PINコード",
-  "reconnect": "再接続",
-  "reconnectTitle": "ゲームに参加していました",
   "playersJoined": "参加プレイヤー数",
   "questionPrefix": "問題 #",
   "rank": {
@@ -19,12 +19,13 @@
     "other": "{{rank}}位"
   },
   "rankSuffix": "位",
+  "reconnect": "再接続",
+  "reconnectTitle": "ゲームに参加していました",
   "resultBehind": "、差は ",
   "resultTop": "あなたの順位は ",
   "startGame": "ゲーム開始",
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
   "waitingForPlayers": "プレイヤーを待っています",
-  "wrong": "残念！",
-  "confirm": "確認"
+  "wrong": "残念！"
 }

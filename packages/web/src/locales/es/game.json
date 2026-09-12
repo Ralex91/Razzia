@@ -1,6 +1,8 @@
 {
+  "confirm": "Confirmar",
   "correct": "¡Bien!",
   "gamePinLabel": "PIN del juego:",
+  "generatedUsernameNotice": "Recibirás un apodo aleatorio al entrar.",
   "hud": {
     "answers": "Respuestas",
     "time": "Tiempo"
@@ -8,8 +10,6 @@
   "joinInstruction": "Únete al juego en",
   "leaderboard": "Clasificación",
   "pinLabel": "Código PIN",
-  "reconnect": "Reconectar",
-  "reconnectTitle": "Estabas en una partida",
   "playersJoined": "Jugadores conectados",
   "questionPrefix": "Pregunta #",
   "rank": {
@@ -19,12 +19,13 @@
     "other": "Puesto {{rank}}"
   },
   "rankSuffix": " puesto",
+  "reconnect": "Reconectar",
+  "reconnectTitle": "Estabas en una partida",
   "resultBehind": ", detrás de ",
   "resultTop": "Terminaste ",
   "startGame": "Iniciar juego",
   "usernamePlaceholder": "Nombre de usuario aquí",
   "waitingForAnswers": "Esperando que los jugadores respondan",
   "waitingForPlayers": "Esperando jugadores",
-  "wrong": "Mala suerte",
-  "confirm": "Confirmar"
+  "wrong": "Mala suerte"
 }

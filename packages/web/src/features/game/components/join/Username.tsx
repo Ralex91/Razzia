@@ -1,3 +1,4 @@
+import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
@@ -14,14 +15,14 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Username = () => {
-  const { inviteCode, updatePlayer } = usePlayerStore()
+  const { inviteCode, settings, updatePlayer } = usePlayerStore()
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const { t } = useTranslation()
 
   const { mutate: join, isPending } = useMutation({
     mutationFn: joinGame,
-    onSuccess: ({ gameId, ticket }) => {
+    onSuccess: ({ gameId, ticket, username: name }) => {
       localStorage.setItem("game_id", gameId)
 
       if (inviteCode) {
@@ -31,7 +32,7 @@ const Username = () => {
       updatePlayer({
         gameId,
         joinTicket: ticket,
-        player: { username, points: 0 },
+        player: name ? { username: name, points: 0 } : null,
         status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
       })
       navigate({ to: "/party/$gameId", params: { gameId } })
@@ -42,7 +43,10 @@ const Username = () => {
       )
 
       if (error instanceof ApiError && error.status === StatusCodes.NOT_FOUND) {
-        updatePlayer({ inviteCode: null })
+        updatePlayer({
+          inviteCode: null,
+          settings: { ...DEFAULT_GAME_SETTINGS },
+        })
       }
     },
   })
@@ -52,13 +56,29 @@ const Username = () => {
       return
     }
 
-    join({ inviteCode, username })
+    join({
+      inviteCode,
+      username: settings.generatedUsernames ? undefined : username,
+    })
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       handleLogin()
     }
+  }
+
+  if (settings.generatedUsernames) {
+    return (
+      <Card>
+        <p className="mb-4 text-center text-lg font-semibold">
+          {t("game:generatedUsernameNotice")}
+        </p>
+        <Button onClick={handleLogin} disabled={isPending}>
+          {t("common:submit")}
+        </Button>
+      </Card>
+    )
   }
 
   return (

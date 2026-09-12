@@ -1,6 +1,10 @@
 import { EVENTS } from "@razzia/common/constants"
 import type { SessionRole } from "@razzia/common/types/auth"
-import type { GameUpdateQuestion, Player } from "@razzia/common/types/game"
+import type {
+  GameSettings,
+  GameUpdateQuestion,
+  Player,
+} from "@razzia/common/types/game"
 import type { Status, StatusDataMap } from "@razzia/common/types/game/status"
 import {
   Server as ServerIO,
@@ -50,7 +54,10 @@ export interface ServerToClientEvents {
     name: Status
     data: StatusDataMap[Status]
   }) => void
-  [EVENTS.GAME.SUCCESS_JOIN]: (_gameId: string) => void
+  [EVENTS.GAME.SUCCESS_JOIN]: (_data: {
+    gameId: string
+    username: string
+  }) => void
   [EVENTS.GAME.TOTAL_PLAYERS]: (_count: number) => void
   [EVENTS.GAME.ERROR_MESSAGE]: (_message: string) => void
   [EVENTS.GAME.START_COOLDOWN]: () => void
@@ -75,6 +82,7 @@ export interface ServerToClientEvents {
   [EVENTS.MANAGER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
     inviteCode: string
+    settings: GameSettings
     status: { name: Status; data: StatusDataMap[Status] }
     players: Player[]
     currentQuestion: GameUpdateQuestion | null

@@ -47,6 +47,7 @@ const ManagerGamePage = () => {
     ({
       gameId: reconnectGameId,
       inviteCode,
+      settings,
       status: reconnectStatus,
       players,
       currentQuestion,
@@ -54,6 +55,7 @@ const ManagerGamePage = () => {
       updateManager({
         gameId: reconnectGameId,
         inviteCode,
+        settings,
         status: createStatus(reconnectStatus.name, reconnectStatus.data),
         players,
       })

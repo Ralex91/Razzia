@@ -14,5 +14,11 @@ export const checkGameValidator = z.object({
 
 export const joinGameValidator = z.object({
   inviteCode: inviteCodeValidator,
-  username: usernameValidator,
+  username: usernameValidator.optional(),
 })
+
+export const gameSettingsValidator = z
+  .object({
+    generatedUsernames: z.boolean(),
+  })
+  .partial()

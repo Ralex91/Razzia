@@ -19,14 +19,14 @@ const Room = () => {
 
   const { mutate: check, isPending } = useMutation({
     mutationFn: checkInviteCode,
-    onSuccess: ({ valid }, code) => {
+    onSuccess: ({ valid, settings }, code) => {
       if (!valid) {
         toast.error(t("errors:game.notFound"))
 
         return
       }
 
-      updatePlayer({ inviteCode: code })
+      updatePlayer({ inviteCode: code, settings })
     },
     onError: (error) => {
       toast.error(

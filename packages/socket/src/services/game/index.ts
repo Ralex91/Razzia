@@ -1,5 +1,5 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { Player, Quizz } from "@razzia/common/types/game"
+import { DEFAULT_GAME_SETTINGS, EVENTS } from "@razzia/common/constants"
+import type { GameSettings, Player, Quizz } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import {
   STATUS,
@@ -12,6 +12,7 @@ import { PlayerManager } from "@razzia/socket/services/game/player-manager"
 import { RoundManager } from "@razzia/socket/services/game/round-manager"
 import Registry from "@razzia/socket/services/registry"
 import { createInviteCode } from "@razzia/socket/utils/game"
+import { createNickname } from "@razzia/socket/utils/nickname"
 import { getClientId } from "@razzia/socket/utils/socket"
 import { v7 as uuid } from "uuid"
 
@@ -20,6 +21,8 @@ const registry = Registry.getInstance()
 class Game {
   readonly gameId: string
   readonly inviteCode: string
+
+  private _settings: GameSettings = { ...DEFAULT_GAME_SETTINGS }
 
   private readonly io: Server
   private readonly _manager: {
@@ -95,6 +98,20 @@ class Game {
     return this.round.isStarted()
   }
 
+  get settings(): GameSettings {
+    return this._settings
+  }
+
+  updateSettings(settings: Partial<GameSettings>): boolean {
+    if (this.started) {
+      return false
+    }
+
+    this._settings = { ...this._settings, ...settings }
+
+    return true
+  }
+
   // ── Status broadcasting ──────────────────────────────────────────────────
 
   private broadcastStatus<T extends Status>(status: T, data: StatusDataMap[T]) {
@@ -121,7 +138,17 @@ class Game {
 
   // Player actions
 
-  join(socket: Socket, username: string): string | null {
+  join(socket: Socket, username?: string): string | null {
+    if (this._settings.generatedUsernames) {
+      const taken = this.playerManager.getAll().map((player) => player.username)
+
+      return this.playerManager.join(socket, createNickname(taken))
+    }
+
+    if (!username) {
+      return "errors:auth.usernameTooShort"
+    }
+
     return this.playerManager.join(socket, username)
   }
 
@@ -177,6 +204,7 @@ class Game {
     socket.emit(EVENTS.MANAGER.SUCCESS_RECONNECT, {
       gameId: this.gameId,
       inviteCode: this.inviteCode,
+      settings: this._settings,
       currentQuestion: this.round.getReconnectInfo(),
       status,
       players: this.playerManager.getAll(),
