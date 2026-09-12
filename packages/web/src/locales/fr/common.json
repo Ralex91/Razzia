@@ -4,6 +4,8 @@
   "connecting": "Connexion...",
   "delete": "Supprimer",
   "exit": "Quitter",
+  "exitFullscreen": "Quitter le plein écran",
+  "fullscreen": "Plein écran",
   "language": {
     "de": "Deutsch - Allemand",
     "en": "English - Anglais",

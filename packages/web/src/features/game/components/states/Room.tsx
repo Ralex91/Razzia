@@ -18,12 +18,10 @@ interface Props {
 }
 
 const Room = ({ data: { text, inviteCode } }: Props) => {
-  const { gameId } = useManagerStore()
+  const { gameId, players } = useManagerStore()
   const { socket } = useSocket()
   const webUrl = window.location.origin
-  const { players } = useManagerStore()
   const [playerList, setPlayerList] = useState<Player[]>(players)
-  const [totalPlayers, setTotalPlayers] = useState(0)
   const [qrOpen, setQrOpen] = useState(false)
   const qrContentRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
@@ -40,10 +38,6 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
 
   useEvent(EVENTS.MANAGER.PLAYER_KICKED, (playerId) => {
     setPlayerList(playerList.filter((p) => p.id !== playerId))
-  })
-
-  useEvent(EVENTS.GAME.TOTAL_PLAYERS, (total) => {
-    setTotalPlayers(total)
   })
 
   const handleKick = (playerId: string) => () => {
@@ -116,16 +110,9 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
         </AlertDialog.Root>
       </div>
 
-      <h2 className="mb-4 text-4xl font-bold text-white drop-shadow-lg">
+      <h2 className="mb-6 text-4xl font-bold text-white drop-shadow-lg">
         {t(text)}
       </h2>
-
-      <div className="mb-6 flex items-center justify-center rounded-lg bg-black/40 px-6 py-3">
-        <span className="text-2xl font-bold text-white drop-shadow-md">
-          {t("game:playersJoined")}
-          {totalPlayers}
-        </span>
-      </div>
 
       <div className="flex flex-wrap gap-3">
         {playerList.map((player) => (

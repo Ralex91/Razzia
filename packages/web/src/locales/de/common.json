@@ -4,6 +4,8 @@
   "connecting": "Verbinden...",
   "delete": "Löschen",
   "exit": "Beenden",
+  "exitFullscreen": "Vollbild beenden",
+  "fullscreen": "Vollbild",
   "language": {
     "de": "Deutsch - Deutsch",
     "en": "English - Englisch",

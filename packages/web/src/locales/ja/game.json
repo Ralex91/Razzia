@@ -10,7 +10,7 @@
   "pinLabel": "PINコード",
   "reconnect": "再接続",
   "reconnectTitle": "ゲームに参加していました",
-  "playersJoined": "参加プレイヤー数: ",
+  "playersJoined": "参加プレイヤー数",
   "questionPrefix": "問題 #",
   "rank": {
     "1": "1位",
