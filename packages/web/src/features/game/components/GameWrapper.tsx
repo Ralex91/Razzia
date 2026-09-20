@@ -1,5 +1,9 @@
 import { EVENTS } from "@razzia/common/constants"
-import { STATUS, type Status } from "@razzia/common/types/game/status"
+import {
+  STATUS,
+  type Status,
+  type StatusDataMap,
+} from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
@@ -13,6 +17,7 @@ import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
 import { MANAGER_SKIP_BTN } from "@razzia/web/features/game/utils/constants"
+import type { Status as GameStatus } from "@razzia/web/features/game/utils/createStatus"
 import { useFullscreen } from "@razzia/web/hooks/useFullscreen"
 import clsx from "clsx"
 import { Maximize, Minimize, Users } from "lucide-react"
@@ -36,16 +41,15 @@ const GameWrapper = ({
 }: Props) => {
   const { isConnected } = useSocket()
   const { player } = usePlayerStore()
-  const { players, inviteCode } = useManagerStore()
+  const { players, inviteCode, status } = useManagerStore()
   const { questionStates, setQuestionStates } = useQuestionStore()
   const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
   const { t } = useTranslation()
-  const [skippedStatusName, setSkippedStatusName] = useState<Status | null>(
-    null,
-  )
+  const [skippedStatus, setSkippedStatus] =
+    useState<GameStatus<StatusDataMap> | null>(null)
   const [totalPlayers, setTotalPlayers] = useState<number | null>(null)
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
-  const isDisabled = skippedStatusName === statusName
+  const isDisabled = skippedStatus !== null && skippedStatus === status
 
   useEvent(EVENTS.GAME.UPDATE_QUESTION, ({ current, total }) => {
     setQuestionStates({
@@ -61,11 +65,11 @@ const GameWrapper = ({
   useEvent(EVENTS.GAME.ERROR_MESSAGE, (message) => {
     toast.error(t(message))
     console.log(t(message))
-    setSkippedStatusName(null)
+    setSkippedStatus(null)
   })
 
   const handleNext = () => {
-    setSkippedStatusName(statusName ?? null)
+    setSkippedStatus(status)
     onNext?.()
   }
 
