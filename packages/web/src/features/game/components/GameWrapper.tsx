@@ -48,6 +48,10 @@ const GameWrapper = ({
   const [skippedStatus, setSkippedStatus] =
     useState<GameStatus<StatusDataMap> | null>(null)
   const [totalPlayers, setTotalPlayers] = useState<number | null>(null)
+  const [countdown, setCountdown] = useState<{
+    seconds: number
+    total: number
+  } | null>(null)
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
   const isDisabled = skippedStatus !== null && skippedStatus === status
 
@@ -60,6 +64,16 @@ const GameWrapper = ({
 
   useEvent(EVENTS.GAME.TOTAL_PLAYERS, (total) => {
     setTotalPlayers(total)
+  })
+
+  useEvent(EVENTS.MANAGER.AUTO_ADVANCE, (state) => {
+    setCountdown((current) => {
+      if (state === null) {
+        return null
+      }
+
+      return current ?? state
+    })
   })
 
   useEvent(EVENTS.GAME.ERROR_MESSAGE, (message) => {
@@ -96,12 +110,22 @@ const GameWrapper = ({
 
               {manager && next && (
                 <Button
-                  className={clsx("hover:bg-accent bg-white px-4 text-black", {
-                    "pointer-events-none": isDisabled,
-                  })}
+                  className={clsx(
+                    "hover:bg-accent relative overflow-hidden bg-white px-4 text-black",
+                    { "pointer-events-none": isDisabled },
+                  )}
                   onClick={handleNext}
                 >
-                  {t(next)}
+                  {countdown && (
+                    <span
+                      className="bg-primary/40 absolute inset-y-0 left-0"
+                      style={{
+                        animation: `progressBar ${countdown.total}s linear forwards`,
+                      }}
+                    />
+                  )}
+
+                  <span className="relative">{t(next)}</span>
                 </Button>
               )}
 

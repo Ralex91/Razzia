@@ -16,6 +16,7 @@
   "game": {
     "alreadyStarted": "Partita già iniziata",
     "expired": "Partita terminata",
+    "invalidAutoAdvanceDelay": "Il ritardo deve essere tra 3 e 600 secondi",
     "kickedByManager": "Sei stato espulso dal gestore",
     "managerAlreadyConnected": "Gestore già connesso",
     "managerCannotJoin": "Non puoi unirti alla tua stessa partita",

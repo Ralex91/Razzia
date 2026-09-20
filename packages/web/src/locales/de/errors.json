@@ -16,6 +16,7 @@
   "game": {
     "alreadyStarted": "Spiel bereits gestartet",
     "expired": "Spiel abgelaufen",
+    "invalidAutoAdvanceDelay": "Verzögerung muss zwischen 3 und 600 Sekunden liegen",
     "kickedByManager": "Du wurdest vom Manager entfernt",
     "managerAlreadyConnected": "Manager bereits verbunden",
     "managerCannotJoin": "Du kannst deinem eigenen Spiel nicht beitreten",

@@ -1,4 +1,4 @@
-import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
+import { createDefaultGameSettings } from "@razzia/common/constants"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
@@ -45,7 +45,7 @@ const Username = () => {
       if (error instanceof ApiError && error.status === StatusCodes.NOT_FOUND) {
         updatePlayer({
           inviteCode: null,
-          settings: { ...DEFAULT_GAME_SETTINGS },
+          settings: createDefaultGameSettings(),
         })
       }
     },

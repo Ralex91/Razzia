@@ -24,6 +24,12 @@
   "resultBehind": ", detrás de ",
   "resultTop": "Terminaste ",
   "settings": {
+    "autoAdvance": {
+      "hint": "Continuar solo tras la revelación y la clasificación.",
+      "label": "Avance automático",
+      "leaderboardDelay": "Clasificación",
+      "responsesDelay": "Resultado"
+    },
     "generatedUsernames": {
       "label": "Generar apodos",
       "hint": "Los jugadores eligen entre nombres generados en vez de escribirlos."

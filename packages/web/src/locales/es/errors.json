@@ -16,6 +16,7 @@
   "game": {
     "alreadyStarted": "La partida ya ha comenzado",
     "expired": "Partida expirada",
+    "invalidAutoAdvanceDelay": "El retraso debe estar entre 3 y 600 segundos",
     "kickedByManager": "Has sido expulsado por el administrador",
     "managerAlreadyConnected": "El administrador ya está conectado",
     "managerCannotJoin": "No puedes unirte a tu propio juego",

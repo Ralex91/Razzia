@@ -1,4 +1,4 @@
-import { DEFAULT_GAME_SETTINGS, EVENTS } from "@razzia/common/constants"
+import { createDefaultGameSettings, EVENTS } from "@razzia/common/constants"
 import type { GameSettings, Player, Quizz } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import {
@@ -22,7 +22,7 @@ class Game {
   readonly gameId: string
   readonly inviteCode: string
 
-  private _settings: GameSettings = { ...DEFAULT_GAME_SETTINGS }
+  private _settings: GameSettings = createDefaultGameSettings()
 
   private readonly io: Server
   private readonly _manager: {
@@ -79,6 +79,7 @@ class Game {
         this.managerStatus = null
       },
       onGameFinished: saveResult,
+      getSettings: () => this._settings,
     })
 
     console.log(
@@ -150,6 +151,11 @@ class Game {
     }
 
     return this.playerManager.join(socket, username)
+  }
+
+  dispose() {
+    this.round.clearAutoAdvance()
+    this.cooldown.abort()
   }
 
   kickPlayer(playerId: string) {

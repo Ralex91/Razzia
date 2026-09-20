@@ -16,6 +16,7 @@
   "game": {
     "alreadyStarted": "Game already started",
     "expired": "Game expired",
+    "invalidAutoAdvanceDelay": "Delay must be between 3 and 600 seconds",
     "kickedByManager": "You have been kicked by the manager",
     "managerAlreadyConnected": "Manager already connected",
     "managerCannotJoin": "You cannot join your own game",

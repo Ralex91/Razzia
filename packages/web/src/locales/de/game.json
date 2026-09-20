@@ -24,6 +24,12 @@
   "resultBehind": ", hinter ",
   "resultTop": "Du hast ",
   "settings": {
+    "autoAdvance": {
+      "hint": "Nach der Auflösung und der Rangliste von selbst weitergehen.",
+      "label": "Automatisch weiter",
+      "leaderboardDelay": "Rangliste",
+      "responsesDelay": "Ergebnis"
+    },
     "generatedUsernames": {
       "label": "Spitznamen generieren",
       "hint": "Spieler wählen aus generierten Namen, statt selbst zu tippen."

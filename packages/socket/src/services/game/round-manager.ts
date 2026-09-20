@@ -3,6 +3,7 @@ import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type {
   Answer,
   GameResult,
+  GameSettings,
   GameUpdateQuestion,
   Player,
   Question,
@@ -43,6 +44,7 @@ export interface RoundManagerOptions {
   send: SendFn
   onNewQuestion: () => void
   onGameFinished: (_result: GameResult) => void
+  getSettings: () => GameSettings
 }
 
 export class RoundManager {
@@ -54,6 +56,7 @@ export class RoundManager {
   private leaderboard: Player[] = []
   private tempOldLeaderboard: Player[] | null = null
   private questionsHistory: QuestionResult[] = []
+  private autoAdvanceTimer: NodeJS.Timeout | null = null
 
   constructor(opts: RoundManagerOptions) {
     this.opts = opts
@@ -61,6 +64,50 @@ export class RoundManager {
 
   isStarted(): boolean {
     return this.started
+  }
+
+  clearAutoAdvance(): void {
+    if (!this.autoAdvanceTimer) {
+      return
+    }
+
+    clearInterval(this.autoAdvanceTimer)
+    this.autoAdvanceTimer = null
+    this.emitAutoAdvance(null)
+  }
+
+  private emitAutoAdvance(state: { seconds: number; total: number } | null) {
+    this.opts.io
+      .to(this.opts.getManagerId())
+      .emit(EVENTS.MANAGER.AUTO_ADVANCE, state)
+  }
+
+  private scheduleAutoAdvance(delay: number, run: () => void): void {
+    this.clearAutoAdvance()
+
+    if (!this.opts.getSettings().autoAdvance.enable) {
+      return
+    }
+
+    let remaining = delay
+
+    this.emitAutoAdvance({ seconds: remaining, total: delay })
+
+    this.autoAdvanceTimer = setInterval(() => {
+      remaining -= 1
+
+      if (remaining > 0) {
+        this.emitAutoAdvance({ seconds: remaining, total: delay })
+
+        return
+      }
+
+      this.clearAutoAdvance()
+
+      if (this.started) {
+        run()
+      }
+    }, 1000)
   }
 
   getReconnectInfo(): GameUpdateQuestion | null {
@@ -162,6 +209,8 @@ export class RoundManager {
   }
 
   private showResults(question: Question): void {
+    this.clearAutoAdvance()
+
     const currentPlayers = this.opts.players.getAll()
 
     const oldLeaderboard = (() => {
@@ -232,6 +281,11 @@ export class RoundManager {
       responses: answerCounts,
     })
 
+    this.scheduleAutoAdvance(
+      this.opts.getSettings().autoAdvance.responsesDelay,
+      () => this.showLeaderboard(),
+    )
+
     this.questionsHistory.push({
       ...question,
       playerAnswers: currentPlayers.map((player) => ({
@@ -292,6 +346,8 @@ export class RoundManager {
   }
 
   nextQuestion(): void {
+    this.clearAutoAdvance()
+
     if (!this.started) {
       return
     }
@@ -305,6 +361,8 @@ export class RoundManager {
   }
 
   abortQuestion(): void {
+    this.clearAutoAdvance()
+
     if (!this.started) {
       return
     }
@@ -313,11 +371,14 @@ export class RoundManager {
   }
 
   showLeaderboard(): void {
+    this.clearAutoAdvance()
+
     const isLastRound =
       this.currentQuestion + 1 === this.opts.quizz.questions.length
 
     if (isLastRound) {
       this.started = false
+      this.clearAutoAdvance()
 
       const top = this.leaderboard.slice(0, 3)
 
@@ -355,6 +416,11 @@ export class RoundManager {
       oldLeaderboard: oldLeaderboard.slice(0, 5),
       leaderboard: this.leaderboard.slice(0, 5),
     })
+
+    this.scheduleAutoAdvance(
+      this.opts.getSettings().autoAdvance.leaderboardDelay,
+      () => this.nextQuestion(),
+    )
 
     this.tempOldLeaderboard = null
   }

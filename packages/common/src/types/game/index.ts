@@ -62,8 +62,15 @@ export interface QuizzMeta {
   subject: string
 }
 
+export interface AutoAdvanceSettings {
+  enable: boolean
+  responsesDelay: number
+  leaderboardDelay: number
+}
+
 export interface GameSettings {
   generatedUsernames: boolean
+  autoAdvance: AutoAdvanceSettings
 }
 
 export interface GameUpdateQuestion {

@@ -1,3 +1,5 @@
+import type { GameSettings } from "@razzia/common/types/game"
+
 export const EVENTS = {
   GAME: {
     STATUS: "game:status",
@@ -31,6 +33,7 @@ export const EVENTS = {
     ABORT_QUIZ: "manager:abortQuiz",
     NEXT_QUESTION: "manager:nextQuestion",
     SHOW_LEADERBOARD: "manager:showLeaderboard",
+    AUTO_ADVANCE: "manager:autoAdvance",
   },
 } as const
 
@@ -41,9 +44,16 @@ export const SESSION_ROLES = {
 
 export const NO_TIME_LIMIT = -1
 
-export const DEFAULT_GAME_SETTINGS = {
+export const AUTO_ADVANCE_DELAY = { MIN: 3, MAX: 600 } as const
+
+export const createDefaultGameSettings = (): GameSettings => ({
   generatedUsernames: false,
-} as const
+  autoAdvance: {
+    enable: false,
+    responsesDelay: 10,
+    leaderboardDelay: 5,
+  },
+})
 
 export const MAX_POINTS = 1000
 

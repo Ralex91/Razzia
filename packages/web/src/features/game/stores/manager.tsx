@@ -1,4 +1,4 @@
-import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
+import { createDefaultGameSettings } from "@razzia/common/constants"
 import type { GameSettings, Player } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
 import type { Status } from "@razzia/web/features/game/utils/createStatus"
@@ -20,7 +20,7 @@ type ManagerStore<T> = ManagerState<T> & {
 const initialState: ManagerState<StatusDataMap> = {
   gameId: null,
   inviteCode: null,
-  settings: { ...DEFAULT_GAME_SETTINGS },
+  settings: createDefaultGameSettings(),
   status: null,
   players: [],
 }

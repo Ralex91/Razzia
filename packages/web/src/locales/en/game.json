@@ -24,6 +24,12 @@
   "resultBehind": ", behind ",
   "resultTop": "You finished ",
   "settings": {
+    "autoAdvance": {
+      "hint": "Move on by itself after the reveal and the leaderboard.",
+      "label": "Auto-advance",
+      "leaderboardDelay": "Leaderboard",
+      "responsesDelay": "Result"
+    },
     "generatedUsernames": {
       "label": "Generate nicknames",
       "hint": "Players pick from generated names instead of typing their own."

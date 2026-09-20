@@ -91,6 +91,9 @@ export interface ServerToClientEvents {
     status: Status
     data: StatusDataMap[Status]
   }) => void
+  [EVENTS.MANAGER.AUTO_ADVANCE]: (
+    _state: { seconds: number; total: number } | null,
+  ) => void
   [EVENTS.MANAGER.NEW_PLAYER]: (_player: Player) => void
   [EVENTS.MANAGER.REMOVE_PLAYER]: (_playerId: string) => void
   [EVENTS.MANAGER.PLAYER_KICKED]: (_playerId: string) => void

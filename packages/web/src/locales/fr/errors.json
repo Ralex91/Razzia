@@ -16,6 +16,7 @@
   "game": {
     "alreadyStarted": "La partie a déjà commencé",
     "expired": "La partie a expiré",
+    "invalidAutoAdvanceDelay": "Le délai doit être compris entre 3 et 600 secondes",
     "kickedByManager": "Vous avez été expulsé par le manager",
     "managerAlreadyConnected": "Un manager est déjà connecté",
     "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",

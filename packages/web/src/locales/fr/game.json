@@ -24,6 +24,12 @@
   "resultBehind": ", derrière ",
   "resultTop": "Tu es ",
   "settings": {
+    "autoAdvance": {
+      "hint": "Enchaîner tout seul après la révélation et le classement.",
+      "label": "Avance automatique",
+      "leaderboardDelay": "Classement",
+      "responsesDelay": "Résultat"
+    },
     "generatedUsernames": {
       "label": "Générer les pseudos",
       "hint": "Les joueurs choisissent parmi des pseudos générés au lieu de les saisir."

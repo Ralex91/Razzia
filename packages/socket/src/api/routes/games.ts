@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
-import { DEFAULT_GAME_SETTINGS } from "@razzia/common/constants"
+import { createDefaultGameSettings } from "@razzia/common/constants"
 import type { GameSettings } from "@razzia/common/types/game"
 import {
   checkGameValidator,
@@ -69,7 +69,7 @@ const routes = apiFactory
     const game = Registry.getInstance().getGameByInviteCode(inviteCode)
 
     const settings: GameSettings = game?.settings ?? {
-      ...DEFAULT_GAME_SETTINGS,
+      ...createDefaultGameSettings(),
     }
 
     return c.json({ valid: Boolean(game), settings })

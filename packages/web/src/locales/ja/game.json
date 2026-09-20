@@ -24,6 +24,12 @@
   "resultBehind": "、差は ",
   "resultTop": "あなたの順位は ",
   "settings": {
+    "autoAdvance": {
+      "hint": "正解発表とランキングのあと自動的に次へ進みます。",
+      "label": "自動で進む",
+      "leaderboardDelay": "ランキング",
+      "responsesDelay": "結果"
+    },
     "generatedUsernames": {
       "label": "ニックネームを生成",
       "hint": "プレイヤーは自分で入力する代わりに生成された名前から選びます。"

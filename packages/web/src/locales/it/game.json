@@ -24,6 +24,12 @@
   "resultBehind": ", dietro ",
   "resultTop": "Hai terminato ",
   "settings": {
+    "autoAdvance": {
+      "hint": "Prosegue da solo dopo la rivelazione e la classifica.",
+      "label": "Avanzamento automatico",
+      "leaderboardDelay": "Classifica",
+      "responsesDelay": "Risultato"
+    },
     "generatedUsernames": {
       "label": "Genera soprannomi",
       "hint": "I giocatori scelgono tra nomi generati invece di scriverli."
