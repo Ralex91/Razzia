@@ -18,7 +18,10 @@ import {
 } from "@razzia/common/types/game/status"
 import { CooldownTimer } from "@razzia/socket/services/game/cooldown-timer"
 import { PlayerManager } from "@razzia/socket/services/game/player-manager"
-import { QUESTION_SCORING } from "@razzia/socket/services/scoring"
+import {
+  countAnswers,
+  scoreQuestion,
+} from "@razzia/socket/services/scoring/round"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import sleep from "@razzia/socket/utils/sleep"
 import { nanoid } from "nanoid"
@@ -221,44 +224,13 @@ export class RoundManager {
       return this.leaderboard.map((p) => ({ ...p }))
     })()
 
-    const answerCounts = this.playersAnswers
-      .flatMap(({ answerIds }) => answerIds)
-      .reduce<Record<number, number>>((acc, id) => {
-        acc[id] = (acc[id] ?? 0) + 1
+    const answerCounts = countAnswers(this.playersAnswers)
 
-        return acc
-      }, {})
-
-    const sortedPlayers = currentPlayers
-      .map((player) => {
-        const playerAnswer = this.playersAnswers.find(
-          (a) => a.playerId === player.id,
-        )
-
-        const scoreMultiplier = (() => {
-          if (!playerAnswer) {
-            return 0
-          }
-
-          const scoring = QUESTION_SCORING[question.type]
-
-          return scoring(question, playerAnswer.answerIds)
-        })()
-
-        const points = Math.round((playerAnswer?.points ?? 0) * scoreMultiplier)
-        const isCorrect = points > 0
-        const penalty = !isCorrect && playerAnswer ? (question.penalty ?? 0) : 0
-
-        player.points = Math.max(0, player.points + points - penalty)
-        player.streak = isCorrect ? player.streak + 1 : 0
-
-        return {
-          ...player,
-          lastCorrect: isCorrect,
-          lastPoints: isCorrect ? points : -penalty,
-        }
-      })
-      .sort((a, b) => b.points - a.points)
+    const sortedPlayers = scoreQuestion(
+      question,
+      currentPlayers,
+      this.playersAnswers,
+    )
 
     this.opts.players.replace(sortedPlayers)
 
