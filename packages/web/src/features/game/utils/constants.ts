@@ -1,4 +1,3 @@
-import { EVENTS } from "@razzia/common/constants"
 import Answers from "@razzia/web/features/game/components/states/Answers"
 import Leaderboard from "@razzia/web/features/game/components/states/Leaderboard"
 import PlayerFinished from "@razzia/web/features/game/components/states/PlayerFinished"
@@ -66,15 +65,6 @@ export const SFX = {
   SHOW_SOUND: "/sounds/show.mp3",
   BOUMP_SOUND: "/sounds/boump.mp3",
 } as const
-
-export const MANAGER_SKIP_EVENTS = {
-  [STATUS.SHOW_ROOM]: EVENTS.MANAGER.START_GAME,
-  [STATUS.SELECT_ANSWER]: EVENTS.MANAGER.ABORT_QUIZ,
-  [STATUS.SHOW_RESPONSES]: EVENTS.MANAGER.SHOW_LEADERBOARD,
-  [STATUS.SHOW_LEADERBOARD]: EVENTS.MANAGER.NEXT_QUESTION,
-} as const satisfies Partial<
-  Record<keyof typeof GAME_STATE_COMPONENTS_MANAGER, string>
->
 
 export function isKeyOf<T extends object>(
   obj: T,

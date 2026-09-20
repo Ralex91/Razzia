@@ -50,10 +50,19 @@ export interface RoundManagerOptions {
   getSettings: () => GameSettings
 }
 
+interface RoundStep {
+  name: string
+  skip?: () => boolean
+  enter: () => void
+  delay: (_settings: GameSettings) => number
+}
+
 export class RoundManager {
   private readonly opts: RoundManagerOptions
+  private readonly steps: RoundStep[]
   private started = false
   private currentQuestion = 0
+  private currentStep = -1
   private playersAnswers: Answer[] = []
   private startTime = 0
   private leaderboard: Player[] = []
@@ -63,11 +72,42 @@ export class RoundManager {
 
   constructor(opts: RoundManagerOptions) {
     this.opts = opts
+    this.steps = [
+      {
+        name: "reveal",
+        enter: () => {
+          this.showResults()
+        },
+        delay: (settings) => settings.autoAdvance.responsesDelay,
+      },
+      {
+        name: "leaderboard",
+        skip: () => this.isLastQuestion(),
+        enter: () => {
+          this.showLeaderboard()
+        },
+        delay: (settings) => settings.autoAdvance.leaderboardDelay,
+      },
+    ]
   }
 
   isStarted(): boolean {
     return this.started
   }
+
+  private get question(): Question {
+    return this.opts.quizz.questions[this.currentQuestion]
+  }
+
+  private isAskingQuestion(): boolean {
+    return this.currentStep < 0
+  }
+
+  private isLastQuestion(): boolean {
+    return !this.opts.quizz.questions[this.currentQuestion + 1]
+  }
+
+  // ── Auto advance ─────────────────────────────────────────────────────────
 
   clearAutoAdvance(): void {
     if (!this.autoAdvanceTimer) {
@@ -85,7 +125,7 @@ export class RoundManager {
       .emit(EVENTS.MANAGER.AUTO_ADVANCE, state)
   }
 
-  private scheduleAutoAdvance(delay: number, run: () => void): void {
+  private scheduleAutoAdvance(delay: number): void {
     this.clearAutoAdvance()
 
     if (!this.opts.getSettings().autoAdvance.enable) {
@@ -106,12 +146,11 @@ export class RoundManager {
       }
 
       this.clearAutoAdvance()
-
-      if (this.started) {
-        run()
-      }
+      this.advance()
     }, 1000)
   }
+
+  // ── Flow ─────────────────────────────────────────────────────────────────
 
   getReconnectInfo(): GameUpdateQuestion | null {
     if (!this.started) {
@@ -150,12 +189,59 @@ export class RoundManager {
     void this.newQuestion()
   }
 
-  async newQuestion(): Promise<void> {
+  advance(): void {
     if (!this.started) {
       return
     }
 
-    const question = this.opts.quizz.questions[this.currentQuestion]
+    this.clearAutoAdvance()
+
+    if (this.isAskingQuestion()) {
+      this.opts.cooldown.abort()
+
+      return
+    }
+
+    this.runStep(this.currentStep + 1)
+  }
+
+  private runStep(index: number): void {
+    const step = this.steps[index]
+
+    if (!step) {
+      this.nextQuestion()
+
+      return
+    }
+
+    if (step.skip?.()) {
+      this.runStep(index + 1)
+
+      return
+    }
+
+    this.currentStep = index
+    step.enter()
+    this.scheduleAutoAdvance(step.delay(this.opts.getSettings()))
+  }
+
+  private nextQuestion(): void {
+    if (this.isLastQuestion()) {
+      this.finish()
+
+      return
+    }
+
+    this.currentQuestion += 1
+    void this.newQuestion()
+  }
+
+  private async newQuestion(): Promise<void> {
+    if (!this.started) {
+      return
+    }
+
+    this.currentStep = -1
 
     this.opts.onNewQuestion()
 
@@ -165,7 +251,7 @@ export class RoundManager {
     })
 
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
-      totalAnswers: question.answers.length,
+      totalAnswers: this.question.answers.length,
       questionNumber: this.currentQuestion + 1,
     })
 
@@ -175,16 +261,21 @@ export class RoundManager {
       return
     }
 
-    const imageMedia =
-      question.media?.type === MEDIA_TYPES.IMAGE ? question.media : undefined
+    const imageMedia = (() => {
+      if (this.question.media?.type !== MEDIA_TYPES.IMAGE) {
+        return undefined
+      }
+
+      return this.question.media
+    })()
 
     this.opts.broadcast(STATUS.SHOW_QUESTION, {
-      question: question.question,
+      question: this.question.question,
       media: imageMedia,
-      cooldown: question.cooldown,
+      cooldown: this.question.cooldown,
     })
 
-    await sleep(question.cooldown)
+    await sleep(this.question.cooldown)
 
     if (!this.started) {
       return
@@ -193,27 +284,27 @@ export class RoundManager {
     this.startTime = Date.now()
 
     this.opts.broadcast(STATUS.SELECT_ANSWER, {
-      question: question.question,
-      answers: question.answers,
-      media: question.media,
-      time: question.time,
+      question: this.question.question,
+      answers: this.question.answers,
+      media: this.question.media,
+      time: this.question.time,
       totalPlayer: this.opts.players.count(),
-      questionType: question.type,
-      options: question.options,
+      questionType: this.question.type,
+      options: this.question.options,
     })
 
-    await this.opts.cooldown.start(question.time)
+    await this.opts.cooldown.start(this.question.time)
 
     if (!this.started) {
       return
     }
 
-    this.showResults(question)
+    this.runStep(0)
   }
 
-  private showResults(question: Question): void {
-    this.clearAutoAdvance()
+  // ── Steps ────────────────────────────────────────────────────────────────
 
+  private showResults(): void {
     const currentPlayers = this.opts.players.getAll()
 
     const oldLeaderboard = (() => {
@@ -227,7 +318,7 @@ export class RoundManager {
     const answerCounts = countAnswers(this.playersAnswers)
 
     const sortedPlayers = scoreQuestion(
-      question,
+      this.question,
       currentPlayers,
       this.playersAnswers,
     )
@@ -235,7 +326,6 @@ export class RoundManager {
     this.opts.players.replace(sortedPlayers)
 
     sortedPlayers.forEach((player, index) => {
-      const rank = index + 1
       const aheadPlayer = sortedPlayers[index - 1]
 
       this.opts.send(player.id, STATUS.SHOW_RESULT, {
@@ -243,23 +333,18 @@ export class RoundManager {
         message: player.lastCorrect ? "game:correct" : "game:wrong",
         points: player.lastPoints,
         myPoints: player.points,
-        rank,
+        rank: index + 1,
         aheadOfMe: aheadPlayer ? aheadPlayer.username : null,
       })
     })
 
     this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
-      ...question,
+      ...this.question,
       responses: answerCounts,
     })
 
-    this.scheduleAutoAdvance(
-      this.opts.getSettings().autoAdvance.responsesDelay,
-      () => this.showLeaderboard(),
-    )
-
     this.questionsHistory.push({
-      ...question,
+      ...this.question,
       playerAnswers: currentPlayers.map((player) => ({
         playerName: player.username,
         answerIds:
@@ -273,9 +358,53 @@ export class RoundManager {
     this.playersAnswers = []
   }
 
+  private showLeaderboard(): void {
+    const oldLeaderboard = this.tempOldLeaderboard ?? this.leaderboard
+
+    this.opts.send(this.opts.getManagerId(), STATUS.SHOW_LEADERBOARD, {
+      oldLeaderboard: oldLeaderboard.slice(0, 5),
+      leaderboard: this.leaderboard.slice(0, 5),
+    })
+
+    this.tempOldLeaderboard = null
+  }
+
+  private finish(): void {
+    this.started = false
+    this.clearAutoAdvance()
+
+    const top = this.leaderboard.slice(0, 3)
+
+    this.opts.onGameFinished({
+      id: `${Date.now()}-${nanoid(8)}`,
+      subject: this.opts.quizz.subject,
+      date: new Date().toISOString(),
+      players: this.leaderboard.map((player, index) => ({
+        username: player.username,
+        points: player.points,
+        rank: index + 1,
+      })),
+      questions: this.questionsHistory,
+    })
+
+    this.opts.send(this.opts.getManagerId(), STATUS.FINISHED, {
+      subject: this.opts.quizz.subject,
+      top,
+    })
+
+    this.leaderboard.forEach((player, index) => {
+      this.opts.send(player.id, STATUS.FINISHED, {
+        subject: this.opts.quizz.subject,
+        top,
+        rank: index + 1,
+      })
+    })
+  }
+
+  // ── Player actions ───────────────────────────────────────────────────────
+
   selectAnswer(socket: Socket, answerIds: number[]): void {
     const player = this.opts.players.findById(socket.id)
-    const question = this.opts.quizz.questions[this.currentQuestion]
 
     if (!player) {
       return
@@ -286,15 +415,15 @@ export class RoundManager {
     }
 
     const points = (() => {
-      if (question.time === NO_TIME_LIMIT) {
+      if (this.question.time === NO_TIME_LIMIT) {
         return orderToPoint(
           this.playersAnswers.length,
           this.opts.players.count(),
-          question.maxPoints,
+          this.question.maxPoints,
         )
       }
 
-      return timeToPoint(this.startTime, question)
+      return timeToPoint(this.startTime, this.question)
     })()
 
     this.playersAnswers.push({
@@ -315,85 +444,5 @@ export class RoundManager {
     if (this.playersAnswers.length === this.opts.players.count()) {
       this.opts.cooldown.abort()
     }
-  }
-
-  nextQuestion(): void {
-    this.clearAutoAdvance()
-
-    if (!this.started) {
-      return
-    }
-
-    if (!this.opts.quizz.questions[this.currentQuestion + 1]) {
-      return
-    }
-
-    this.currentQuestion += 1
-    void this.newQuestion()
-  }
-
-  abortQuestion(): void {
-    this.clearAutoAdvance()
-
-    if (!this.started) {
-      return
-    }
-
-    this.opts.cooldown.abort()
-  }
-
-  showLeaderboard(): void {
-    this.clearAutoAdvance()
-
-    const isLastRound =
-      this.currentQuestion + 1 === this.opts.quizz.questions.length
-
-    if (isLastRound) {
-      this.started = false
-      this.clearAutoAdvance()
-
-      const top = this.leaderboard.slice(0, 3)
-
-      this.opts.onGameFinished({
-        id: `${Date.now()}-${nanoid(8)}`,
-        subject: this.opts.quizz.subject,
-        date: new Date().toISOString(),
-        players: this.leaderboard.map((player, index) => ({
-          username: player.username,
-          points: player.points,
-          rank: index + 1,
-        })),
-        questions: this.questionsHistory,
-      })
-
-      this.opts.send(this.opts.getManagerId(), STATUS.FINISHED, {
-        subject: this.opts.quizz.subject,
-        top,
-      })
-
-      this.leaderboard.forEach((player, index) => {
-        this.opts.send(player.id, STATUS.FINISHED, {
-          subject: this.opts.quizz.subject,
-          top,
-          rank: index + 1,
-        })
-      })
-
-      return
-    }
-
-    const oldLeaderboard = this.tempOldLeaderboard ?? this.leaderboard
-
-    this.opts.send(this.opts.getManagerId(), STATUS.SHOW_LEADERBOARD, {
-      oldLeaderboard: oldLeaderboard.slice(0, 5),
-      leaderboard: this.leaderboard.slice(0, 5),
-    })
-
-    this.scheduleAutoAdvance(
-      this.opts.getSettings().autoAdvance.leaderboardDelay,
-      () => this.nextQuestion(),
-    )
-
-    this.tempOldLeaderboard = null
   }
 }

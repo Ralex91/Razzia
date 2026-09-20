@@ -30,9 +30,7 @@ export const EVENTS = {
     LEAVE: "manager:leave",
     KICK_PLAYER: "manager:kickPlayer",
     START_GAME: "manager:startGame",
-    ABORT_QUIZ: "manager:abortQuiz",
-    NEXT_QUESTION: "manager:nextQuestion",
-    SHOW_LEADERBOARD: "manager:showLeaderboard",
+    ADVANCE: "manager:advance",
     AUTO_ADVANCE: "manager:autoAdvance",
   },
 } as const

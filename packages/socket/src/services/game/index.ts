@@ -303,16 +303,8 @@ class Game {
     this.round.selectAnswer(socket, answerIds)
   }
 
-  nextRound() {
-    this.round.nextQuestion()
-  }
-
-  abortRound() {
-    this.round.abortQuestion()
-  }
-
-  showLeaderboard() {
-    this.round.showLeaderboard()
+  advance() {
+    this.round.advance()
   }
 }
 
