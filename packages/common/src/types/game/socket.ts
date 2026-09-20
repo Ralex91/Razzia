@@ -4,6 +4,7 @@ import type {
   GameSettings,
   GameUpdateQuestion,
   Player,
+  QuizzMode,
 } from "@razzia/common/types/game"
 import type { Status, StatusDataMap } from "@razzia/common/types/game/status"
 import {
@@ -57,6 +58,7 @@ export interface ServerToClientEvents {
   [EVENTS.GAME.SUCCESS_JOIN]: (_data: {
     gameId: string
     username: string
+    gameMode: QuizzMode
   }) => void
   [EVENTS.GAME.TOTAL_PLAYERS]: (_count: number) => void
   [EVENTS.GAME.ERROR_MESSAGE]: (_message: string) => void
@@ -72,6 +74,7 @@ export interface ServerToClientEvents {
   // Player events
   [EVENTS.PLAYER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
+    gameMode: QuizzMode
     status: { name: Status; data: StatusDataMap[Status] }
     player: { username: string; points: number }
     currentQuestion: GameUpdateQuestion | null

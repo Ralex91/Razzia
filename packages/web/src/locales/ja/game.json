@@ -1,4 +1,5 @@
 {
+  "answerNoted": "ありがとう、記録しました",
   "confirm": "確認",
   "correct": "正解！",
   "gamePinLabel": "ゲームPIN:",
@@ -37,6 +38,11 @@
     "title": "ゲーム設定"
   },
   "startGame": "ゲーム開始",
+  "summary": {
+    "title": "アンケート終了",
+    "participants": "参加者",
+    "questions": "質問"
+  },
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
   "waitingForPlayers": "プレイヤーを待っています",

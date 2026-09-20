@@ -83,11 +83,10 @@ const Responses = ({
             <AnswerButton
               key={key}
               className={clsx(ANSWERS_COLORS[key], {
-                // oxlint-disable-next-line typescript/no-unnecessary-condition
-                "opacity-65": responses && !solutions.includes(key),
+                "opacity-65": solutions && !solutions.includes(key),
               })}
               label={ANSWERS_LABELS[key]}
-              correct={solutions.includes(key)}
+              correct={solutions ? solutions.includes(key) : undefined}
             >
               {answer}
             </AnswerButton>

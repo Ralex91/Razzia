@@ -82,7 +82,7 @@ const QuizzEditorCard = ({
             key={i}
             className="border-accent flex h-4 flex-1 items-center rounded-md border px-0.5"
           >
-            {question.solutions.includes(i) && (
+            {question.solutions?.includes(i) && (
               <div className="ml-auto size-1.5 rounded-full bg-green-400" />
             )}
           </div>

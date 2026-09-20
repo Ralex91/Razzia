@@ -1,7 +1,8 @@
-import { EXAMPLE_QUIZZ } from "@razzia/common/constants"
+import { EXAMPLE_QUIZZ, QUIZZ_MODES } from "@razzia/common/constants"
 import type {
   GameResult,
   GameResultMeta,
+  QuizzMode,
   QuizzWithId,
 } from "@razzia/common/types/game"
 import {
@@ -200,6 +201,9 @@ export const saveResult = (data: GameResult): void => {
   }
 }
 
+/** Results written before survey mode have no `gameMode` field. */
+type StoredResult = Omit<GameResult, "gameMode"> & { gameMode?: QuizzMode }
+
 export const getResultsMeta = (): GameResultMeta[] => {
   const resultsPath = getPath("results")
 
@@ -208,7 +212,7 @@ export const getResultsMeta = (): GameResultMeta[] => {
   }
 
   const readMeta = (file: string): GameResultMeta | null => {
-    const data = readJson(join(resultsPath, file)) as GameResult | null
+    const data = readJson(join(resultsPath, file)) as StoredResult | null
 
     if (!data) {
       return null
@@ -217,6 +221,7 @@ export const getResultsMeta = (): GameResultMeta[] => {
     try {
       return {
         id: data.id,
+        gameMode: data.gameMode ?? QUIZZ_MODES.QUIZ,
         subject: data.subject,
         date: data.date,
         playerCount: data.players.length,
@@ -244,7 +249,9 @@ export const getResultById = (id: string): GameResult => {
     throw notFound("errors:result.notFound")
   }
 
-  return data as unknown as GameResult
+  const result = data as unknown as StoredResult
+
+  return { ...result, gameMode: result.gameMode ?? QUIZZ_MODES.QUIZ }
 }
 
 export const deleteResult = (id: string): void => {

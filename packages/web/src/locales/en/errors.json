@@ -46,6 +46,7 @@
     "invalidMediaUrl": "Media URL must be a valid URL",
     "maxPointsTooLow": "Points must be at least 1",
     "noQuestions": "A quizz must have at least one question",
+    "noSolution": "Pick at least one correct answer",
     "notFound": "Quizz not found",
     "penaltyNegative": "Penalty cannot be negative",
     "questionEmpty": "Question cannot be empty",

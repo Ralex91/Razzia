@@ -1,4 +1,4 @@
-import { EVENTS } from "@razzia/common/constants"
+import { EVENTS, QUIZZ_MODES } from "@razzia/common/constants"
 import {
   STATUS,
   type Status,
@@ -40,7 +40,7 @@ const GameWrapper = ({
   manager,
 }: Props) => {
   const { isConnected } = useSocket()
-  const { player } = usePlayerStore()
+  const { player, gameMode } = usePlayerStore()
   const { players, inviteCode, status } = useManagerStore()
   const { questionStates, setQuestionStates } = useQuestionStore()
   const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
@@ -186,9 +186,11 @@ const GameWrapper = ({
             ) : (
               <div className="z-50 flex items-center justify-between bg-white px-4 py-2 text-lg font-bold text-white">
                 <p className="text-gray-800">{player?.username}</p>
-                <div className="rounded-lg bg-gray-800 px-3 py-1 text-lg">
-                  {player?.points}
-                </div>
+                {gameMode !== QUIZZ_MODES.SURVEY && (
+                  <div className="rounded-lg bg-gray-800 px-3 py-1 text-lg">
+                    {player?.points}
+                  </div>
+                )}
               </div>
             )}
           </>

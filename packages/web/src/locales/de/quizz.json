@@ -3,6 +3,10 @@
   "addQuestion": "Frage hinzufügen",
   "answersCountSuffix": " Antworten",
   "deleteQuestion": "Frage löschen",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Umfrage"
+  },
   "noQuestionYet": "Noch keine Fragen",
   "question": {
     "addMediaHint": "Füge ein Bild, Video oder Audio zu deiner Frage hinzu",

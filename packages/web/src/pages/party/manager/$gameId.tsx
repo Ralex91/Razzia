@@ -74,7 +74,7 @@ const ManagerGamePage = () => {
       return
     }
 
-    if (status.name === STATUS.FINISHED) {
+    if (status.name === STATUS.FINISHED || status.name === STATUS.SUMMARY) {
       navigate({ to: "/manager/config" })
       resetManager()
       setQuestionStates(null)

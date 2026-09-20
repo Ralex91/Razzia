@@ -1,4 +1,5 @@
 {
+  "answerNoted": "Danke, notiert",
   "confirm": "Bestätigen",
   "correct": "Richtig!",
   "gamePinLabel": "Spiel-PIN:",
@@ -37,6 +38,11 @@
     "title": "Spieleinstellungen"
   },
   "startGame": "Spiel starten",
+  "summary": {
+    "title": "Umfrage beendet",
+    "participants": "Teilnehmer",
+    "questions": "Fragen"
+  },
   "usernamePlaceholder": "Benutzername hier",
   "waitingForAnswers": "Warten auf die Antworten der Spieler",
   "waitingForPlayers": "Warten auf Spieler",

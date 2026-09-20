@@ -1,4 +1,5 @@
 {
+  "answerNoted": "Grazie, annotato",
   "confirm": "Conferma",
   "correct": "Bravo!",
   "gamePinLabel": "PIN del gioco:",
@@ -37,6 +38,11 @@
     "title": "Impostazioni partita"
   },
   "startGame": "Inizia il gioco",
+  "summary": {
+    "title": "Sondaggio terminato",
+    "participants": "Partecipanti",
+    "questions": "Domande"
+  },
   "usernamePlaceholder": "Nome utente qui",
   "waitingForAnswers": "In attesa delle risposte dei giocatori",
   "waitingForPlayers": "In attesa di giocatori",

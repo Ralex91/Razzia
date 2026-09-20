@@ -55,6 +55,11 @@ export const createDefaultGameSettings = (): GameSettings => ({
 
 export const MAX_POINTS = 1000
 
+export const QUIZZ_MODES = {
+  QUIZ: "quiz",
+  SURVEY: "survey",
+} as const
+
 export const QUESTION_TYPES = {
   SINGLE: "single",
   MULTI: "multi",
@@ -73,6 +78,7 @@ export const MEDIA_TYPES = {
 } as const
 
 export const EXAMPLE_QUIZZ = {
+  gameMode: QUIZZ_MODES.QUIZ,
   subject: "Example Quizz",
   questions: [
     {

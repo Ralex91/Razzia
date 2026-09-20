@@ -1,4 +1,5 @@
 {
+  "answerNoted": "Thanks, that's noted",
   "confirm": "Confirm",
   "correct": "Nice!",
   "gamePinLabel": "Game PIN:",
@@ -37,6 +38,11 @@
     "title": "Game settings"
   },
   "startGame": "Start Game",
+  "summary": {
+    "title": "Survey complete",
+    "participants": "Participants",
+    "questions": "Questions"
+  },
   "usernamePlaceholder": "Username here",
   "waitingForAnswers": "Waiting for the players to answer",
   "waitingForPlayers": "Waiting for players",

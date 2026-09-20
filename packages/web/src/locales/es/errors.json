@@ -46,6 +46,7 @@
     "invalidMediaUrl": "La URL del medio debe ser una URL válida",
     "maxPointsTooLow": "Los puntos deben ser como mínimo 1",
     "noQuestions": "Un cuestionario debe tener al menos una pregunta",
+    "noSolution": "Elige al menos una respuesta correcta",
     "notFound": "Cuestionario no encontrado",
     "penaltyNegative": "La penalización no puede ser negativa",
     "questionEmpty": "La pregunta no puede estar vacía",

@@ -1,5 +1,10 @@
 import { createDefaultGameSettings, EVENTS } from "@razzia/common/constants"
-import type { GameSettings, Player, Quizz } from "@razzia/common/types/game"
+import type {
+  GameSettings,
+  Player,
+  Quizz,
+  QuizzMode,
+} from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import {
   STATUS,
@@ -21,6 +26,7 @@ const registry = Registry.getInstance()
 class Game {
   readonly gameId: string
   readonly inviteCode: string
+  readonly gameMode: QuizzMode
 
   private _settings: GameSettings = createDefaultGameSettings()
 
@@ -51,6 +57,7 @@ class Game {
     this.io = io
     this.gameId = uuid()
     this.inviteCode = createInviteCode()
+    this.gameMode = quizz.gameMode
     this._manager = {
       id: "",
       clientId: managerClientId,
@@ -59,11 +66,12 @@ class Game {
 
     this.cooldown = new CooldownTimer(io, this.gameId)
 
-    this.playerManager = new PlayerManager(
+    this.playerManager = new PlayerManager({
       io,
-      this.gameId,
-      () => this._manager.id,
-    )
+      gameId: this.gameId,
+      gameMode: quizz.gameMode,
+      getManagerId: () => this._manager.id,
+    })
 
     this.round = new RoundManager({
       quizz,
@@ -256,6 +264,7 @@ class Game {
 
     socket.emit(EVENTS.PLAYER.SUCCESS_RECONNECT, {
       gameId: this.gameId,
+      gameMode: this.gameMode,
       currentQuestion: this.round.getReconnectInfo(),
       status,
       player: { username: player.username, points: player.points },

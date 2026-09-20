@@ -46,6 +46,7 @@
     "invalidMediaUrl": "L'URL del media deve essere un URL valido",
     "maxPointsTooLow": "I punti devono essere almeno 1",
     "noQuestions": "Un quiz deve avere almeno una domanda",
+    "noSolution": "Scegli almeno una risposta corretta",
     "notFound": "Quiz non trovato",
     "penaltyNegative": "La penalità non può essere negativa",
     "questionEmpty": "La domanda non può essere vuota",

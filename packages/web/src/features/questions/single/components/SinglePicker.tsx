@@ -7,7 +7,7 @@ const SingleSolutionPicker = ({ index, isSelected }: SolutionPickerProps) => {
   const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
 
   const handleToggle = () => {
-    const current = currentQuestion.solutions
+    const current = currentQuestion.solutions ?? []
 
     if (current.includes(index)) {
       const next = current.filter((s) => s !== index)

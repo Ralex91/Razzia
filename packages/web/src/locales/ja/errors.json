@@ -46,6 +46,7 @@
     "invalidMediaUrl": "メディアURLは有効なURLである必要があります",
     "maxPointsTooLow": "ポイントは1以上にしてください",
     "noQuestions": "クイズには少なくとも1問必要です",
+    "noSolution": "正解を1つ以上選んでください",
     "notFound": "クイズが見つかりません",
     "penaltyNegative": "ペナルティを負の値にはできません",
     "questionEmpty": "質問は空にできません",

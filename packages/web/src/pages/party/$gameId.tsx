@@ -54,25 +54,31 @@ const PlayerGamePage = () => {
     socket.emit(EVENTS.PLAYER.RECONNECT, { gameId: gameIdParam })
   }, [isConnected, gameIdParam, socket])
 
-  useEvent(EVENTS.GAME.SUCCESS_JOIN, ({ gameId: joinedGameId, username }) => {
-    updatePlayer({
-      gameId: joinedGameId,
-      joinTicket: null,
-      player: { username, points: 0 },
-      status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
-    })
-  })
+  useEvent(
+    EVENTS.GAME.SUCCESS_JOIN,
+    ({ gameId: joinedGameId, username, gameMode }) => {
+      updatePlayer({
+        gameId: joinedGameId,
+        gameMode,
+        joinTicket: null,
+        player: { username, points: 0 },
+        status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
+      })
+    },
+  )
 
   useEvent(
     EVENTS.PLAYER.SUCCESS_RECONNECT,
     ({
       gameId: reconnectGameId,
+      gameMode,
       status: reconnectStatus,
       player,
       currentQuestion,
     }) => {
       updatePlayer({
         gameId: reconnectGameId,
+        gameMode,
         status: createStatus(reconnectStatus.name, reconnectStatus.data),
         player,
       })

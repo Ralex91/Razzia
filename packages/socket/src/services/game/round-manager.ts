@@ -1,5 +1,10 @@
 // oxlint-disable typescript/no-unnecessary-condition
-import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
+import {
+  EVENTS,
+  MEDIA_TYPES,
+  NO_TIME_LIMIT,
+  QUIZZ_MODES,
+} from "@razzia/common/constants"
 import type {
   Answer,
   GameResult,
@@ -9,6 +14,7 @@ import type {
   Question,
   QuestionResult,
   Quizz,
+  QuizzMode,
 } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import {
@@ -52,6 +58,7 @@ export interface RoundManagerOptions {
 
 interface RoundStep {
   name: string
+  gameModes: QuizzMode[]
   skip?: () => boolean
   enter: () => void
   delay: (_settings: GameSettings) => number
@@ -72,9 +79,11 @@ export class RoundManager {
 
   constructor(opts: RoundManagerOptions) {
     this.opts = opts
-    this.steps = [
+
+    const steps: RoundStep[] = [
       {
         name: "reveal",
+        gameModes: [QUIZZ_MODES.QUIZ, QUIZZ_MODES.SURVEY],
         enter: () => {
           this.showResults()
         },
@@ -82,6 +91,7 @@ export class RoundManager {
       },
       {
         name: "leaderboard",
+        gameModes: [QUIZZ_MODES.QUIZ],
         skip: () => this.isLastQuestion(),
         enter: () => {
           this.showLeaderboard()
@@ -89,6 +99,10 @@ export class RoundManager {
         delay: (settings) => settings.autoAdvance.leaderboardDelay,
       },
     ]
+
+    this.steps = steps.filter((step) =>
+      step.gameModes.includes(opts.quizz.gameMode),
+    )
   }
 
   isStarted(): boolean {
@@ -105,6 +119,10 @@ export class RoundManager {
 
   private isLastQuestion(): boolean {
     return !this.opts.quizz.questions[this.currentQuestion + 1]
+  }
+
+  private isSurvey(): boolean {
+    return this.opts.quizz.gameMode === QUIZZ_MODES.SURVEY
   }
 
   // ── Auto advance ─────────────────────────────────────────────────────────
@@ -304,8 +322,41 @@ export class RoundManager {
 
   // ── Steps ────────────────────────────────────────────────────────────────
 
+  private recordHistory(players: Player[]): void {
+    this.questionsHistory.push({
+      ...this.question,
+      solutions: this.isSurvey() ? undefined : this.question.solutions,
+      playerAnswers: players.map((player) => ({
+        playerName: player.username,
+        answerIds:
+          this.playersAnswers.find((a) => a.playerId === player.id)
+            ?.answerIds ?? null,
+      })),
+    })
+  }
+
   private showResults(): void {
     const currentPlayers = this.opts.players.getAll()
+    const answerCounts = countAnswers(this.playersAnswers)
+
+    if (this.isSurvey()) {
+      this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
+        ...this.question,
+        solutions: undefined,
+        responses: answerCounts,
+      })
+
+      currentPlayers.forEach((player) => {
+        this.opts.send(player.id, STATUS.WAIT, {
+          text: "game:answerNoted",
+        })
+      })
+
+      this.recordHistory(currentPlayers)
+      this.playersAnswers = []
+
+      return
+    }
 
     const oldLeaderboard = (() => {
       if (this.leaderboard.length === 0) {
@@ -314,8 +365,6 @@ export class RoundManager {
 
       return this.leaderboard.map((p) => ({ ...p }))
     })()
-
-    const answerCounts = countAnswers(this.playersAnswers)
 
     const sortedPlayers = scoreQuestion(
       this.question,
@@ -343,15 +392,7 @@ export class RoundManager {
       responses: answerCounts,
     })
 
-    this.questionsHistory.push({
-      ...this.question,
-      playerAnswers: currentPlayers.map((player) => ({
-        playerName: player.username,
-        answerIds:
-          this.playersAnswers.find((a) => a.playerId === player.id)
-            ?.answerIds ?? null,
-      })),
-    })
+    this.recordHistory(currentPlayers)
 
     this.leaderboard = sortedPlayers
     this.tempOldLeaderboard = oldLeaderboard
@@ -369,23 +410,50 @@ export class RoundManager {
     this.tempOldLeaderboard = null
   }
 
+  private finishSurvey(): void {
+    const players = this.opts.players.getAll()
+
+    const summary = {
+      subject: this.opts.quizz.subject,
+      totalPlayers: players.length,
+      totalQuestions: this.opts.quizz.questions.length,
+    }
+
+    this.opts.send(this.opts.getManagerId(), STATUS.SUMMARY, summary)
+
+    players.forEach((player) => {
+      this.opts.send(player.id, STATUS.SUMMARY, summary)
+    })
+  }
+
   private finish(): void {
     this.started = false
     this.clearAutoAdvance()
 
-    const top = this.leaderboard.slice(0, 3)
+    const finalPlayers = this.isSurvey()
+      ? this.opts.players.getAll()
+      : this.leaderboard
 
     this.opts.onGameFinished({
       id: `${Date.now()}-${nanoid(8)}`,
+      gameMode: this.opts.quizz.gameMode,
       subject: this.opts.quizz.subject,
       date: new Date().toISOString(),
-      players: this.leaderboard.map((player, index) => ({
+      players: finalPlayers.map((player, index) => ({
         username: player.username,
         points: player.points,
         rank: index + 1,
       })),
       questions: this.questionsHistory,
     })
+
+    if (this.isSurvey()) {
+      this.finishSurvey()
+
+      return
+    }
+
+    const top = this.leaderboard.slice(0, 3)
 
     this.opts.send(this.opts.getManagerId(), STATUS.FINISHED, {
       subject: this.opts.quizz.subject,
