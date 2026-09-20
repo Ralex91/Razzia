@@ -88,26 +88,56 @@ The quiz body is validated against the same schema as the files in `config/quizz
 
 `POST /api/games` creates the game but binds no socket to it: the manager enters the room by emitting `manager:reconnect { gameId }`. A game nobody connects to expires after ~5 minutes, like an abandoned one.
 
+### `PATCH /api/games/:gameId/settings`
+
+Changes the settings of a game you created, before it starts. The body is a **partial** settings object — send only the keys you are changing:
+
+```ts
+{
+  generatedUsernames?: boolean   // the server names the players instead of letting them type
+  autoAdvance?: {
+    enable: boolean
+    responsesDelay: number       // seconds on the answer reveal, 3-600
+    leaderboardDelay: number     // seconds on the leaderboard, 3-600
+  }
+}
+```
+
+Answers `200 { settings }` with the full settings after the change.
+
+- `404 errors:game.notFound` — unknown game, or you are not its manager
+- `409 errors:game.alreadyStarted` — settings are locked once the game is running
+- `400` — validation key, e.g. `errors:game.invalidAutoAdvanceDelay`
+
+The `autoAdvance` object is nested, so sending it replaces all three of its fields at once.
+
 ## Public routes
 
-| Route                   | Success                  | Notes                                       |
-| ----------------------- | ------------------------ | ------------------------------------------- |
-| `GET /api/health`       | `200 { status: "ok" }`   | Liveness probe                              |
-| `POST /api/games/check` | `200 { valid: boolean }` | Checks a 6-digit invite code before joining |
+| Route                   | Success                            | Notes                                       |
+| ----------------------- | ---------------------------------- | ------------------------------------------- |
+| `GET /api/health`       | `200 { status: "ok" }`             | Liveness probe                              |
+| `POST /api/games/check` | `200 { valid: boolean, settings }` | Checks a 6-digit invite code before joining |
 
 Body `{ "inviteCode": string }`. It is a `POST` rather than a `GET` on purpose: the invite code is a room key, and a body keeps it out of access logs, browser history and `Referer` headers — and out of proxy caches, which matters because the answer changes as games start and end.
 
+`settings` comes back so a client knows what the join form should ask for — in particular whether `generatedUsernames` is on, in which case there is no username to type. For an unknown code it holds the defaults.
+
 ### `POST /api/games/join`
 
-Any signed session (bearer required, no role). Body `{ "inviteCode": string, "username": string }`, answers `200 { gameId, ticket }`.
+Any signed session (bearer required, no role). Body `{ "inviteCode": string, "username"?: string }`, answers `200 { gameId, ticket, username }`.
+
+- `username` is 1-24 characters ([validators/auth.ts](../packages/common/src/validators/auth.ts)). It is **required unless** the game has `generatedUsernames` enabled, in which case anything you send is ignored and the server picks the name.
+- The response `username` is the name you asked for, or `null` when the server will generate one — you then learn it from `game:successJoin`.
 
 The **ticket** is a 5-minute JWT with claims `{ sub, gameId, username }`, signed with the same secret. It carries the _right_ to a seat; the seat itself is only created when the socket presents it through `player:login { ticket }` — which is what keeps `player.id === socket.id` true at all times server-side.
+
+When the generator is on, the ticket carries no `username` and the name is drawn at join time, so a ticket minted before the setting was turned on cannot smuggle a chosen name past it.
 
 `ticket` is `null` when this client already holds a seat: reconnect with `player:reconnect { gameId }` instead.
 
 - `404 errors:game.notFound` — unknown invite code
 - `403 errors:game.managerCannotJoin` — you are this game's manager
-- `400` — invalid username, with the validation key
+- `400` — invalid or missing username, with the validation key
 
 > `POST /api/games/check` makes the 6-digit PIN space (10⁶) cheaply enumerable, as it already was over the socket. Keeping the code out of the URL does not change that — it only stops it leaking passively into logs and caches. Worth knowing if you expose Razzia to the open internet.
 
