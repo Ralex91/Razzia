@@ -94,6 +94,10 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     withManagerGame(gameId, socket, (game) => game.kickPlayer(playerId)),
   )
 
+  socket.on(EVENTS.MANAGER.SET_LOCK, ({ gameId, locked }) =>
+    withManagerGame(gameId, socket, (game) => game.setLocked(locked)),
+  )
+
   socket.on(EVENTS.MANAGER.START_GAME, ({ gameId }) =>
     withManagerGame(gameId, socket, (game) => game.start(socket)),
   )

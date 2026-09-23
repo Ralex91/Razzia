@@ -8,6 +8,7 @@ interface ManagerState<T> {
   gameId: string | null
   inviteCode: string | null
   settings: GameSettings
+  locked: boolean
   status: Status<T> | null
   players: Player[]
 }
@@ -21,6 +22,7 @@ const initialState: ManagerState<StatusDataMap> = {
   gameId: null,
   inviteCode: null,
   settings: createDefaultGameSettings(),
+  locked: false,
   status: null,
   players: [],
 }

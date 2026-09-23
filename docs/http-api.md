@@ -113,14 +113,17 @@ The `autoAdvance` object is nested, so sending it replaces all three of its fiel
 
 ## Public routes
 
-| Route                   | Success                            | Notes                                       |
-| ----------------------- | ---------------------------------- | ------------------------------------------- |
-| `GET /api/health`       | `200 { status: "ok" }`             | Liveness probe                              |
-| `POST /api/games/check` | `200 { valid: boolean, settings }` | Checks a 6-digit invite code before joining |
+| Route                   | Success                               | Notes                                       |
+| ----------------------- | ------------------------------------- | ------------------------------------------- |
+| `GET /api/health`       | `200 { status: "ok" }`                | Liveness probe                              |
+| `POST /api/games/check` | `200 { generatedUsernames: boolean }` | Checks a 6-digit invite code before joining |
 
 Body `{ "inviteCode": string }`. It is a `POST` rather than a `GET` on purpose: the invite code is a room key, and a body keeps it out of access logs, browser history and `Referer` headers — and out of proxy caches, which matters because the answer changes as games start and end.
 
-`settings` comes back so a client knows what the join form should ask for — in particular whether `generatedUsernames` is on, in which case there is no username to type. For an unknown code it holds the defaults.
+`generatedUsernames` tells a client what the join form should ask for: when it is `true` there is no username to type.
+
+- `404 errors:game.notFound` — unknown invite code
+- `403 errors:game.locked` — the host has locked the room (`manager:setLock`, see [WebSocket protocol](websocket-protocol.md)). The game still exists, so a player who already holds a seat can reconnect to it.
 
 ### `POST /api/games/join`
 
@@ -137,6 +140,7 @@ When the generator is on, the ticket carries no `username` and the name is drawn
 
 - `404 errors:game.notFound` — unknown invite code
 - `403 errors:game.managerCannotJoin` — you are this game's manager
+- `403 errors:game.locked` — the host has locked the room; a client that already holds a seat still gets its `ticket: null` answer
 - `400` — invalid or missing username, with the validation key
 
 > `POST /api/games/check` makes the 6-digit PIN space (10⁶) cheaply enumerable, as it already was over the socket. Keeping the code out of the URL does not change that — it only stops it leaking passively into logs and caches. Worth knowing if you expose Razzia to the open internet.

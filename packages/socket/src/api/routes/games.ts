@@ -1,6 +1,4 @@
 import { zValidator } from "@hono/zod-validator"
-import { createDefaultGameSettings } from "@razzia/common/constants"
-import type { GameSettings } from "@razzia/common/types/game"
 import {
   checkGameValidator,
   createGameValidator,
@@ -68,11 +66,15 @@ const routes = apiFactory
     const { inviteCode } = c.req.valid("json")
     const game = Registry.getInstance().getGameByInviteCode(inviteCode)
 
-    const settings: GameSettings = game?.settings ?? {
-      ...createDefaultGameSettings(),
+    if (!game) {
+      return c.json({ error: "errors:game.notFound" }, StatusCodes.NOT_FOUND)
     }
 
-    return c.json({ valid: Boolean(game), settings })
+    if (game.locked) {
+      return c.json({ error: "errors:game.locked" }, StatusCodes.FORBIDDEN)
+    }
+
+    return c.json({ generatedUsernames: game.settings.generatedUsernames })
   })
   .post(
     "/join",
@@ -103,6 +105,10 @@ const routes = apiFactory
           ticket: null,
           username: existing.username,
         })
+      }
+
+      if (game.locked) {
+        return c.json({ error: "errors:game.locked" }, StatusCodes.FORBIDDEN)
       }
 
       if (!game.settings.generatedUsernames && !username) {

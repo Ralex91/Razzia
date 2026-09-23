@@ -47,6 +47,7 @@ const ManagerGamePage = () => {
       gameId: reconnectGameId,
       inviteCode,
       settings,
+      locked,
       status: reconnectStatus,
       players,
       currentQuestion,
@@ -55,12 +56,17 @@ const ManagerGamePage = () => {
         gameId: reconnectGameId,
         inviteCode,
         settings,
+        locked,
         status: createStatus(reconnectStatus.name, reconnectStatus.data),
         players,
       })
       setQuestionStates(currentQuestion)
     },
   )
+
+  useEvent(EVENTS.MANAGER.LOCK_UPDATED, (locked) => {
+    updateManager({ locked })
+  })
 
   useEvent(EVENTS.GAME.RESET, (message) => {
     navigate({ to: "/manager/config" })

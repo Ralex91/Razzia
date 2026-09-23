@@ -29,6 +29,7 @@ class Game {
   readonly gameMode: QuizzMode
 
   private _settings: GameSettings = createDefaultGameSettings()
+  private _locked = false
 
   private readonly io: Server
   private readonly _manager: {
@@ -121,6 +122,15 @@ class Game {
     return true
   }
 
+  get locked(): boolean {
+    return this._locked
+  }
+
+  setLocked(locked: boolean) {
+    this._locked = locked
+    this.io.to(this._manager.id).emit(EVENTS.MANAGER.LOCK_UPDATED, locked)
+  }
+
   // ── Status broadcasting ──────────────────────────────────────────────────
 
   private broadcastStatus<T extends Status>(status: T, data: StatusDataMap[T]) {
@@ -148,6 +158,10 @@ class Game {
   // Player actions
 
   join(socket: Socket, username?: string): string | null {
+    if (this._locked) {
+      return "errors:game.locked"
+    }
+
     if (this._settings.generatedUsernames) {
       const taken = this.playerManager.getAll().map((player) => player.username)
 
@@ -219,6 +233,7 @@ class Game {
       gameId: this.gameId,
       inviteCode: this.inviteCode,
       settings: this._settings,
+      locked: this._locked,
       currentQuestion: this.round.getReconnectInfo(),
       status,
       players: this.playerManager.getAll(),

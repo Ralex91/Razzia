@@ -10,6 +10,10 @@
   },
   "joinInstruction": "Tritt dem Spiel bei auf",
   "leaderboard": "Bestenliste",
+  "lock": {
+    "lock": "Raum sperren",
+    "unlock": "Raum entsperren"
+  },
   "pinLabel": "PIN-Code",
   "playersJoined": "Verbundene Spieler",
   "questionPrefix": "Frage #",
@@ -37,7 +41,7 @@
     },
     "title": "Spieleinstellungen"
   },
-  "startGame": "Spiel starten",
+  "startGame": "Starten",
   "summary": {
     "title": "Umfrage beendet",
     "participants": "Teilnehmer",

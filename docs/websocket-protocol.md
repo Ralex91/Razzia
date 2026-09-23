@@ -65,10 +65,10 @@ where `name` is one of the status constants below and `data` is the payload for 
 
    ```
    POST /api/games/check   { "inviteCode": "..." }
-   ->  { valid: boolean, settings }
+   ->  { generatedUsernames: boolean }
    ```
 
-   `settings.generatedUsernames` tells you whether the host has the nickname generator on. If it is `true`, do not ask for a name — the server picks one.
+   `generatedUsernames` tells you whether the host has the nickname generator on. If it is `true`, do not ask for a name — the server picks one. Errors: `404 errors:game.notFound` (unknown code), `403 errors:game.locked` (the host has closed the room: new players are refused until it is unlocked).
 
 2. **Ask for a seat over HTTP**, with your session token as a bearer:
 
@@ -80,7 +80,7 @@ where `name` is one of the status constants below and `data` is the payload for 
    - `username` must be 1-24 characters ([validators/auth.ts](../packages/common/src/validators/auth.ts)). It is optional — and ignored — when the game generates nicknames, in which case the response `username` is `null` and you learn your name from `game:successJoin`.
    - The **ticket** is a short-lived (5 min) signed proof that you passed the invite code and that this username was accepted. It is bound to your `clientId`: another client cannot use it.
    - `ticket` comes back `null` when you already hold a seat in that game — skip step 3 and go straight to [Reconnecting](#reconnecting).
-   - Errors: `404 errors:game.notFound` (unknown code), `403 errors:game.managerCannotJoin`, `400` with a validation key, `401 errors:auth.unauthorized` (no bearer).
+   - Errors: `404 errors:game.notFound` (unknown code), `403 errors:game.managerCannotJoin`, `403 errors:game.locked` (room locked by the host), `400` with a validation key, `401 errors:auth.unauthorized` (no bearer).
 
 3. **Present the ticket on the socket.** This is what creates the seat and binds it to this connection:
 
@@ -89,7 +89,7 @@ where `name` is one of the status constants below and `data` is the payload for 
    ```
 
    - `on game:successJoin { gameId, username, gameMode }`: you're in. `username` is your final name, which is the only way to learn it when the host generates nicknames. `gameMode` is `"quiz"` or `"survey"` — see [Survey mode](#survey-mode). The server also emits `manager:newPlayer` to the manager and `game:totalPlayers <count>` to everyone in the room.
-   - `on game:reset <key: string>`: the ticket is expired, forged, or was minted for another client (`errors:auth.joinTicketInvalid` / `errors:auth.unauthorized`), the game is gone, or this `clientId` already has a player. Go back to step 1.
+   - `on game:reset <key: string>`: the ticket is expired, forged, or was minted for another client (`errors:auth.joinTicketInvalid` / `errors:auth.unauthorized`), the game is gone, the room was locked after the ticket was issued (`errors:game.locked`), or this `clientId` already has a player. Go back to step 1.
 
 From here, wait for `game:status` events and react to the `name` field.
 
@@ -244,8 +244,10 @@ Full type definitions live in [packages/common/src/types/game/socket.ts](../pack
 
 ## Manager events
 
-Out of scope for a buzzer client, but worth knowing they are guarded: `manager:startGame`, `manager:advance` and `manager:kickPlayer` are **refused unless your token's `clientId` is the one that created that game** through `POST /api/games` — the refusal is `game:errorMessage errors:auth.unauthorized`. Creating a game, quiz CRUD, game settings and results are HTTP-only; see [HTTP API](http-api.md).
+Out of scope for a buzzer client, but worth knowing they are guarded: `manager:startGame`, `manager:advance`, `manager:kickPlayer` and `manager:setLock` are **refused unless your token's `clientId` is the one that created that game** through `POST /api/games` — the refusal is `game:errorMessage errors:auth.unauthorized`. Creating a game, quiz CRUD, game settings and results are HTTP-only; see [HTTP API](http-api.md).
 
 `manager:advance { gameId }` is the single "move the game forward" action: it cuts the answer window short while a question is open, and otherwise steps to whatever comes next — the answer reveal, the leaderboard, the following question or the end screen. The manager client does not decide that order; the server holds it, which is how survey mode can skip the leaderboard without any client change.
 
 While the host has auto-advance enabled, the server ticks `manager:autoAdvance { seconds, total } | null` to the manager only, so the UI can show the countdown. `null` means the countdown was cleared.
+
+`manager:setLock { gameId, locked }` locks or unlocks the room, at any point of the game. While it is locked, `POST /api/games/join` and `player:login` refuse new players with `errors:game.locked`; players already seated keep reconnecting normally. The server confirms with `manager:lockUpdated <locked: boolean>` to the manager, and `manager:successReconnect` carries the current `locked` value.

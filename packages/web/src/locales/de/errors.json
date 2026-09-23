@@ -18,6 +18,7 @@
     "expired": "Spiel abgelaufen",
     "invalidAutoAdvanceDelay": "Verzögerung muss zwischen 3 und 600 Sekunden liegen",
     "kickedByManager": "Du wurdest vom Manager entfernt",
+    "locked": "Spiel gesperrt",
     "managerAlreadyConnected": "Manager bereits verbunden",
     "managerCannotJoin": "Du kannst deinem eigenen Spiel nicht beitreten",
     "managerDisconnected": "Manager getrennt",

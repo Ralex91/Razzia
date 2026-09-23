@@ -32,6 +32,8 @@ export const EVENTS = {
     START_GAME: "manager:startGame",
     ADVANCE: "manager:advance",
     AUTO_ADVANCE: "manager:autoAdvance",
+    SET_LOCK: "manager:setLock",
+    LOCK_UPDATED: "manager:lockUpdated",
   },
 } as const
 

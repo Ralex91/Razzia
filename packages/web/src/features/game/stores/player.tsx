@@ -1,8 +1,5 @@
-import {
-  createDefaultGameSettings,
-  QUIZZ_MODES,
-} from "@razzia/common/constants"
-import type { GameSettings, QuizzMode } from "@razzia/common/types/game"
+import { QUIZZ_MODES } from "@razzia/common/constants"
+import type { QuizzMode } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
 import type { Status } from "@razzia/web/features/game/utils/createStatus"
 import { create } from "zustand"
@@ -16,7 +13,7 @@ interface PlayerState<T> {
   gameId: string | null
   inviteCode: string | null
   gameMode: QuizzMode
-  settings: GameSettings
+  generatedUsernames: boolean
   joinTicket: string | null
   player: PlayerInfo | null
   status: Status<T> | null
@@ -35,7 +32,7 @@ const initialState: PlayerState<StatusDataMap> = {
   gameId: null,
   inviteCode: null,
   gameMode: QUIZZ_MODES.QUIZ,
-  settings: createDefaultGameSettings(),
+  generatedUsernames: false,
   joinTicket: null,
   player: null,
   status: null,

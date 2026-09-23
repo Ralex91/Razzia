@@ -18,6 +18,7 @@
     "expired": "Game expired",
     "invalidAutoAdvanceDelay": "Delay must be between 3 and 600 seconds",
     "kickedByManager": "You have been kicked by the manager",
+    "locked": "Game locked",
     "managerAlreadyConnected": "Manager already connected",
     "managerCannotJoin": "You cannot join your own game",
     "managerDisconnected": "Manager disconnected",

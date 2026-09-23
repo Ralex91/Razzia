@@ -10,6 +10,10 @@
   },
   "joinInstruction": "Únete al juego en",
   "leaderboard": "Clasificación",
+  "lock": {
+    "lock": "Bloquear la sala",
+    "unlock": "Desbloquear la sala"
+  },
   "pinLabel": "Código PIN",
   "playersJoined": "Jugadores conectados",
   "questionPrefix": "Pregunta #",
@@ -37,7 +41,7 @@
     },
     "title": "Ajustes de la partida"
   },
-  "startGame": "Iniciar juego",
+  "startGame": "Iniciar",
   "summary": {
     "title": "Encuesta finalizada",
     "participants": "Participantes",

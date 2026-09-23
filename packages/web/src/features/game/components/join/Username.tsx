@@ -1,4 +1,3 @@
-import { createDefaultGameSettings } from "@razzia/common/constants"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
@@ -15,7 +14,7 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Username = () => {
-  const { inviteCode, settings, updatePlayer } = usePlayerStore()
+  const { inviteCode, generatedUsernames, updatePlayer } = usePlayerStore()
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const { t } = useTranslation()
@@ -43,10 +42,7 @@ const Username = () => {
       )
 
       if (error instanceof ApiError && error.status === StatusCodes.NOT_FOUND) {
-        updatePlayer({
-          inviteCode: null,
-          settings: createDefaultGameSettings(),
-        })
+        updatePlayer({ inviteCode: null, generatedUsernames: false })
       }
     },
   })
@@ -58,7 +54,7 @@ const Username = () => {
 
     join({
       inviteCode,
-      username: settings.generatedUsernames ? undefined : username,
+      username: generatedUsernames ? undefined : username,
     })
   }
 
@@ -68,7 +64,7 @@ const Username = () => {
     }
   }
 
-  if (settings.generatedUsernames) {
+  if (generatedUsernames) {
     return (
       <Card>
         <p className="mb-4 text-center text-lg font-semibold">

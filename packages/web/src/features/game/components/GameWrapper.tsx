@@ -9,6 +9,7 @@ import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
 import Tooltip from "@razzia/web/components/Tooltip"
 import GameSettingsModal from "@razzia/web/features/game/components/GameSettingsModal"
+import RoomLockButton from "@razzia/web/features/game/components/RoomLockButton"
 import {
   useEvent,
   useSocket,
@@ -41,7 +42,7 @@ const GameWrapper = ({
 }: Props) => {
   const { isConnected } = useSocket()
   const { player, gameMode } = usePlayerStore()
-  const { players, inviteCode, status } = useManagerStore()
+  const { players, inviteCode, locked, status } = useManagerStore()
   const { questionStates, setQuestionStates } = useQuestionStore()
   const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
   const { t } = useTranslation()
@@ -108,27 +109,6 @@ const GameWrapper = ({
                 </div>
               )}
 
-              {manager && next && (
-                <Button
-                  className={clsx(
-                    "hover:bg-accent relative overflow-hidden bg-white px-4 text-black",
-                    { "pointer-events-none": isDisabled },
-                  )}
-                  onClick={handleNext}
-                >
-                  {countdown && (
-                    <span
-                      className="bg-primary/40 absolute inset-y-0 left-0"
-                      style={{
-                        animation: `progressBar ${countdown.total}s linear forwards`,
-                      }}
-                    />
-                  )}
-
-                  <span className="relative">{t(next)}</span>
-                </Button>
-              )}
-
               {manager && onBack && (
                 <Button
                   onClick={onBack}
@@ -136,6 +116,33 @@ const GameWrapper = ({
                 >
                   {t("common:exit")}
                 </Button>
+              )}
+
+              {manager && next && (
+                <div className="ml-auto flex gap-2">
+                  {statusName === STATUS.SHOW_ROOM && (
+                    <RoomLockButton className="hover:bg-accent rounded-lg bg-white px-3 text-black" />
+                  )}
+
+                  <Button
+                    className={clsx(
+                      "hover:bg-accent relative overflow-hidden bg-white px-4 text-black",
+                      { "pointer-events-none": isDisabled },
+                    )}
+                    onClick={handleNext}
+                  >
+                    {countdown && (
+                      <span
+                        className="bg-primary/40 absolute inset-y-0 left-0"
+                        style={{
+                          animation: `progressBar ${countdown.total}s linear forwards`,
+                        }}
+                      />
+                    )}
+
+                    <span className="relative">{t(next)}</span>
+                  </Button>
+                </div>
               )}
             </div>
 
@@ -149,9 +156,14 @@ const GameWrapper = ({
               >
                 {inviteCode && statusName !== STATUS.SHOW_ROOM && (
                   <div className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md">
-                    <span>{window.location.host}</span>
-                    <span className="h-5 w-px bg-white/40" />
-                    <span>{inviteCode}</span>
+                    {!locked && (
+                      <>
+                        <span>{window.location.host}</span>
+                        <span className="h-5 w-px bg-white/40" />
+                        <span>{inviteCode}</span>
+                      </>
+                    )}
+                    <RoomLockButton className="-mx-1 rounded-md p-1 hover:bg-white/20" />
                   </div>
                 )}
 

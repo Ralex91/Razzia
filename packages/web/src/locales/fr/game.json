@@ -10,6 +10,10 @@
   },
   "joinInstruction": "Rejoins la partie sur",
   "leaderboard": "Classement",
+  "lock": {
+    "lock": "Verrouiller la salle",
+    "unlock": "Déverrouiller la salle"
+  },
   "pinLabel": "Code PIN",
   "playersJoined": "Joueurs connectés",
   "questionPrefix": "Question n°",
@@ -37,7 +41,7 @@
     },
     "title": "Réglages de la partie"
   },
-  "startGame": "Demarrer la partie",
+  "startGame": "Démarrer",
   "summary": {
     "title": "Sondage terminé",
     "participants": "Participants",

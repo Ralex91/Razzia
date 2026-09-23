@@ -10,6 +10,10 @@
   },
   "joinInstruction": "Join the game at",
   "leaderboard": "Leaderboard",
+  "lock": {
+    "lock": "Lock the room",
+    "unlock": "Unlock the room"
+  },
   "pinLabel": "PIN Code",
   "playersJoined": "Players joined",
   "questionPrefix": "Question #",
@@ -37,7 +41,7 @@
     },
     "title": "Game settings"
   },
-  "startGame": "Start Game",
+  "startGame": "Start",
   "summary": {
     "title": "Survey complete",
     "participants": "Participants",

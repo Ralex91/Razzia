@@ -18,6 +18,7 @@
     "expired": "Partida expirada",
     "invalidAutoAdvanceDelay": "El retraso debe estar entre 3 y 600 segundos",
     "kickedByManager": "Has sido expulsado por el administrador",
+    "locked": "Partida bloqueada",
     "managerAlreadyConnected": "El administrador ya está conectado",
     "managerCannotJoin": "No puedes unirte a tu propio juego",
     "managerDisconnected": "El administrador se ha desconectado",

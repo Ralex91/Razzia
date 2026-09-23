@@ -10,6 +10,10 @@
   },
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
+  "lock": {
+    "lock": "ルームをロック",
+    "unlock": "ルームのロックを解除"
+  },
   "pinLabel": "PINコード",
   "playersJoined": "参加プレイヤー数",
   "questionPrefix": "問題 #",
@@ -37,7 +41,7 @@
     },
     "title": "ゲーム設定"
   },
-  "startGame": "ゲーム開始",
+  "startGame": "開始",
   "summary": {
     "title": "アンケート終了",
     "participants": "参加者",
