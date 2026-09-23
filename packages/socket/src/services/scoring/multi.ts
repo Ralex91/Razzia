@@ -40,5 +40,5 @@ export const scoring: ScoringFn = (
   const mode = question.options?.scoringMode ?? SCORING_MODES.BALANCED
   const entry = SCORING_BY_MODE.find((s) => s.mode === mode)
 
-  return entry ? entry.compute(answerIds, question.solutions) : 0
+  return entry ? entry.compute(answerIds, question.solutions ?? []) : 0
 }

@@ -9,9 +9,9 @@ import {
 import { useSocketConnection } from "@razzia/web/features/game/hooks/useSocketConnection"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import {
   GAME_STATE_COMPONENTS_MANAGER,
-  MANAGER_SKIP_EVENTS,
   isKeyOf,
 } from "@razzia/web/features/game/utils/constants"
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
@@ -23,8 +23,7 @@ const ManagerGamePage = () => {
   const navigate = useNavigate()
   const { gameId: gameIdParam } = useParams({ from: "/party/manager/$gameId" })
   const { socket, isConnected } = useSocket()
-  const { gameId, status, setGameId, setStatus, setPlayers, reset } =
-    useManagerStore()
+  const { gameId, status, updateManager, resetManager } = useManagerStore()
   const { setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
 
@@ -32,7 +31,7 @@ const ManagerGamePage = () => {
 
   useEvent(EVENTS.GAME.STATUS, ({ name, data }) => {
     if (name in GAME_STATE_COMPONENTS_MANAGER) {
-      setStatus(name, data)
+      updateManager({ status: createStatus(name, data) })
     }
   })
 
@@ -46,20 +45,32 @@ const ManagerGamePage = () => {
     EVENTS.MANAGER.SUCCESS_RECONNECT,
     ({
       gameId: reconnectGameId,
+      inviteCode,
+      settings,
+      locked,
       status: reconnectStatus,
       players,
       currentQuestion,
     }) => {
-      setGameId(reconnectGameId)
-      setStatus(reconnectStatus.name, reconnectStatus.data)
-      setPlayers(players)
+      updateManager({
+        gameId: reconnectGameId,
+        inviteCode,
+        settings,
+        locked,
+        status: createStatus(reconnectStatus.name, reconnectStatus.data),
+        players,
+      })
       setQuestionStates(currentQuestion)
     },
   )
 
+  useEvent(EVENTS.MANAGER.LOCK_UPDATED, (locked) => {
+    updateManager({ locked })
+  })
+
   useEvent(EVENTS.GAME.RESET, (message) => {
     navigate({ to: "/manager/config" })
-    reset()
+    resetManager()
     setQuestionStates(null)
     toast.error(t(message))
   })
@@ -69,9 +80,9 @@ const ManagerGamePage = () => {
       return
     }
 
-    if (status.name === STATUS.FINISHED) {
+    if (status.name === STATUS.FINISHED || status.name === STATUS.SUMMARY) {
       navigate({ to: "/manager/config" })
-      reset()
+      resetManager()
       setQuestionStates(null)
 
       return
@@ -81,14 +92,18 @@ const ManagerGamePage = () => {
       return
     }
 
-    if (isKeyOf(MANAGER_SKIP_EVENTS, status.name)) {
-      socket.emit(MANAGER_SKIP_EVENTS[status.name], { gameId })
+    if (status.name === STATUS.SHOW_ROOM) {
+      socket.emit(EVENTS.MANAGER.START_GAME, { gameId })
+
+      return
     }
+
+    socket.emit(EVENTS.MANAGER.ADVANCE, { gameId })
   }
 
   const handleBack = () => {
     navigate({ to: "/manager/config" })
-    reset()
+    resetManager()
     setQuestionStates(null)
   }
 

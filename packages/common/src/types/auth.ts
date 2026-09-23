@@ -19,7 +19,7 @@ export interface SessionResponse {
 export interface JoinTicketClaims {
   sub: string
   gameId: string
-  username: string
+  username?: string
   iat: number
   exp: number
 }

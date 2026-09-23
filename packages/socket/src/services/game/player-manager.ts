@@ -1,18 +1,27 @@
 import { EVENTS } from "@razzia/common/constants"
-import type { Player } from "@razzia/common/types/game"
+import type { Player, QuizzMode } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import { usernameValidator } from "@razzia/common/validators/auth"
 import { getClientId } from "@razzia/socket/utils/socket"
 
+export interface PlayerManagerOptions {
+  io: Server
+  gameId: string
+  gameMode: QuizzMode
+  getManagerId: () => string
+}
+
 export class PlayerManager {
   private readonly io: Server
   private readonly gameId: string
+  private readonly gameMode: QuizzMode
   private readonly getManagerId: () => string
   private players: Player[] = []
 
-  constructor(io: Server, gameId: string, getManagerId: () => string) {
+  constructor({ io, gameId, gameMode, getManagerId }: PlayerManagerOptions) {
     this.io = io
     this.gameId = gameId
+    this.gameMode = gameMode
     this.getManagerId = getManagerId
   }
 
@@ -43,7 +52,11 @@ export class PlayerManager {
     this.players.push(player)
     this.io.to(this.getManagerId()).emit(EVENTS.MANAGER.NEW_PLAYER, player)
     this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.players.length)
-    socket.emit(EVENTS.GAME.SUCCESS_JOIN, this.gameId)
+    socket.emit(EVENTS.GAME.SUCCESS_JOIN, {
+      gameId: this.gameId,
+      username,
+      gameMode: this.gameMode,
+    })
 
     return null
   }

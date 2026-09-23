@@ -3,6 +3,10 @@
   "addQuestion": "Add question",
   "answersCountSuffix": " answers",
   "deleteQuestion": "Delete question",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Survey"
+  },
   "noQuestionYet": "No question yet",
   "question": {
     "addMediaHint": "Add an image, video or audio to your question",

@@ -1,16 +1,21 @@
 {
+  "answerNoted": "Gracias, anotado",
+  "confirm": "Confirmar",
   "correct": "¡Bien!",
   "gamePinLabel": "PIN del juego:",
+  "generatedUsernameNotice": "Recibirás un apodo aleatorio al entrar.",
   "hud": {
     "answers": "Respuestas",
     "time": "Tiempo"
   },
   "joinInstruction": "Únete al juego en",
   "leaderboard": "Clasificación",
+  "lock": {
+    "lock": "Bloquear la sala",
+    "unlock": "Desbloquear la sala"
+  },
   "pinLabel": "Código PIN",
-  "reconnect": "Reconectar",
-  "reconnectTitle": "Estabas en una partida",
-  "playersJoined": "Jugadores conectados: ",
+  "playersJoined": "Jugadores conectados",
   "questionPrefix": "Pregunta #",
   "rank": {
     "1": "1er puesto",
@@ -19,12 +24,31 @@
     "other": "Puesto {{rank}}"
   },
   "rankSuffix": " puesto",
+  "reconnect": "Reconectar",
+  "reconnectTitle": "Estabas en una partida",
   "resultBehind": ", detrás de ",
   "resultTop": "Terminaste ",
-  "startGame": "Iniciar juego",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Continuar solo tras la revelación y la clasificación.",
+      "label": "Avance automático",
+      "leaderboardDelay": "Clasificación",
+      "responsesDelay": "Resultado"
+    },
+    "generatedUsernames": {
+      "label": "Generar apodos",
+      "hint": "Los jugadores eligen entre nombres generados en vez de escribirlos."
+    },
+    "title": "Ajustes de la partida"
+  },
+  "startGame": "Iniciar",
+  "summary": {
+    "title": "Encuesta finalizada",
+    "participants": "Participantes",
+    "questions": "Preguntas"
+  },
   "usernamePlaceholder": "Nombre de usuario aquí",
   "waitingForAnswers": "Esperando que los jugadores respondan",
   "waitingForPlayers": "Esperando jugadores",
-  "wrong": "Mala suerte",
-  "confirm": "Confirmar"
+  "wrong": "Mala suerte"
 }

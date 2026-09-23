@@ -1,3 +1,4 @@
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import FieldError from "@razzia/web/components/forms/FieldError"
 import {
   ANSWERS_COLORS,
@@ -14,8 +15,13 @@ import { Controller, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorAnswers = () => {
-  const { currentQuestion, currentIndex, updateQuestion, questionPath } =
-    useQuizzEditor()
+  const {
+    currentQuestion,
+    currentIndex,
+    gameMode,
+    updateQuestion,
+    questionPath,
+  } = useQuizzEditor()
   const { control } = useFormContext<QuizzFormValues>()
   const { t } = useTranslation()
 
@@ -37,7 +43,9 @@ const QuestionEditorAnswers = () => {
 
     const next = currentQuestion.answers.slice(0, -1)
     const maxIndex = next.length - 1
-    const nextSolution = currentQuestion.solutions.filter((s) => s <= maxIndex)
+    const nextSolution = (currentQuestion.solutions ?? []).filter(
+      (s) => s <= maxIndex,
+    )
 
     updateQuestion(currentIndex, {
       answers: next,
@@ -72,7 +80,7 @@ const QuestionEditorAnswers = () => {
 
       <div className="grid grid-cols-2 gap-3">
         {currentQuestion.answers.map((_, i) => {
-          const isSelected = currentQuestion.solutions.includes(i)
+          const isSelected = currentQuestion.solutions?.includes(i) ?? false
 
           return (
             <Controller
@@ -101,7 +109,9 @@ const QuestionEditorAnswers = () => {
                         className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none"
                         placeholder={t("quizz:addAnswerPlaceholder")}
                       />
-                      <SolutionPicker index={i} isSelected={isSelected} />
+                      {gameMode !== QUIZZ_MODES.SURVEY && (
+                        <SolutionPicker index={i} isSelected={isSelected} />
+                      )}
                     </div>
                   </div>
                   <FieldError

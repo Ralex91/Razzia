@@ -1,16 +1,21 @@
 {
+  "answerNoted": "Thanks, that's noted",
+  "confirm": "Confirm",
   "correct": "Nice!",
   "gamePinLabel": "Game PIN:",
+  "generatedUsernameNotice": "You will be given a random nickname when you join.",
   "hud": {
     "answers": "Answers",
     "time": "Time"
   },
   "joinInstruction": "Join the game at",
   "leaderboard": "Leaderboard",
+  "lock": {
+    "lock": "Lock the room",
+    "unlock": "Unlock the room"
+  },
   "pinLabel": "PIN Code",
-  "reconnect": "Reconnect",
-  "reconnectTitle": "You were in a game",
-  "playersJoined": "Players Joined: ",
+  "playersJoined": "Players joined",
   "questionPrefix": "Question #",
   "rank": {
     "1": "1st place",
@@ -19,12 +24,31 @@
     "other": "{{rank}}th place"
   },
   "rankSuffix": " place",
+  "reconnect": "Reconnect",
+  "reconnectTitle": "You were in a game",
   "resultBehind": ", behind ",
   "resultTop": "You finished ",
-  "startGame": "Start Game",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Move on by itself after the reveal and the leaderboard.",
+      "label": "Auto-advance",
+      "leaderboardDelay": "Leaderboard",
+      "responsesDelay": "Result"
+    },
+    "generatedUsernames": {
+      "label": "Generate nicknames",
+      "hint": "Players pick from generated names instead of typing their own."
+    },
+    "title": "Game settings"
+  },
+  "startGame": "Start",
+  "summary": {
+    "title": "Survey complete",
+    "participants": "Participants",
+    "questions": "Questions"
+  },
   "usernamePlaceholder": "Username here",
   "waitingForAnswers": "Waiting for the players to answer",
   "waitingForPlayers": "Waiting for players",
-  "wrong": "Too bad",
-  "confirm": "Confirm"
+  "wrong": "Too bad"
 }

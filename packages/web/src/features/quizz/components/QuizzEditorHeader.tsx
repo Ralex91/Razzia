@@ -1,7 +1,9 @@
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import type { QuizzValidated } from "@razzia/common/validators/quizz"
 import Button from "@razzia/web/components/Button"
 import FieldError from "@razzia/web/components/forms/FieldError"
 import Input from "@razzia/web/components/Input"
+import ToggleGroup from "@razzia/web/components/ToggleGroup"
 import {
   createQuizz,
   quizzKeys,
@@ -18,6 +20,8 @@ import clsx from "clsx"
 import { Controller, useFormContext } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+
+const QUIZZ_MODE_LIST = Object.values(QUIZZ_MODES)
 
 const QuizzEditorHeader = () => {
   const { quizzId, setCurrentIndex } = useQuizzEditor()
@@ -83,31 +87,48 @@ const QuizzEditorHeader = () => {
 
   return (
     <header className="bg-background z-20 flex h-14 items-center justify-between gap-4 px-4 shadow-sm">
-      <Controller
-        control={control}
-        name="subject"
-        render={({ field, fieldState }) => (
-          <div className="flex items-center gap-6">
-            <Input
-              {...field}
-              variant="sm"
-              aria-invalid={fieldState.invalid}
-              aria-describedby={
-                fieldState.invalid ? `${field.name}-error` : undefined
-              }
-              className={clsx(
-                "w-64",
-                fieldState.invalid && "ring-2 ring-red-500",
-              )}
-              placeholder={t("quizz:titleQuizzPlaceholder")}
+      <div className="flex items-center gap-4">
+        <Controller
+          control={control}
+          name="subject"
+          render={({ field, fieldState }) => (
+            <div className="flex items-center gap-6">
+              <Input
+                {...field}
+                variant="sm"
+                aria-invalid={fieldState.invalid}
+                aria-describedby={
+                  fieldState.invalid ? `${field.name}-error` : undefined
+                }
+                className={clsx(
+                  "w-64",
+                  fieldState.invalid && "ring-2 ring-red-500",
+                )}
+                placeholder={t("quizz:titleQuizzPlaceholder")}
+              />
+              <FieldError
+                id={`${field.name}-error`}
+                errors={[fieldState.error]}
+              />
+            </div>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="gameMode"
+          render={({ field }) => (
+            <ToggleGroup
+              value={field.value}
+              onChange={field.onChange}
+              items={QUIZZ_MODE_LIST.map((gameMode) => ({
+                value: gameMode,
+                label: t(`quizz:gameMode.${gameMode}`),
+              }))}
             />
-            <FieldError
-              id={`${field.name}-error`}
-              errors={[fieldState.error]}
-            />
-          </div>
-        )}
-      />
+          )}
+        />
+      </div>
 
       <div className="flex gap-2">
         <Button

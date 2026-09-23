@@ -1,6 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { QUESTION_TYPES } from "@razzia/common/constants"
-import type { Question, QuizzWithId } from "@razzia/common/types/game"
+import { QUESTION_TYPES, QUIZZ_MODES } from "@razzia/common/constants"
+import type {
+  Question,
+  QuizzMode,
+  QuizzWithId,
+} from "@razzia/common/types/game"
 import {
   quizzValidator,
   type QuizzValidated,
@@ -20,12 +24,14 @@ import {
 } from "react-hook-form"
 
 export interface QuizzFormValues {
+  gameMode: QuizzMode
   subject: string
   questions: Question[]
 }
 
 interface QuizzEditorContextType {
   quizzId: string | null
+  gameMode: QuizzMode
   questions: Question[]
   questionIds: string[]
   currentIndex: number
@@ -66,6 +72,7 @@ export const QuizzEditorProvider = ({
   const form = useForm<QuizzFormValues, unknown, QuizzValidated>({
     resolver: zodResolver(quizzValidator),
     defaultValues: {
+      gameMode: initialData?.gameMode ?? QUIZZ_MODES.QUIZ,
       subject: initialData?.subject ?? "Untitled Quizz",
       questions: initialData ? initialData.questions : [defaultQuestion()],
     },
@@ -79,6 +86,7 @@ export const QuizzEditorProvider = ({
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const questions = useWatch({ control, name: "questions" })
+  const gameMode = useWatch({ control, name: "gameMode" })
   const safeIndex = clampIndex(currentIndex, questions.length)
   const currentQuestion = questions[safeIndex]
   const questionIds = fields.map((field) => field.id)
@@ -125,6 +133,7 @@ export const QuizzEditorProvider = ({
       <QuizzEditorContext.Provider
         value={{
           quizzId: initialData?.id ?? null,
+          gameMode,
           questions,
           questionIds,
           currentIndex,

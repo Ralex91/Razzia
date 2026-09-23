@@ -30,7 +30,7 @@ const tabs = [
 
 const Configurations = () => {
   const [selectedTab, setSelectedTab] = useState(0)
-  const { reset } = useManagerStore()
+  const { resetManager } = useManagerStore()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -45,7 +45,7 @@ const Configurations = () => {
     onSuccess: (session) => setToken(session.token),
     onSettled: () => {
       queryClient.clear()
-      reset()
+      resetManager()
       navigate({ to: "/manager" })
     },
   })

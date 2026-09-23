@@ -1,6 +1,7 @@
 import {
   MEDIA_TYPES,
   QUESTION_TYPES,
+  QUIZZ_MODES,
   SCORING_MODES,
 } from "@razzia/common/constants"
 import { z } from "zod"
@@ -24,7 +25,7 @@ const questionValidator = z.object({
     .array(z.string().min(1, "errors:quizz.answerEmpty"))
     .min(2, "errors:quizz.tooFewAnswers")
     .max(4, "errors:quizz.tooManyAnswers"),
-  solutions: z.array(z.number().int().min(0)).min(1),
+  solutions: z.array(z.number().int().min(0)).optional(),
   cooldown: z
     .number()
     .int()
@@ -36,10 +37,29 @@ const questionValidator = z.object({
   options: multiOptionsValidator.optional(),
 })
 
-export const quizzValidator = z.object({
-  subject: z.string().min(1, "errors:quizz.subjectEmpty"),
-  questions: z.array(questionValidator).min(1, "errors:quizz.noQuestions"),
-})
+export const quizzValidator = z
+  .object({
+    gameMode: z.enum(QUIZZ_MODES),
+    subject: z.string().min(1, "errors:quizz.subjectEmpty"),
+    questions: z.array(questionValidator).min(1, "errors:quizz.noQuestions"),
+  })
+  .superRefine((quizz, ctx) => {
+    if (quizz.gameMode !== QUIZZ_MODES.QUIZ) {
+      return
+    }
+
+    quizz.questions.forEach((question, index) => {
+      if (question.solutions && question.solutions.length > 0) {
+        return
+      }
+
+      ctx.addIssue({
+        code: "custom",
+        path: ["questions", index, "solutions"],
+        message: "errors:quizz.noSolution",
+      })
+    })
+  })
 
 export type QuizzValidated = z.infer<typeof quizzValidator>
 
@@ -47,8 +67,9 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null
 
 /**
- * Upgrades quizz files written by older versions: questions without a `type`,
- * a scalar `solutions`, or options without a `scoringMode`.
+ * Upgrades quizz files written by older versions: quizzes without a `gameMode`,
+ * questions without a `type`, a scalar `solutions`, or options without a
+ * `scoringMode`.
  */
 export const normalizeLegacyQuizz = (data: unknown): unknown => {
   if (!isRecord(data) || !Array.isArray(data.questions)) {
@@ -57,6 +78,7 @@ export const normalizeLegacyQuizz = (data: unknown): unknown => {
 
   return {
     ...data,
+    gameMode: data.gameMode ?? QUIZZ_MODES.QUIZ,
     questions: data.questions.map((question: unknown) => {
       if (!isRecord(question)) {
         return question

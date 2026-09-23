@@ -1,16 +1,21 @@
 {
+  "answerNoted": "Merci, c'est noté",
+  "confirm": "Valider",
   "correct": "Bravo !",
   "gamePinLabel": "PIN de la partie :",
+  "generatedUsernameNotice": "Un pseudo aléatoire te sera attribué en rejoignant.",
   "hud": {
     "answers": "Réponses",
     "time": "Temps"
   },
   "joinInstruction": "Rejoins la partie sur",
   "leaderboard": "Classement",
+  "lock": {
+    "lock": "Verrouiller la salle",
+    "unlock": "Déverrouiller la salle"
+  },
   "pinLabel": "Code PIN",
-  "reconnect": "Reconnecter",
-  "reconnectTitle": "Vous étiez dans une partie",
-  "playersJoined": "Joueurs connectés : ",
+  "playersJoined": "Joueurs connectés",
   "questionPrefix": "Question n°",
   "rank": {
     "1": "1er",
@@ -19,12 +24,31 @@
     "other": "{{rank}}ème place"
   },
   "rankSuffix": "e place",
+  "reconnect": "Reconnecter",
+  "reconnectTitle": "Vous étiez dans une partie",
   "resultBehind": ", derrière ",
   "resultTop": "Tu es ",
-  "startGame": "Demarrer la partie",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Enchaîner tout seul après la révélation et le classement.",
+      "label": "Avance automatique",
+      "leaderboardDelay": "Classement",
+      "responsesDelay": "Résultat"
+    },
+    "generatedUsernames": {
+      "label": "Générer les pseudos",
+      "hint": "Les joueurs choisissent parmi des pseudos générés au lieu de les saisir."
+    },
+    "title": "Réglages de la partie"
+  },
+  "startGame": "Démarrer",
+  "summary": {
+    "title": "Sondage terminé",
+    "participants": "Participants",
+    "questions": "Questions"
+  },
   "usernamePlaceholder": "Pseudo",
   "waitingForAnswers": "En attente des réponses des joueurs",
   "waitingForPlayers": "En attente des joueurs",
-  "wrong": "Dommage",
-  "confirm": "Valider"
+  "wrong": "Dommage"
 }

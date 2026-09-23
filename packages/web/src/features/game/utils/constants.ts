@@ -1,4 +1,3 @@
-import { EVENTS } from "@razzia/common/constants"
 import Answers from "@razzia/web/features/game/components/states/Answers"
 import Leaderboard from "@razzia/web/features/game/components/states/Leaderboard"
 import PlayerFinished from "@razzia/web/features/game/components/states/PlayerFinished"
@@ -9,6 +8,7 @@ import Responses from "@razzia/web/features/game/components/states/Responses"
 import Result from "@razzia/web/features/game/components/states/Result"
 import Room from "@razzia/web/features/game/components/states/Room"
 import Start from "@razzia/web/features/game/components/states/Start"
+import Summary from "@razzia/web/features/game/components/states/Summary"
 import Wait from "@razzia/web/features/game/components/states/Wait"
 
 import { STATUS } from "@razzia/common/types/game/status"
@@ -41,6 +41,7 @@ export const GAME_STATE_COMPONENTS = {
   [STATUS.SHOW_RESULT]: Result,
   [STATUS.SHOW_PREPARED]: Prepared,
   [STATUS.FINISHED]: PlayerFinished,
+  [STATUS.SUMMARY]: Summary,
 }
 
 export const GAME_STATE_COMPONENTS_MANAGER = {
@@ -67,15 +68,6 @@ export const SFX = {
   BOUMP_SOUND: "/sounds/boump.mp3",
 } as const
 
-export const MANAGER_SKIP_EVENTS = {
-  [STATUS.SHOW_ROOM]: EVENTS.MANAGER.START_GAME,
-  [STATUS.SELECT_ANSWER]: EVENTS.MANAGER.ABORT_QUIZ,
-  [STATUS.SHOW_RESPONSES]: EVENTS.MANAGER.SHOW_LEADERBOARD,
-  [STATUS.SHOW_LEADERBOARD]: EVENTS.MANAGER.NEXT_QUESTION,
-} as const satisfies Partial<
-  Record<keyof typeof GAME_STATE_COMPONENTS_MANAGER, string>
->
-
 export function isKeyOf<T extends object>(
   obj: T,
   key: string,
@@ -93,5 +85,6 @@ export const MANAGER_SKIP_BTN = {
   [STATUS.SHOW_RESPONSES]: "common:next",
   [STATUS.SHOW_LEADERBOARD]: "common:next",
   [STATUS.FINISHED]: "common:exit",
+  [STATUS.SUMMARY]: "common:exit",
   [STATUS.WAIT]: null,
 }

@@ -1,16 +1,21 @@
 {
+  "answerNoted": "ありがとう、記録しました",
+  "confirm": "確認",
   "correct": "正解！",
   "gamePinLabel": "ゲームPIN:",
+  "generatedUsernameNotice": "参加するとランダムなニックネームが割り当てられます。",
   "hud": {
     "answers": "回答数",
     "time": "時間"
   },
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
+  "lock": {
+    "lock": "ルームをロック",
+    "unlock": "ルームのロックを解除"
+  },
   "pinLabel": "PINコード",
-  "reconnect": "再接続",
-  "reconnectTitle": "ゲームに参加していました",
-  "playersJoined": "参加プレイヤー数: ",
+  "playersJoined": "参加プレイヤー数",
   "questionPrefix": "問題 #",
   "rank": {
     "1": "1位",
@@ -19,12 +24,31 @@
     "other": "{{rank}}位"
   },
   "rankSuffix": "位",
+  "reconnect": "再接続",
+  "reconnectTitle": "ゲームに参加していました",
   "resultBehind": "、差は ",
   "resultTop": "あなたの順位は ",
-  "startGame": "ゲーム開始",
+  "settings": {
+    "autoAdvance": {
+      "hint": "正解発表とランキングのあと自動的に次へ進みます。",
+      "label": "自動で進む",
+      "leaderboardDelay": "ランキング",
+      "responsesDelay": "結果"
+    },
+    "generatedUsernames": {
+      "label": "ニックネームを生成",
+      "hint": "プレイヤーは自分で入力する代わりに生成された名前から選びます。"
+    },
+    "title": "ゲーム設定"
+  },
+  "startGame": "開始",
+  "summary": {
+    "title": "アンケート終了",
+    "participants": "参加者",
+    "questions": "質問"
+  },
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
   "waitingForPlayers": "プレイヤーを待っています",
-  "wrong": "残念！",
-  "confirm": "確認"
+  "wrong": "残念！"
 }

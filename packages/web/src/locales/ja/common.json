@@ -4,6 +4,8 @@
   "connecting": "接続中...",
   "delete": "削除",
   "exit": "退出",
+  "exitFullscreen": "全画面表示を終了",
+  "fullscreen": "全画面表示",
   "language": {
     "de": "Deutsch - ドイツ語",
     "en": "English - 英語",

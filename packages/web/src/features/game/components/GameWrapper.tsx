@@ -1,16 +1,27 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { Status } from "@razzia/common/types/game/status"
+import { EVENTS, QUIZZ_MODES } from "@razzia/common/constants"
+import {
+  STATUS,
+  type Status,
+  type StatusDataMap,
+} from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import GameBackground from "@razzia/web/components/GameBackground"
 import Loader from "@razzia/web/components/Loader"
+import Tooltip from "@razzia/web/components/Tooltip"
+import GameSettingsModal from "@razzia/web/features/game/components/GameSettingsModal"
+import RoomLockButton from "@razzia/web/features/game/components/RoomLockButton"
 import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
 import { MANAGER_SKIP_BTN } from "@razzia/web/features/game/utils/constants"
+import type { Status as GameStatus } from "@razzia/web/features/game/utils/createStatus"
+import { useFullscreen } from "@razzia/web/hooks/useFullscreen"
 import clsx from "clsx"
+import { Maximize, Minimize, Users } from "lucide-react"
 import { type PropsWithChildren, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -30,14 +41,20 @@ const GameWrapper = ({
   manager,
 }: Props) => {
   const { isConnected } = useSocket()
-  const { player } = usePlayerStore()
+  const { player, gameMode } = usePlayerStore()
+  const { players, inviteCode, locked, status } = useManagerStore()
   const { questionStates, setQuestionStates } = useQuestionStore()
+  const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
   const { t } = useTranslation()
-  const [skippedStatusName, setSkippedStatusName] = useState<Status | null>(
-    null,
-  )
+  const [skippedStatus, setSkippedStatus] =
+    useState<GameStatus<StatusDataMap> | null>(null)
+  const [totalPlayers, setTotalPlayers] = useState<number | null>(null)
+  const [countdown, setCountdown] = useState<{
+    seconds: number
+    total: number
+  } | null>(null)
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
-  const isDisabled = skippedStatusName === statusName
+  const isDisabled = skippedStatus !== null && skippedStatus === status
 
   useEvent(EVENTS.GAME.UPDATE_QUESTION, ({ current, total }) => {
     setQuestionStates({
@@ -46,14 +63,28 @@ const GameWrapper = ({
     })
   })
 
+  useEvent(EVENTS.GAME.TOTAL_PLAYERS, (total) => {
+    setTotalPlayers(total)
+  })
+
+  useEvent(EVENTS.MANAGER.AUTO_ADVANCE, (state) => {
+    setCountdown((current) => {
+      if (state === null) {
+        return null
+      }
+
+      return current ?? state
+    })
+  })
+
   useEvent(EVENTS.GAME.ERROR_MESSAGE, (message) => {
     toast.error(t(message))
     console.log(t(message))
-    setSkippedStatusName(null)
+    setSkippedStatus(null)
   })
 
   const handleNext = () => {
-    setSkippedStatusName(statusName ?? null)
+    setSkippedStatus(status)
     onNext?.()
   }
 
@@ -78,17 +109,6 @@ const GameWrapper = ({
                 </div>
               )}
 
-              {manager && next && (
-                <Button
-                  className={clsx("hover:bg-accent bg-white px-4 text-black", {
-                    "pointer-events-none": isDisabled,
-                  })}
-                  onClick={handleNext}
-                >
-                  {t(next)}
-                </Button>
-              )}
-
               {manager && onBack && (
                 <Button
                   onClick={onBack}
@@ -97,16 +117,92 @@ const GameWrapper = ({
                   {t("common:exit")}
                 </Button>
               )}
+
+              {manager && next && (
+                <div className="ml-auto flex gap-2">
+                  {statusName === STATUS.SHOW_ROOM && (
+                    <RoomLockButton className="hover:bg-accent rounded-lg bg-white px-3 text-black" />
+                  )}
+
+                  <Button
+                    className={clsx(
+                      "hover:bg-accent relative overflow-hidden bg-white px-4 text-black",
+                      { "pointer-events-none": isDisabled },
+                    )}
+                    onClick={handleNext}
+                  >
+                    {countdown && (
+                      <span
+                        className="bg-primary/40 absolute inset-y-0 left-0"
+                        style={{
+                          animation: `progressBar ${countdown.total}s linear forwards`,
+                        }}
+                      />
+                    )}
+
+                    <span className="relative">{t(next)}</span>
+                  </Button>
+                </div>
+              )}
             </div>
 
             {children}
 
-            {!manager && (
+            {manager ? (
+              <div
+                className={clsx("z-50 flex items-stretch gap-3 p-4", {
+                  "absolute inset-x-0 bottom-0": statusName === STATUS.FINISHED,
+                })}
+              >
+                {inviteCode && statusName !== STATUS.SHOW_ROOM && (
+                  <div className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md">
+                    {!locked && (
+                      <>
+                        <span>{window.location.host}</span>
+                        <span className="h-5 w-px bg-white/40" />
+                        <span>{inviteCode}</span>
+                      </>
+                    )}
+                    <RoomLockButton className="-mx-1 rounded-md p-1 hover:bg-white/20" />
+                  </div>
+                )}
+
+                <Tooltip content={t("game:playersJoined")}>
+                  <div className="ml-auto flex items-center gap-2 rounded-lg bg-black/40 px-3 py-1.5 text-xl font-bold text-white drop-shadow-md">
+                    <Users className="size-5" />
+                    {totalPlayers ?? players.length}
+                  </div>
+                </Tooltip>
+
+                {statusName === STATUS.SHOW_ROOM && <GameSettingsModal />}
+
+                <Tooltip
+                  content={t(
+                    isFullscreen
+                      ? "common:exitFullscreen"
+                      : "common:fullscreen",
+                  )}
+                >
+                  <button
+                    onClick={toggleFullscreen}
+                    className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60"
+                  >
+                    {isFullscreen ? (
+                      <Minimize className="size-5" />
+                    ) : (
+                      <Maximize className="size-5" />
+                    )}
+                  </button>
+                </Tooltip>
+              </div>
+            ) : (
               <div className="z-50 flex items-center justify-between bg-white px-4 py-2 text-lg font-bold text-white">
                 <p className="text-gray-800">{player?.username}</p>
-                <div className="rounded-lg bg-gray-800 px-3 py-1 text-lg">
-                  {player?.points}
-                </div>
+                {gameMode !== QUIZZ_MODES.SURVEY && (
+                  <div className="rounded-lg bg-gray-800 px-3 py-1 text-lg">
+                    {player?.points}
+                  </div>
+                )}
               </div>
             )}
           </>

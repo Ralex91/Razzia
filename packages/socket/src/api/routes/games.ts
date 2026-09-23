@@ -2,6 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import {
   checkGameValidator,
   createGameValidator,
+  gameSettingsValidator,
   joinGameValidator,
 } from "@razzia/common/validators/game"
 import { apiFactory } from "@razzia/socket/api/factory"
@@ -40,11 +41,40 @@ const routes = apiFactory
       )
     },
   )
+  .patch(
+    "/:gameId/settings",
+    requireManager,
+    zValidator("json", gameSettingsValidator, i18nHook),
+    (c) => {
+      const game = Registry.getInstance().getGameById(c.req.param("gameId"))
+
+      if (!game || game.manager.clientId !== c.get("claims").sub) {
+        return c.json({ error: "errors:game.notFound" }, StatusCodes.NOT_FOUND)
+      }
+
+      if (!game.updateSettings(c.req.valid("json"))) {
+        return c.json(
+          { error: "errors:game.alreadyStarted" },
+          StatusCodes.CONFLICT,
+        )
+      }
+
+      return c.json({ settings: game.settings })
+    },
+  )
   .post("/check", zValidator("json", checkGameValidator, i18nHook), (c) => {
     const { inviteCode } = c.req.valid("json")
     const game = Registry.getInstance().getGameByInviteCode(inviteCode)
 
-    return c.json({ valid: Boolean(game) })
+    if (!game) {
+      return c.json({ error: "errors:game.notFound" }, StatusCodes.NOT_FOUND)
+    }
+
+    if (game.locked) {
+      return c.json({ error: "errors:game.locked" }, StatusCodes.FORBIDDEN)
+    }
+
+    return c.json({ generatedUsernames: game.settings.generatedUsernames })
   })
   .post(
     "/join",
@@ -67,13 +97,33 @@ const routes = apiFactory
         )
       }
 
-      if (game.players.some((p) => p.clientId === sub)) {
-        return c.json({ gameId: game.gameId, ticket: null })
+      const existing = game.players.find((p) => p.clientId === sub)
+
+      if (existing) {
+        return c.json({
+          gameId: game.gameId,
+          ticket: null,
+          username: existing.username,
+        })
       }
+
+      if (game.locked) {
+        return c.json({ error: "errors:game.locked" }, StatusCodes.FORBIDDEN)
+      }
+
+      if (!game.settings.generatedUsernames && !username) {
+        return c.json(
+          { error: "errors:auth.usernameTooShort" },
+          StatusCodes.BAD_REQUEST,
+        )
+      }
+
+      const name = game.settings.generatedUsernames ? undefined : username
 
       return c.json({
         gameId: game.gameId,
-        ticket: await mintJoinTicket(sub, game.gameId, username),
+        ticket: await mintJoinTicket(sub, game.gameId, name),
+        username: name ?? null,
       })
     },
   )

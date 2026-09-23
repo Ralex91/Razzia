@@ -1,8 +1,11 @@
 import type {
   MEDIA_TYPES,
   QUESTION_TYPES,
+  QUIZZ_MODES,
   SCORING_MODES,
 } from "@razzia/common/constants"
+
+export type QuizzMode = (typeof QUIZZ_MODES)[keyof typeof QUIZZ_MODES]
 
 export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES]
 
@@ -42,7 +45,7 @@ export interface Question {
   question: string
   media?: QuestionMedia
   answers: string[]
-  solutions: number[]
+  solutions?: number[]
   cooldown: number
   time: number
   maxPoints?: number
@@ -51,6 +54,7 @@ export interface Question {
 }
 
 export interface Quizz {
+  gameMode: QuizzMode
   subject: string
   questions: Question[]
 }
@@ -60,6 +64,17 @@ export type QuizzWithId = Quizz & { id: string }
 export interface QuizzMeta {
   id: string
   subject: string
+}
+
+export interface AutoAdvanceSettings {
+  enable: boolean
+  responsesDelay: number
+  leaderboardDelay: number
+}
+
+export interface GameSettings {
+  generatedUsernames: boolean
+  autoAdvance: AutoAdvanceSettings
 }
 
 export interface GameUpdateQuestion {
@@ -84,6 +99,7 @@ export interface GameResultPlayer {
 
 export interface GameResult {
   id: string
+  gameMode: QuizzMode
   subject: string
   date: string
   players: GameResultPlayer[]
@@ -92,6 +108,7 @@ export interface GameResult {
 
 export interface GameResultMeta {
   id: string
+  gameMode: QuizzMode
   subject: string
   date: string
   playerCount: number

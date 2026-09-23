@@ -3,6 +3,10 @@
   "addQuestion": "質問を追加",
   "answersCountSuffix": "件の回答",
   "deleteQuestion": "質問を削除",
+  "gameMode": {
+    "quiz": "クイズ",
+    "survey": "アンケート"
+  },
   "noQuestionYet": "まだ質問がありません",
   "question": {
     "addMediaHint": "質問に画像、動画、音声を追加できます",

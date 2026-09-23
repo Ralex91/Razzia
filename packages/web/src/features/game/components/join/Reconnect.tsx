@@ -1,8 +1,10 @@
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
 import { inviteCodeQuery } from "@razzia/web/features/game/queries"
+import { ApiError } from "@razzia/web/lib/api"
 import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
+import { StatusCodes } from "http-status-codes"
 import { X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -20,16 +22,20 @@ const Reconnect = () => {
     gameId: localStorage.getItem("game_id"),
   }))
 
-  const { data, isPending } = useQuery({
+  const { data, error, isPending } = useQuery({
     ...inviteCodeQuery(saved.pin ?? ""),
     enabled: Boolean(saved.pin && saved.gameId),
   })
 
+  const errorStatus = error instanceof ApiError ? error.status : null
+  // A locked game still exists: a player already seated in it can come back
+  const gameExists = Boolean(data) || errorStatus === StatusCodes.FORBIDDEN
+
   useEffect(() => {
-    if (data && !data.valid) {
+    if (errorStatus === StatusCodes.NOT_FOUND) {
       clearSavedGame()
     }
-  }, [data])
+  }, [errorStatus])
 
   const handleReconnect = () => {
     if (saved.gameId) {
@@ -42,7 +48,7 @@ const Reconnect = () => {
     setSaved({ pin: null, gameId: null })
   }
 
-  if (!saved.pin || !saved.gameId || isPending || !data?.valid) {
+  if (!saved.pin || !saved.gameId || isPending || !gameExists) {
     return null
   }
 
