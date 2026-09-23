@@ -31,7 +31,7 @@
     "react": "^19.2.8",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.2.8",
-    "react-hook-form": "^7.87.0",
+    "react-hook-form": "^7.88.0",
     "react-hot-toast": "^2.6.0",
     "react-i18next": "^17.0.12",
     "socket.io-client": "catalog:",
