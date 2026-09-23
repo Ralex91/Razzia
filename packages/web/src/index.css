@@ -22,6 +22,12 @@
   --animate-fade: fade 150ms ease both;
 }
 
+@layer base {
+  .lucide {
+    stroke-width: 2.5;
+  }
+}
+
 button:not(:disabled),
 [role="button"]:not(:disabled) {
   cursor: pointer;
