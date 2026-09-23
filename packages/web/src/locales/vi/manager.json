@@ -1,0 +1,45 @@
+{
+  "configurationsTitle": "Cấu hình",
+  "logout": "Đăng xuất",
+  "passwordPlaceholder": "Mật khẩu",
+  "quizz": {
+    "create": "Tạo trò chơi",
+    "delete": "Xóa trò chơi",
+    "deleteConfirm": "Bạn có chắc muốn xóa \"{{name}}\"? Trò chơi này sẽ bị xóa vĩnh viễn.",
+    "deleted": "Đã xóa trò chơi",
+    "export": "Xuất trò chơi dạng JSON",
+    "import": "Nhập trò chơi từ JSON",
+    "none": "Chưa có trò chơi nào",
+    "notFound": "Không tìm thấy trò chơi",
+    "pleaseCreate": "Vui lòng tạo trò chơi trước",
+    "pleaseSelect": "Vui lòng chọn một trò chơi",
+    "startGame": "Bắt đầu trò chơi"
+  },
+  "result": {
+    "delete": "Xóa kết quả",
+    "deleteConfirm": "Xóa kết quả của \"{{name}}\"? Kết quả này sẽ bị xóa vĩnh viễn.",
+    "deleted": "Đã xóa kết quả",
+    "noAnswer": "Không có câu trả lời",
+    "none": "Chưa có kết quả, hoàn thành một trò chơi để xem báo cáo tại đây",
+    "paginationOf": " / ",
+    "stats": {
+      "correctAnswers": "Câu trả lời đúng",
+      "playersAnswered": "Người chơi đã trả lời"
+    },
+    "table": {
+      "answered": "Đã trả lời",
+      "correct": " Đúng",
+      "correctIncorrect": "Đúng / Sai",
+      "incorrect": " Sai",
+      "player": "Người chơi",
+      "points": "Điểm"
+    },
+    "playerCount": "{{count}} người chơi",
+    "timeLimitSuffix": "s giới hạn thời gian"
+  },
+  "tabs": {
+    "play": "Trò chơi",
+    "quizz": "Cấu hình",
+    "results": "Kết quả"
+  }
+}
