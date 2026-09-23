@@ -18,7 +18,7 @@
     "@razzia/socket": "workspace:*",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.102.8",
-    "@tanstack/react-router": "^1.170.32",
+    "@tanstack/react-router": "^1.170.36",
     "clsx": "^2.1.1",
     "hono": "catalog:",
     "http-status-codes": "catalog:",
