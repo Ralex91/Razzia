@@ -44,7 +44,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
-    "@tanstack/router-plugin": "^1.168.35",
+    "@tanstack/router-plugin": "^1.168.38",
     "@types/node": "catalog:",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
