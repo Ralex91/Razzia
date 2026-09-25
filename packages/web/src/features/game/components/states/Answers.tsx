@@ -2,6 +2,7 @@ import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { QuestionMediaType } from "@razzia/common/types/game"
 import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 import QuestionMedia from "@razzia/web/components/QuestionMedia"
+import QuestionMediaDialog from "@razzia/web/features/game/components/QuestionMediaDialog"
 import {
   useEvent,
   useSocket,
@@ -9,9 +10,13 @@ import {
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { SFX } from "@razzia/web/features/game/utils/constants"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
+import useScreenSize from "@razzia/web/hooks/useScreenSize"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import useSound from "use-sound"
+
+// Tailwind sm breakpoint
+const MOBILE_BREAKPOINT = 640
 
 interface Props {
   data: CommonStatusDataMap["SELECT_ANSWER"]
@@ -26,6 +31,13 @@ const Answers = ({
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
   const { t } = useTranslation()
+  const { width } = useScreenSize()
+
+  const popupMedia: QuestionMediaType[] = [MEDIA_TYPES.IMAGE, MEDIA_TYPES.VIDEO]
+  const showMediaInPopup =
+    Boolean(player) &&
+    width < MOBILE_BREAKPOINT &&
+    popupMedia.includes(media?.type)
 
   const [sfxPop] = useSound(SFX.ANSWERS.SOUND, {
     volume: 0.1,
@@ -82,12 +94,16 @@ const Answers = ({
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
-      <div className="mx-auto inline-flex h-full w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
+      <div className="mx-auto inline-flex h-full min-h-0 w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
         <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {question}
         </h2>
 
-        <QuestionMedia media={media} alt={question} />
+        {showMediaInPopup && media ? (
+          <QuestionMediaDialog media={media} alt={question} />
+        ) : (
+          <QuestionMedia media={media} alt={question} />
+        )}
       </div>
 
       <div>
