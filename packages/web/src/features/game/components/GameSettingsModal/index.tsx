@@ -5,6 +5,7 @@ import Button from "@razzia/web/components/Button"
 import Tooltip from "@razzia/web/components/Tooltip"
 import AutoAdvance from "@razzia/web/features/game/components/GameSettingsModal/AutoAdvance"
 import GeneratedUsernames from "@razzia/web/features/game/components/GameSettingsModal/GeneratedUsernames"
+import AnswersOnly from "@razzia/web/features/game/components/GameSettingsModal/AnswersOnly"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { updateGameSettings } from "@razzia/web/features/manager/queries"
 import { ApiError } from "@razzia/web/lib/api"
@@ -85,6 +86,7 @@ const GameSettingsModal = () => {
             >
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <GeneratedUsernames />
+                <AnswersOnly />
                 <AutoAdvance />
               </div>
 

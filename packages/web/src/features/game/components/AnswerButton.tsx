@@ -7,6 +7,7 @@ type Props = PropsWithChildren &
     label: string
     correct?: boolean
     selected?: boolean
+    large?: boolean
   }
 
 const AnswerButton = ({
@@ -15,6 +16,7 @@ const AnswerButton = ({
   children,
   correct,
   selected,
+  large,
   ...otherProps
 }: Props) => {
   const CorrectIcon = correct ? Check : X
@@ -27,10 +29,22 @@ const AnswerButton = ({
       )}
       {...otherProps}
     >
-      <span className="flex size-5 shrink-0 items-center justify-center rounded bg-black/20 text-sm font-bold sm:size-7 sm:rounded-md md:size-8 md:text-base">
+      <span
+        className={clsx(
+          "flex shrink-0 items-center justify-center bg-black/20 font-bold",
+          large
+            ? "size-7 rounded-md text-base md:size-9 md:text-lg"
+            : "size-5 rounded text-sm sm:size-7 sm:rounded-md md:size-8 md:text-base",
+        )}
+      >
         {label}
       </span>
-      <p className="w-full flex-1 text-sm break-all drop-shadow-md md:text-lg">
+      <p
+        className={clsx(
+          "w-full flex-1 break-all drop-shadow-md",
+          large ? "text-lg md:text-2xl" : "text-sm md:text-lg",
+        )}
+      >
         {children}
       </p>
       {correct !== undefined && (
@@ -39,11 +53,19 @@ const AnswerButton = ({
       {selected !== undefined && correct === undefined && (
         <span
           className={clsx(
-            "text-foreground flex size-5 shrink-0 items-center justify-center rounded-md md:size-6",
+            "text-foreground flex shrink-0 items-center justify-center rounded-md",
+            large ? "size-6 md:size-8" : "size-5 md:size-6",
             selected ? "bg-white" : "bg-white/20",
           )}
         >
-          {selected && <Check className="size-3 stroke-5 md:size-4" />}
+          {selected && (
+            <Check
+              className={clsx(
+                "stroke-5",
+                large ? "size-4 md:size-5" : "size-3 md:size-4",
+              )}
+            />
+          )}
         </span>
       )}
     </button>

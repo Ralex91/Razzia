@@ -12,6 +12,9 @@
     "showImage": "画像を表示",
     "showVideo": "動画を表示"
   },
+  "question": {
+    "show": "問題を表示"
+  },
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
   "lock": {
@@ -42,6 +45,10 @@
     "generatedUsernames": {
       "label": "ニックネームを生成",
       "hint": "プレイヤーは自分で入力する代わりに生成された名前から選びます。"
+    },
+    "answersOnly": {
+      "label": "回答のみ",
+      "hint": "プレイヤーには回答ボタンだけが表示され、問題はボタンで読み直せます。"
     },
     "title": "ゲーム設定"
   },

@@ -95,6 +95,7 @@ Changes the settings of a game you created, before it starts. The body is a **pa
 ```ts
 {
   generatedUsernames?: boolean   // the server names the players instead of letting them type
+  answersOnly?: boolean // players only see the answer buttons during SELECT_ANSWER
   autoAdvance?: {
     enable: boolean
     responsesDelay: number       // seconds on the answer reveal, 3-600
