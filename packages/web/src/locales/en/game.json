@@ -8,6 +8,10 @@
     "answers": "Answers",
     "time": "Time"
   },
+  "media": {
+    "showImage": "Show image",
+    "showVideo": "Show video"
+  },
   "joinInstruction": "Join the game at",
   "leaderboard": "Leaderboard",
   "lock": {

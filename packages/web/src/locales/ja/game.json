@@ -8,6 +8,10 @@
     "answers": "回答数",
     "time": "時間"
   },
+  "media": {
+    "showImage": "画像を表示",
+    "showVideo": "動画を表示"
+  },
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
   "lock": {

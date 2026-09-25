@@ -8,6 +8,10 @@
     "answers": "Risposte",
     "time": "Tempo"
   },
+  "media": {
+    "showImage": "Mostra immagine",
+    "showVideo": "Mostra video"
+  },
   "joinInstruction": "Unisciti al gioco su",
   "leaderboard": "Classifica",
   "lock": {
