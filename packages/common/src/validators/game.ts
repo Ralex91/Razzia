@@ -26,6 +26,7 @@ const delayValidator = z
 
 export const gameSettingsSchema = z.object({
   generatedUsernames: z.boolean(),
+  answersOnly: z.boolean(),
   autoAdvance: z.object({
     enable: z.boolean(),
     responsesDelay: delayValidator,

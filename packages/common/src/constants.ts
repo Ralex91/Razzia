@@ -48,6 +48,7 @@ export const AUTO_ADVANCE_DELAY = { MIN: 3, MAX: 600 } as const
 
 export const createDefaultGameSettings = (): GameSettings => ({
   generatedUsernames: false,
+  answersOnly: false,
   autoAdvance: {
     enable: false,
     responsesDelay: 10,

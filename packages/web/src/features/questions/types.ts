@@ -5,6 +5,7 @@ export interface AnswerComponentProps {
   options?: QuestionOptions
   onSubmit: (_answerKeys: number[]) => void
   readOnly?: boolean
+  fill?: boolean
 }
 
 export interface SolutionPickerProps {

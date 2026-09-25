@@ -37,6 +37,7 @@ export interface CommonStatusDataMap {
     totalPlayer: number
     questionType: QuestionType
     options?: QuestionOptions
+    answersOnly: boolean
   }
   SHOW_RESULT: {
     correct: boolean

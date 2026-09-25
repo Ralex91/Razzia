@@ -12,6 +12,9 @@
     "showImage": "Voir l'image",
     "showVideo": "Voir la vidéo"
   },
+  "question": {
+    "show": "Afficher la question"
+  },
   "joinInstruction": "Rejoins la partie sur",
   "leaderboard": "Classement",
   "lock": {
@@ -42,6 +45,10 @@
     "generatedUsernames": {
       "label": "Générer les pseudos",
       "hint": "Les joueurs choisissent parmi des pseudos générés au lieu de les saisir."
+    },
+    "answersOnly": {
+      "label": "Réponses seules",
+      "hint": "Les joueurs ne voient que les boutons de réponse, avec un bouton pour relire la question."
     },
     "title": "Réglages de la partie"
   },

@@ -12,6 +12,9 @@
     "showImage": "Ver imagen",
     "showVideo": "Ver vídeo"
   },
+  "question": {
+    "show": "Ver la pregunta"
+  },
   "joinInstruction": "Únete al juego en",
   "leaderboard": "Clasificación",
   "lock": {
@@ -42,6 +45,10 @@
     "generatedUsernames": {
       "label": "Generar apodos",
       "hint": "Los jugadores eligen entre nombres generados en vez de escribirlos."
+    },
+    "answersOnly": {
+      "label": "Solo respuestas",
+      "hint": "Los jugadores solo ven los botones de respuesta, con un botón para volver a leer la pregunta."
     },
     "title": "Ajustes de la partida"
   },

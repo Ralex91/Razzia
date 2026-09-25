@@ -12,6 +12,9 @@
     "showImage": "Mostra immagine",
     "showVideo": "Mostra video"
   },
+  "question": {
+    "show": "Mostra la domanda"
+  },
   "joinInstruction": "Unisciti al gioco su",
   "leaderboard": "Classifica",
   "lock": {
@@ -42,6 +45,10 @@
     "generatedUsernames": {
       "label": "Genera soprannomi",
       "hint": "I giocatori scelgono tra nomi generati invece di scriverli."
+    },
+    "answersOnly": {
+      "label": "Solo risposte",
+      "hint": "I giocatori vedono solo i pulsanti di risposta, con un pulsante per rileggere la domanda."
     },
     "title": "Impostazioni partita"
   },

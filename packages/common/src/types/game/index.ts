@@ -74,6 +74,7 @@ export interface AutoAdvanceSettings {
 
 export interface GameSettings {
   generatedUsernames: boolean
+  answersOnly: boolean
   autoAdvance: AutoAdvanceSettings
 }
 

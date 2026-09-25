@@ -12,6 +12,9 @@
     "showImage": "Show image",
     "showVideo": "Show video"
   },
+  "question": {
+    "show": "Show the question"
+  },
   "joinInstruction": "Join the game at",
   "leaderboard": "Leaderboard",
   "lock": {
@@ -42,6 +45,10 @@
     "generatedUsernames": {
       "label": "Generate nicknames",
       "hint": "Players pick from generated names instead of typing their own."
+    },
+    "answersOnly": {
+      "label": "Answers only",
+      "hint": "Players only see the answer buttons, with a button to read the question again."
     },
     "title": "Game settings"
   },

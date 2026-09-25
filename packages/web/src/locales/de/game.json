@@ -12,6 +12,9 @@
     "showImage": "Bild anzeigen",
     "showVideo": "Video anzeigen"
   },
+  "question": {
+    "show": "Frage anzeigen"
+  },
   "joinInstruction": "Tritt dem Spiel bei auf",
   "leaderboard": "Bestenliste",
   "lock": {
@@ -42,6 +45,10 @@
     "generatedUsernames": {
       "label": "Spitznamen generieren",
       "hint": "Spieler wählen aus generierten Namen, statt selbst zu tippen."
+    },
+    "answersOnly": {
+      "label": "Nur Antworten",
+      "hint": "Die Spieler sehen nur die Antwortknöpfe, mit einem Knopf, um die Frage erneut zu lesen."
     },
     "title": "Spieleinstellungen"
   },

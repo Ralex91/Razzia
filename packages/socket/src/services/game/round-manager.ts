@@ -309,6 +309,7 @@ export class RoundManager {
       totalPlayer: this.opts.players.count(),
       questionType: this.question.type,
       options: this.question.options,
+      answersOnly: this.opts.getSettings().answersOnly,
     })
 
     await this.opts.cooldown.start(this.question.time)
