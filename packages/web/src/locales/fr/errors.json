@@ -62,5 +62,13 @@
     "back": "Retour à l'accueil",
     "description": "Une erreur inattendue s'est produite. Veuillez réessayer.",
     "title": "Une erreur est survenue"
+  },
+  "media": {
+    "invalidName": "Nom de média invalide",
+    "invalidType": "Fichier non pris en charge, importez une image ou un fichier audio",
+    "missingFile": "Aucun fichier envoyé",
+    "notFound": "Média introuvable",
+    "tooLarge": "Le fichier est trop volumineux",
+    "uploadFailed": "Échec de l'import du fichier"
   }
 }

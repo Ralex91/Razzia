@@ -62,5 +62,13 @@
     "back": "Zurück zur Startseite",
     "description": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
     "title": "Etwas ist schiefgelaufen"
+  },
+  "media": {
+    "invalidName": "Ungültiger Medienname",
+    "invalidType": "Nicht unterstützte Datei, lade ein Bild oder eine Audiodatei hoch",
+    "missingFile": "Es wurde keine Datei gesendet",
+    "notFound": "Medium nicht gefunden",
+    "tooLarge": "Die Datei ist zu groß",
+    "uploadFailed": "Hochladen der Datei fehlgeschlagen"
   }
 }

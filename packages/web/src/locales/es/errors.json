@@ -62,5 +62,13 @@
     "back": "Volver al inicio",
     "description": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
     "title": "Algo salió mal"
+  },
+  "media": {
+    "invalidName": "Nombre de archivo no válido",
+    "invalidType": "Archivo no compatible, sube una imagen o un archivo de audio",
+    "missingFile": "No se ha enviado ningún archivo",
+    "notFound": "Archivo no encontrado",
+    "tooLarge": "El archivo es demasiado grande",
+    "uploadFailed": "No se pudo subir el archivo"
   }
 }

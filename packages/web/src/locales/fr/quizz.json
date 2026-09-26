@@ -49,5 +49,22 @@
   },
   "quizzSaved": "Quizz enregistré avec succès",
   "quizzUpdated": "Quizz mis à jour avec succès",
-  "titleQuizzPlaceholder": "Titre du quizz..."
+  "titleQuizzPlaceholder": "Titre du quizz...",
+  "media": {
+    "delete": "Supprimer le média",
+    "deleteConfirm": "Supprimer « {{name}} » ? Les questions qui l'utilisent, dans tous les quizz, perdront leur média.",
+    "library": "Médiathèque",
+    "libraryEmpty": "Ta médiathèque est vide",
+    "upload": "Importer",
+    "uploadHint": "Images (PNG, JPG, WebP, GIF) ou audio (MP3, OGG, WAV), jusqu'à {{size}} Mo",
+    "search": "Rechercher un média...",
+    "filter": {
+      "all": "Tout"
+    },
+    "use": "Utiliser",
+    "dropHint": "Dépose tes images et fichiers audio ici, ou utilise le bouton Importer",
+    "dropHere": "Dépose pour importer",
+    "noResults": "Aucun média ne correspond à ta recherche",
+    "fromUrl": "Ajouter depuis une URL"
+  }
 }

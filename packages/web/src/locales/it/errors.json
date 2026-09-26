@@ -62,5 +62,13 @@
     "back": "Torna alla home",
     "description": "Si è verificato un errore imprevisto. Riprova.",
     "title": "Qualcosa è andato storto"
+  },
+  "media": {
+    "invalidName": "Nome del file non valido",
+    "invalidType": "File non supportato, carica un'immagine o un file audio",
+    "missingFile": "Nessun file inviato",
+    "notFound": "File non trovato",
+    "tooLarge": "Il file è troppo grande",
+    "uploadFailed": "Caricamento del file non riuscito"
   }
 }
