@@ -2,9 +2,11 @@ import type { UploadedMedia } from "@razzia/common/types/game"
 import Loader from "@razzia/web/components/Loader"
 import MediaCard from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaCard"
 import MediaDropOverlay from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaDropOverlay"
+import MediaRow from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaRow"
 import MediaLibraryEmpty from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaLibraryEmpty"
 import MediaLibraryToolbar, {
   type MediaFilter,
+  type MediaView,
 } from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaLibraryToolbar"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { useUploadMedia } from "@razzia/web/features/quizz/hooks/useUploadMedia"
@@ -15,6 +17,7 @@ import {
 } from "@razzia/web/features/quizz/queries"
 import { ApiError } from "@razzia/web/lib/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import clsx from "clsx"
 import { X } from "lucide-react"
 import { Dialog } from "radix-ui"
 import { type DragEvent, useState } from "react"
@@ -34,6 +37,7 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
   const { upload, pendingCount } = useUploadMedia()
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState<MediaFilter>("all")
+  const [view, setView] = useState<MediaView>("grid")
   const [isDragging, setIsDragging] = useState(false)
   const queryClient = useQueryClient()
   const { t } = useTranslation()
@@ -126,6 +130,8 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
             onSearchChange={setSearch}
             filter={filter}
             onFilterChange={setFilter}
+            view={view}
+            onViewChange={setView}
             onUpload={upload}
           />
 
@@ -145,24 +151,45 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
             )}
 
             {(visibleMedia.length > 0 || pendingCount > 0) && (
-              <div className="grid h-full auto-rows-min grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3 overflow-y-auto p-0.5">
+              <div
+                className={clsx(
+                  "h-full overflow-y-auto p-0.5",
+                  view === "grid"
+                    ? "grid auto-rows-min grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3"
+                    : "flex flex-col gap-1",
+                )}
+              >
                 {Array.from({ length: pendingCount }, (_, index) => (
                   <div
                     key={`pending-${index}`}
-                    className="bg-accent/60 flex aspect-square animate-pulse items-center justify-center rounded-xl"
+                    className={clsx(
+                      "bg-accent/60 flex animate-pulse items-center justify-center",
+                      view === "grid"
+                        ? "aspect-square rounded-xl"
+                        : "h-15 rounded-lg",
+                    )}
                   >
                     <Loader className="text-primary size-8" />
                   </div>
                 ))}
 
-                {visibleMedia.map((item) => (
-                  <MediaCard
-                    key={item.name}
-                    media={item}
-                    onSelect={handleSelect(item)}
-                    onDelete={handleDelete(item)}
-                  />
-                ))}
+                {visibleMedia.map((item) =>
+                  view === "grid" ? (
+                    <MediaCard
+                      key={item.name}
+                      media={item}
+                      onSelect={handleSelect(item)}
+                      onDelete={handleDelete(item)}
+                    />
+                  ) : (
+                    <MediaRow
+                      key={item.name}
+                      media={item}
+                      onSelect={handleSelect(item)}
+                      onDelete={handleDelete(item)}
+                    />
+                  ),
+                )}
               </div>
             )}
 

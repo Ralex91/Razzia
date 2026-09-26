@@ -65,6 +65,10 @@
     "dropHint": "Ziehe deine Bilder, Audio- und Videodateien hierher oder nutze die Schaltfläche Hochladen",
     "dropHere": "Zum Hochladen loslassen",
     "noResults": "Keine Medien entsprechen deiner Suche",
-    "fromUrl": "Über eine URL hinzufügen"
+    "fromUrl": "Über eine URL hinzufügen",
+    "view": {
+      "grid": "Rasteransicht",
+      "list": "Listenansicht"
+    }
   }
 }

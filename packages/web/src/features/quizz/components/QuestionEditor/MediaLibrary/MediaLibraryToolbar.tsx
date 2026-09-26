@@ -7,12 +7,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@razzia/web/components/Select"
+import ToggleGroup from "@razzia/web/components/ToggleGroup"
 import { UPLOAD_ACCEPT } from "@razzia/web/features/quizz/hooks/useUploadMedia"
-import { Search, Upload } from "lucide-react"
+import { LayoutGrid, List, Search, Upload } from "lucide-react"
 import type { ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 
 export type MediaFilter = "all" | UploadedMediaType
+
+export type MediaView = "grid" | "list"
+
+const VIEWS = [
+  { value: "grid", icon: LayoutGrid, labelKey: "quizz:media.view.grid" },
+  { value: "list", icon: List, labelKey: "quizz:media.view.list" },
+] as const
 
 const FILTERS: Array<{ value: MediaFilter; labelKey: string }> = [
   { value: "all", labelKey: "quizz:media.filter.all" },
@@ -26,6 +34,8 @@ interface Props {
   onSearchChange: (_search: string) => void
   filter: MediaFilter
   onFilterChange: (_filter: MediaFilter) => void
+  view: MediaView
+  onViewChange: (_view: MediaView) => void
   onUpload: (_files: File[]) => void
 }
 
@@ -34,6 +44,8 @@ const MediaLibraryToolbar = ({
   onSearchChange,
   filter,
   onFilterChange,
+  view,
+  onViewChange,
   onUpload,
 }: Props) => {
   const { t } = useTranslation()
@@ -76,6 +88,17 @@ const MediaLibraryToolbar = ({
           ))}
         </SelectContent>
       </Select>
+
+      <ToggleGroup
+        iconOnly
+        value={view}
+        onChange={onViewChange}
+        items={VIEWS.map(({ value, icon, labelKey }) => ({
+          value,
+          icon,
+          label: t(labelKey),
+        }))}
+      />
 
       <label className="bg-primary flex h-10 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95]">
         <Upload className="size-4" />

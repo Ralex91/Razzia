@@ -65,6 +65,10 @@
     "dropHint": "Dépose tes images, fichiers audio et vidéos ici, ou utilise le bouton Importer",
     "dropHere": "Dépose pour importer",
     "noResults": "Aucun média ne correspond à ta recherche",
-    "fromUrl": "Ajouter depuis une URL"
+    "fromUrl": "Ajouter depuis une URL",
+    "view": {
+      "grid": "Vue grille",
+      "list": "Vue liste"
+    }
   }
 }

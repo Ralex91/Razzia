@@ -65,6 +65,10 @@
     "dropHint": "Suelta aquí tus imágenes, audios y vídeos, o usa el botón Subir",
     "dropHere": "Suelta para subir",
     "noResults": "Ningún archivo coincide con tu búsqueda",
-    "fromUrl": "Añadir desde una URL"
+    "fromUrl": "Añadir desde una URL",
+    "view": {
+      "grid": "Vista de cuadrícula",
+      "list": "Vista de lista"
+    }
   }
 }

@@ -65,6 +65,10 @@
     "dropHint": "Drop your images, audio and video files here, or use the Upload button",
     "dropHere": "Drop to upload",
     "noResults": "No media matches your search",
-    "fromUrl": "Add from a URL"
+    "fromUrl": "Add from a URL",
+    "view": {
+      "grid": "Grid view",
+      "list": "List view"
+    }
   }
 }

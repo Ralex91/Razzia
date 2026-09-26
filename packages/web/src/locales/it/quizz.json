@@ -65,6 +65,10 @@
     "dropHint": "Trascina qui immagini, audio e video, oppure usa il pulsante Carica",
     "dropHere": "Rilascia per caricare",
     "noResults": "Nessun file corrisponde alla ricerca",
-    "fromUrl": "Aggiungi da un URL"
+    "fromUrl": "Aggiungi da un URL",
+    "view": {
+      "grid": "Vista griglia",
+      "list": "Vista elenco"
+    }
   }
 }
