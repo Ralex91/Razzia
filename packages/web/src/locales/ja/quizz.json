@@ -56,7 +56,7 @@
     "library": "メディアライブラリ",
     "libraryEmpty": "メディアライブラリは空です",
     "upload": "アップロード",
-    "uploadHint": "画像（PNG、JPG、WebP、GIF）、音声（MP3、OGG、WAV）または動画（MP4、WebM）、最大 {{size}} MB",
+    "uploadHint": "画像、音声、動画、最大 {{size}} MB",
     "search": "メディアを検索...",
     "filter": {
       "all": "すべて"

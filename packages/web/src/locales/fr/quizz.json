@@ -56,7 +56,7 @@
     "library": "Médiathèque",
     "libraryEmpty": "Ta médiathèque est vide",
     "upload": "Importer",
-    "uploadHint": "Images (PNG, JPG, WebP, GIF), audio (MP3, OGG, WAV) ou vidéo (MP4, WebM), jusqu'à {{size}} Mo",
+    "uploadHint": "Images, audio ou vidéo, jusqu'à {{size}} Mo",
     "search": "Rechercher un média...",
     "filter": {
       "all": "Tout"

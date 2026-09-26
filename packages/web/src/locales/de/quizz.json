@@ -56,7 +56,7 @@
     "library": "Mediathek",
     "libraryEmpty": "Deine Mediathek ist leer",
     "upload": "Hochladen",
-    "uploadHint": "Bilder (PNG, JPG, WebP, GIF), Audio (MP3, OGG, WAV) oder Video (MP4, WebM), bis zu {{size}} MB",
+    "uploadHint": "Bilder, Audio oder Video, bis zu {{size}} MB",
     "search": "Medien suchen...",
     "filter": {
       "all": "Alle"

@@ -56,7 +56,7 @@
     "library": "Biblioteca multimedia",
     "libraryEmpty": "Tu biblioteca está vacía",
     "upload": "Subir",
-    "uploadHint": "Imágenes (PNG, JPG, WebP, GIF), audio (MP3, OGG, WAV) o vídeo (MP4, WebM), hasta {{size}} MB",
+    "uploadHint": "Imágenes, audio o vídeo, hasta {{size}} MB",
     "search": "Buscar archivos...",
     "filter": {
       "all": "Todo"
