@@ -2,7 +2,7 @@ import { MEDIA_TYPES } from "@razzia/common/constants"
 import type { UploadedMedia } from "@razzia/common/types/game"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import clsx from "clsx"
-import { Music, Trash2 } from "lucide-react"
+import { Music, Trash2, Video } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 interface Props {
@@ -22,17 +22,33 @@ const MediaCard = ({ media, onSelect, onDelete }: Props) => {
         className="focus-visible:ring-primary w-full overflow-hidden rounded-xl text-left ring-2 ring-transparent transition focus-visible:outline-none"
       >
         <div className="relative aspect-square overflow-hidden rounded-xl">
-          {media.type === MEDIA_TYPES.AUDIO ? (
+          {media.type === MEDIA_TYPES.AUDIO && (
             <div className="bg-accent text-accent-foreground flex size-full items-center justify-center">
               <Music className="size-12" />
             </div>
-          ) : (
+          )}
+
+          {media.type === MEDIA_TYPES.IMAGE && (
             <img
               src={media.url}
               alt={media.name}
               loading="lazy"
               className="bg-accent size-full object-cover transition duration-300 group-hover:scale-105"
             />
+          )}
+
+          {media.type === MEDIA_TYPES.VIDEO && (
+            <>
+              <video
+                src={media.url}
+                preload="metadata"
+                muted
+                className="bg-accent size-full object-cover transition duration-300 group-hover:scale-105"
+              />
+              <span className="absolute bottom-2 left-2 rounded-md bg-black/60 p-1 text-white">
+                <Video className="size-4" />
+              </span>
+            </>
           )}
 
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">

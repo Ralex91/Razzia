@@ -54,6 +54,7 @@ const MediaLibraryToolbar = ({
           { value: "all", label: t("quizz:media.filter.all") },
           { value: MEDIA_TYPES.IMAGE, label: t("quizz:question.media.image") },
           { value: MEDIA_TYPES.AUDIO, label: t("quizz:question.media.audio") },
+          { value: MEDIA_TYPES.VIDEO, label: t("quizz:question.media.video") },
         ]}
       />
 

@@ -65,7 +65,7 @@
   },
   "media": {
     "invalidName": "Ungültiger Medienname",
-    "invalidType": "Nicht unterstützte Datei, lade ein Bild oder eine Audiodatei hoch",
+    "invalidType": "Nicht unterstützte Datei, lade ein Bild, eine Audio- oder Videodatei hoch",
     "missingFile": "Es wurde keine Datei gesendet",
     "notFound": "Medium nicht gefunden",
     "tooLarge": "Die Datei ist zu groß",

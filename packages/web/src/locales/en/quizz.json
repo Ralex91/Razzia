@@ -56,13 +56,13 @@
     "library": "Media library",
     "libraryEmpty": "Your library is empty",
     "upload": "Upload",
-    "uploadHint": "Images (PNG, JPG, WebP, GIF) or audio (MP3, OGG, WAV), up to {{size}} MB",
+    "uploadHint": "Images (PNG, JPG, WebP, GIF), audio (MP3, OGG, WAV) or video (MP4, WebM), up to {{size}} MB",
     "search": "Search media...",
     "filter": {
       "all": "All"
     },
     "use": "Use",
-    "dropHint": "Drop your images and audio files here, or use the Upload button",
+    "dropHint": "Drop your images, audio and video files here, or use the Upload button",
     "dropHere": "Drop to upload",
     "noResults": "No media matches your search",
     "fromUrl": "Add from a URL"

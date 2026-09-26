@@ -56,13 +56,13 @@
     "library": "Biblioteca multimedia",
     "libraryEmpty": "Tu biblioteca está vacía",
     "upload": "Subir",
-    "uploadHint": "Imágenes (PNG, JPG, WebP, GIF) o audio (MP3, OGG, WAV), hasta {{size}} MB",
+    "uploadHint": "Imágenes (PNG, JPG, WebP, GIF), audio (MP3, OGG, WAV) o vídeo (MP4, WebM), hasta {{size}} MB",
     "search": "Buscar archivos...",
     "filter": {
       "all": "Todo"
     },
     "use": "Usar",
-    "dropHint": "Suelta aquí tus imágenes y archivos de audio, o usa el botón Subir",
+    "dropHint": "Suelta aquí tus imágenes, audios y vídeos, o usa el botón Subir",
     "dropHere": "Suelta para subir",
     "noResults": "Ningún archivo coincide con tu búsqueda",
     "fromUrl": "Añadir desde una URL"

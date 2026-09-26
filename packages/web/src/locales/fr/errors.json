@@ -65,7 +65,7 @@
   },
   "media": {
     "invalidName": "Nom de média invalide",
-    "invalidType": "Fichier non pris en charge, importez une image ou un fichier audio",
+    "invalidType": "Fichier non pris en charge, importez une image, un fichier audio ou une vidéo",
     "missingFile": "Aucun fichier envoyé",
     "notFound": "Média introuvable",
     "tooLarge": "Le fichier est trop volumineux",

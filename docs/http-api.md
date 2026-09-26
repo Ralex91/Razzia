@@ -91,9 +91,9 @@ The quiz body is validated against the same schema as the files in `config/quizz
 
 ### Media
 
-`POST /api/media` takes a `multipart/form-data` body with a single `file` field, up to 20 MB (`413 errors:media.tooLarge` beyond). The type is detected from the file's content, not its name or declared MIME: PNG, JPEG, WebP and GIF images, MP3, OGG and WAV audio. Anything else is refused with `415 errors:media.invalidType`.
+`POST /api/media` takes a `multipart/form-data` body with a single `file` field, up to 100 MB (`413 errors:media.tooLarge` beyond). The type is detected from the file's content, not its name or declared MIME: PNG, JPEG, WebP and GIF images, MP3, OGG and WAV audio, MP4 and WebM video. Anything else is refused with `415 errors:media.invalidType`.
 
-Files are stored in `config/media` and served at `/media/<name>`. A media object is `{ name, url, type }`: `name` is the stored file name (the uploaded name plus a random suffix) and `type` either `"image"` or `"audio"`; put its `url` in a question's `media.url`. The list is sorted newest first. Deleting a file does not update the quizzes that use it.
+Files are stored in `config/media` and served at `/media/<name>`. A media object is `{ name, url, type }`: `name` is the stored file name (the uploaded name plus a random suffix) and `type` either `"image"`, `"audio"` or `"video"`; put its `url` in a question's `media.url`. The list is sorted newest first. Deleting a file does not update the quizzes that use it.
 
 `POST /api/games` creates the game but binds no socket to it: the manager enters the room by emitting `manager:reconnect { gameId }`. A game nobody connects to expires after ~5 minutes, like an abandoned one.
 

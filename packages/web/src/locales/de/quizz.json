@@ -56,13 +56,13 @@
     "library": "Mediathek",
     "libraryEmpty": "Deine Mediathek ist leer",
     "upload": "Hochladen",
-    "uploadHint": "Bilder (PNG, JPG, WebP, GIF) oder Audio (MP3, OGG, WAV), bis zu {{size}} MB",
+    "uploadHint": "Bilder (PNG, JPG, WebP, GIF), Audio (MP3, OGG, WAV) oder Video (MP4, WebM), bis zu {{size}} MB",
     "search": "Medien suchen...",
     "filter": {
       "all": "Alle"
     },
     "use": "Verwenden",
-    "dropHint": "Ziehe deine Bilder und Audiodateien hierher oder nutze die Schaltfläche Hochladen",
+    "dropHint": "Ziehe deine Bilder, Audio- und Videodateien hierher oder nutze die Schaltfläche Hochladen",
     "dropHere": "Zum Hochladen loslassen",
     "noResults": "Keine Medien entsprechen deiner Suche",
     "fromUrl": "Über eine URL hinzufügen"
