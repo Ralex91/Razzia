@@ -6,11 +6,11 @@ import type { IncomingMessage, ServerResponse } from "node:http"
 import path from "node:path"
 import { fileURLToPath } from "url"
 import { defineConfig, type Plugin } from "vite"
+import { ACCEPTED_MEDIA_TYPES } from "../common/src/constants"
 import { version } from "../../package.json" with { type: "json" }
 
-const brandingDir = fileURLToPath(
-  new URL("../../config/branding", import.meta.url),
-)
+const configDir = (name: string) =>
+  fileURLToPath(new URL(`../../config/${name}`, import.meta.url))
 
 const brandingMimeTypes: Record<string, string> = {
   ".json": "application/json",
@@ -23,43 +23,55 @@ const brandingMimeTypes: Record<string, string> = {
   ".woff2": "font/woff2",
 }
 
-const serveBranding = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: () => void,
-): void => {
-  if (!req.url?.startsWith("/branding/")) {
-    next()
+const mediaMimeTypes: Record<string, string> = Object.fromEntries(
+  Object.entries(ACCEPTED_MEDIA_TYPES).map(([mime, { ext }]) => [ext, mime]),
+)
 
-    return
+const serveDir =
+  (prefix: string, dir: string, mimeTypes: Record<string, string>) =>
+  (req: IncomingMessage, res: ServerResponse, next: () => void): void => {
+    if (!req.url?.startsWith(prefix)) {
+      next()
+
+      return
+    }
+
+    const [relative] = req.url.slice(prefix.length).split("?")
+    const filePath = path.join(dir, relative)
+
+    if (!filePath.startsWith(dir) || !fs.existsSync(filePath)) {
+      res.statusCode = 404
+      res.end()
+
+      return
+    }
+
+    res.setHeader(
+      "Content-Type",
+      mimeTypes[path.extname(filePath)] ?? "application/octet-stream",
+    )
+
+    fs.createReadStream(filePath).pipe(res)
   }
 
-  const [relative] = req.url.replace(/^\/branding\//, "").split("?")
-  const filePath = path.join(brandingDir, relative)
+const serveBranding = serveDir(
+  "/branding/",
+  configDir("branding"),
+  brandingMimeTypes,
+)
 
-  if (!filePath.startsWith(brandingDir) || !fs.existsSync(filePath)) {
-    res.statusCode = 404
-    res.end()
+const serveMedia = serveDir("/media/", configDir("media"), mediaMimeTypes)
 
-    return
-  }
-
-  res.setHeader(
-    "Content-Type",
-    brandingMimeTypes[path.extname(filePath)] ?? "application/octet-stream",
-  )
-
-  fs.createReadStream(filePath).pipe(res)
-}
-
-/** Serves the optional `config/branding` folder at `/branding/` in `vite dev` and `vite preview` (nginx does this in prod). */
-const brandingServer = (): Plugin => ({
-  name: "razzia-branding-server",
+/** Serves the `config/branding` and `config/media` folders in `vite dev` and `vite preview` (nginx does this in prod). */
+const configServer = (): Plugin => ({
+  name: "razzia-config-server",
   configureServer(server) {
     server.middlewares.use(serveBranding)
+    server.middlewares.use(serveMedia)
   },
   configurePreviewServer(server) {
     server.middlewares.use(serveBranding)
+    server.middlewares.use(serveMedia)
   },
 })
 
@@ -76,7 +88,7 @@ export default defineConfig({
     }),
     react(),
     tailwindcss(),
-    brandingServer(),
+    configServer(),
   ],
   resolve: {
     alias: {
