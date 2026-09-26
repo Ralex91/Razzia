@@ -93,6 +93,8 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
   }
 
   const isEmpty = !isPending && media.length === 0 && pendingCount === 0
+  const hasNoResults =
+    !isPending && !isEmpty && pendingCount === 0 && visibleMedia.length === 0
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -136,7 +138,7 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
 
             {isEmpty && <MediaLibraryEmpty />}
 
-            {!isPending && !isEmpty && visibleMedia.length === 0 && (
+            {hasNoResults && (
               <p className="text-muted-foreground py-12 text-center">
                 {t("quizz:media.noResults")}
               </p>
