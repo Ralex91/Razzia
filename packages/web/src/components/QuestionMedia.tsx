@@ -31,7 +31,7 @@ const QuestionMedia = ({ media, alt = "" }: Props) => {
   if (media?.type === MEDIA_TYPES.AUDIO) {
     return (
       <audio
-        className="m-4 mb-2 w-auto rounded-md"
+        className="m-4 mb-2 w-full max-w-md rounded-md"
         src={media.url}
         autoPlay
         controls
