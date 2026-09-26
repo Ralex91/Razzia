@@ -89,7 +89,11 @@ const QuestionEditorMedia = () => {
 
   return (
     <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-3 p-4">
-      <QuestionMedia media={currentQuestion.media} alt="Question Media" />
+      <QuestionMedia
+        media={currentQuestion.media}
+        alt="Question Media"
+        autoPlay={false}
+      />
 
       {!questionMedia?.type && (
         <Card className="my-auto flex max-h-100 w-full max-w-xl flex-1 flex-col items-center justify-center gap-2">
