@@ -1,12 +1,25 @@
 import { MEDIA_TYPES } from "@razzia/common/constants"
 import type { UploadedMediaType } from "@razzia/common/types/game"
-import ToggleGroup from "@razzia/web/components/ToggleGroup"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@razzia/web/components/Select"
 import { UPLOAD_ACCEPT } from "@razzia/web/features/quizz/hooks/useUploadMedia"
 import { Search, Upload } from "lucide-react"
 import type { ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 
 export type MediaFilter = "all" | UploadedMediaType
+
+const FILTERS: Array<{ value: MediaFilter; labelKey: string }> = [
+  { value: "all", labelKey: "quizz:media.filter.all" },
+  { value: MEDIA_TYPES.IMAGE, labelKey: "quizz:question.media.image" },
+  { value: MEDIA_TYPES.AUDIO, labelKey: "quizz:question.media.audio" },
+  { value: MEDIA_TYPES.VIDEO, labelKey: "quizz:question.media.video" },
+]
 
 interface Props {
   search: string
@@ -29,6 +42,10 @@ const MediaLibraryToolbar = ({
     onSearchChange(e.target.value)
   }
 
+  const handleFilterChange = (value: string) => {
+    onFilterChange(value as MediaFilter)
+  }
+
   const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
     onUpload(Array.from(e.target.files ?? []))
     e.target.value = ""
@@ -47,16 +64,18 @@ const MediaLibraryToolbar = ({
         />
       </div>
 
-      <ToggleGroup
-        value={filter}
-        onChange={onFilterChange}
-        items={[
-          { value: "all", label: t("quizz:media.filter.all") },
-          { value: MEDIA_TYPES.IMAGE, label: t("quizz:question.media.image") },
-          { value: MEDIA_TYPES.AUDIO, label: t("quizz:question.media.audio") },
-          { value: MEDIA_TYPES.VIDEO, label: t("quizz:question.media.video") },
-        ]}
-      />
+      <Select value={filter} onValueChange={handleFilterChange}>
+        <SelectTrigger className="h-10 w-40">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {FILTERS.map(({ value, labelKey }) => (
+            <SelectItem key={value} value={value}>
+              {t(labelKey)}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <label className="bg-primary flex h-10 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95]">
         <Upload className="size-4" />
