@@ -28,11 +28,12 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header CF-Connecting-IP $http_cf_connecting_ip; # only set if this nginx sits behind Cloudflare: real visitor IP from Cloudflare's edge
         proxy_read_timeout 3600s;
+        client_max_body_size 21m;
     }
 }
 ```
 
-The `Upgrade`/`Connection` headers and the longer `proxy_read_timeout` are what keep the `/ws` WebSocket connection alive — the rest of the config is a standard reverse proxy.
+The `Upgrade`/`Connection` headers and the longer `proxy_read_timeout` are what keep the `/ws` WebSocket connection alive, and `client_max_body_size` lets media uploads from the quiz editor (up to 20 MB) through nginx's 1 MB default — the rest of the config is a standard reverse proxy.
 
 ## Traefik
 

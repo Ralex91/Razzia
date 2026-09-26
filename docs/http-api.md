@@ -83,8 +83,17 @@ All of these require a bearer whose role is `manager`, and answer `401 errors:au
 | `GET /api/results/:id`    | `200` the full result              | `404 errors:result.notFound` |
 | `DELETE /api/results/:id` | `204`                              | `404 errors:result.notFound` |
 | `POST /api/games`         | `201 { gameId, inviteCode }`       | `404 errors:quizz.notFound`  |
+| `GET /api/media`          | `200 { media: [media] }`           | —                            |
+| `POST /api/media`         | `201` the stored media             | `400`, `413`, `415`          |
+| `DELETE /api/media/:name` | `204`                              | `400`, `404`                 |
 
 The quiz body is validated against the same schema as the files in `config/quizz` — see [Quiz](quiz.md).
+
+### Media
+
+`POST /api/media` takes a `multipart/form-data` body with a single `file` field, up to 20 MB (`413 errors:media.tooLarge` beyond). The type is detected from the file's content, not its name or declared MIME: PNG, JPEG, WebP and GIF images, MP3, OGG and WAV audio. Anything else is refused with `415 errors:media.invalidType`.
+
+Files are stored in `config/media` and served at `/media/<name>`. A media object is `{ name, url, type }`: `name` is the stored file name (the uploaded name plus a random suffix) and `type` either `"image"` or `"audio"`; put its `url` in a question's `media.url`. The list is sorted newest first. Deleting a file does not update the quizzes that use it.
 
 `POST /api/games` creates the game but binds no socket to it: the manager enters the room by emitting `manager:reconnect { gameId }`. A game nobody connects to expires after ~5 minutes, like an abandoned one.
 
