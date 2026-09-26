@@ -10,14 +10,14 @@ import {
   quizzValidator,
 } from "@razzia/common/validators/quizz"
 import { invalidInput, notFound } from "@razzia/socket/services/errors"
-import { normalizeFilename } from "@razzia/socket/utils/game"
+import { normalizeFilename } from "@razzia/socket/utils/file"
 import fs from "fs"
 import { nanoid } from "nanoid"
 import { join, resolve } from "path"
 
 const inContainerPath = process.env.CONFIG_PATH
 
-const getPath = (path = "") =>
+export const getPath = (path = "") =>
   inContainerPath
     ? resolve(inContainerPath, path)
     : resolve(process.cwd(), "../../config", path)
@@ -268,7 +268,7 @@ export const saveQuizz = (data: unknown): { id: string } => {
   }
 
   const id = nanoid()
-  const fileName = normalizeFilename(result.data.subject)
+  const fileName = normalizeFilename(result.data.subject, { fallback: "quizz" })
 
   fs.writeFileSync(
     getPath(`quizz/${fileName}.json`),

@@ -49,5 +49,26 @@
   },
   "quizzSaved": "Quiz salvato con successo",
   "quizzUpdated": "Quiz aggiornato con successo",
-  "titleQuizzPlaceholder": "Titolo del quiz..."
+  "titleQuizzPlaceholder": "Titolo del quiz...",
+  "media": {
+    "delete": "Elimina file",
+    "deleteConfirm": "Eliminare \"{{name}}\"? Le domande che lo usano in qualsiasi quiz perderanno il loro contenuto multimediale.",
+    "library": "Libreria multimediale",
+    "libraryEmpty": "La tua libreria è vuota",
+    "upload": "Carica",
+    "uploadHint": "Immagini, audio o video, fino a {{size}} MB",
+    "search": "Cerca file...",
+    "filter": {
+      "all": "Tutti"
+    },
+    "use": "Usa",
+    "dropHint": "Trascina qui immagini, audio e video, oppure usa il pulsante Carica",
+    "dropHere": "Rilascia per caricare",
+    "noResults": "Nessun file corrisponde alla ricerca",
+    "fromUrl": "Aggiungi da un URL",
+    "view": {
+      "grid": "Vista griglia",
+      "list": "Vista elenco"
+    }
+  }
 }

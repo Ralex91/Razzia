@@ -49,5 +49,26 @@
   },
   "quizzSaved": "クイズを保存しました",
   "quizzUpdated": "クイズを更新しました",
-  "titleQuizzPlaceholder": "クイズのタイトル..."
+  "titleQuizzPlaceholder": "クイズのタイトル...",
+  "media": {
+    "delete": "メディアを削除",
+    "deleteConfirm": "「{{name}}」を削除しますか？このメディアを使用しているクイズの問題からメディアが消えます。",
+    "library": "メディアライブラリ",
+    "libraryEmpty": "メディアライブラリは空です",
+    "upload": "アップロード",
+    "uploadHint": "画像、音声、動画、最大 {{size}} MB",
+    "search": "メディアを検索...",
+    "filter": {
+      "all": "すべて"
+    },
+    "use": "使用する",
+    "dropHint": "画像、音声、動画ファイルをここにドロップするか、アップロードボタンを使用してください",
+    "dropHere": "ドロップしてアップロード",
+    "noResults": "検索に一致するメディアはありません",
+    "fromUrl": "URLから追加",
+    "view": {
+      "grid": "グリッド表示",
+      "list": "リスト表示"
+    }
+  }
 }
