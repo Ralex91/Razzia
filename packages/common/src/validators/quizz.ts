@@ -13,7 +13,7 @@ export const questionMediaValidator = z.object({
     .enum([MEDIA_TYPES.IMAGE, MEDIA_TYPES.VIDEO, MEDIA_TYPES.AUDIO])
     .optional(),
   url: z
-    .string()
+    .string("errors:quizz.invalidMediaUrl")
     .refine(
       (url) =>
         url.startsWith(MEDIA_URL_PREFIX) || z.url().safeParse(url).success,
