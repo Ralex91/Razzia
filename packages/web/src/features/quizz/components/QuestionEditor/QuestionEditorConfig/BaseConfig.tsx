@@ -63,7 +63,7 @@ const BaseConfig = () => {
               label={t("quizz:question.config.maxPoints")}
               unit="pts"
             />
-            <ConfigNumberInput name="maxPoints" fallback={MAX_POINTS} min={1} />
+            <ConfigNumberInput name="maxPoints" fallback={MAX_POINTS} min={0} />
             <ConfigField.Description>
               {t("quizz:question.config.maxPointsHint")}
             </ConfigField.Description>
