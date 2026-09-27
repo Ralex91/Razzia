@@ -1,5 +1,7 @@
 import {
+  MAX_MEDIA_SIZE,
   MEDIA_TYPES,
+  MEDIA_URL_PREFIX,
   QUESTION_TYPES,
   QUIZZ_MODES,
   SCORING_MODES,
@@ -10,7 +12,19 @@ export const questionMediaValidator = z.object({
   type: z
     .enum([MEDIA_TYPES.IMAGE, MEDIA_TYPES.VIDEO, MEDIA_TYPES.AUDIO])
     .optional(),
-  url: z.url("errors:quizz.invalidMediaUrl"),
+  url: z
+    .string("errors:quizz.invalidMediaUrl")
+    .refine(
+      (url) =>
+        url.startsWith(MEDIA_URL_PREFIX) || z.url().safeParse(url).success,
+      "errors:quizz.invalidMediaUrl",
+    ),
+})
+
+export const mediaUploadValidator = z.object({
+  file: z
+    .file("errors:media.missingFile")
+    .max(MAX_MEDIA_SIZE, "errors:media.tooLarge"),
 })
 
 const multiOptionsValidator = z.object({

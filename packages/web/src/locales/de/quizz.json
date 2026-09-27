@@ -49,5 +49,26 @@
   },
   "quizzSaved": "Quiz erfolgreich gespeichert",
   "quizzUpdated": "Quiz erfolgreich aktualisiert",
-  "titleQuizzPlaceholder": "Quiz-Titel..."
+  "titleQuizzPlaceholder": "Quiz-Titel...",
+  "media": {
+    "delete": "Medium löschen",
+    "deleteConfirm": "\"{{name}}\" löschen? Fragen, die es in einem Quiz verwenden, verlieren ihr Medium.",
+    "library": "Mediathek",
+    "libraryEmpty": "Deine Mediathek ist leer",
+    "upload": "Hochladen",
+    "uploadHint": "Bilder, Audio oder Video, bis zu {{size}} MB",
+    "search": "Medien suchen...",
+    "filter": {
+      "all": "Alle"
+    },
+    "use": "Verwenden",
+    "dropHint": "Ziehe deine Bilder, Audio- und Videodateien hierher oder nutze die Schaltfläche Hochladen",
+    "dropHere": "Zum Hochladen loslassen",
+    "noResults": "Keine Medien entsprechen deiner Suche",
+    "fromUrl": "Über eine URL hinzufügen",
+    "view": {
+      "grid": "Rasteransicht",
+      "list": "Listenansicht"
+    }
+  }
 }

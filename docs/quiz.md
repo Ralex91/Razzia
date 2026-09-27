@@ -55,7 +55,7 @@ Quiz Options:
   - `answers`: Array of possible answers (2-4 options)
   - `media`: Optional media object displayed with the question:
     - `type`: `"image"`, `"video"`, or `"audio"`
-    - `url`: URL of the media
+    - `url`: URL of the media, either a full `http(s)://` URL or a `/media/...` path for a file uploaded from the editor (stored in `config/media`)
   - `solutions`: Array of correct answer indices (0-based). Use multiple indices for multi-answer questions. Required in `"quiz"` mode, omitted in `"survey"` mode
   - `cooldown`: Time in seconds before answers are revealed (3-15)
   - `time`: Time in seconds allowed to answer (5-120)

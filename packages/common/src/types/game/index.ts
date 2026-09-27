@@ -1,4 +1,5 @@
 import type {
+  ACCEPTED_MEDIA_TYPES,
   MEDIA_TYPES,
   QUESTION_TYPES,
   QUIZZ_MODES,
@@ -38,6 +39,15 @@ export type QuestionMediaType =
 export interface QuestionMedia {
   type?: QuestionMediaType
   url: string
+}
+
+export type UploadedMediaType =
+  (typeof ACCEPTED_MEDIA_TYPES)[keyof typeof ACCEPTED_MEDIA_TYPES]["type"]
+
+export interface UploadedMedia {
+  name: string
+  url: string
+  type: UploadedMediaType
 }
 
 export interface Question {

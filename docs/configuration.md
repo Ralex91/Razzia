@@ -46,6 +46,7 @@ Created automatically on first run, with an example quiz:
 config/
   quizz/      your quizzes
   results/    saved game results
+  media/      files uploaded from the quiz editor
   branding/   optional theming
 ```
 

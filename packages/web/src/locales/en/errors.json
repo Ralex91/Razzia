@@ -62,5 +62,13 @@
     "back": "Go back home",
     "description": "An unexpected error occurred. Please try again.",
     "title": "Something went wrong"
+  },
+  "media": {
+    "invalidName": "Invalid media name",
+    "invalidType": "Unsupported file, upload an image, an audio or a video file",
+    "missingFile": "No file was sent",
+    "notFound": "Media not found",
+    "tooLarge": "File is too large",
+    "uploadFailed": "Failed to upload the file"
   }
 }
