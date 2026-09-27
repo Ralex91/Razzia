@@ -39,7 +39,13 @@ const serveDir =
     const [relative] = req.url.slice(prefix.length).split("?")
     const filePath = path.join(dir, relative)
 
-    if (!filePath.startsWith(dir) || !fs.existsSync(filePath)) {
+    const isInsideDir = filePath.startsWith(dir + path.sep)
+
+    if (
+      !isInsideDir ||
+      !fs.existsSync(filePath) ||
+      !fs.statSync(filePath).isFile()
+    ) {
       res.statusCode = 404
       res.end()
 
