@@ -1,0 +1,65 @@
+{
+  "answerNoted": "Teşekkürler, cevabınız alındı",
+  "confirm": "Onayla",
+  "correct": "Harika!",
+  "gamePinLabel": "Oyun PIN'i:",
+  "generatedUsernameNotice": "Katıldığınızda size rastgele bir takma ad atanacaktır.",
+  "hud": {
+    "answers": "Cevaplar",
+    "time": "Süre"
+  },
+  "media": {
+    "showImage": "Görseli göster",
+    "showVideo": "Videoyu göster"
+  },
+  "question": {
+    "show": "Soruyu göster"
+  },
+  "joinInstruction": "Oyuna buradan katılın:",
+  "leaderboard": "Liderlik Tablosu",
+  "lock": {
+    "lock": "Odayı kilitle",
+    "unlock": "Odanın kilidini aç"
+  },
+  "pinLabel": "PIN Kodu",
+  "playersJoined": "Katılan oyuncular",
+  "questionPrefix": "Soru #",
+  "rank": {
+    "1": "1. sıra",
+    "2": "2. sıra",
+    "3": "3. sıra",
+    "other": "{{rank}}. sıra"
+  },
+  "rankSuffix": ". sıra",
+  "reconnect": "Yeniden bağlan",
+  "reconnectTitle": "Bir oyundaydınız",
+  "resultBehind": ", hemen arkasında: ",
+  "resultTop": "Tamamladığınız sıra: ",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Cevaplar ve liderlik tablosu gösterildikten sonra otomatik olarak ilerler.",
+      "label": "Otomatik ilerleme",
+      "leaderboardDelay": "Liderlik Tablosu",
+      "responsesDelay": "Sonuç"
+    },
+    "generatedUsernames": {
+      "label": "Takma ad oluştur",
+      "hint": "Oyuncular kendi adlarını yazmak yerine oluşturulan listeden seçim yapar."
+    },
+    "answersOnly": {
+      "label": "Yalnızca cevaplar",
+      "hint": "Oyuncular yalnızca cevap butonlarını görür; soruyu tekrar okumak için bir buton bulunur."
+    },
+    "title": "Oyun ayarları"
+  },
+  "startGame": "Başlat",
+  "summary": {
+    "title": "Anket tamamlandı",
+    "participants": "Katılımcılar",
+    "questions": "Sorular"
+  },
+  "usernamePlaceholder": "Kullanıcı adınızı girin",
+  "waitingForAnswers": "Oyuncuların cevap vermesi bekleniyor",
+  "waitingForPlayers": "Oyuncular bekleniyor",
+  "wrong": "Maalesef yanlış"
+}

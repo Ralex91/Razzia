@@ -1,0 +1,53 @@
+{
+  "addAnswerPlaceholder": "Cevap ekle...",
+  "addQuestion": "Soru ekle",
+  "answersCountSuffix": " cevap",
+  "deleteQuestion": "Soruyu sil",
+  "gameMode": {
+    "quiz": "Test",
+    "survey": "Anket"
+  },
+  "noQuestionYet": "Henüz soru yok",
+  "question": {
+    "addMediaHint": "Sorunuza görsel, video veya ses ekleyin",
+    "config": {
+      "answerTime": "Cevaplama süresi",
+      "answerTimeHint": "Oyuncuların cevaplamak için sahip olduğu süre",
+      "noTimeLimit": "Süre sınırı yok",
+      "noTimeLimitHint": "Puanlar cevaplama sırasına göre verilir. Cevaplamak için süre sınırı yoktur.",
+      "questionDisplay": "Soru görüntüleme",
+      "questionDisplayHint": "Cevaplar görünmeden önceki bekleme süresi",
+      "timings": "Zamanlamalar",
+      "answerMode": "Cevaplama modu",
+      "scoring": "Puanlama",
+      "maxPoints": "Maksimum puan",
+      "maxPointsHint": "Doğru bir cevap için verilecek en yüksek puan",
+      "penalty": "Ceza puanı",
+      "penaltyHint": "Yanlış bir cevap için düşülecek puan (toplam puan 0'ın altına düşemez)",
+      "scoringMode": "Puanlama modu",
+      "scoringMode.strict": "Katı",
+      "scoringMode.balanced": "Dengeli",
+      "scoringMode.lenient": "Esnek",
+      "scoringModeHint.strict": "Yalnızca tüm doğru cevaplar seçilip hiçbir yanlış cevap seçilmediğinde tam puan verilir",
+      "scoringModeHint.balanced": "Kısmi puan: Doğru seçimlerden yanlış seçimler çıkarılır",
+      "scoringModeHint.lenient": "Her doğru cevap için puan verilir, yanlışlar için ceza uygulanmaz"
+    },
+    "deleteQuestion": "Soruyu sil",
+    "deleteQuestionConfirm": "Bu soruyu silmek istediğinizden emin misiniz?",
+    "media": {
+      "audio": "Ses",
+      "image": "Görsel",
+      "video": "Video"
+    },
+    "mediaUrlPlaceholder": "URL girin...",
+    "placeholder": "Sorunuzu yazmaya başlayın..."
+  },
+  "questionHasErrors": "Bu soruda hatalar var",
+  "questionType": {
+    "single": "Tek seçenekli",
+    "multi": "Çoktan seçmeli"
+  },
+  "quizzSaved": "Test başarıyla kaydedildi",
+  "quizzUpdated": "Test başarıyla güncellendi",
+  "titleQuizzPlaceholder": "Test başlığı..."
+}
