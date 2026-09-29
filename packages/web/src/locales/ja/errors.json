@@ -45,7 +45,7 @@
     "failedToSave": "クイズが未完成です。すべての質問にタイトルがあり、少なくとも1つの正解があることを確認してください",
     "failedToUpdate": "クイズの更新に失敗しました",
     "invalidMediaUrl": "メディアURLは有効なURLである必要があります",
-    "maxPointsTooLow": "ポイントは1以上にしてください",
+    "maxPointsNegative": "ポイントを負の値にはできません",
     "noQuestions": "クイズには少なくとも1問必要です",
     "noSolution": "正解を1つ以上選んでください",
     "notFound": "クイズが見つかりません",

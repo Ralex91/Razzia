@@ -46,7 +46,11 @@ const questionValidator = z.object({
     .min(3, "errors:quizz.cooldownTooShort")
     .max(15, "errors:quizz.cooldownTooLong"),
   time: z.number().int().min(-1),
-  maxPoints: z.number().int().min(1, "errors:quizz.maxPointsTooLow").optional(),
+  maxPoints: z
+    .number()
+    .int()
+    .min(0, "errors:quizz.maxPointsNegative")
+    .optional(),
   penalty: z.number().int().min(0, "errors:quizz.penaltyNegative").optional(),
   options: multiOptionsValidator.optional(),
 })

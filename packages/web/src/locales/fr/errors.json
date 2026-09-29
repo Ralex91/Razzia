@@ -45,7 +45,7 @@
     "failedToSave": "Le quizz est incomplet, vérifiez que chaque question a un titre et au moins une bonne réponse",
     "failedToUpdate": "La mise à jour du quizz a echoué",
     "invalidMediaUrl": "L'URL du média doit être une URL valide",
-    "maxPointsTooLow": "Les points doivent être au minimum de 1",
+    "maxPointsNegative": "Les points ne peuvent pas être négatifs",
     "noQuestions": "Un quizz doit avoir au moins une question",
     "noSolution": "Choisissez au moins une bonne réponse",
     "notFound": "Quizz introuvable",

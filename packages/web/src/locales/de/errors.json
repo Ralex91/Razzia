@@ -45,7 +45,7 @@
     "failedToSave": "Quiz ist unvollständig, stelle sicher, dass alle Fragen einen Titel und mindestens eine richtige Antwort haben",
     "failedToUpdate": "Quiz konnte nicht aktualisiert werden",
     "invalidMediaUrl": "Die Medien-URL muss eine gültige URL sein",
-    "maxPointsTooLow": "Punkte müssen mindestens 1 betragen",
+    "maxPointsNegative": "Punkte können nicht negativ sein",
     "noQuestions": "Ein Quiz muss mindestens eine Frage haben",
     "noSolution": "Wähle mindestens eine richtige Antwort",
     "notFound": "Quiz nicht gefunden",
