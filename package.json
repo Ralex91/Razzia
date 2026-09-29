@@ -12,7 +12,8 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "prettier --check . --log-level warn",
-    "format:fix": "prettier --write . --log-level warn"
+    "format:fix": "prettier --write . --log-level warn",
+    "act:release": "act release -W .github/workflows/docker-release.yml --env GITHUB_REF_NAME=v0.0.1 -P ubuntu-latest=catthehacker/ubuntu:act-latest -s DOCKERHUB_USERNAME=dry-run"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
