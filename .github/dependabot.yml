@@ -7,7 +7,15 @@ updates:
     cooldown:
       default-days: 3
     target-branch: "dev"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 15
+    groups:
+      npm-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -16,7 +24,15 @@ updates:
     cooldown:
       default-days: 3
     target-branch: "dev"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 15
+    groups:
+      docker-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -25,4 +41,12 @@ updates:
     cooldown:
       default-days: 3
     target-branch: "dev"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 15
+    groups:
+      github-actions-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
