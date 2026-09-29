@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "rolldown": "^1.2.7",
-    "tsx": "^4.23.13"
+    "rolldown": "^1.2.11",
+    "tsx": "^4.23.15"
   }
 }
