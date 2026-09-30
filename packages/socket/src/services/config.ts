@@ -96,8 +96,15 @@ export const initConfig = () => {
   }
 }
 
+const subjectCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: "base",
+})
+
 export const getQuizzMeta = () =>
-  getQuizz().map(({ id, subject }) => ({ id, subject }))
+  getQuizz()
+    .map(({ id, subject }) => ({ id, subject }))
+    .sort((a, b) => subjectCollator.compare(a.subject, b.subject))
 
 export const getQuizzById = (id: string): QuizzWithId => {
   const quizz = getQuizz().find((q) => q.id === id)
