@@ -5,9 +5,10 @@ import { useRouter } from "@tanstack/react-router"
 import { CircleX } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
-const ErrorPage = ({ error }: { error: Error }) => {
+const ErrorPage = ({ error }: { error: unknown }) => {
   const { t } = useTranslation()
   const router = useRouter()
+  const message = error instanceof Error ? error.message : null
 
   return (
     <Background>
@@ -21,9 +22,9 @@ const ErrorPage = ({ error }: { error: Error }) => {
             {t("errors:route.description")}
           </p>
         </div>
-        {error.message && (
+        {message && (
           <pre className="bg-accent max-h-60 overflow-auto rounded-md px-3 py-2 text-left font-mono text-sm wrap-break-word">
-            {error.message}
+            {message}
           </pre>
         )}
         <Button onClick={() => router.navigate({ to: "/" })}>
