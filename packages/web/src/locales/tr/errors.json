@@ -1,0 +1,66 @@
+{
+  "api": {
+    "notFound": "İstenen kaynak mevcut değil",
+    "serverError": "Sunucu bir hatayla karşılaştı, lütfen tekrar deneyin"
+  },
+  "auth": {
+    "invalidInviteCode": "Geçersiz davet kodu",
+    "joinTicketInvalid": "Katılma isteğinizin süresi doldu, lütfen PIN kodunu tekrar girin",
+    "sessionFailed": "Oturum başlatılamadı, lütfen sayfayı yenileyin",
+    "tokenInvalid": "Geçersiz oturum belirteci",
+    "tokenMissing": "Oturum belirteci eksik",
+    "unauthorized": "Yetkiniz yok",
+    "usernameTooLong": "Kullanıcı adı 24 karakteri geçemez",
+    "usernameTooShort": "Kullanıcı adı 4 karakterden kısa olamaz"
+  },
+  "game": {
+    "alreadyStarted": "Oyun zaten başladı",
+    "expired": "Oyunun süresi doldu",
+    "invalidAutoAdvanceDelay": "Gecikme süresi 3 ile 600 saniye arasında olmalıdır",
+    "kickedByManager": "Yönetici tarafından oyundan atıldınız",
+    "locked": "Oyun kilitli",
+    "managerAlreadyConnected": "Yönetici zaten bağlı",
+    "managerCannotJoin": "Kendi oyununuza katılamazsınız",
+    "managerDisconnected": "Yöneticinin bağlantısı kesildi",
+    "noPlayersConnected": "Bağlı oyuncu yok",
+    "notFound": "Oyun bulunamadı",
+    "playerAlreadyConnected": "Oyuncu zaten bağlı"
+  },
+  "invalidRequest": "Geçersiz istek",
+  "manager": {
+    "failedToReadConfig": "Oyun yapılandırması okunamadı",
+    "invalidPassword": "Geçersiz şifre",
+    "passwordNotConfigured": "Yönetici şifresi ayarlanmamış"
+  },
+  "notFound": {
+    "back": "Ana sayfaya dön",
+    "description": "Aradığınız sayfa mevcut değil.",
+    "title": "Sayfa bulunamadı"
+  },
+  "quizz": {
+    "answerEmpty": "Cevap alanı boş bırakılamaz",
+    "cooldownTooLong": "Soru görüntüleme süresi 15 saniyeyi geçemez",
+    "cooldownTooShort": "Soru görüntüleme süresi en az 3 saniye olmalıdır",
+    "failedToDelete": "Test silinemedi",
+    "failedToSave": "Test tamamlanmadı; tüm soruların bir başlığa ve en az bir doğru cevaba sahip olduğundan emin olun",
+    "failedToUpdate": "Test güncellenemedi",
+    "invalidMediaUrl": "Medya bağlantısı geçerli bir URL olmalıdır",
+    "maxPointsTooLow": "Puan en az 1 olmalıdır",
+    "noQuestions": "Bir testte en az bir soru bulunmalıdır",
+    "noSolution": "En az bir doğru cevap seçin",
+    "notFound": "Test bulunamadı",
+    "penaltyNegative": "Ceza puanı negatif olamaz",
+    "questionEmpty": "Soru alanı boş bırakılamaz",
+    "subjectEmpty": "Konu alanı boş bırakılamaz",
+    "tooFewAnswers": "Bir sorunun en az 2 cevabı olmalıdır",
+    "tooManyAnswers": "Bir sorunun 4'ten fazla cevabı olamaz"
+  },
+  "result": {
+    "notFound": "Sonuç bulunamadı"
+  },
+  "route": {
+    "back": "Ana sayfaya dön",
+    "description": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
+    "title": "Bir şeyler ters gitti"
+  }
+}

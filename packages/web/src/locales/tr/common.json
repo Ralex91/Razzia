@@ -1,0 +1,24 @@
+{
+  "cancel": "İptal",
+  "confirm": "Onayla",
+  "connecting": "Bağlanıyor...",
+  "delete": "Sil",
+  "exit": "Çıkış",
+  "exitFullscreen": "Tam ekrandan çık",
+  "fullscreen": "Tam ekran",
+  "language": {
+    "de": "Deutsch - Almanca",
+    "en": "English - İngilizce",
+    "es": "Español - İspanyolca",
+    "fr": "Français - Fransızca",
+    "it": "Italiano - İtalyanca",
+    "ja": "日本語 - Japonca",
+    "tr": "Türkçe - Türkçe"
+  },
+  "loading": "Yükleniyor...",
+  "next": "İleri",
+  "save": "Kaydet",
+  "seconds": "sn",
+  "skip": "Geç",
+  "submit": "Gönder"
+}

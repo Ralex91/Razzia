@@ -1,0 +1,45 @@
+{
+  "configurationsTitle": "Yapılandırmalar",
+  "logout": "Çıkış Yap",
+  "passwordPlaceholder": "Parola",
+  "quizz": {
+    "create": "Test Oluştur",
+    "delete": "Testi sil",
+    "deleteConfirm": "\"{{name}}\" adlı testi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+    "deleted": "Test silindi",
+    "export": "Testi JSON olarak dışa aktar",
+    "import": "Testi JSON'dan içe aktar",
+    "none": "Henüz oluşturulmuş bir test yok",
+    "notFound": "Test bulunamadı",
+    "pleaseCreate": "Lütfen önce bir test oluşturun",
+    "pleaseSelect": "Lütfen bir test seçin",
+    "startGame": "Oyunu başlat"
+  },
+  "result": {
+    "delete": "Sonucu sil",
+    "deleteConfirm": "\"{{name}}\" için sonuç silinsin mi? Bu işlem geri alınamaz.",
+    "deleted": "Sonuç silindi",
+    "noAnswer": "Cevap yok",
+    "none": "Henüz sonuç yok, raporları burada görmek için bir oyunu tamamlayın",
+    "paginationOf": " / ",
+    "stats": {
+      "correctAnswers": "Doğru cevaplar",
+      "playersAnswered": "Cevap veren oyuncular"
+    },
+    "table": {
+      "answered": "Cevaplanan",
+      "correct": " Doğru",
+      "correctIncorrect": "Doğru / Yanlış",
+      "incorrect": " Yanlış",
+      "player": "Oyuncu",
+      "points": "Puan"
+    },
+    "playerCount": "{{count}} oyuncu",
+    "timeLimitSuffix": " sn süre sınırı"
+  },
+  "tabs": {
+    "play": "Oyna",
+    "quizz": "Test",
+    "results": "Sonuçlar"
+  }
+}
