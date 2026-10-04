@@ -1,10 +1,12 @@
 // oxlint-disable typescript/no-unnecessary-condition
 import {
   EVENTS,
+  MAX_POINTS,
   MEDIA_TYPES,
   NO_TIME_LIMIT,
   QUIZZ_MODES,
 } from "@razzia/common/constants"
+import { isEstimationOptions } from "@razzia/common/questions/options"
 import type {
   Answer,
   GameResult,
@@ -271,6 +273,7 @@ export class RoundManager {
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
       totalAnswers: this.question.answers.length,
       questionNumber: this.currentQuestion + 1,
+      questionType: this.question.type,
     })
 
     await sleep(2)
@@ -472,6 +475,26 @@ export class RoundManager {
 
   // ── Player actions ───────────────────────────────────────────────────────
 
+  private normalizeAnswer(answerIds: number[]): number[] | null {
+    const { options } = this.question
+
+    if (!isEstimationOptions(options)) {
+      return answerIds
+    }
+
+    const value = answerIds.at(0)
+
+    if (
+      answerIds.length !== 1 ||
+      value === undefined ||
+      !Number.isFinite(value)
+    ) {
+      return null
+    }
+
+    return [Math.min(options.max, Math.max(options.min, value))]
+  }
+
   selectAnswer(socket: Socket, answerIds: number[]): void {
     const player = this.opts.players.findById(socket.id)
 
@@ -483,7 +506,17 @@ export class RoundManager {
       return
     }
 
+    const submitted = this.normalizeAnswer(answerIds)
+
+    if (!submitted) {
+      return
+    }
+
     const points = (() => {
+      if (isEstimationOptions(this.question.options)) {
+        return this.question.maxPoints ?? MAX_POINTS
+      }
+
       if (this.question.time === NO_TIME_LIMIT) {
         return orderToPoint(
           this.playersAnswers.length,
@@ -497,7 +530,7 @@ export class RoundManager {
 
     this.playersAnswers.push({
       playerId: player.id,
-      answerIds,
+      answerIds: submitted,
       points,
     })
 
