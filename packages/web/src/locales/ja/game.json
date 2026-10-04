@@ -24,13 +24,7 @@
   "pinLabel": "PINコード",
   "playersJoined": "参加プレイヤー数",
   "questionPrefix": "問題 #",
-  "rank": {
-    "1": "1位",
-    "2": "2位",
-    "3": "3位",
-    "other": "{{rank}}位"
-  },
-  "rankSuffix": "位",
+  "rank_ordinal_other": "{{count}}位",
   "reconnect": "再接続",
   "reconnectTitle": "ゲームに参加していました",
   "resultBehind": "、差は ",

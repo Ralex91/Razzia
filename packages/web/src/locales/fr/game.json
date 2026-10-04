@@ -24,13 +24,8 @@
   "pinLabel": "Code PIN",
   "playersJoined": "Joueurs connectés",
   "questionPrefix": "Question n°",
-  "rank": {
-    "1": "1er",
-    "2": "2ème place",
-    "3": "3ème place",
-    "other": "{{rank}}ème place"
-  },
-  "rankSuffix": "e place",
+  "rank_ordinal_one": "{{count}}er",
+  "rank_ordinal_other": "{{count}}ème place",
   "reconnect": "Reconnecter",
   "reconnectTitle": "Vous étiez dans une partie",
   "resultBehind": ", derrière ",
