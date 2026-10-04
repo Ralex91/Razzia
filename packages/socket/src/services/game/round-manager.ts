@@ -123,8 +123,6 @@ export class RoundManager {
     return !this.opts.quizz.questions[this.currentQuestion + 1]
   }
 
-  // The leaderboard only shows when the category changes, so consecutive
-  // questions sharing a category play as one round
   private isSameCategoryNext(): boolean {
     const category = this.question.category?.trim()
     const next = this.opts.quizz.questions[this.currentQuestion + 1]
@@ -408,8 +406,6 @@ export class RoundManager {
     this.recordHistory(currentPlayers)
 
     this.leaderboard = sortedPlayers
-    // Keep the snapshot from the start of the round so the leaderboard
-    // animates the movement of the whole category
     this.tempOldLeaderboard ??= oldLeaderboard
     this.playersAnswers = []
   }
