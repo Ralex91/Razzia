@@ -24,13 +24,8 @@
   "pinLabel": "Codice PIN",
   "playersJoined": "Giocatori connessi",
   "questionPrefix": "Domanda #",
-  "rank": {
-    "1": "1° posto",
-    "2": "2° posto",
-    "3": "3° posto",
-    "other": "{{rank}}° posto"
-  },
-  "rankSuffix": "° posto",
+  "rank_ordinal_many": "{{count}}° posto",
+  "rank_ordinal_other": "{{count}}° posto",
   "reconnect": "Riconnetti",
   "reconnectTitle": "Eri in una partita",
   "resultBehind": ", dietro ",

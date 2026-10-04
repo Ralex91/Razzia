@@ -24,13 +24,10 @@
   "pinLabel": "PIN Code",
   "playersJoined": "Players joined",
   "questionPrefix": "Question #",
-  "rank": {
-    "1": "1st place",
-    "2": "2nd place",
-    "3": "3rd place",
-    "other": "{{rank}}th place"
-  },
-  "rankSuffix": " place",
+  "rank_ordinal_one": "{{count}}st place",
+  "rank_ordinal_two": "{{count}}nd place",
+  "rank_ordinal_few": "{{count}}rd place",
+  "rank_ordinal_other": "{{count}}th place",
   "reconnect": "Reconnect",
   "reconnectTitle": "You were in a game",
   "resultBehind": ", behind ",

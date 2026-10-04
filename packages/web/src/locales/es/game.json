@@ -24,13 +24,7 @@
   "pinLabel": "Código PIN",
   "playersJoined": "Jugadores conectados",
   "questionPrefix": "Pregunta #",
-  "rank": {
-    "1": "1er puesto",
-    "2": "2do puesto",
-    "3": "3er puesto",
-    "other": "Puesto {{rank}}"
-  },
-  "rankSuffix": " puesto",
+  "rank_ordinal_other": "{{count}}.º puesto",
   "reconnect": "Reconectar",
   "reconnectTitle": "Estabas en una partida",
   "resultBehind": ", detrás de ",
