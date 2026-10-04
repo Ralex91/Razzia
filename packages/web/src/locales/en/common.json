@@ -4,6 +4,8 @@
   "connecting": "Connecting...",
   "delete": "Delete",
   "exit": "Exit",
+  "exitFullscreen": "Exit fullscreen",
+  "fullscreen": "Fullscreen",
   "language": {
     "de": "Deutsch - German",
     "en": "English - English",
@@ -18,5 +20,6 @@
   "save": "Save",
   "seconds": "sec",
   "skip": "Skip",
-  "submit": "Submit"
+  "submit": "Submit",
+  "close": "Close"
 }

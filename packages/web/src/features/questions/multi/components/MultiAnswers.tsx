@@ -5,6 +5,7 @@ import {
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
 import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
+import clsx from "clsx"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -12,6 +13,7 @@ const MultiAnswers = ({
   answers,
   onSubmit,
   readOnly,
+  fill,
 }: AnswerComponentProps) => {
   const [selected, setSelected] = useState<number[]>([])
   const { t } = useTranslation()
@@ -25,8 +27,22 @@ const MultiAnswers = ({
   }
 
   return (
-    <div className="mx-auto mb-4 flex w-full max-w-7xl flex-col gap-2 px-2">
-      <div className="grid grid-cols-2 gap-1 text-lg font-bold text-white md:text-xl">
+    <div
+      className={clsx(
+        "mx-auto mb-4 flex w-full max-w-7xl flex-col gap-2 px-2",
+        {
+          "flex-1": fill,
+        },
+      )}
+    >
+      <div
+        className={clsx(
+          "grid gap-1 text-lg font-bold text-white md:text-xl",
+          fill
+            ? "flex-1 auto-rows-fr grid-cols-1 sm:grid-cols-2"
+            : "grid-cols-2",
+        )}
+      >
         {answers.map((answer, key) => {
           const isSelected = selected.includes(key)
 
@@ -38,6 +54,7 @@ const MultiAnswers = ({
               onClick={() => toggle(key)}
               selected={readOnly ? undefined : isSelected}
               disabled={readOnly}
+              large={fill}
             >
               {answer}
             </AnswerButton>

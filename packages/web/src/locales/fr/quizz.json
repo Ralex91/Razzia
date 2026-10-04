@@ -3,6 +3,10 @@
   "addQuestion": "Ajouter une question",
   "answersCountSuffix": " réponses",
   "deleteQuestion": "Supprimer la question",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Sondage"
+  },
   "noQuestionYet": "Aucune question pour l'instant",
   "question": {
     "addMediaHint": "Ajoutez une image, une vidéo ou un audio à votre question",
@@ -15,6 +19,9 @@
       "questionDisplayHint": "Délai avant l'apparition des réponses",
       "timings": "Durées",
       "answerMode": "Mode de réponse",
+      "category": "Catégorie",
+      "categoryPlaceholder": "ex. Géographie",
+      "categoryHint": "Les questions consécutives de la même catégorie forment une manche. Le classement ne s'affiche que lorsque la catégorie change.",
       "scoring": "Score",
       "maxPoints": "Points max",
       "maxPointsHint": "Points maximum attribués pour une bonne réponse",
@@ -26,7 +33,25 @@
       "scoringMode.lenient": "Indulgent",
       "scoringModeHint.strict": "Points uniquement si toutes les bonnes réponses sont cochées et aucune mauvaise",
       "scoringModeHint.balanced": "Points partiels : bonnes sélections moins les mauvaises",
-      "scoringModeHint.lenient": "Points par bonne réponse, aucune pénalité pour les mauvaises"
+      "scoringModeHint.lenient": "Points par bonne réponse, aucune pénalité pour les mauvaises",
+      "estimation": {
+        "title": "Estimation",
+        "inputMode": "Type de saisie",
+        "inputModes": {
+          "slider": "Curseur",
+          "input": "Saisie libre"
+        },
+        "inputModeHint": {
+          "slider": "Les joueurs choisissent une valeur avec un curseur entre les bornes",
+          "input": "Les joueurs tapent un nombre entre les bornes"
+        },
+        "min": "Minimum",
+        "max": "Maximum",
+        "step": "Pas",
+        "stepHint": "Précision du curseur et de la réponse attendue",
+        "margin": "Marge",
+        "marginHint": "Les réponses à cette distance de la bonne réponse rapportent de 100 % (exacte) à 50 %. Au-delà, elles ne rapportent rien."
+      }
     },
     "deleteQuestion": "Supprimer la question",
     "deleteQuestionConfirm": "Êtes-vous sûr de vouloir supprimer cette question ?",
@@ -36,13 +61,39 @@
       "video": "Vidéo"
     },
     "mediaUrlPlaceholder": "Entrez l'URL...",
-    "placeholder": "Commencez à écrire votre question..."
+    "placeholder": "Commencez à écrire votre question...",
+    "estimation": {
+      "correctAnswer": "Bonne réponse"
+    }
+  },
+  "questionHasErrors": "Cette question contient des erreurs",
+  "questionType": {
+    "single": "Choix unique",
+    "multi": "Choix multiple",
+    "estimation": "Estimation"
   },
   "quizzSaved": "Quizz enregistré avec succès",
   "quizzUpdated": "Quizz mis à jour avec succès",
-  "questionType": {
-    "single": "Choix unique",
-    "multi": "Choix multiple"
-  },
-  "titleQuizzPlaceholder": "Titre du quizz..."
+  "titleQuizzPlaceholder": "Titre du quizz...",
+  "media": {
+    "delete": "Supprimer le média",
+    "deleteConfirm": "Supprimer « {{name}} » ? Les questions qui l'utilisent, dans tous les quizz, perdront leur média.",
+    "library": "Médiathèque",
+    "libraryEmpty": "Ta médiathèque est vide",
+    "upload": "Importer",
+    "uploadHint": "Images, audio ou vidéo, jusqu'à {{size}} Mo",
+    "search": "Rechercher un média...",
+    "filter": {
+      "all": "Tout"
+    },
+    "use": "Utiliser",
+    "dropHint": "Dépose tes images, fichiers audio et vidéos ici, ou utilise le bouton Importer",
+    "dropHere": "Dépose pour importer",
+    "noResults": "Aucun média ne correspond à ta recherche",
+    "fromUrl": "Ajouter depuis une URL",
+    "view": {
+      "grid": "Vue grille",
+      "list": "Vue liste"
+    }
+  }
 }

@@ -18,28 +18,34 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import Button from "@razzia/web/components/Button"
 import QuizzEditorCard from "@razzia/web/features/quizz/components/QuizzEditorCard"
+import type { Question } from "@razzia/common/types/game"
 import {
   useQuizzEditor,
-  type QuestionWithId,
+  type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
 import { Plus } from "lucide-react"
 import { useRef } from "react"
+import { useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 interface SortableItemProps {
-  q: QuestionWithId
+  id: string
+  question: Question
   index: number
   isActive: boolean
+  isInvalid: boolean
   canDelete: boolean
   onClick: () => void
   onDelete: () => void
 }
 
 const SortableItem = ({
-  q,
+  id,
+  question,
   index,
   isActive,
+  isInvalid,
   canDelete,
   onClick,
   onDelete,
@@ -51,7 +57,7 @@ const SortableItem = ({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: q.id })
+  } = useSortable({ id })
 
   return (
     <div
@@ -62,9 +68,10 @@ const SortableItem = ({
       className={clsx(isDragging && "shadow-lg")}
     >
       <QuizzEditorCard
-        question={q}
+        question={question}
         index={index}
         isActive={isActive}
+        isInvalid={isInvalid}
         canDelete={canDelete}
         onClick={onClick}
         onDelete={onDelete}
@@ -76,12 +83,16 @@ const SortableItem = ({
 const QuizzEditorSidebar = () => {
   const {
     questions,
+    questionIds,
     currentIndex,
     setCurrentIndex,
     addQuestion,
     removeQuestion,
     reorderQuestions,
   } = useQuizzEditor()
+  const {
+    formState: { errors },
+  } = useFormContext<QuizzFormValues>()
   const { t } = useTranslation()
 
   const isDragging = useRef(false)
@@ -108,8 +119,8 @@ const QuizzEditorSidebar = () => {
       return
     }
 
-    const from = questions.findIndex((q) => q.id === active.id)
-    const to = questions.findIndex((q) => q.id === over.id)
+    const from = questionIds.findIndex((id) => id === active.id)
+    const to = questionIds.findIndex((id) => id === over.id)
     reorderQuestions(from, to)
   }
 
@@ -125,16 +136,18 @@ const QuizzEditorSidebar = () => {
         onDragEnd={handleDragEnd}
       >
         <SortableContext
-          items={questions.map((q) => q.id)}
+          items={questionIds}
           strategy={verticalListSortingStrategy}
         >
           <div className="flex flex-col gap-2">
-            {questions.map((q, index) => (
+            {questions.map((question, index) => (
               <SortableItem
-                key={q.id}
-                q={q}
+                key={questionIds[index]}
+                id={questionIds[index]}
+                question={question}
                 index={index}
                 isActive={currentIndex === index}
+                isInvalid={Boolean(errors.questions?.[index])}
                 canDelete={questions.length > 1}
                 onClick={handleSlideClick(index)}
                 onDelete={handleDelete(index)}

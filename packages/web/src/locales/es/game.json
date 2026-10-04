@@ -1,30 +1,63 @@
 {
+  "answerNoted": "Gracias, anotado",
+  "confirm": "Confirmar",
   "correct": "¡Bien!",
   "gamePinLabel": "PIN del juego:",
+  "generatedUsernameNotice": "Recibirás un apodo aleatorio al entrar.",
   "hud": {
     "answers": "Respuestas",
     "time": "Tiempo"
   },
+  "media": {
+    "showImage": "Ver imagen",
+    "showVideo": "Ver vídeo"
+  },
+  "question": {
+    "show": "Ver la pregunta"
+  },
   "joinInstruction": "Únete al juego en",
   "leaderboard": "Clasificación",
+  "lock": {
+    "lock": "Bloquear la sala",
+    "unlock": "Desbloquear la sala"
+  },
   "pinLabel": "Código PIN",
+  "playersJoined": "Jugadores conectados",
+  "questionPrefix": "Pregunta #",
+  "rank_ordinal_other": "{{count}}.º puesto",
   "reconnect": "Reconectar",
   "reconnectTitle": "Estabas en una partida",
-  "playersJoined": "Jugadores conectados: ",
-  "questionPrefix": "Pregunta #",
-  "rank": {
-    "1": "1er puesto",
-    "2": "2do puesto",
-    "3": "3er puesto",
-    "other": "Puesto {{rank}}"
-  },
-  "rankSuffix": " puesto",
   "resultBehind": ", detrás de ",
   "resultTop": "Terminaste ",
-  "startGame": "Iniciar juego",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Continuar solo tras la revelación y la clasificación.",
+      "label": "Avance automático",
+      "leaderboardDelay": "Clasificación",
+      "responsesDelay": "Resultado"
+    },
+    "generatedUsernames": {
+      "label": "Generar apodos",
+      "hint": "Los jugadores eligen entre nombres generados en vez de escribirlos."
+    },
+    "answersOnly": {
+      "label": "Solo respuestas",
+      "hint": "Los jugadores solo ven los botones de respuesta, con un botón para volver a leer la pregunta."
+    },
+    "title": "Ajustes de la partida"
+  },
+  "startGame": "Iniciar",
+  "summary": {
+    "title": "Encuesta finalizada",
+    "participants": "Participantes",
+    "questions": "Preguntas"
+  },
   "usernamePlaceholder": "Nombre de usuario aquí",
   "waitingForAnswers": "Esperando que los jugadores respondan",
   "waitingForPlayers": "Esperando jugadores",
   "wrong": "Mala suerte",
-  "confirm": "Confirmar"
+  "estimation": {
+    "yourAnswer": "Tu respuesta",
+    "rangeHint": "Entre {{min}} y {{max}}"
+  }
 }

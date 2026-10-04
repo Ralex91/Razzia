@@ -1,30 +1,64 @@
 {
+  "answerNoted": "Merci, c'est noté",
+  "confirm": "Valider",
   "correct": "Bravo !",
   "gamePinLabel": "PIN de la partie :",
+  "generatedUsernameNotice": "Un pseudo aléatoire te sera attribué en rejoignant.",
   "hud": {
     "answers": "Réponses",
     "time": "Temps"
   },
+  "media": {
+    "showImage": "Voir l'image",
+    "showVideo": "Voir la vidéo"
+  },
+  "question": {
+    "show": "Afficher la question"
+  },
   "joinInstruction": "Rejoins la partie sur",
   "leaderboard": "Classement",
+  "lock": {
+    "lock": "Verrouiller la salle",
+    "unlock": "Déverrouiller la salle"
+  },
   "pinLabel": "Code PIN",
+  "playersJoined": "Joueurs connectés",
+  "questionPrefix": "Question n°",
+  "rank_ordinal_one": "{{count}}er",
+  "rank_ordinal_other": "{{count}}ème place",
   "reconnect": "Reconnecter",
   "reconnectTitle": "Vous étiez dans une partie",
-  "playersJoined": "Joueurs connectés : ",
-  "questionPrefix": "Question n°",
-  "rank": {
-    "1": "1er",
-    "2": "2ème place",
-    "3": "3ème place",
-    "other": "{{rank}}ème place"
-  },
-  "rankSuffix": "e place",
   "resultBehind": ", derrière ",
   "resultTop": "Tu es ",
-  "startGame": "Demarrer la partie",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Enchaîner tout seul après la révélation et le classement.",
+      "label": "Avance automatique",
+      "leaderboardDelay": "Classement",
+      "responsesDelay": "Résultat"
+    },
+    "generatedUsernames": {
+      "label": "Générer les pseudos",
+      "hint": "Les joueurs choisissent parmi des pseudos générés au lieu de les saisir."
+    },
+    "answersOnly": {
+      "label": "Réponses seules",
+      "hint": "Les joueurs ne voient que les boutons de réponse, avec un bouton pour relire la question."
+    },
+    "title": "Réglages de la partie"
+  },
+  "startGame": "Démarrer",
+  "summary": {
+    "title": "Sondage terminé",
+    "participants": "Participants",
+    "questions": "Questions"
+  },
   "usernamePlaceholder": "Pseudo",
   "waitingForAnswers": "En attente des réponses des joueurs",
   "waitingForPlayers": "En attente des joueurs",
   "wrong": "Dommage",
-  "confirm": "Valider"
+  "estimation": {
+    "yourAnswer": "Ta réponse",
+    "rangeHint": "Entre {{min}} et {{max}}"
+  }
 }

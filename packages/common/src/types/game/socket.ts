@@ -1,17 +1,36 @@
 import { EVENTS } from "@razzia/common/constants"
+import type { SessionRole } from "@razzia/common/types/auth"
 import type {
-  GameResult,
+  GameSettings,
   GameUpdateQuestion,
   Player,
-  QuizzWithId,
+  QuizzMode,
 } from "@razzia/common/types/game"
 import type { Status, StatusDataMap } from "@razzia/common/types/game/status"
-import type { ManagerConfig } from "@razzia/common/types/manager"
-import { Server as ServerIO, Socket as SocketIO } from "socket.io"
+import {
+  Server as ServerIO,
+  Socket as SocketIO,
+  type DefaultEventsMap,
+} from "socket.io"
 
-export type Server = ServerIO<ClientToServerEvents, ServerToClientEvents>
+export interface SocketData {
+  clientId: string
+  role: SessionRole
+}
 
-export type Socket = SocketIO<ClientToServerEvents, ServerToClientEvents>
+export type Server = ServerIO<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  DefaultEventsMap,
+  SocketData
+>
+
+export type Socket = SocketIO<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  DefaultEventsMap,
+  SocketData
+>
 
 export interface Message<K extends keyof StatusDataMap = keyof StatusDataMap> {
   gameId?: string
@@ -36,8 +55,11 @@ export interface ServerToClientEvents {
     name: Status
     data: StatusDataMap[Status]
   }) => void
-  [EVENTS.GAME.SUCCESS_ROOM]: (_data: string) => void
-  [EVENTS.GAME.SUCCESS_JOIN]: (_gameId: string) => void
+  [EVENTS.GAME.SUCCESS_JOIN]: (_data: {
+    gameId: string
+    username: string
+    gameMode: QuizzMode
+  }) => void
   [EVENTS.GAME.TOTAL_PLAYERS]: (_count: number) => void
   [EVENTS.GAME.ERROR_MESSAGE]: (_message: string) => void
   [EVENTS.GAME.START_COOLDOWN]: () => void
@@ -50,51 +72,40 @@ export interface ServerToClientEvents {
   [EVENTS.GAME.PLAYER_ANSWER]: (_count: number) => void
 
   // Player events
-  [EVENTS.PLAYER.CHECK_PIN_RESULT]: (_data: { valid: boolean }) => void
   [EVENTS.PLAYER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
+    gameMode: QuizzMode
     status: { name: Status; data: StatusDataMap[Status] }
     player: { username: string; points: number }
-    currentQuestion: GameUpdateQuestion
+    currentQuestion: GameUpdateQuestion | null
   }) => void
   [EVENTS.PLAYER.UPDATE_LEADERBOARD]: (_data: { leaderboard: Player[] }) => void
 
   // Manager events
   [EVENTS.MANAGER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
+    inviteCode: string
+    settings: GameSettings
+    locked: boolean
     status: { name: Status; data: StatusDataMap[Status] }
     players: Player[]
-    currentQuestion: GameUpdateQuestion
-  }) => void
-  [EVENTS.MANAGER.CONFIG]: (_config: ManagerConfig) => void
-  [EVENTS.QUIZZ.DATA]: (_quizz: QuizzWithId) => void
-  [EVENTS.MANAGER.GAME_CREATED]: (_data: {
-    gameId: string
-    inviteCode: string
+    currentQuestion: GameUpdateQuestion | null
   }) => void
   [EVENTS.MANAGER.STATUS_UPDATE]: (_data: {
     status: Status
     data: StatusDataMap[Status]
   }) => void
+  [EVENTS.MANAGER.AUTO_ADVANCE]: (
+    _state: { seconds: number; total: number } | null,
+  ) => void
   [EVENTS.MANAGER.NEW_PLAYER]: (_player: Player) => void
   [EVENTS.MANAGER.REMOVE_PLAYER]: (_playerId: string) => void
-  [EVENTS.MANAGER.ERROR_MESSAGE]: (_message: string) => void
   [EVENTS.MANAGER.PLAYER_KICKED]: (_playerId: string) => void
-  [EVENTS.MANAGER.UNAUTHORIZED]: () => void
-
-  // Quizz events
-  [EVENTS.QUIZZ.SAVE_SUCCESS]: (_data: { id: string }) => void
-  [EVENTS.QUIZZ.UPDATE_SUCCESS]: (_data: { id: string }) => void
-  [EVENTS.QUIZZ.ERROR]: (_message: string) => void
-
-  // Results events
-  [EVENTS.RESULTS.DATA]: (_result: GameResult) => void
+  [EVENTS.MANAGER.LOCK_UPDATED]: (_locked: boolean) => void
 }
 
 export interface ClientToServerEvents {
   // Manager actions
-  [EVENTS.GAME.CREATE]: (_quizzId: string) => void
-  [EVENTS.MANAGER.AUTH]: (_password: string) => void
   [EVENTS.MANAGER.RECONNECT]: (_message: { gameId: string }) => void
   [EVENTS.MANAGER.LEAVE]: (_message: { gameId: string }) => void
   [EVENTS.MANAGER.KICK_PLAYER]: (_message: {
@@ -102,33 +113,19 @@ export interface ClientToServerEvents {
     playerId: string
   }) => void
   [EVENTS.MANAGER.START_GAME]: (_message: MessageGameId) => void
-  [EVENTS.MANAGER.ABORT_QUIZ]: (_message: MessageGameId) => void
-  [EVENTS.MANAGER.NEXT_QUESTION]: (_message: MessageGameId) => void
-  [EVENTS.MANAGER.SHOW_LEADERBOARD]: (_message: MessageGameId) => void
-  [EVENTS.MANAGER.GET_CONFIG]: () => void
-  [EVENTS.MANAGER.LOGOUT]: () => void
-
-  // Quizz actions
-  [EVENTS.QUIZZ.GET]: (_id: string) => void
-  [EVENTS.QUIZZ.SAVE]: (_quizz: unknown) => void
-  [EVENTS.QUIZZ.UPDATE]: (_data: QuizzWithId) => void
-  [EVENTS.QUIZZ.DELETE]: (_id: string) => void
+  [EVENTS.MANAGER.ADVANCE]: (_message: MessageGameId) => void
+  [EVENTS.MANAGER.SET_LOCK]: (_message: {
+    gameId: string
+    locked: boolean
+  }) => void
 
   // Player actions
-  [EVENTS.PLAYER.CHECK_PIN]: (_inviteCode: string) => void
-  [EVENTS.PLAYER.JOIN]: (_inviteCode: string) => void
-  [EVENTS.PLAYER.LOGIN]: (
-    _message: MessageWithoutStatus<{ username: string }>,
-  ) => void
+  [EVENTS.PLAYER.LOGIN]: (_message: { ticket: string }) => void
   [EVENTS.PLAYER.RECONNECT]: (_message: { gameId: string }) => void
   [EVENTS.PLAYER.LEAVE]: (_message: { gameId: string }) => void
   [EVENTS.PLAYER.SELECTED_ANSWER]: (
     _message: MessageWithoutStatus<{ answerKeys: number[] }>,
   ) => void
-
-  // Results actions
-  [EVENTS.RESULTS.GET]: (_id: string) => void
-  [EVENTS.RESULTS.DELETE]: (_id: string) => void
 
   // Common
   disconnect: () => void

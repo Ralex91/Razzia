@@ -1,22 +1,23 @@
-import { EXAMPLE_QUIZZ } from "@razzia/common/constants"
+import { EXAMPLE_QUIZZ, QUIZZ_MODES } from "@razzia/common/constants"
 import type {
   GameResult,
   GameResultMeta,
+  QuizzMode,
   QuizzWithId,
 } from "@razzia/common/types/game"
-import { quizzValidator } from "@razzia/common/validators/quizz"
-import { normalizeFilename } from "@razzia/socket/utils/game"
+import {
+  normalizeLegacyQuizz,
+  quizzValidator,
+} from "@razzia/common/validators/quizz"
+import { invalidInput, notFound } from "@razzia/socket/services/errors"
+import { normalizeFilename } from "@razzia/socket/utils/file"
 import fs from "fs"
 import { nanoid } from "nanoid"
 import { join, resolve } from "path"
 
-interface GameConfig {
-  managerPassword: string
-}
-
 const inContainerPath = process.env.CONFIG_PATH
 
-const getPath = (path = "") =>
+export const getPath = (path = "") =>
   inContainerPath
     ? resolve(inContainerPath, path)
     : resolve(process.cwd(), "../../config", path)
@@ -66,11 +67,11 @@ const findFileById = (subDir: string, id: string): string | undefined => {
   )
 }
 
-const requireFileById = (subDir: string, id: string, label: string): string => {
+const requireFileById = (subDir: string, id: string, key: string): string => {
   const file = findFileById(subDir, id)
 
   if (!file) {
-    throw new Error(`${label} "${id}" not found`)
+    throw notFound(key)
   }
 
   return file
@@ -81,21 +82,6 @@ export const initConfig = () => {
 
   if (!isConfigFolderExists) {
     fs.mkdirSync(getPath())
-  }
-
-  const isGameConfigExists = fs.existsSync(getPath("game.json"))
-
-  if (!isGameConfigExists) {
-    fs.writeFileSync(
-      getPath("game.json"),
-      JSON.stringify(
-        {
-          managerPassword: "PASSWORD",
-        },
-        null,
-        2,
-      ),
-    )
   }
 
   const isQuizzExists = fs.existsSync(getPath("quizz"))
@@ -110,32 +96,21 @@ export const initConfig = () => {
   }
 }
 
-export const getGameConfig = (): GameConfig => {
-  const isExists = fs.existsSync(getPath("game.json"))
-
-  if (!isExists) {
-    throw new Error("Game config not found")
-  }
-
-  try {
-    const config = fs.readFileSync(getPath("game.json"), "utf-8")
-
-    return JSON.parse(config) as GameConfig
-  } catch (error) {
-    console.error("Failed to read game config:", error)
-  }
-
-  return {} as GameConfig
-}
+const subjectCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: "base",
+})
 
 export const getQuizzMeta = () =>
-  getQuizz().map(({ id, subject }) => ({ id, subject }))
+  getQuizz()
+    .map(({ id, subject }) => ({ id, subject }))
+    .sort((a, b) => subjectCollator.compare(a.subject, b.subject))
 
 export const getQuizzById = (id: string): QuizzWithId => {
   const quizz = getQuizz().find((q) => q.id === id)
 
   if (!quizz) {
-    throw new Error(`Quizz "${id}" not found`)
+    throw notFound("errors:quizz.notFound")
   }
 
   return quizz
@@ -161,7 +136,7 @@ export const getQuizz = (): QuizzWithId[] => {
         return []
       }
 
-      const result = quizzValidator.safeParse(data)
+      const result = quizzValidator.safeParse(normalizeLegacyQuizz(data))
 
       if (!result.success) {
         console.warn(`Invalid quizz config "${file}":`, result.error.issues)
@@ -195,10 +170,10 @@ export const updateQuizz = (id: string, data: unknown): { id: string } => {
   const result = quizzValidator.safeParse(data)
 
   if (!result.success) {
-    throw new Error(result.error.issues[0].message)
+    throw invalidInput(result.error.issues[0].message)
   }
 
-  const file = requireFileById("quizz", id, "Quizz")
+  const file = requireFileById("quizz", id, "errors:quizz.notFound")
 
   fs.writeFileSync(
     join(getPath("quizz"), file),
@@ -209,7 +184,7 @@ export const updateQuizz = (id: string, data: unknown): { id: string } => {
 }
 
 export const deleteQuizz = (id: string): void => {
-  const file = requireFileById("quizz", id, "Quizz")
+  const file = requireFileById("quizz", id, "errors:quizz.notFound")
 
   fs.unlinkSync(join(getPath("quizz"), file))
 }
@@ -233,6 +208,9 @@ export const saveResult = (data: GameResult): void => {
   }
 }
 
+/** Results written before survey mode have no `gameMode` field. */
+type StoredResult = Omit<GameResult, "gameMode"> & { gameMode?: QuizzMode }
+
 export const getResultsMeta = (): GameResultMeta[] => {
   const resultsPath = getPath("results")
 
@@ -241,7 +219,7 @@ export const getResultsMeta = (): GameResultMeta[] => {
   }
 
   const readMeta = (file: string): GameResultMeta | null => {
-    const data = readJson(join(resultsPath, file)) as GameResult | null
+    const data = readJson(join(resultsPath, file)) as StoredResult | null
 
     if (!data) {
       return null
@@ -250,6 +228,7 @@ export const getResultsMeta = (): GameResultMeta[] => {
     try {
       return {
         id: data.id,
+        gameMode: data.gameMode ?? QUIZZ_MODES.QUIZ,
         subject: data.subject,
         date: data.date,
         playerCount: data.players.length,
@@ -270,18 +249,20 @@ export const getResultsMeta = (): GameResultMeta[] => {
 }
 
 export const getResultById = (id: string): GameResult => {
-  const file = requireFileById("results", id, "Result")
+  const file = requireFileById("results", id, "errors:result.notFound")
   const data = readJson(join(getPath("results"), file))
 
   if (!data) {
-    throw new Error(`Result "${id}" not found`)
+    throw notFound("errors:result.notFound")
   }
 
-  return data as unknown as GameResult
+  const result = data as unknown as StoredResult
+
+  return { ...result, gameMode: result.gameMode ?? QUIZZ_MODES.QUIZ }
 }
 
 export const deleteResult = (id: string): void => {
-  const file = requireFileById("results", id, "Result")
+  const file = requireFileById("results", id, "errors:result.notFound")
 
   fs.unlinkSync(join(getPath("results"), file))
 }
@@ -290,11 +271,11 @@ export const saveQuizz = (data: unknown): { id: string } => {
   const result = quizzValidator.safeParse(data)
 
   if (!result.success) {
-    throw new Error(result.error.issues[0].message)
+    throw invalidInput(result.error.issues[0].message)
   }
 
   const id = nanoid()
-  const fileName = normalizeFilename(result.data.subject)
+  const fileName = normalizeFilename(result.data.subject, { fallback: "quizz" })
 
   fs.writeFileSync(
     getPath(`quizz/${fileName}.json`),

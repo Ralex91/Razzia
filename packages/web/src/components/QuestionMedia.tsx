@@ -4,9 +4,10 @@ import type { QuestionMedia as QuestionMediaType } from "@razzia/common/types/ga
 interface Props {
   media?: QuestionMediaType
   alt?: string
+  autoPlay?: boolean
 }
 
-const QuestionMedia = ({ media, alt = "" }: Props) => {
+const QuestionMedia = ({ media, alt = "", autoPlay = true }: Props) => {
   if (media?.type === MEDIA_TYPES.IMAGE) {
     return (
       <img
@@ -22,7 +23,7 @@ const QuestionMedia = ({ media, alt = "" }: Props) => {
       <video
         className="m-4 mb-2 aspect-video max-h-60 w-auto rounded-md px-4 sm:max-h-100"
         src={media.url}
-        autoPlay
+        autoPlay={autoPlay}
         controls
       />
     )
@@ -31,9 +32,9 @@ const QuestionMedia = ({ media, alt = "" }: Props) => {
   if (media?.type === MEDIA_TYPES.AUDIO) {
     return (
       <audio
-        className="m-4 mb-2 w-auto rounded-md"
+        className="m-4 mb-2 w-full max-w-md rounded-md"
         src={media.url}
-        autoPlay
+        autoPlay={autoPlay}
         controls
       />
     )

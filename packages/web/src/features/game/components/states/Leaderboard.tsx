@@ -49,9 +49,6 @@ const Leaderboard = ({ data: { oldLeaderboard, leaderboard } }: Props) => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    setDisplayedLeaderboard(oldLeaderboard)
-    setIsAnimating(false)
-
     const timer = setTimeout(() => {
       setIsAnimating(true)
       setDisplayedLeaderboard(leaderboard)

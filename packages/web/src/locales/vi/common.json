@@ -4,6 +4,8 @@
   "connecting": "Đang kết nối...",
   "delete": "Xóa",
   "exit": "Thoát",
+  "exitFullscreen": "Thoát toàn màn hình",
+  "fullscreen": "Toàn màn hình",
   "language": {
     "de": "Deutsch - Tiếng Đức",
     "en": "English - Tiếng Anh",
@@ -11,12 +13,13 @@
     "fr": "Français - Tiếng Pháp",
     "it": "Italiano - Tiếng Ý",
     "ja": "日本語 - Tiếng Nhật",
-    "vi": "Tiếng Việt - Vietnamese"
+    "vi": "Tiếng Việt - Tiếng Việt"
   },
   "loading": "Đang tải...",
   "next": "Tiếp",
   "save": "Lưu",
   "seconds": "giây",
   "skip": "Bỏ qua",
-  "submit": "Gửi"
+  "submit": "Gửi",
+  "close": "Đóng"
 }

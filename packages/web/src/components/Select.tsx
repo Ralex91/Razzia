@@ -1,6 +1,6 @@
-import * as RadixSelect from "@radix-ui/react-select"
 import clsx from "clsx"
 import { Check, ChevronDown } from "lucide-react"
+import { Select as RadixSelect } from "radix-ui"
 import type { ComponentProps } from "react"
 import { twMerge } from "tailwind-merge"
 

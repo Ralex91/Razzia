@@ -4,6 +4,8 @@
   "connecting": "Verbinden...",
   "delete": "Löschen",
   "exit": "Beenden",
+  "exitFullscreen": "Vollbild beenden",
+  "fullscreen": "Vollbild",
   "language": {
     "de": "Deutsch - Deutsch",
     "en": "English - Englisch",
@@ -18,5 +20,6 @@
   "save": "Speichern",
   "seconds": "Sek",
   "skip": "Überspringen",
-  "submit": "Absenden"
+  "submit": "Absenden",
+  "close": "Schließen"
 }

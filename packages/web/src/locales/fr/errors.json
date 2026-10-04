@@ -1,19 +1,32 @@
 {
+  "api": {
+    "notFound": "La ressource demandée n'existe pas",
+    "serverError": "Le serveur a rencontré une erreur, réessayez"
+  },
   "auth": {
     "invalidInviteCode": "Code d'invitation invalide",
-    "usernameTooLong": "Le pseudo ne peut pas dépasser 20 caractères",
+    "joinTicketInvalid": "Votre demande a expiré, saisissez à nouveau le PIN",
+    "sessionFailed": "Impossible de démarrer une session, rechargez la page",
+    "tokenInvalid": "Jeton de session invalide",
+    "tokenMissing": "Jeton de session manquant",
+    "unauthorized": "Vous n'êtes pas autorisé",
+    "usernameTooLong": "Le pseudo ne peut pas dépasser 24 caractères",
     "usernameTooShort": "Le pseudo doit faire au moins 4 caractères"
   },
   "game": {
+    "alreadyStarted": "La partie a déjà commencé",
     "expired": "La partie a expiré",
+    "invalidAutoAdvanceDelay": "Le délai doit être compris entre 3 et 600 secondes",
     "kickedByManager": "Vous avez été expulsé par le manager",
+    "locked": "Partie verrouillée",
     "managerAlreadyConnected": "Un manager est déjà connecté",
+    "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",
     "managerDisconnected": "Le manager s'est déconnecté",
     "noPlayersConnected": "Aucun joueur connecté",
-    "managerCannotJoin": "Vous ne pouvez pas rejoindre votre propre partie",
     "notFound": "Partie introuvable",
     "playerAlreadyConnected": "Ce joueur est déjà connecté"
   },
+  "invalidRequest": "Requête invalide",
   "manager": {
     "failedToReadConfig": "Impossible de lire la configuration",
     "invalidPassword": "Mot de passe invalide",
@@ -26,20 +39,41 @@
   },
   "quizz": {
     "answerEmpty": "Une réponse ne peut pas être vide",
+    "cooldownTooLong": "Le temps d'affichage de la question ne peut pas dépasser 15 secondes",
+    "cooldownTooShort": "Le temps d'affichage de la question doit être d'au moins 3 secondes",
     "failedToDelete": "Suppression du quizz a echoué",
     "failedToSave": "Le quizz est incomplet, vérifiez que chaque question a un titre et au moins une bonne réponse",
     "failedToUpdate": "La mise à jour du quizz a echoué",
     "invalidMediaUrl": "L'URL du média doit être une URL valide",
+    "maxPointsNegative": "Les points ne peuvent pas être négatifs",
     "noQuestions": "Un quizz doit avoir au moins une question",
+    "noSolution": "Choisissez au moins une bonne réponse",
     "notFound": "Quizz introuvable",
+    "penaltyNegative": "La pénalité ne peut pas être négative",
     "questionEmpty": "La question ne peut pas être vide",
     "subjectEmpty": "Le sujet ne peut pas être vide",
     "tooFewAnswers": "Une question doit avoir au moins 2 réponses",
-    "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses"
+    "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses",
+    "estimationInvalidRange": "Le maximum doit être supérieur au minimum",
+    "estimationSolutionOutOfRange": "La bonne réponse doit être comprise entre le minimum et le maximum",
+    "estimationStepInvalid": "Le pas doit être supérieur à 0",
+    "estimationMarginNegative": "La marge ne peut pas être négative",
+    "estimationInvalidOptions": "Les réglages de l'estimation sont manquants ou invalides"
+  },
+  "result": {
+    "notFound": "Résultat introuvable"
   },
   "route": {
     "back": "Retour à l'accueil",
     "description": "Une erreur inattendue s'est produite. Veuillez réessayer.",
     "title": "Une erreur est survenue"
+  },
+  "media": {
+    "invalidName": "Nom de média invalide",
+    "invalidType": "Fichier non pris en charge, importez une image, un fichier audio ou une vidéo",
+    "missingFile": "Aucun fichier envoyé",
+    "notFound": "Média introuvable",
+    "tooLarge": "Le fichier est trop volumineux",
+    "uploadFailed": "Échec de l'import du fichier"
   }
 }

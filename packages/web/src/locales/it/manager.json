@@ -35,7 +35,13 @@
       "points": "Punti"
     },
     "playerCount": "{{count}} giocatore/i",
-    "timeLimitSuffix": "s limite di tempo"
+    "timeLimitSuffix": "s limite di tempo",
+    "estimation": {
+      "answered": "Hanno risposto",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "Fuori dal margine",
+      "average": "Risposta media: {{value}}"
+    }
   },
   "tabs": {
     "play": "Gioca",

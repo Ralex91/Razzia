@@ -3,6 +3,10 @@
   "addQuestion": "Frage hinzufügen",
   "answersCountSuffix": " Antworten",
   "deleteQuestion": "Frage löschen",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Umfrage"
+  },
   "noQuestionYet": "Noch keine Fragen",
   "question": {
     "addMediaHint": "Füge ein Bild, Video oder Audio zu deiner Frage hinzu",
@@ -15,6 +19,9 @@
       "questionDisplayHint": "Dauer bevor Antworten erscheinen",
       "timings": "Zeiten",
       "answerMode": "Antwortmodus",
+      "category": "Kategorie",
+      "categoryPlaceholder": "z. B. Geografie",
+      "categoryHint": "Aufeinanderfolgende Fragen mit derselben Kategorie bilden eine Runde. Die Rangliste wird nur angezeigt, wenn sich die Kategorie ändert.",
       "scoring": "Bewertung",
       "maxPoints": "Max. Punkte",
       "maxPointsHint": "Maximale Punkte für eine richtige Antwort",
@@ -26,7 +33,25 @@
       "scoringMode.lenient": "Nachsichtig",
       "scoringModeHint.strict": "Punkte nur wenn alle richtigen Antworten gewählt und keine falschen",
       "scoringModeHint.balanced": "Teilpunkte: richtige Auswahlen minus falsche",
-      "scoringModeHint.lenient": "Punkte pro richtiger Antwort, keine Strafe für falsche"
+      "scoringModeHint.lenient": "Punkte pro richtiger Antwort, keine Strafe für falsche",
+      "estimation": {
+        "title": "Schätzung",
+        "inputMode": "Eingabeart",
+        "inputModes": {
+          "slider": "Schieberegler",
+          "input": "Freie Eingabe"
+        },
+        "inputModeHint": {
+          "slider": "Die Spieler wählen einen Wert mit einem Schieberegler zwischen den Grenzen",
+          "input": "Die Spieler geben eine Zahl zwischen den Grenzen ein"
+        },
+        "min": "Minimum",
+        "max": "Maximum",
+        "step": "Schrittweite",
+        "stepHint": "Genauigkeit des Schiebereglers und der erwarteten Antwort",
+        "margin": "Toleranz",
+        "marginHint": "Antworten innerhalb dieses Abstands zur richtigen Antwort bringen 100 % (exakt) bis 50 %. Außerhalb gibt es keine Punkte."
+      }
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -36,13 +61,39 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "URL eingeben...",
-    "placeholder": "Beginne deine Frage zu tippen..."
+    "placeholder": "Beginne deine Frage zu tippen...",
+    "estimation": {
+      "correctAnswer": "Richtige Antwort"
+    }
+  },
+  "questionHasErrors": "Diese Frage enthält Fehler",
+  "questionType": {
+    "single": "Einzelauswahl",
+    "multi": "Mehrfachauswahl",
+    "estimation": "Schätzung"
   },
   "quizzSaved": "Quiz erfolgreich gespeichert",
   "quizzUpdated": "Quiz erfolgreich aktualisiert",
-  "questionType": {
-    "single": "Einzelauswahl",
-    "multi": "Mehrfachauswahl"
-  },
-  "titleQuizzPlaceholder": "Quiz-Titel..."
+  "titleQuizzPlaceholder": "Quiz-Titel...",
+  "media": {
+    "delete": "Medium löschen",
+    "deleteConfirm": "\"{{name}}\" löschen? Fragen, die es in einem Quiz verwenden, verlieren ihr Medium.",
+    "library": "Mediathek",
+    "libraryEmpty": "Deine Mediathek ist leer",
+    "upload": "Hochladen",
+    "uploadHint": "Bilder, Audio oder Video, bis zu {{size}} MB",
+    "search": "Medien suchen...",
+    "filter": {
+      "all": "Alle"
+    },
+    "use": "Verwenden",
+    "dropHint": "Ziehe deine Bilder, Audio- und Videodateien hierher oder nutze die Schaltfläche Hochladen",
+    "dropHere": "Zum Hochladen loslassen",
+    "noResults": "Keine Medien entsprechen deiner Suche",
+    "fromUrl": "Über eine URL hinzufügen",
+    "view": {
+      "grid": "Rasteransicht",
+      "list": "Listenansicht"
+    }
+  }
 }

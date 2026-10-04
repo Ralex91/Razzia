@@ -15,6 +15,7 @@ export const STATUS = {
   SHOW_RESPONSES: "SHOW_RESPONSES",
   SHOW_LEADERBOARD: "SHOW_LEADERBOARD",
   FINISHED: "FINISHED",
+  SUMMARY: "SUMMARY",
   WAIT: "WAIT",
 } as const
 
@@ -22,7 +23,11 @@ export type Status = (typeof STATUS)[keyof typeof STATUS]
 
 export interface CommonStatusDataMap {
   SHOW_START: { time: number; subject: string }
-  SHOW_PREPARED: { totalAnswers: number; questionNumber: number }
+  SHOW_PREPARED: {
+    totalAnswers: number
+    questionNumber: number
+    questionType: QuestionType
+  }
   SHOW_QUESTION: {
     question: string
     media?: QuestionMedia
@@ -36,6 +41,7 @@ export interface CommonStatusDataMap {
     totalPlayer: number
     questionType: QuestionType
     options?: QuestionOptions
+    answersOnly: boolean
   }
   SHOW_RESULT: {
     correct: boolean
@@ -47,6 +53,7 @@ export interface CommonStatusDataMap {
   }
   WAIT: { text: string }
   FINISHED: { subject: string; top: Player[]; rank?: number }
+  SUMMARY: { subject: string; totalPlayers: number; totalQuestions: number }
 }
 
 interface ManagerExtraStatus {
@@ -54,9 +61,11 @@ interface ManagerExtraStatus {
   SHOW_RESPONSES: {
     question: string
     responses: Record<number, number>
-    solutions: number[]
+    solutions?: number[]
     answers: string[]
     media?: QuestionMedia
+    type: QuestionType
+    options?: QuestionOptions
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }

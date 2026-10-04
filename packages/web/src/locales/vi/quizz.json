@@ -3,6 +3,10 @@
   "addQuestion": "Thêm câu hỏi",
   "answersCountSuffix": " câu trả lời",
   "deleteQuestion": "Xóa câu hỏi",
+  "gameMode": {
+    "quiz": "Đố vui",
+    "survey": "Khảo sát"
+  },
   "noQuestionYet": "Chưa có câu hỏi",
   "question": {
     "addMediaHint": "Thêm ảnh, video hoặc âm thanh vào câu hỏi",
@@ -15,6 +19,9 @@
       "questionDisplayHint": "Thời gian trước khi hiện câu trả lời",
       "timings": "Thời gian",
       "answerMode": "Chế độ trả lời",
+      "category": "Chủ đề",
+      "categoryPlaceholder": "VD: Địa lý",
+      "categoryHint": "Các câu hỏi liên tiếp cùng chủ đề tạo thành một vòng. Bảng xếp hạng chỉ hiện khi chuyển sang chủ đề khác.",
       "scoring": "Tính điểm",
       "maxPoints": "Điểm tối đa",
       "maxPointsHint": "Điểm tối đa khi trả lời đúng",
@@ -26,7 +33,25 @@
       "scoringMode.lenient": "Dễ dàng",
       "scoringModeHint.strict": "Điểm đầy đủ chỉ khi chọn đủ đáp án đúng và không chọn đáp án sai",
       "scoringModeHint.balanced": "Điểm một phần: đáp án đúng, bị phạt đáp án sai",
-      "scoringModeHint.lenient": "Điểm theo từng đáp án đúng, không phạt đáp án sai"
+      "scoringModeHint.lenient": "Điểm theo từng đáp án đúng, không phạt đáp án sai",
+      "estimation": {
+        "title": "Ước lượng",
+        "inputMode": "Kiểu nhập",
+        "inputModes": {
+          "slider": "Thanh trượt",
+          "input": "Nhập tự do"
+        },
+        "inputModeHint": {
+          "slider": "Người chơi chọn giá trị bằng thanh trượt trong khoảng giới hạn",
+          "input": "Người chơi nhập một số trong khoảng giới hạn"
+        },
+        "min": "Tối thiểu",
+        "max": "Tối đa",
+        "step": "Bước nhảy",
+        "stepHint": "Độ chính xác của thanh trượt và đáp án mong đợi",
+        "margin": "Biên độ",
+        "marginHint": "Câu trả lời nằm trong khoảng này so với đáp án đúng được từ 100% (chính xác) đến 50% số điểm. Câu trả lời ngoài khoảng này không được điểm."
+      }
     },
     "deleteQuestion": "Xóa câu hỏi",
     "deleteQuestionConfirm": "Bạn có chắc muốn xóa câu hỏi này?",
@@ -36,13 +61,39 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Nhập URL...",
-    "placeholder": "Nhập câu hỏi của bạn..."
+    "placeholder": "Nhập câu hỏi của bạn...",
+    "estimation": {
+      "correctAnswer": "Đáp án đúng"
+    }
+  },
+  "questionHasErrors": "Câu hỏi này có lỗi",
+  "questionType": {
+    "single": "Chọn một đáp án",
+    "multi": "Chọn nhiều đáp án",
+    "estimation": "Ước lượng"
   },
   "quizzSaved": "Đã lưu trò chơi thành công",
   "quizzUpdated": "Đã cập nhật trò chơi thành công",
-  "questionType": {
-    "single": "Chọn một đáp án",
-    "multi": "Chọn nhiều đáp án"
-  },
-  "titleQuizzPlaceholder": "Tiêu đề trò chơi..."
+  "titleQuizzPlaceholder": "Tiêu đề trò chơi...",
+  "media": {
+    "delete": "Xóa media",
+    "deleteConfirm": "Xóa \"{{name}}\"? Các câu hỏi đang dùng media này trong mọi trò chơi sẽ mất media.",
+    "library": "Thư viện media",
+    "libraryEmpty": "Thư viện của bạn đang trống",
+    "upload": "Tải lên",
+    "uploadHint": "Hình ảnh, âm thanh hoặc video, tối đa {{size}} MB",
+    "search": "Tìm media...",
+    "filter": {
+      "all": "Tất cả"
+    },
+    "use": "Dùng",
+    "dropHint": "Thả hình ảnh, âm thanh và video vào đây, hoặc dùng nút Tải lên",
+    "dropHere": "Thả để tải lên",
+    "noResults": "Không có media nào khớp với tìm kiếm",
+    "fromUrl": "Thêm từ URL",
+    "view": {
+      "grid": "Dạng lưới",
+      "list": "Dạng danh sách"
+    }
+  }
 }

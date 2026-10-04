@@ -7,5 +7,14 @@ export const type = QUESTION_TYPES.SINGLE
 export const scoring: ScoringFn = (
   question: Question,
   answerIds: number[],
-): number =>
-  answerIds.length === 1 && question.solutions.includes(answerIds[0]) ? 1 : 0
+): number => {
+  if (answerIds.length !== 1) {
+    return 0
+  }
+
+  if (!question.solutions?.includes(answerIds[0])) {
+    return 0
+  }
+
+  return 1
+}

@@ -3,6 +3,10 @@
   "addQuestion": "Aggiungi domanda",
   "answersCountSuffix": " risposte",
   "deleteQuestion": "Elimina domanda",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Sondaggio"
+  },
   "noQuestionYet": "Nessuna domanda ancora",
   "question": {
     "addMediaHint": "Aggiungi un'immagine, video o audio alla tua domanda",
@@ -15,6 +19,9 @@
       "questionDisplayHint": "Durata prima che appaiano le risposte",
       "timings": "Tempi",
       "answerMode": "Modalità risposta",
+      "category": "Categoria",
+      "categoryPlaceholder": "es. Geografia",
+      "categoryHint": "Le domande consecutive con la stessa categoria formano un round. La classifica viene mostrata solo quando la categoria cambia.",
       "scoring": "Punteggio",
       "maxPoints": "Punti max",
       "maxPointsHint": "Punti massimi assegnati per una risposta corretta",
@@ -26,7 +33,25 @@
       "scoringMode.lenient": "Permissivo",
       "scoringModeHint.strict": "Punti solo se tutte le risposte corrette sono selezionate e nessuna sbagliata",
       "scoringModeHint.balanced": "Punti parziali: selezioni corrette meno quelle sbagliate",
-      "scoringModeHint.lenient": "Punti per risposta corretta, nessuna penalità per quelle sbagliate"
+      "scoringModeHint.lenient": "Punti per risposta corretta, nessuna penalità per quelle sbagliate",
+      "estimation": {
+        "title": "Stima",
+        "inputMode": "Tipo di inserimento",
+        "inputModes": {
+          "slider": "Cursore",
+          "input": "Inserimento libero"
+        },
+        "inputModeHint": {
+          "slider": "I giocatori scelgono un valore con un cursore tra i limiti",
+          "input": "I giocatori digitano un numero tra i limiti"
+        },
+        "min": "Minimo",
+        "max": "Massimo",
+        "step": "Passo",
+        "stepHint": "Precisione del cursore e della risposta attesa",
+        "margin": "Margine",
+        "marginHint": "Le risposte entro questa distanza dalla risposta corretta valgono dal 100% (esatta) al 50%. Fuori dal margine non valgono nulla."
+      }
     },
     "deleteQuestion": "Elimina domanda",
     "deleteQuestionConfirm": "Sei sicuro di voler eliminare questa domanda?",
@@ -36,13 +61,39 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Inserisci URL...",
-    "placeholder": "Inizia a scrivere la tua domanda..."
+    "placeholder": "Inizia a scrivere la tua domanda...",
+    "estimation": {
+      "correctAnswer": "Risposta corretta"
+    }
+  },
+  "questionHasErrors": "Questa domanda contiene errori",
+  "questionType": {
+    "single": "Scelta singola",
+    "multi": "Scelta multipla",
+    "estimation": "Stima"
   },
   "quizzSaved": "Quiz salvato con successo",
   "quizzUpdated": "Quiz aggiornato con successo",
-  "questionType": {
-    "single": "Scelta singola",
-    "multi": "Scelta multipla"
-  },
-  "titleQuizzPlaceholder": "Titolo del quiz..."
+  "titleQuizzPlaceholder": "Titolo del quiz...",
+  "media": {
+    "delete": "Elimina file",
+    "deleteConfirm": "Eliminare \"{{name}}\"? Le domande che lo usano in qualsiasi quiz perderanno il loro contenuto multimediale.",
+    "library": "Libreria multimediale",
+    "libraryEmpty": "La tua libreria è vuota",
+    "upload": "Carica",
+    "uploadHint": "Immagini, audio o video, fino a {{size}} MB",
+    "search": "Cerca file...",
+    "filter": {
+      "all": "Tutti"
+    },
+    "use": "Usa",
+    "dropHint": "Trascina qui immagini, audio e video, oppure usa il pulsante Carica",
+    "dropHere": "Rilascia per caricare",
+    "noResults": "Nessun file corrisponde alla ricerca",
+    "fromUrl": "Aggiungi da un URL",
+    "view": {
+      "grid": "Vista griglia",
+      "list": "Vista elenco"
+    }
+  }
 }

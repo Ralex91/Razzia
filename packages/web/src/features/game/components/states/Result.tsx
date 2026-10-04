@@ -14,21 +14,15 @@ interface Props {
 const Result = ({
   data: { correct, message, points, myPoints, rank, aheadOfMe },
 }: Props) => {
-  const player = usePlayerStore()
+  const { updatePlayer } = usePlayerStore()
   const { t } = useTranslation()
-  const rankKeyMap: Record<number, string> = {
-    1: "game:rank.1",
-    2: "game:rank.2",
-    3: "game:rank.3",
-  }
-  const rankKey = rankKeyMap[rank] ?? "game:rank.other"
 
   const [sfxResults] = useSound(SFX.RESULTS_SOUND, {
     volume: 0.2,
   })
 
   useEffect(() => {
-    player.updatePoints(myPoints)
+    updatePlayer(({ player }) => ({ player: { ...player, points: myPoints } }))
 
     sfxResults()
     // oxlint-disable-next-line
@@ -46,7 +40,7 @@ const Result = ({
       </h2>
       <p className="mt-1 text-xl font-bold text-white drop-shadow-lg">
         {t("game:resultTop")}
-        {t(rankKey, { rank })}
+        {t("game:rank", { count: rank, ordinal: true })}
         {aheadOfMe ? `${t("game:resultBehind")}${aheadOfMe}` : ""}
       </p>
       {correct && (

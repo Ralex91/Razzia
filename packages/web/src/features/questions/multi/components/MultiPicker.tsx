@@ -7,7 +7,7 @@ const MultiSolutionPicker = ({ index, isSelected }: SolutionPickerProps) => {
   const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
 
   const handleToggle = () => {
-    const current = currentQuestion.solutions
+    const current = currentQuestion.solutions ?? []
 
     if (current.includes(index)) {
       const next = current.filter((s) => s !== index)
@@ -25,7 +25,7 @@ const MultiSolutionPicker = ({ index, isSelected }: SolutionPickerProps) => {
       onClick={handleToggle}
       className={clsx(
         "flex size-6 shrink-0 items-center justify-center rounded-md transition-colors",
-        isSelected ? "bg-white text-green-600" : "bg-white/20",
+        isSelected ? "text-correct bg-white" : "bg-white/20",
       )}
     >
       {isSelected && <Check className="size-4 stroke-5" />}

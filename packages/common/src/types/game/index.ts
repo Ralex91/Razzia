@@ -1,8 +1,13 @@
 import type {
+  ACCEPTED_MEDIA_TYPES,
+  ESTIMATION_INPUT_MODES,
   MEDIA_TYPES,
   QUESTION_TYPES,
+  QUIZZ_MODES,
   SCORING_MODES,
 } from "@razzia/common/constants"
+
+export type QuizzMode = (typeof QUIZZ_MODES)[keyof typeof QUIZZ_MODES]
 
 export type QuestionType = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES]
 
@@ -12,7 +17,18 @@ export interface MultiQuestionOptions {
   scoringMode: ScoringMode
 }
 
-export type QuestionOptions = MultiQuestionOptions
+export type EstimationInputMode =
+  (typeof ESTIMATION_INPUT_MODES)[keyof typeof ESTIMATION_INPUT_MODES]
+
+export interface EstimationQuestionOptions {
+  inputMode: EstimationInputMode
+  min: number
+  max: number
+  step: number
+  margin: number
+}
+
+export type QuestionOptions = MultiQuestionOptions | EstimationQuestionOptions
 
 export interface Player {
   id: string
@@ -30,20 +46,29 @@ export interface Answer {
 }
 
 export type QuestionMediaType =
-  | (typeof MEDIA_TYPES)[keyof typeof MEDIA_TYPES]
-  | undefined
+  (typeof MEDIA_TYPES)[keyof typeof MEDIA_TYPES] | undefined
 
 export interface QuestionMedia {
   type?: QuestionMediaType
   url: string
 }
 
+export type UploadedMediaType =
+  (typeof ACCEPTED_MEDIA_TYPES)[keyof typeof ACCEPTED_MEDIA_TYPES]["type"]
+
+export interface UploadedMedia {
+  name: string
+  url: string
+  type: UploadedMediaType
+}
+
 export interface Question {
   type: QuestionType
   question: string
+  category?: string
   media?: QuestionMedia
   answers: string[]
-  solutions: number[]
+  solutions?: number[]
   cooldown: number
   time: number
   maxPoints?: number
@@ -52,6 +77,7 @@ export interface Question {
 }
 
 export interface Quizz {
+  gameMode: QuizzMode
   subject: string
   questions: Question[]
 }
@@ -61,6 +87,18 @@ export type QuizzWithId = Quizz & { id: string }
 export interface QuizzMeta {
   id: string
   subject: string
+}
+
+export interface AutoAdvanceSettings {
+  enable: boolean
+  responsesDelay: number
+  leaderboardDelay: number
+}
+
+export interface GameSettings {
+  generatedUsernames: boolean
+  answersOnly: boolean
+  autoAdvance: AutoAdvanceSettings
 }
 
 export interface GameUpdateQuestion {
@@ -85,6 +123,7 @@ export interface GameResultPlayer {
 
 export interface GameResult {
   id: string
+  gameMode: QuizzMode
   subject: string
   date: string
   players: GameResultPlayer[]
@@ -93,6 +132,7 @@ export interface GameResult {
 
 export interface GameResultMeta {
   id: string
+  gameMode: QuizzMode
   subject: string
   date: string
   playerCount: number

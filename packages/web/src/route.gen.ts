@@ -11,13 +11,13 @@
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as authLayoutRouteImport } from './pages/(auth)/layout'
 import { Route as authIndexRouteImport } from './pages/(auth)/index'
-import { Route as PartyGameIdRouteImport } from './pages/party/$gameId'
 import { Route as ManagerConfigRouteImport } from './pages/manager/config'
 import { Route as ManagerQuizzLayoutRouteImport } from './pages/manager/quizz/layout'
-import { Route as ManagerQuizzIndexRouteImport } from './pages/manager/quizz/index'
+import { Route as PartyGameIdRouteImport } from './pages/party/$gameId'
 import { Route as authManagerIndexRouteImport } from './pages/(auth)/manager/index'
-import { Route as PartyManagerGameIdRouteImport } from './pages/party/manager/$gameId'
+import { Route as ManagerQuizzIndexRouteImport } from './pages/manager/quizz/index'
 import { Route as ManagerQuizzQuizzIdRouteImport } from './pages/manager/quizz/$quizzId'
+import { Route as PartyManagerGameIdRouteImport } from './pages/party/manager/$gameId'
 
 const authLayoutRoute = authLayoutRouteImport.update({
   id: '/(auth)',
@@ -27,11 +27,6 @@ const authIndexRoute = authIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => authLayoutRoute,
-} as any)
-const PartyGameIdRoute = PartyGameIdRouteImport.update({
-  id: '/party/$gameId',
-  path: '/party/$gameId',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const ManagerConfigRoute = ManagerConfigRouteImport.update({
   id: '/manager/config',
@@ -43,25 +38,30 @@ const ManagerQuizzLayoutRoute = ManagerQuizzLayoutRouteImport.update({
   path: '/manager/quizz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ManagerQuizzIndexRoute = ManagerQuizzIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ManagerQuizzLayoutRoute,
+const PartyGameIdRoute = PartyGameIdRouteImport.update({
+  id: '/party/$gameId',
+  path: '/party/$gameId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const authManagerIndexRoute = authManagerIndexRouteImport.update({
   id: '/manager/',
   path: '/manager/',
   getParentRoute: () => authLayoutRoute,
 } as any)
-const PartyManagerGameIdRoute = PartyManagerGameIdRouteImport.update({
-  id: '/party/manager/$gameId',
-  path: '/party/manager/$gameId',
-  getParentRoute: () => rootRouteImport,
+const ManagerQuizzIndexRoute = ManagerQuizzIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ManagerQuizzLayoutRoute,
 } as any)
 const ManagerQuizzQuizzIdRoute = ManagerQuizzQuizzIdRouteImport.update({
   id: '/$quizzId',
   path: '/$quizzId',
   getParentRoute: () => ManagerQuizzLayoutRoute,
+} as any)
+const PartyManagerGameIdRoute = PartyManagerGameIdRouteImport.update({
+  id: '/party/manager/$gameId',
+  path: '/party/manager/$gameId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -152,13 +152,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authIndexRouteImport
       parentRoute: typeof authLayoutRoute
     }
-    '/party/$gameId': {
-      id: '/party/$gameId'
-      path: '/party/$gameId'
-      fullPath: '/party/$gameId'
-      preLoaderRoute: typeof PartyGameIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/manager/config': {
       id: '/manager/config'
       path: '/manager/config'
@@ -173,12 +166,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManagerQuizzLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/manager/quizz/': {
-      id: '/manager/quizz/'
-      path: '/'
-      fullPath: '/manager/quizz/'
-      preLoaderRoute: typeof ManagerQuizzIndexRouteImport
-      parentRoute: typeof ManagerQuizzLayoutRoute
+    '/party/$gameId': {
+      id: '/party/$gameId'
+      path: '/party/$gameId'
+      fullPath: '/party/$gameId'
+      preLoaderRoute: typeof PartyGameIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(auth)/manager/': {
       id: '/(auth)/manager/'
@@ -187,12 +180,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authManagerIndexRouteImport
       parentRoute: typeof authLayoutRoute
     }
-    '/party/manager/$gameId': {
-      id: '/party/manager/$gameId'
-      path: '/party/manager/$gameId'
-      fullPath: '/party/manager/$gameId'
-      preLoaderRoute: typeof PartyManagerGameIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/manager/quizz/': {
+      id: '/manager/quizz/'
+      path: '/'
+      fullPath: '/manager/quizz/'
+      preLoaderRoute: typeof ManagerQuizzIndexRouteImport
+      parentRoute: typeof ManagerQuizzLayoutRoute
     }
     '/manager/quizz/$quizzId': {
       id: '/manager/quizz/$quizzId'
@@ -200,6 +193,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/manager/quizz/$quizzId'
       preLoaderRoute: typeof ManagerQuizzQuizzIdRouteImport
       parentRoute: typeof ManagerQuizzLayoutRoute
+    }
+    '/party/manager/$gameId': {
+      id: '/party/manager/$gameId'
+      path: '/party/manager/$gameId'
+      fullPath: '/party/manager/$gameId'
+      preLoaderRoute: typeof PartyManagerGameIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }

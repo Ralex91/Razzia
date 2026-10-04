@@ -1,5 +1,10 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { Player, Quizz } from "@razzia/common/types/game"
+import { createDefaultGameSettings, EVENTS } from "@razzia/common/constants"
+import type {
+  GameSettings,
+  Player,
+  Quizz,
+  QuizzMode,
+} from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import {
   STATUS,
@@ -12,6 +17,7 @@ import { PlayerManager } from "@razzia/socket/services/game/player-manager"
 import { RoundManager } from "@razzia/socket/services/game/round-manager"
 import Registry from "@razzia/socket/services/registry"
 import { createInviteCode } from "@razzia/socket/utils/game"
+import { createNickname } from "@razzia/socket/utils/nickname"
 import { getClientId } from "@razzia/socket/utils/socket"
 import { v7 as uuid } from "uuid"
 
@@ -20,6 +26,10 @@ const registry = Registry.getInstance()
 class Game {
   readonly gameId: string
   readonly inviteCode: string
+  readonly gameMode: QuizzMode
+
+  private _settings: GameSettings = createDefaultGameSettings()
+  private _locked = false
 
   private readonly io: Server
   private readonly _manager: {
@@ -44,25 +54,25 @@ class Game {
     { name: Status; data: StatusDataMap[Status] }
   >()
 
-  constructor(io: Server, socket: Socket, quizz: Quizz) {
-    const clientId = getClientId(socket)
-
+  constructor(io: Server, managerClientId: string, quizz: Quizz) {
     this.io = io
     this.gameId = uuid()
     this.inviteCode = createInviteCode()
+    this.gameMode = quizz.gameMode
     this._manager = {
-      id: socket.id,
-      clientId,
-      connected: true,
+      id: "",
+      clientId: managerClientId,
+      connected: false,
     }
 
     this.cooldown = new CooldownTimer(io, this.gameId)
 
-    this.playerManager = new PlayerManager(
+    this.playerManager = new PlayerManager({
       io,
-      this.gameId,
-      () => this._manager.id,
-    )
+      gameId: this.gameId,
+      gameMode: quizz.gameMode,
+      getManagerId: () => this._manager.id,
+    })
 
     this.round = new RoundManager({
       quizz,
@@ -78,12 +88,7 @@ class Game {
         this.managerStatus = null
       },
       onGameFinished: saveResult,
-    })
-
-    socket.join(this.gameId)
-    socket.emit(EVENTS.MANAGER.GAME_CREATED, {
-      gameId: this.gameId,
-      inviteCode: this.inviteCode,
+      getSettings: () => this._settings,
     })
 
     console.log(
@@ -101,6 +106,29 @@ class Game {
 
   get started(): boolean {
     return this.round.isStarted()
+  }
+
+  get settings(): GameSettings {
+    return this._settings
+  }
+
+  updateSettings(settings: Partial<GameSettings>): boolean {
+    if (this.started) {
+      return false
+    }
+
+    this._settings = { ...this._settings, ...settings }
+
+    return true
+  }
+
+  get locked(): boolean {
+    return this._locked
+  }
+
+  setLocked(locked: boolean) {
+    this._locked = locked
+    this.io.to(this._manager.id).emit(EVENTS.MANAGER.LOCK_UPDATED, locked)
   }
 
   // ── Status broadcasting ──────────────────────────────────────────────────
@@ -129,12 +157,31 @@ class Game {
 
   // Player actions
 
-  join(socket: Socket, username: string) {
-    this.playerManager.join(socket, username)
+  join(socket: Socket, username?: string): string | null {
+    if (this._locked) {
+      return "errors:game.locked"
+    }
+
+    if (this._settings.generatedUsernames) {
+      const taken = this.playerManager.getAll().map((player) => player.username)
+
+      return this.playerManager.join(socket, createNickname(taken))
+    }
+
+    if (!username) {
+      return "errors:auth.usernameTooShort"
+    }
+
+    return this.playerManager.join(socket, username)
   }
 
-  kickPlayer(socket: Socket, playerId: string) {
-    if (this.playerManager.kick(socket, playerId)) {
+  dispose() {
+    this.round.clearAutoAdvance()
+    this.cooldown.abort()
+  }
+
+  kickPlayer(playerId: string) {
+    if (this.playerManager.kick(playerId)) {
       this.playerStatus.delete(playerId)
     }
   }
@@ -142,7 +189,7 @@ class Game {
   // Reconnect
 
   reconnect(socket: Socket) {
-    const { clientId } = socket.handshake.auth
+    const clientId = getClientId(socket)
 
     if (this._manager.clientId === clientId) {
       this.reconnectManager(socket)
@@ -164,14 +211,29 @@ class Game {
     this._manager.id = socket.id
     this._manager.connected = true
 
-    const status = this.managerStatus ??
-      this.lastBroadcastStatus ?? {
-        name: STATUS.WAIT,
-        data: { text: "game:waitingForPlayers" },
+    const status = (() => {
+      if (this.managerStatus) {
+        return this.managerStatus
       }
+
+      if (this.lastBroadcastStatus) {
+        return this.lastBroadcastStatus
+      }
+
+      return {
+        name: STATUS.SHOW_ROOM,
+        data: {
+          text: "game:waitingForPlayers",
+          inviteCode: this.inviteCode,
+        },
+      }
+    })()
 
     socket.emit(EVENTS.MANAGER.SUCCESS_RECONNECT, {
       gameId: this.gameId,
+      inviteCode: this.inviteCode,
+      settings: this._settings,
+      locked: this._locked,
       currentQuestion: this.round.getReconnectInfo(),
       status,
       players: this.playerManager.getAll(),
@@ -217,6 +279,7 @@ class Game {
 
     socket.emit(EVENTS.PLAYER.SUCCESS_RECONNECT, {
       gameId: this.gameId,
+      gameMode: this.gameMode,
       currentQuestion: this.round.getReconnectInfo(),
       status,
       player: { username: player.username, points: player.points },
@@ -264,16 +327,8 @@ class Game {
     this.round.selectAnswer(socket, answerIds)
   }
 
-  nextRound(socket: Socket) {
-    this.round.nextQuestion(socket)
-  }
-
-  abortRound(socket: Socket) {
-    this.round.abortQuestion(socket)
-  }
-
-  showLeaderboard(socket: Socket) {
-    this.round.showLeaderboard(socket)
+  advance() {
+    this.round.advance()
   }
 }
 

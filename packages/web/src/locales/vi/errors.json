@@ -1,19 +1,32 @@
 {
+  "api": {
+    "notFound": "Tài nguyên được yêu cầu không tồn tại",
+    "serverError": "Máy chủ gặp lỗi, vui lòng thử lại"
+  },
   "auth": {
     "invalidInviteCode": "Mã tham dự không hợp lệ",
-    "usernameTooLong": "Tên người dùng không được vượt quá 20 ký tự",
+    "joinTicketInvalid": "Yêu cầu tham gia đã hết hạn, vui lòng nhập lại mã PIN",
+    "sessionFailed": "Không thể bắt đầu phiên, vui lòng tải lại trang",
+    "tokenInvalid": "Mã phiên không hợp lệ",
+    "tokenMissing": "Thiếu mã phiên",
+    "unauthorized": "Bạn không có quyền truy cập",
+    "usernameTooLong": "Tên người dùng không được vượt quá 24 ký tự",
     "usernameTooShort": "Tên người dùng không được ngắn hơn 4 ký tự"
   },
   "game": {
+    "alreadyStarted": "Trò chơi đã bắt đầu",
     "expired": "Trò chơi đã hết hạn",
+    "invalidAutoAdvanceDelay": "Thời gian chờ phải từ 3 đến 600 giây",
     "kickedByManager": "Bạn đã bị quản trị viên mời ra khỏi phòng",
+    "locked": "Trò chơi đã bị khóa",
     "managerAlreadyConnected": "Quản trị viên đã kết nối",
+    "managerCannotJoin": "Bạn không thể tham gia trò chơi của chính mình",
     "managerDisconnected": "Quản trị viên đã ngắt kết nối",
     "noPlayersConnected": "Không có người chơi nào kết nối",
-    "managerCannotJoin": "Bạn không thể tham gia trò chơi của chính mình",
     "notFound": "Không tìm thấy trò chơi",
     "playerAlreadyConnected": "Người chơi đã kết nối"
   },
+  "invalidRequest": "Yêu cầu không hợp lệ",
   "manager": {
     "failedToReadConfig": "Không đọc được cấu hình trò chơi",
     "invalidPassword": "Mật khẩu không hợp lệ",
@@ -26,20 +39,41 @@
   },
   "quizz": {
     "answerEmpty": "Đáp án không được để trống",
+    "cooldownTooLong": "Thời gian hiển thị câu hỏi không được vượt quá 15 giây",
+    "cooldownTooShort": "Thời gian hiển thị câu hỏi phải ít nhất 3 giây",
     "failedToDelete": "Xóa trò chơi thất bại",
     "failedToSave": "Trò chơi chưa hoàn chỉnh, hãy đảm bảo mọi câu hỏi đều có tiêu đề và ít nhất một đáp án đúng",
     "failedToUpdate": "Cập nhật trò chơi thất bại",
     "invalidMediaUrl": "URL media phải là một URL hợp lệ",
+    "maxPointsNegative": "Số điểm không được âm",
     "noQuestions": "Trò chơi phải có ít nhất một câu hỏi",
+    "noSolution": "Chọn ít nhất một đáp án đúng",
     "notFound": "Không tìm thấy trò chơi",
+    "penaltyNegative": "Điểm phạt không được âm",
     "questionEmpty": "Câu hỏi không được để trống",
     "subjectEmpty": "Chủ đề không được để trống",
     "tooFewAnswers": "Một câu hỏi phải có ít nhất 2 câu trả lời",
-    "tooManyAnswers": "Một câu hỏi không được có quá 4 câu trả lời"
+    "tooManyAnswers": "Một câu hỏi không được có quá 4 câu trả lời",
+    "estimationInvalidRange": "Giá trị tối đa phải lớn hơn giá trị tối thiểu",
+    "estimationSolutionOutOfRange": "Đáp án đúng phải nằm giữa giá trị tối thiểu và tối đa",
+    "estimationStepInvalid": "Bước nhảy phải lớn hơn 0",
+    "estimationMarginNegative": "Biên độ không được âm",
+    "estimationInvalidOptions": "Cài đặt ước lượng bị thiếu hoặc không hợp lệ"
+  },
+  "result": {
+    "notFound": "Không tìm thấy kết quả"
   },
   "route": {
     "back": "Về trang chủ",
     "description": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.",
     "title": "Đã có lỗi xảy ra"
+  },
+  "media": {
+    "invalidName": "Tên media không hợp lệ",
+    "invalidType": "Tệp không được hỗ trợ, hãy tải lên hình ảnh, âm thanh hoặc video",
+    "missingFile": "Chưa có tệp nào được gửi",
+    "notFound": "Không tìm thấy media",
+    "tooLarge": "Tệp quá lớn",
+    "uploadFailed": "Tải tệp lên thất bại"
   }
 }

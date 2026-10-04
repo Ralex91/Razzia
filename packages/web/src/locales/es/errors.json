@@ -1,19 +1,32 @@
 {
+  "api": {
+    "notFound": "El recurso solicitado no existe",
+    "serverError": "El servidor encontró un error, inténtalo de nuevo"
+  },
   "auth": {
     "invalidInviteCode": "Código de invitación inválido",
-    "usernameTooLong": "El nombre de usuario no puede superar los 20 caracteres",
+    "joinTicketInvalid": "Tu solicitud ha caducado, introduce el PIN de nuevo",
+    "sessionFailed": "No se pudo iniciar la sesión, recarga la página",
+    "tokenInvalid": "Token de sesión inválido",
+    "tokenMissing": "Falta el token de sesión",
+    "unauthorized": "No estás autorizado",
+    "usernameTooLong": "El nombre de usuario no puede superar los 24 caracteres",
     "usernameTooShort": "El nombre de usuario no puede tener menos de 4 caracteres"
   },
   "game": {
+    "alreadyStarted": "La partida ya ha comenzado",
     "expired": "Partida expirada",
+    "invalidAutoAdvanceDelay": "El retraso debe estar entre 3 y 600 segundos",
     "kickedByManager": "Has sido expulsado por el administrador",
+    "locked": "Partida bloqueada",
     "managerAlreadyConnected": "El administrador ya está conectado",
+    "managerCannotJoin": "No puedes unirte a tu propio juego",
     "managerDisconnected": "El administrador se ha desconectado",
     "noPlayersConnected": "No hay jugadores conectados",
-    "managerCannotJoin": "No puedes unirte a tu propio juego",
     "notFound": "Partida no encontrada",
     "playerAlreadyConnected": "El jugador ya está conectado"
   },
+  "invalidRequest": "Solicitud inválida",
   "manager": {
     "failedToReadConfig": "Error al leer la configuración del juego",
     "invalidPassword": "Contraseña incorrecta",
@@ -26,20 +39,41 @@
   },
   "quizz": {
     "answerEmpty": "Una respuesta no puede estar vacía",
+    "cooldownTooLong": "El tiempo de visualización de la pregunta no puede superar los 15 segundos",
+    "cooldownTooShort": "El tiempo de visualización de la pregunta debe ser de al menos 3 segundos",
     "failedToDelete": "Error al eliminar el cuestionario",
     "failedToSave": "El cuestionario está incompleto, asegúrate de que todas las preguntas tengan un título y al menos una respuesta correcta",
     "failedToUpdate": "Error al actualizar el cuestionario",
     "invalidMediaUrl": "La URL del medio debe ser una URL válida",
+    "maxPointsNegative": "Los puntos no pueden ser negativos",
     "noQuestions": "Un cuestionario debe tener al menos una pregunta",
+    "noSolution": "Elige al menos una respuesta correcta",
     "notFound": "Cuestionario no encontrado",
+    "penaltyNegative": "La penalización no puede ser negativa",
     "questionEmpty": "La pregunta no puede estar vacía",
     "subjectEmpty": "El tema no puede estar vacío",
     "tooFewAnswers": "Una pregunta debe tener al menos 2 respuestas",
-    "tooManyAnswers": "Una pregunta no puede tener más de 4 respuestas"
+    "tooManyAnswers": "Una pregunta no puede tener más de 4 respuestas",
+    "estimationInvalidRange": "El máximo debe ser mayor que el mínimo",
+    "estimationSolutionOutOfRange": "La respuesta correcta debe estar entre el mínimo y el máximo",
+    "estimationStepInvalid": "El paso debe ser mayor que 0",
+    "estimationMarginNegative": "El margen no puede ser negativo",
+    "estimationInvalidOptions": "La configuración de la estimación falta o no es válida"
+  },
+  "result": {
+    "notFound": "Resultado no encontrado"
   },
   "route": {
     "back": "Volver al inicio",
     "description": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
     "title": "Algo salió mal"
+  },
+  "media": {
+    "invalidName": "Nombre de archivo no válido",
+    "invalidType": "Archivo no compatible, sube una imagen, un audio o un vídeo",
+    "missingFile": "No se ha enviado ningún archivo",
+    "notFound": "Archivo no encontrado",
+    "tooLarge": "El archivo es demasiado grande",
+    "uploadFailed": "No se pudo subir el archivo"
   }
 }

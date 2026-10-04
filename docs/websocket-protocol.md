@@ -1,21 +1,47 @@
 # WebSocket protocol
 
-Razzia's client-server communication runs entirely over [Socket.IO](https://socket.io/), on the `/ws` path. This document describes the **player-facing** part of the protocol, so you can build an alternative client, for example firmware for an ESP32-based physical buzzer for kids, instead of using the web UI.
+Razzia's live game communication runs over [Socket.IO](https://socket.io/), on the `/ws` path. Everything that is not live game state — identity, quiz storage, results, game creation — is a plain HTTP API under `/api` (see [HTTP API](http-api.md)). This document describes the **player-facing** part of the socket protocol, so you can build an alternative client, for example firmware for an ESP32-based physical buzzer for kids, instead of using the web UI.
+
+A custom client now makes **one HTTP call before connecting**, to obtain a session token.
 
 > This protocol is internal and not version-stabilized. It can change between releases without a deprecation period. Check this file against the version you deploy.
 
 ## Connecting
 
+The handshake carries a **signed session token**, not a self-declared id. Get one once and persist it (e.g. in an ESP32's NVS flash):
+
+```
+POST /api/auth/session   {}          ->  { token, clientId, role, expiresAt }
+POST /api/auth/session   { token }   ->  the same token, while it is still valid
+```
+
+Then connect:
+
 ```js
 io("http://<host>:<port>", {
   path: "/ws",
-  auth: { clientId },
+  auth: { token },
 })
 ```
 
-- `clientId` is a stable, random identifier your device generates once and persists (e.g. in flash on an ESP32). It's what lets a player rejoin their seat in the game after a disconnect (Wi-Fi drop, reboot, etc). Reusing the same `clientId` after a disconnect triggers the reconnect flow instead of creating a new player.
-- There's no HTTP auth for players. Anyone who knows a 6-character invite code can join a room, so treat the invite code as a room key.
+- The token's `clientId` is the identity the server trusts: it is what lets a player rejoin their seat after a disconnect (Wi-Fi drop, reboot, etc). Reconnecting with the same token triggers the reconnect flow instead of creating a new player. A `clientId` you generate yourself is no longer accepted.
+- Player tokens last 30 days. **Re-POST the stored token to `/api/auth/session` before every connection**: an unexpired token comes back unchanged, and an expired one is replaced by a fresh token carrying the same `clientId`, so the seat survives.
+- Anyone who knows a 6-character invite code can still join a room, so treat the invite code as a room key.
 - The server doesn't override Socket.IO's default keepalive (`pingInterval` 25s / `pingTimeout` 20s). Your client library needs to answer Engine.IO pings within that window or it will be dropped as disconnected.
+
+### Handshake rejections
+
+If the token is missing or unusable the connection is refused with `connect_error`. The error carries `message` (an i18n key) and `data.code`:
+
+| `data.code`     | Meaning                                                | What to do                                      |
+| --------------- | ------------------------------------------------------ | ----------------------------------------------- |
+| `TOKEN_MISSING` | No `auth.token` was sent                               | Call `POST /api/auth/session`, then reconnect   |
+| `TOKEN_EXPIRED` | Valid signature, past `exp`                            | Re-POST the token to refresh it, then reconnect |
+| `TOKEN_INVALID` | Bad signature or malformed (e.g. the server restarted) | Discard it, POST an empty body, then reconnect  |
+
+> **Socket.IO does not retry after these.** The transport itself connected, so the client marks the namespace inactive and stays disconnected until _you_ call `connect()` again. Cap your retries (the web client allows two) so a permanently failing mint cannot spin.
+
+The token is verified **only at the handshake**, never per event, so a token that expires mid-game does not interrupt the game.
 
 ## Message envelope
 
@@ -35,48 +61,66 @@ where `name` is one of the status constants below and `data` is the payload for 
 
 ## Joining a game as a player
 
-1. **Check the PIN** (optional, used by the web UI to validate before showing the join form):
+1. **Check the PIN** (optional, used by the web UI to validate before showing the join form). No authentication needed:
 
    ```
-   emit  player:checkPin        <inviteCode: string>
-   on    player:checkPinResult  { valid: boolean }
+   POST /api/games/check   { "inviteCode": "..." }
+   ->  { generatedUsernames: boolean }
    ```
 
-2. **Enter the room**:
+   `generatedUsernames` tells you whether the host has the nickname generator on. If it is `true`, do not ask for a name — the server picks one. Errors: `404 errors:game.notFound` (unknown code), `403 errors:game.locked` (the host has closed the room: new players are refused until it is unlocked).
+
+2. **Ask for a seat over HTTP**, with your session token as a bearer:
 
    ```
-   emit player:join <inviteCode: string>
+   POST /api/games/join   { "inviteCode": "...", "username": "..." }
+   ->  { gameId, ticket, username }
    ```
 
-   - `on game:successRoom <gameId: string>`: the invite code is valid and this `clientId` hasn't joined yet. Proceed to step 3.
-   - If this `clientId` already joined this game before (e.g. after a reconnect), the server reconnects the player automatically instead and emits `player:successReconnect` (see [Reconnecting](#reconnecting)).
-   - `on game:errorMessage <key: string>`: invalid/unknown invite code, or you are the manager's `clientId` trying to join your own game.
+   - `username` must be 1-24 characters ([validators/auth.ts](../packages/common/src/validators/auth.ts)). It is optional — and ignored — when the game generates nicknames, in which case the response `username` is `null` and you learn your name from `game:successJoin`.
+   - The **ticket** is a short-lived (5 min) signed proof that you passed the invite code and that this username was accepted. It is bound to your `clientId`: another client cannot use it.
+   - `ticket` comes back `null` when you already hold a seat in that game — skip step 3 and go straight to [Reconnecting](#reconnecting).
+   - Errors: `404 errors:game.notFound` (unknown code), `403 errors:game.managerCannotJoin`, `403 errors:game.locked` (room locked by the host), `400` with a validation key, `401 errors:auth.unauthorized` (no bearer).
 
-3. **Pick a username** (only after receiving `gameId` from step 2):
+3. **Present the ticket on the socket.** This is what creates the seat and binds it to this connection:
 
    ```
-   emit player:login { gameId, data: { username } }
+   emit player:login { ticket }
    ```
 
-   - `username` must be 1-20 characters ([validators/auth.ts](../packages/common/src/validators/auth.ts)).
-   - `on game:successJoin <gameId: string>`: you're in. The server also emits `manager:newPlayer` to the manager and `game:totalPlayers <count>` to everyone in the room.
-   - `on game:errorMessage <key: string>`: invalid username, or this `clientId` already has a player in the game.
+   - `on game:successJoin { gameId, username, gameMode }`: you're in. `username` is your final name, which is the only way to learn it when the host generates nicknames. `gameMode` is `"quiz"` or `"survey"` — see [Survey mode](#survey-mode). The server also emits `manager:newPlayer` to the manager and `game:totalPlayers <count>` to everyone in the room.
+   - `on game:reset <key: string>`: the ticket is expired, forged, or was minted for another client (`errors:auth.joinTicketInvalid` / `errors:auth.unauthorized`), the game is gone, the room was locked after the ticket was issued (`errors:game.locked`), or this `clientId` already has a player. Go back to step 1.
 
 From here, wait for `game:status` events and react to the `name` field.
 
+> The seat is created by step 3, not step 2: a ticket you never present leaves no trace on the server.
+
 ## Game status flow
 
-The manager drives the game through a fixed sequence of statuses, broadcast to every player via `game:status`. A single button/buzzer client mainly cares about `SELECT_ANSWER` (when it should accept a button press) and `SHOW_RESULT` (whether that press was correct).
+The manager drives the game through a fixed sequence of statuses, broadcast to every player via `game:status`. A single button/buzzer client mainly cares about `SELECT_ANSWER` (when it should accept a button press) and, in quiz mode, `SHOW_RESULT` (whether that press was correct).
 
-| Status          | Player payload (`data`)                                                                                                   | What it means                                                                                                                                                                                              |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SHOW_START`    | `{ time: number, subject: string }`                                                                                       | Countdown before the quiz starts.                                                                                                                                                                          |
-| `SHOW_PREPARED` | `{ totalAnswers: number, questionNumber: number }`                                                                        | "Get ready" screen before a question is shown, tells you how many answer options this question has.                                                                                                        |
-| `SHOW_QUESTION` | `{ question: string, media?, cooldown: number }`                                                                          | The question text is shown; answers are **not** accepted yet. `cooldown` is how many seconds until answers open.                                                                                           |
-| `SELECT_ANSWER` | `{ question, answers: string[], media?, time: number, totalPlayer: number, questionType: "single" \| "multi", options? }` | Answers are open. `answers.length` tells you how many buttons are relevant (2-4). `time` is the number of seconds to answer. `questionType` is `"single"` (one correct button) or `"multi"` (one or more). |
-| `SHOW_RESULT`   | `{ correct: boolean, message: string, points: number, myPoints: number, rank: number, aheadOfMe: string \| null }`        | Whether your submitted answer was correct, points earned, and your new total/rank.                                                                                                                         |
-| `WAIT`          | `{ text: string }`                                                                                                        | Generic waiting screen (e.g. after answering, waiting for other players or for the manager to continue).                                                                                                   |
-| `FINISHED`      | `{ subject: string, top: Player[], rank?: number }`                                                                       | Game over; final leaderboard.                                                                                                                                                                              |
+| Status          | Player payload (`data`)                                                                                                                                         | What it means                                                                                                                                                                                                                                                                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SHOW_START`    | `{ time: number, subject: string }`                                                                                                                             | Countdown before the quiz starts.                                                                                                                                                                                                                                                                                                                                                 |
+| `SHOW_PREPARED` | `{ totalAnswers: number, questionNumber: number, questionType }`                                                                                                | "Get ready" screen before a question is shown, tells you how many answer options this question has (`0` for an estimation question).                                                                                                                                                                                                                                              |
+| `SHOW_QUESTION` | `{ question: string, media?, cooldown: number }`                                                                                                                | The question text is shown; answers are **not** accepted yet. `cooldown` is how many seconds until answers open.                                                                                                                                                                                                                                                                  |
+| `SELECT_ANSWER` | `{ question, answers: string[], media?, time: number, totalPlayer: number, questionType: "single" \| "multi" \| "estimation", options?, answersOnly: boolean }` | Answers are open. `answers.length` tells you how many buttons are relevant (2-4). `time` is the number of seconds to answer. `questionType` is `"single"` (one correct button), `"multi"` (one or more) or `"estimation"` (a number between `options.min` and `options.max`, no buttons). `answersOnly` is `true` when the host asked for players to see only the answer buttons. |
+| `SHOW_RESULT`   | `{ correct: boolean, message: string, points: number, myPoints: number, rank: number, aheadOfMe: string \| null }`                                              | Whether your submitted answer was correct, points earned, and your new total/rank. **Quiz mode only.**                                                                                                                                                                                                                                                                            |
+| `WAIT`          | `{ text: string }`                                                                                                                                              | Generic waiting screen (e.g. after answering, waiting for other players or for the manager to continue).                                                                                                                                                                                                                                                                          |
+| `FINISHED`      | `{ subject: string, top: Player[], rank?: number }`                                                                                                             | Game over; final leaderboard. **Quiz mode only.**                                                                                                                                                                                                                                                                                                                                 |
+| `SUMMARY`       | `{ subject: string, totalPlayers: number, totalQuestions: number }`                                                                                             | Survey over. There is no ranking, so this carries counts instead of a leaderboard. **Survey mode only.**                                                                                                                                                                                                                                                                          |
+
+### Survey mode
+
+A quiz can be authored as a **survey** ([Quiz](quiz.md#survey-mode)): no scoring, no ranking, no correct answer. You learn the mode from `game:successJoin` and `player:successReconnect`, both of which carry `gameMode`.
+
+For a client, three things change:
+
+- **`SHOW_RESULT` never arrives.** When the question closes you get a `WAIT` with `data.text` set to `game:answerNoted` instead. A buzzer that lights up green or red on `SHOW_RESULT` simply never lights up.
+- **The game ends on `SUMMARY`, not `FINISHED`.** Handle whichever your client cares about, but do not assume `FINISHED` is the only terminal status.
+- **Points stay at zero.** There is no leaderboard, and a player's total never moves.
+
+Everything else — joining, `SELECT_ANSWER`, submitting answers, reconnecting — is identical, so a client that treats `SHOW_RESULT` and `FINISHED` as optional works in both modes without any mode-specific code.
 
 Other useful events while a game is in progress:
 
@@ -93,27 +137,28 @@ emit player:selectedAnswer { gameId, data: { answerKeys: number[] } }
 ```
 
 - `answerKeys` are 0-based indices into the `answers` array received in `SELECT_ANSWER`. For a `"single"` question, send a one-element array, e.g. `[1]` for the second button. For `"multi"`, send every button pressed, e.g. `[0, 2]`.
-- Points are time-weighted (faster correct answers score higher), computed server-side from `time` and when you answer relative to the start of the answer window.
-- After submitting, expect `data: { text: "game:waitingForAnswers" }` on the `WAIT` status, then `SHOW_RESULT` once the question closes (time runs out or every player has answered).
+- For an `"estimation"` question, send the value itself as a one-element array, e.g. `[27]`. It is clamped to `options.min` / `options.max`.
+- Points are time-weighted (faster correct answers score higher), computed server-side from `time` and when you answer relative to the start of the answer window. Estimation questions are the exception: they are scored on how close the value is to the expected one, regardless of speed.
+- After submitting, expect `data: { text: "game:waitingForAnswers" }` on the `WAIT` status, then, once the question closes (time runs out or every player has answered), `SHOW_RESULT` in quiz mode or another `WAIT` in survey mode.
 
 This is the one event a 4-button ESP32 buzzer needs to send: map each physical button to an answer index and emit this event on press, once, while in `SELECT_ANSWER`.
 
 ## Reconnecting
 
-If the socket disconnects (`disconnect` event fires implicitly, no action needed client-side) and reconnects, replay the same `clientId` and call:
+If the socket disconnects (`disconnect` event fires implicitly, no action needed client-side) and reconnects, refresh the token (`POST /api/auth/session` with the stored one — the `clientId` is preserved), reconnect with it, and call:
 
 ```
 emit player:reconnect { gameId }
 ```
 
-- `on player:successReconnect { gameId, status, player: { username, points }, currentQuestion }`: you're back in, `status` is the current `game:status` payload so you can resume the UI where it left off.
+- `on player:successReconnect { gameId, gameMode, status, player: { username, points }, currentQuestion }`: you're back in, `status` is the current `game:status` payload so you can resume the UI where it left off, and `gameMode` saves you from having to persist it across reboots.
 - `on game:reset <key: string>`: the game no longer exists or this player slot is already connected elsewhere, start over from [Joining a game](#joining-a-game-as-a-player).
 
-You need to persist `gameId` and `clientId` across reconnects/reboots to use this (e.g. in the ESP32's NVS flash) — a fresh `gameId` is only handed out by `game:successRoom` / `game:successJoin` when first joining.
+You need to persist `gameId` and the session `token` across reconnects/reboots to use this (e.g. in the ESP32's NVS flash) — a fresh `gameId` is only handed out by `POST /api/games/join` when first joining.
 
 ## Leaving a game
 
-An unexpected drop (Wi-Fi loss, reboot) is handled by the server as a temporary disconnect: no event needed, just reconnect later with the same `clientId` as above.
+An unexpected drop (Wi-Fi loss, reboot) is handled by the server as a temporary disconnect: no event needed, just reconnect later with the same token as above.
 
 If the player intentionally quits (e.g. a physical "leave" button), emit this instead so the manager sees them go immediately rather than just "disconnected":
 
@@ -122,6 +167,8 @@ emit player:leave { gameId }
 ```
 
 Before the game has started this removes you from the player list entirely; once started, it behaves the same as a disconnect (marked disconnected, seat kept for a potential reconnect).
+
+The same rule applies to an unexpected drop: **before the game starts there is no seat to come back to**, so a reconnect fails with `game:reset errors:game.notFound` and you rejoin from step 1. Once the game is running, the seat is kept.
 
 ## Full example
 
@@ -132,24 +179,26 @@ sequenceDiagram
     participant P as Player (buzzer)
     participant S as Server
 
-    P->>S: connect (auth: clientId)
-    P->>S: player:join (inviteCode)
-    S-->>P: game:successRoom (gameId)
-    P->>S: player:login (gameId, username)
-    S-->>P: game:successJoin (gameId)
+    P->>S: POST /api/auth/session (stored token or {})
+    S-->>P: { token, clientId }
+    P->>S: POST /api/games/join (inviteCode, username)
+    S-->>P: { gameId, ticket, username }
+    P->>S: connect (auth: token)
+    P->>S: player:login (ticket)
+    S-->>P: game:successJoin (gameId, username, gameMode)
 
     loop each question
         S-->>P: game:status (SHOW_START / SHOW_PREPARED / SHOW_QUESTION)
         S-->>P: game:status (SELECT_ANSWER)
         P->>S: player:selectedAnswer (gameId, answerKeys)
         S-->>P: game:status (WAIT)
-        S-->>P: game:status (SHOW_RESULT)
+        S-->>P: game:status (SHOW_RESULT, quiz mode only)
     end
 
-    S-->>P: game:status (FINISHED)
+    S-->>P: game:status (FINISHED in quiz mode, SUMMARY in survey mode)
 ```
 
-If the socket drops mid-game (Wi-Fi loss, reboot) and comes back, replay the persisted `clientId` and `gameId` instead of joining again:
+If the socket drops mid-game (Wi-Fi loss, reboot) and comes back, refresh the persisted token and replay it with the persisted `gameId` instead of joining again:
 
 ```mermaid
 sequenceDiagram
@@ -158,9 +207,10 @@ sequenceDiagram
 
     Note over P,S: connection lost mid-game
 
-    P->>S: connect (auth: clientId)
+    P->>S: POST /api/auth/session (stored token)
+    P->>S: connect (auth: token)
     P->>S: player:reconnect (gameId)
-    S-->>P: player:successReconnect (status, player, currentQuestion)
+    S-->>P: player:successReconnect (gameMode, status, player, currentQuestion)
 
     Note over P: resume reacting to game:status from "status" onward
 ```
@@ -173,28 +223,32 @@ Full type definitions live in [packages/common/src/types/game/socket.ts](../pack
 
 | Event                   | Payload                                      |
 | ----------------------- | -------------------------------------------- |
-| `player:checkPin`       | `inviteCode: string`                         |
-| `player:join`           | `inviteCode: string`                         |
-| `player:login`          | `{ gameId, data: { username: string } }`     |
+| `player:login`          | `{ ticket: string }`                         |
 | `player:reconnect`      | `{ gameId: string }`                         |
 | `player:leave`          | `{ gameId: string }`                         |
 | `player:selectedAnswer` | `{ gameId, data: { answerKeys: number[] } }` |
 
 **Server → Client**
 
-| Event                     | Payload                                            |
-| ------------------------- | -------------------------------------------------- |
-| `player:checkPinResult`   | `{ valid: boolean }`                               |
-| `player:successReconnect` | `{ gameId, status, player, currentQuestion }`      |
-| `game:status`             | `{ name: Status, data }`                           |
-| `game:successRoom`        | `gameId: string`                                   |
-| `game:successJoin`        | `gameId: string`                                   |
-| `game:totalPlayers`       | `count: number`                                    |
-| `game:updateQuestion`     | `{ current: number, total: number }`               |
-| `game:playerAnswer`       | `count: number` (players who have answered so far) |
-| `game:errorMessage`       | `key: string`                                      |
-| `game:reset`              | `key: string`                                      |
+| Event                     | Payload                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| `player:successReconnect` | `{ gameId, gameMode, status, player, currentQuestion }` |
+| `game:status`             | `{ name: Status, data }`                                |
+| `game:successJoin`        | `{ gameId, username, gameMode }`                        |
+| `game:totalPlayers`       | `count: number`                                         |
+| `game:updateQuestion`     | `{ current: number, total: number }`                    |
+| `game:playerAnswer`       | `count: number` (players who have answered so far)      |
+| `game:errorMessage`       | `key: string`                                           |
+| `game:reset`              | `key: string`                                           |
 
 `key`/`message` string values here are i18n translation keys used by the web UI (e.g. `errors:game.notFound`), not human-readable text — treat them as symbolic error codes and map the ones you care about.
 
-The manager side of the protocol (creating games, starting rounds, kicking players, quiz CRUD) is out of scope for a buzzer client; see [packages/socket/src/handlers](../packages/socket/src/handlers) if you need it.
+## Manager events
+
+Out of scope for a buzzer client, but worth knowing they are guarded: `manager:startGame`, `manager:advance`, `manager:kickPlayer` and `manager:setLock` are **refused unless your token's `clientId` is the one that created that game** through `POST /api/games` — the refusal is `game:errorMessage errors:auth.unauthorized`. Creating a game, quiz CRUD, game settings and results are HTTP-only; see [HTTP API](http-api.md).
+
+`manager:advance { gameId }` is the single "move the game forward" action: it cuts the answer window short while a question is open, and otherwise steps to whatever comes next — the answer reveal, the leaderboard, the following question or the end screen. The manager client does not decide that order; the server holds it, which is how survey mode can skip the leaderboard without any client change.
+
+While the host has auto-advance enabled, the server ticks `manager:autoAdvance { seconds, total } | null` to the manager only, so the UI can show the countdown. `null` means the countdown was cleared.
+
+`manager:setLock { gameId, locked }` locks or unlocks the room, at any point of the game. While it is locked, `POST /api/games/join` and `player:login` refuse new players with `errors:game.locked`; players already seated keep reconnecting normally. The server confirms with `manager:lockUpdated <locked: boolean>` to the manager, and `manager:successReconnect` carries the current `locked` value.

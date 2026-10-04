@@ -7,20 +7,21 @@
     "dev:web": "dotenv -e .env -- pnpm --filter web dev",
     "dev:socket": "dotenv -e .env -- pnpm --filter socket dev",
     "build": "pnpm -r run build",
-    "start": "pnpm -r --parallel run start",
+    "start": "dotenv -e .env -- pnpm -r --parallel run start",
     "clean": "pnpm -r exec rm -rf dist node_modules",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "prettier --check . --log-level warn",
-    "format:fix": "prettier --write . --log-level warn"
+    "format:fix": "prettier --write . --log-level warn",
+    "act:release": "act release -W .github/workflows/docker-release.yml --env GITHUB_REF_NAME=v0.0.1 -P ubuntu-latest=catthehacker/ubuntu:act-latest -s DOCKERHUB_USERNAME=dry-run"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
     "dotenv-cli": "^11.0.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^0.23.0",
-    "prettier": "^3.8.5",
-    "prettier-plugin-tailwindcss": "^0.8.0",
-    "typescript": "^6.0.3"
+    "oxlint-tsgolint": "^7.0.2003",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "catalog:"
   }
 }

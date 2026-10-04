@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tailwindcss-animated";
 
 @theme {
   --color-primary: #ff9900;
@@ -7,6 +8,7 @@
   --color-answer-2: #56b4e9;
   --color-answer-3: #3dbfa0;
   --color-answer-4: #cc79a7;
+  --color-correct: var(--color-green-500);
 
   --color-background: var(--color-white);
 
@@ -17,6 +19,14 @@
   --color-foreground: var(--color-gray-700);
 
   --font-display: "Rubik Variable", sans-serif;
+
+  --animate-fade: fade 150ms ease both;
+}
+
+@layer base {
+  .lucide {
+    stroke-width: 2.5;
+  }
 }
 
 button:not(:disabled),
@@ -47,7 +57,7 @@ button:not(:disabled),
     top: -20%;
   }
   30% {
-    opacity: 100;
+    opacity: 0.8;
     top: -80%;
     left: -80%;
   }
@@ -60,7 +70,7 @@ button:not(:disabled),
     left: -50%;
   }
   98% {
-    opacity: 1;
+    opacity: 0.8;
   }
   100% {
     opacity: 0;
@@ -89,6 +99,91 @@ button:not(:disabled),
 
 .anim-balanced {
   animation: balanced 0.8s linear infinite;
+}
+
+.anim-slider-fill {
+  animation: sliderFill 1s ease-in-out infinite alternate;
+}
+
+.anim-slider-thumb {
+  animation: sliderThumb 1s ease-in-out infinite alternate;
+}
+
+.anim-slider-fill-slow {
+  animation: sliderFill 4s ease-in-out infinite alternate;
+}
+
+.anim-slider-thumb-slow {
+  animation: sliderThumb 4s ease-in-out infinite alternate;
+}
+
+@keyframes sliderFill {
+  from {
+    width: 20%;
+  }
+  to {
+    width: 80%;
+  }
+}
+
+@keyframes sliderThumb {
+  from {
+    left: 20%;
+  }
+  to {
+    left: 80%;
+  }
+}
+
+.range-slider {
+  appearance: none;
+  height: 1rem;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--color-primary) var(--progress, 50%),
+    rgb(255 255 255 / 0.9) var(--progress, 50%)
+  );
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.range-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 5px solid white;
+  background: var(--color-primary);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.35);
+}
+
+.range-slider::-moz-range-thumb {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 5px solid white;
+  background: var(--color-primary);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.35);
+}
+
+.range-overlay {
+  appearance: none;
+  background: transparent;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.range-overlay::-webkit-slider-thumb {
+  appearance: none;
+  width: 1px;
+  height: 2rem;
+}
+
+.range-overlay::-moz-range-thumb {
+  width: 1px;
+  height: 2rem;
+  border: 0;
 }
 
 @keyframes balanced {

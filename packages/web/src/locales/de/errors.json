@@ -1,19 +1,32 @@
 {
+  "api": {
+    "notFound": "Die angeforderte Ressource existiert nicht",
+    "serverError": "Auf dem Server ist ein Fehler aufgetreten, bitte erneut versuchen"
+  },
   "auth": {
     "invalidInviteCode": "Ungültiger Einladungscode",
-    "usernameTooLong": "Der Benutzername darf nicht mehr als 20 Zeichen haben",
+    "joinTicketInvalid": "Deine Beitrittsanfrage ist abgelaufen, gib den PIN erneut ein",
+    "sessionFailed": "Sitzung konnte nicht gestartet werden, bitte Seite neu laden",
+    "tokenInvalid": "Ungültiges Sitzungstoken",
+    "tokenMissing": "Sitzungstoken fehlt",
+    "unauthorized": "Nicht autorisiert",
+    "usernameTooLong": "Der Benutzername darf nicht mehr als 24 Zeichen haben",
     "usernameTooShort": "Der Benutzername muss mindestens 4 Zeichen haben"
   },
   "game": {
+    "alreadyStarted": "Spiel bereits gestartet",
     "expired": "Spiel abgelaufen",
+    "invalidAutoAdvanceDelay": "Verzögerung muss zwischen 3 und 600 Sekunden liegen",
     "kickedByManager": "Du wurdest vom Manager entfernt",
+    "locked": "Spiel gesperrt",
     "managerAlreadyConnected": "Manager bereits verbunden",
+    "managerCannotJoin": "Du kannst deinem eigenen Spiel nicht beitreten",
     "managerDisconnected": "Manager getrennt",
     "noPlayersConnected": "Keine Spieler verbunden",
-    "managerCannotJoin": "Du kannst deinem eigenen Spiel nicht beitreten",
     "notFound": "Spiel nicht gefunden",
     "playerAlreadyConnected": "Spieler bereits verbunden"
   },
+  "invalidRequest": "Ungültige Anfrage",
   "manager": {
     "failedToReadConfig": "Spielkonfiguration konnte nicht gelesen werden",
     "invalidPassword": "Ungültiges Passwort",
@@ -26,20 +39,41 @@
   },
   "quizz": {
     "answerEmpty": "Eine Antwort darf nicht leer sein",
+    "cooldownTooLong": "Die Anzeigedauer der Frage darf 15 Sekunden nicht überschreiten",
+    "cooldownTooShort": "Die Anzeigedauer der Frage muss mindestens 3 Sekunden betragen",
     "failedToDelete": "Quiz konnte nicht gelöscht werden",
     "failedToSave": "Quiz ist unvollständig, stelle sicher, dass alle Fragen einen Titel und mindestens eine richtige Antwort haben",
     "failedToUpdate": "Quiz konnte nicht aktualisiert werden",
     "invalidMediaUrl": "Die Medien-URL muss eine gültige URL sein",
+    "maxPointsNegative": "Punkte können nicht negativ sein",
     "noQuestions": "Ein Quiz muss mindestens eine Frage haben",
+    "noSolution": "Wähle mindestens eine richtige Antwort",
     "notFound": "Quiz nicht gefunden",
+    "penaltyNegative": "Der Punktabzug kann nicht negativ sein",
     "questionEmpty": "Die Frage darf nicht leer sein",
     "subjectEmpty": "Das Thema darf nicht leer sein",
     "tooFewAnswers": "Eine Frage muss mindestens 2 Antworten haben",
-    "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben"
+    "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben",
+    "estimationInvalidRange": "Das Maximum muss größer als das Minimum sein",
+    "estimationSolutionOutOfRange": "Die richtige Antwort muss zwischen Minimum und Maximum liegen",
+    "estimationStepInvalid": "Die Schrittweite muss größer als 0 sein",
+    "estimationMarginNegative": "Die Toleranz darf nicht negativ sein",
+    "estimationInvalidOptions": "Die Schätzungseinstellungen fehlen oder sind ungültig"
+  },
+  "result": {
+    "notFound": "Ergebnis nicht gefunden"
   },
   "route": {
     "back": "Zurück zur Startseite",
     "description": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
     "title": "Etwas ist schiefgelaufen"
+  },
+  "media": {
+    "invalidName": "Ungültiger Medienname",
+    "invalidType": "Nicht unterstützte Datei, lade ein Bild, eine Audio- oder Videodatei hoch",
+    "missingFile": "Es wurde keine Datei gesendet",
+    "notFound": "Medium nicht gefunden",
+    "tooLarge": "Die Datei ist zu groß",
+    "uploadFailed": "Hochladen der Datei fehlgeschlagen"
   }
 }

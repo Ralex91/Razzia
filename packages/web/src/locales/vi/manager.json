@@ -35,7 +35,13 @@
       "points": "Điểm"
     },
     "playerCount": "{{count}} người chơi",
-    "timeLimitSuffix": "s giới hạn thời gian"
+    "timeLimitSuffix": "s giới hạn thời gian",
+    "estimation": {
+      "answered": "Đã trả lời",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "Ngoài biên độ",
+      "average": "Câu trả lời trung bình: {{value}}"
+    }
   },
   "tabs": {
     "play": "Trò chơi",

@@ -1,30 +1,63 @@
 {
+  "answerNoted": "Cảm ơn, đã ghi nhận",
+  "confirm": "Xác nhận",
   "correct": "Chính xác!",
   "gamePinLabel": "Mã PIN trò chơi:",
+  "generatedUsernameNotice": "Bạn sẽ được đặt một biệt danh ngẫu nhiên khi tham gia.",
   "hud": {
     "answers": "Câu trả lời",
     "time": "Thời gian"
   },
+  "media": {
+    "showImage": "Hiện hình ảnh",
+    "showVideo": "Hiện video"
+  },
+  "question": {
+    "show": "Hiện câu hỏi"
+  },
   "joinInstruction": "Tham gia trò chơi tại",
   "leaderboard": "Bảng xếp hạng",
+  "lock": {
+    "lock": "Khóa phòng",
+    "unlock": "Mở khóa phòng"
+  },
   "pinLabel": "Mã PIN",
+  "playersJoined": "Người chơi đã tham gia",
+  "questionPrefix": "Câu hỏi #",
+  "rank_ordinal_other": "hạng {{count}}",
   "reconnect": "Kết nối lại",
   "reconnectTitle": "Bạn đang ở trong một trò chơi",
-  "playersJoined": "Người chơi đã tham gia: ",
-  "questionPrefix": "Câu hỏi #",
-  "rank": {
-    "1": "Top 1",
-    "2": "Top 2",
-    "3": "Top 3",
-    "other": "Top {{rank}}"
-  },
-  "rankSuffix": "",
   "resultBehind": ", sau ",
   "resultTop": "Bạn xếp ",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Tự động chuyển tiếp sau khi công bố đáp án và bảng xếp hạng.",
+      "label": "Tự động chuyển tiếp",
+      "leaderboardDelay": "Bảng xếp hạng",
+      "responsesDelay": "Kết quả"
+    },
+    "generatedUsernames": {
+      "label": "Tạo biệt danh",
+      "hint": "Người chơi chọn từ các tên được tạo sẵn thay vì tự nhập."
+    },
+    "answersOnly": {
+      "label": "Chỉ hiện đáp án",
+      "hint": "Người chơi chỉ thấy các nút đáp án, kèm một nút để đọc lại câu hỏi."
+    },
+    "title": "Cài đặt trò chơi"
+  },
   "startGame": "Bắt đầu trò chơi",
+  "summary": {
+    "title": "Khảo sát đã kết thúc",
+    "participants": "Người tham gia",
+    "questions": "Câu hỏi"
+  },
   "usernamePlaceholder": "Nhập tên người dùng",
   "waitingForAnswers": "Đang chờ người chơi trả lời",
   "waitingForPlayers": "Đang chờ người chơi",
   "wrong": "Sai rồi",
-  "confirm": "Xác nhận"
+  "estimation": {
+    "yourAnswer": "Câu trả lời của bạn",
+    "rangeHint": "Từ {{min}} đến {{max}}"
+  }
 }
