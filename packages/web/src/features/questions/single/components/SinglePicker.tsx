@@ -28,7 +28,7 @@ const SingleSolutionPicker = ({ index, isSelected }: SolutionPickerProps) => {
       onClick={handleToggle}
       className={clsx(
         "flex size-6 shrink-0 items-center justify-center rounded-full transition-colors",
-        isSelected ? "bg-white text-green-600" : "bg-white/20",
+        isSelected ? "text-correct bg-white" : "bg-white/20",
       )}
     >
       {isSelected && <Check className="size-4 stroke-5" />}

@@ -9,7 +9,11 @@ Create `config/branding/theme.json`:
 ```json
 {
   "appName": "My Quiz",
-  "colors": { "primary": "#ff9900", "secondary": "#1a140b" },
+  "colors": {
+    "primary": "#ff9900",
+    "secondary": "#1a140b",
+    "correct": "#22c55e"
+  },
   "answerColors": ["#e69f00", "#56b4e9", "#3dbfa0", "#cc79a7"],
   "font": {
     "family": "Rubik",
@@ -24,7 +28,7 @@ Create `config/branding/theme.json`:
 All fields are optional: anything you omit keeps its default value.
 
 - `appName`: app name + browser tab title
-- `colors`: CSS color tokens (at least `primary` and `secondary`)
+- `colors`: CSS color tokens (at least `primary` and `secondary`). `correct` sets the color used for correct answers (checkmarks, estimation range and answer)
 - `answerColors`: up to 4 answer-button colors
 - `font`: a font family + an optional stylesheet URL (e.g. Google Fonts)
 - `logo` / `favicon` / `background`: drop the files in `config/branding/` and reference them here

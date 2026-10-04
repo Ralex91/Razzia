@@ -31,7 +31,7 @@ const CorrectAnswersStat = () => {
               cy="18"
               r="15"
               fill="none"
-              className="stroke-green-500"
+              className="stroke-correct"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={`${correctPct * 0.94} 94`}
