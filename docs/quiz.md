@@ -50,7 +50,7 @@ Quiz Options:
 - `gameMode`: `"quiz"` (default) or `"survey"`, see [Survey mode](#survey-mode)
 - `subject`: Title/topic of the quiz
 - `questions`: Array of question objects containing:
-  - `type`: `"single"` (exactly one answer) or `"multi"` (one or more). Defaults to `"single"` when omitted
+  - `type`: `"single"` (exactly one answer), `"multi"` (one or more) or `"estimation"` (a number, see [Estimation questions](#estimation-questions)). Defaults to `"single"` when omitted
   - `question`: The question text
   - `answers`: Array of possible answers (2-4 options)
   - `media`: Optional media object displayed with the question:
@@ -62,6 +62,35 @@ Quiz Options:
   - `maxPoints`: Maximum points awarded for a correct answer (default: `1000`, min: `0`)
   - `penalty`: Points deducted for a wrong answer (default: none, min: `0`). The player's total cannot go below 0. Unanswered questions are not penalised.
   - `options.scoringMode`: For `"multi"` questions only — `"strict"` (full points only if the selection matches exactly), `"balanced"` (correct picks minus wrong ones, the default) or `"lenient"` (points per correct pick, no penalty for wrong ones)
+
+## Estimation questions
+
+An `"estimation"` question asks for a number instead of offering answers to pick from, e.g. "How many days does a fly live?". Players answer with a slider or by typing a number, and are scored on how close they get, not on how fast they answer:
+
+```json
+{
+  "type": "estimation",
+  "question": "How many days does a fly live?",
+  "answers": [],
+  "solutions": [28],
+  "options": {
+    "inputMode": "slider",
+    "min": 0,
+    "max": 60,
+    "step": 1,
+    "margin": 5
+  },
+  "cooldown": 5,
+  "time": 30
+}
+```
+
+- `answers`: Always an empty array
+- `solutions`: A one-element array holding the expected value, between `min` and `max`. Required in `"quiz"` mode, omitted in `"survey"` mode
+- `options.inputMode`: `"slider"` (pick a value between the bounds) or `"input"` (type a number between the bounds)
+- `options.min` / `options.max`: Bounds of the accepted values, `max` must be greater than `min`
+- `options.step`: Precision of the slider (must be greater than 0)
+- `options.margin`: How far from the expected value an answer still counts as correct. An exact answer earns `maxPoints`, an answer at the edge of the margin earns half of it, and anything further away earns nothing (and the `penalty`, if any). A margin of `0` only accepts the exact value
 
 > **Note:** the app automatically adds and manages an `id` field inside each quiz file the first time it's loaded — you don't need to set it yourself, and editing it manually may cause conflicts if it collides with another quiz's id.
 
