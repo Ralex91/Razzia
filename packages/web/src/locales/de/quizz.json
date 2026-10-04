@@ -30,7 +30,25 @@
       "scoringMode.lenient": "Nachsichtig",
       "scoringModeHint.strict": "Punkte nur wenn alle richtigen Antworten gewählt und keine falschen",
       "scoringModeHint.balanced": "Teilpunkte: richtige Auswahlen minus falsche",
-      "scoringModeHint.lenient": "Punkte pro richtiger Antwort, keine Strafe für falsche"
+      "scoringModeHint.lenient": "Punkte pro richtiger Antwort, keine Strafe für falsche",
+      "estimation": {
+        "title": "Schätzung",
+        "inputMode": "Eingabeart",
+        "inputModes": {
+          "slider": "Schieberegler",
+          "input": "Freie Eingabe"
+        },
+        "inputModeHint": {
+          "slider": "Die Spieler wählen einen Wert mit einem Schieberegler zwischen den Grenzen",
+          "input": "Die Spieler geben eine Zahl zwischen den Grenzen ein"
+        },
+        "min": "Minimum",
+        "max": "Maximum",
+        "step": "Schrittweite",
+        "stepHint": "Genauigkeit des Schiebereglers und der erwarteten Antwort",
+        "margin": "Toleranz",
+        "marginHint": "Antworten innerhalb dieses Abstands zur richtigen Antwort bringen 100 % (exakt) bis 50 %. Außerhalb gibt es keine Punkte."
+      }
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -40,12 +58,16 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "URL eingeben...",
-    "placeholder": "Beginne deine Frage zu tippen..."
+    "placeholder": "Beginne deine Frage zu tippen...",
+    "estimation": {
+      "correctAnswer": "Richtige Antwort"
+    }
   },
   "questionHasErrors": "Diese Frage enthält Fehler",
   "questionType": {
     "single": "Einzelauswahl",
-    "multi": "Mehrfachauswahl"
+    "multi": "Mehrfachauswahl",
+    "estimation": "Schätzung"
   },
   "quizzSaved": "Quiz erfolgreich gespeichert",
   "quizzUpdated": "Quiz erfolgreich aktualisiert",

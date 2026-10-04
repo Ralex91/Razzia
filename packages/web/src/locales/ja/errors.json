@@ -53,7 +53,12 @@
     "questionEmpty": "質問は空にできません",
     "subjectEmpty": "主題は空にできません",
     "tooFewAnswers": "質問には少なくとも2つの回答が必要です",
-    "tooManyAnswers": "質問に設定できる回答は4つまでです"
+    "tooManyAnswers": "質問に設定できる回答は4つまでです",
+    "estimationInvalidRange": "最大値は最小値より大きくする必要があります",
+    "estimationSolutionOutOfRange": "正解は最小値と最大値の間である必要があります",
+    "estimationStepInvalid": "刻み幅は 0 より大きくする必要があります",
+    "estimationMarginNegative": "許容範囲は負の値にできません",
+    "estimationInvalidOptions": "数値推定の設定がないか、無効です"
   },
   "result": {
     "notFound": "結果が見つかりません"

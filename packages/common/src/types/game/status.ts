@@ -23,7 +23,11 @@ export type Status = (typeof STATUS)[keyof typeof STATUS]
 
 export interface CommonStatusDataMap {
   SHOW_START: { time: number; subject: string }
-  SHOW_PREPARED: { totalAnswers: number; questionNumber: number }
+  SHOW_PREPARED: {
+    totalAnswers: number
+    questionNumber: number
+    questionType: QuestionType
+  }
   SHOW_QUESTION: {
     question: string
     media?: QuestionMedia
@@ -60,6 +64,8 @@ interface ManagerExtraStatus {
     solutions?: number[]
     answers: string[]
     media?: QuestionMedia
+    type: QuestionType
+    options?: QuestionOptions
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }

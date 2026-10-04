@@ -35,7 +35,13 @@
       "points": "ポイント"
     },
     "playerCount": "{{count}}人",
-    "timeLimitSuffix": "秒制限"
+    "timeLimitSuffix": "秒制限",
+    "estimation": {
+      "answered": "回答済み",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "許容範囲外",
+      "average": "平均回答: {{value}}"
+    }
   },
   "tabs": {
     "play": "プレイ",

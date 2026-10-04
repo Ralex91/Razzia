@@ -1,10 +1,13 @@
 import { QUIZZ_MODES } from "@razzia/common/constants"
+import { isEstimationOptions } from "@razzia/common/questions/options"
 import type { PlayerAnswerRecord } from "@razzia/common/types/game"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
 import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
+import { formatValue } from "@razzia/web/features/questions/estimation/utils"
+import { isAnswerCorrect } from "@razzia/web/features/questions/utils"
 import clsx from "clsx"
 import { Check, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -20,21 +23,19 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
   const { playerName, answerIds } = playerAnswer
   const hasAnswer = answerIds !== null && answerIds.length > 0
 
-  const isCorrect = (() => {
-    const { solutions } = questionResult
-
-    if (!answerIds || !solutions) {
-      return false
-    }
-
-    return answerIds.some((id) => solutions.includes(id))
-  })()
+  const isCorrect = isAnswerCorrect(questionResult, answerIds)
+  const isEstimation = isEstimationOptions(questionResult.options)
 
   return (
     <tr>
       <td className="px-5 py-2.5 font-medium">{playerName}</td>
       <td className="px-4 py-2.5">
-        {hasAnswer ? (
+        {hasAnswer && isEstimation && (
+          <span className="bg-accent text-accent-foreground inline-flex rounded-md px-2 py-1 text-xs font-bold">
+            {formatValue(answerIds[0])}
+          </span>
+        )}
+        {hasAnswer && !isEstimation && (
           <div className="flex flex-wrap gap-1">
             {answerIds.map((id) => (
               <span
@@ -51,14 +52,13 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
               </span>
             ))}
           </div>
-        ) : (
-          <span className="text-muted-foreground text-xs">-</span>
         )}
+        {!hasAnswer && <span className="text-muted-foreground text-xs">-</span>}
       </td>
       {result.gameMode !== QUIZZ_MODES.SURVEY && (
         <td className="px-4 py-2.5">
           {isCorrect ? (
-            <span className="flex items-center gap-1 text-green-600">
+            <span className="text-correct flex items-center gap-1">
               <Check className="size-4 stroke-4" />
               {t("manager:result.table.correct")}
             </span>

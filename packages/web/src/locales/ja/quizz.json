@@ -30,7 +30,25 @@
       "scoringMode.lenient": "寛大",
       "scoringModeHint.strict": "すべての正解を選び、不正解を選ばない場合のみポイント獲得",
       "scoringModeHint.balanced": "部分点：正解数から不正解数を引いた割合",
-      "scoringModeHint.lenient": "正解ごとにポイント、不正解への罰則なし"
+      "scoringModeHint.lenient": "正解ごとにポイント、不正解への罰則なし",
+      "estimation": {
+        "title": "数値推定",
+        "inputMode": "入力方式",
+        "inputModes": {
+          "slider": "スライダー",
+          "input": "自由入力"
+        },
+        "inputModeHint": {
+          "slider": "プレイヤーは範囲内の値をスライダーで選びます",
+          "input": "プレイヤーは範囲内の数値を入力します"
+        },
+        "min": "最小値",
+        "max": "最大値",
+        "step": "刻み幅",
+        "stepHint": "スライダーと正解の精度",
+        "margin": "許容範囲",
+        "marginHint": "正解からこの範囲内の回答は 100%（完全一致）から 50% の得点になります。範囲外は 0 点です。"
+      }
     },
     "deleteQuestion": "この質問を削除",
     "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
@@ -40,12 +58,16 @@
       "video": "動画"
     },
     "mediaUrlPlaceholder": "URLを入力...",
-    "placeholder": "質問を入力してください..."
+    "placeholder": "質問を入力してください...",
+    "estimation": {
+      "correctAnswer": "正解"
+    }
   },
   "questionHasErrors": "この質問にはエラーがあります",
   "questionType": {
     "single": "単一選択",
-    "multi": "複数選択"
+    "multi": "複数選択",
+    "estimation": "数値推定"
   },
   "quizzSaved": "クイズを保存しました",
   "quizzUpdated": "クイズを更新しました",

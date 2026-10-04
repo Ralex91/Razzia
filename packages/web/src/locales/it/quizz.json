@@ -30,7 +30,25 @@
       "scoringMode.lenient": "Permissivo",
       "scoringModeHint.strict": "Punti solo se tutte le risposte corrette sono selezionate e nessuna sbagliata",
       "scoringModeHint.balanced": "Punti parziali: selezioni corrette meno quelle sbagliate",
-      "scoringModeHint.lenient": "Punti per risposta corretta, nessuna penalità per quelle sbagliate"
+      "scoringModeHint.lenient": "Punti per risposta corretta, nessuna penalità per quelle sbagliate",
+      "estimation": {
+        "title": "Stima",
+        "inputMode": "Tipo di inserimento",
+        "inputModes": {
+          "slider": "Cursore",
+          "input": "Inserimento libero"
+        },
+        "inputModeHint": {
+          "slider": "I giocatori scelgono un valore con un cursore tra i limiti",
+          "input": "I giocatori digitano un numero tra i limiti"
+        },
+        "min": "Minimo",
+        "max": "Massimo",
+        "step": "Passo",
+        "stepHint": "Precisione del cursore e della risposta attesa",
+        "margin": "Margine",
+        "marginHint": "Le risposte entro questa distanza dalla risposta corretta valgono dal 100% (esatta) al 50%. Fuori dal margine non valgono nulla."
+      }
     },
     "deleteQuestion": "Elimina domanda",
     "deleteQuestionConfirm": "Sei sicuro di voler eliminare questa domanda?",
@@ -40,12 +58,16 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Inserisci URL...",
-    "placeholder": "Inizia a scrivere la tua domanda..."
+    "placeholder": "Inizia a scrivere la tua domanda...",
+    "estimation": {
+      "correctAnswer": "Risposta corretta"
+    }
   },
   "questionHasErrors": "Questa domanda contiene errori",
   "questionType": {
     "single": "Scelta singola",
-    "multi": "Scelta multipla"
+    "multi": "Scelta multipla",
+    "estimation": "Stima"
   },
   "quizzSaved": "Quiz salvato con successo",
   "quizzUpdated": "Quiz aggiornato con successo",

@@ -1,14 +1,20 @@
 import {
   MEDIA_TYPES,
   NO_TIME_LIMIT,
+  QUESTION_TYPES,
   QUIZZ_MODES,
 } from "@razzia/common/constants"
+import {
+  isEstimationOptions,
+  isMultiOptions,
+} from "@razzia/common/questions/options"
 import type { QuestionMedia } from "@razzia/common/types/game"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
 import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
+import { formatValue } from "@razzia/web/features/questions/estimation/utils"
 import clsx from "clsx"
 import { Check, Clock, ImageOff, Music, Video, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -56,14 +62,67 @@ const MediaPreview = ({ media }: { media?: QuestionMedia }) => {
 }
 
 const ResultModalAnswers = () => {
-  const { result, questionResult, totalPlayers, answeredCount } =
+  const { result, questionResult, totalPlayers, answeredCount, correctCount } =
     useResultModal()
   const { t } = useTranslation()
 
   const noAnswerCount = totalPlayers - answeredCount
+  const { options } = questionResult
+  const scoringMode = isMultiOptions(options) ? options.scoringMode : undefined
 
-  const rows: AnswerRow[] = [
-    ...questionResult.answers.map((label, ai) => ({
+  const values = questionResult.playerAnswers.flatMap(
+    (pa) => pa.answerIds ?? [],
+  )
+  const average = (() => {
+    if (values.length === 0) {
+      return null
+    }
+
+    return values.reduce((acc, value) => acc + value, 0) / values.length
+  })()
+
+  const estimationRows = (): AnswerRow[] => {
+    const solution = questionResult.solutions?.[0]
+
+    if (!isEstimationOptions(options) || solution === undefined) {
+      return [
+        {
+          label: t("manager:result.estimation.answered"),
+          count: answeredCount,
+          isCorrect: false,
+          color: "bg-primary",
+          answerLabel: "≈",
+        },
+      ]
+    }
+
+    return [
+      {
+        label: t("manager:result.estimation.withinMargin", {
+          value: formatValue(solution),
+          margin: formatValue(options.margin),
+        }),
+        count: correctCount,
+        isCorrect: true,
+        color: "bg-correct",
+        answerLabel: "≈",
+      },
+      {
+        label: t("manager:result.estimation.outsideMargin"),
+        count: answeredCount - correctCount,
+        isCorrect: false,
+        color: "bg-red-500",
+        answerLabel: "≠",
+      },
+    ]
+  }
+
+  const answerRows: AnswerRow[] = (() => {
+    if (questionResult.type === QUESTION_TYPES.ESTIMATION) {
+      return estimationRows()
+    }
+
+    return questionResult.answers.map((label, ai) => ({
       label,
       count: questionResult.playerAnswers.filter((pa) =>
         pa.answerIds?.includes(ai),
@@ -71,7 +130,11 @@ const ResultModalAnswers = () => {
       isCorrect: questionResult.solutions?.includes(ai) ?? false,
       color: ANSWERS_COLORS[ai % 4],
       answerLabel: ANSWERS_LABELS[ai % 4],
-    })),
+    }))
+  })()
+
+  const rows: AnswerRow[] = [
+    ...answerRows,
     {
       label: t("manager:result.noAnswer"),
       count: noAnswerCount,
@@ -92,11 +155,9 @@ const ResultModalAnswers = () => {
               ? "∞"
               : `${questionResult.time}${t("manager:result.timeLimitSuffix")}`}
           </span>
-          {questionResult.options?.scoringMode && (
+          {scoringMode && (
             <div className="bg-accent text-accent-foreground rounded-md px-2 py-0.5 font-semibold">
-              {t(
-                `quizz:question.config.scoringMode.${questionResult.options.scoringMode}`,
-              )}
+              {t(`quizz:question.config.scoringMode.${scoringMode}`)}
             </div>
           )}
         </div>
@@ -106,6 +167,15 @@ const ResultModalAnswers = () => {
         <p className="text-md text-foreground mb-1 font-semibold">
           {questionResult.question}
         </p>
+
+        {questionResult.type === QUESTION_TYPES.ESTIMATION &&
+          average !== null && (
+            <p className="text-muted-foreground mb-1 text-xs">
+              {t("manager:result.estimation.average", {
+                value: formatValue(Math.round(average * 100) / 100),
+              })}
+            </p>
+          )}
 
         <div
           className={clsx(
@@ -143,7 +213,7 @@ const ResultModalAnswers = () => {
               {result.gameMode !== QUIZZ_MODES.SURVEY && (
                 <div className="shrink-0">
                   {row.isCorrect ? (
-                    <Check className="size-5 stroke-4 text-green-500" />
+                    <Check className="text-correct size-5 stroke-4" />
                   ) : (
                     <X
                       className={clsx(

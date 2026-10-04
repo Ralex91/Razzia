@@ -3,6 +3,7 @@ import {
   NO_TIME_LIMIT,
   QUIZZ_MODES,
 } from "@razzia/common/constants"
+import { isMultiOptions } from "@razzia/common/questions/options"
 import type { ScoringMode } from "@razzia/common/types/game"
 import {
   Select,
@@ -30,7 +31,8 @@ const BaseConfig = () => {
   const isTimeLimitEnabled = currentQuestion.time !== NO_TIME_LIMIT
   const isPenaltyEnabled = (currentQuestion.penalty ?? 0) > 0
   const { scoringModes } = QUESTION_REGISTRY[currentQuestion.type]
-  const scoringMode = currentQuestion.options?.scoringMode
+  const { options } = currentQuestion
+  const scoringMode = isMultiOptions(options) ? options.scoringMode : undefined
 
   const handleScoringModeChange = (nextMode: ScoringMode) => {
     updateQuestion(currentIndex, { options: { scoringMode: nextMode } })

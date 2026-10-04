@@ -109,7 +109,7 @@ const QuestionEditorAnswers = () => {
                         className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none"
                         placeholder={t("quizz:addAnswerPlaceholder")}
                       />
-                      {gameMode !== QUIZZ_MODES.SURVEY && (
+                      {gameMode !== QUIZZ_MODES.SURVEY && SolutionPicker && (
                         <SolutionPicker index={i} isSelected={isSelected} />
                       )}
                     </div>

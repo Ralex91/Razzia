@@ -6,6 +6,7 @@ import {
   SFX,
 } from "@razzia/web/features/game/utils/constants"
 import { calculatePercentages } from "@razzia/web/features/game/utils/score"
+import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import useSound from "use-sound"
@@ -14,9 +15,9 @@ interface Props {
   data: ManagerStatusDataMap["SHOW_RESPONSES"]
 }
 
-const Responses = ({
-  data: { question, answers, responses, solutions },
-}: Props) => {
+const Responses = ({ data }: Props) => {
+  const { question, answers, responses, solutions, type } = data
+  const { ResponsesComponent } = QUESTION_REGISTRY[type]
   const percentages = calculatePercentages(responses)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
 
@@ -48,6 +49,17 @@ const Responses = ({
   useEffect(() => {
     stopMusic()
   }, [playMusic, stopMusic])
+
+  if (ResponsesComponent) {
+    return (
+      <div className="flex h-full flex-1 flex-col items-center justify-center gap-8 pb-4">
+        <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
+          {question}
+        </h2>
+        <ResponsesComponent data={data} />
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
