@@ -53,7 +53,12 @@
     "questionEmpty": "La domanda non può essere vuota",
     "subjectEmpty": "Il soggetto non può essere vuoto",
     "tooFewAnswers": "Una domanda deve avere almeno 2 risposte",
-    "tooManyAnswers": "Una domanda non può avere più di 4 risposte"
+    "tooManyAnswers": "Una domanda non può avere più di 4 risposte",
+    "estimationInvalidRange": "Il massimo deve essere maggiore del minimo",
+    "estimationSolutionOutOfRange": "La risposta corretta deve essere compresa tra il minimo e il massimo",
+    "estimationStepInvalid": "Il passo deve essere maggiore di 0",
+    "estimationMarginNegative": "Il margine non può essere negativo",
+    "estimationInvalidOptions": "Le impostazioni della stima mancano o non sono valide"
   },
   "result": {
     "notFound": "Risultato non trovato"

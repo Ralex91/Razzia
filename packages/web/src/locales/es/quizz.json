@@ -30,7 +30,25 @@
       "scoringMode.lenient": "Permisivo",
       "scoringModeHint.strict": "Puntos solo si todas las respuestas correctas están marcadas y ninguna incorrecta",
       "scoringModeHint.balanced": "Puntos parciales: selecciones correctas menos las incorrectas",
-      "scoringModeHint.lenient": "Puntos por respuesta correcta, sin penalización por incorrectas"
+      "scoringModeHint.lenient": "Puntos por respuesta correcta, sin penalización por incorrectas",
+      "estimation": {
+        "title": "Estimación",
+        "inputMode": "Tipo de entrada",
+        "inputModes": {
+          "slider": "Deslizador",
+          "input": "Entrada libre"
+        },
+        "inputModeHint": {
+          "slider": "Los jugadores eligen un valor con un deslizador entre los límites",
+          "input": "Los jugadores escriben un número entre los límites"
+        },
+        "min": "Mínimo",
+        "max": "Máximo",
+        "step": "Paso",
+        "stepHint": "Precisión del deslizador y de la respuesta esperada",
+        "margin": "Margen",
+        "marginHint": "Las respuestas dentro de esta distancia de la respuesta correcta obtienen del 100 % (exacta) al 50 %. Fuera de ella no obtienen nada."
+      }
     },
     "deleteQuestion": "Eliminar pregunta",
     "deleteQuestionConfirm": "¿Estás seguro de que quieres eliminar esta pregunta?",
@@ -40,12 +58,16 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Introduce la URL...",
-    "placeholder": "Empieza a escribir tu pregunta..."
+    "placeholder": "Empieza a escribir tu pregunta...",
+    "estimation": {
+      "correctAnswer": "Respuesta correcta"
+    }
   },
   "questionHasErrors": "Esta pregunta contiene errores",
   "questionType": {
     "single": "Opción única",
-    "multi": "Opción múltiple"
+    "multi": "Opción múltiple",
+    "estimation": "Estimación"
   },
   "quizzSaved": "Cuestionario guardado con éxito",
   "quizzUpdated": "Cuestionario actualizado con éxito",

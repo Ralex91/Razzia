@@ -53,7 +53,12 @@
     "questionEmpty": "Die Frage darf nicht leer sein",
     "subjectEmpty": "Das Thema darf nicht leer sein",
     "tooFewAnswers": "Eine Frage muss mindestens 2 Antworten haben",
-    "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben"
+    "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben",
+    "estimationInvalidRange": "Das Maximum muss größer als das Minimum sein",
+    "estimationSolutionOutOfRange": "Die richtige Antwort muss zwischen Minimum und Maximum liegen",
+    "estimationStepInvalid": "Die Schrittweite muss größer als 0 sein",
+    "estimationMarginNegative": "Die Toleranz darf nicht negativ sein",
+    "estimationInvalidOptions": "Die Schätzungseinstellungen fehlen oder sind ungültig"
   },
   "result": {
     "notFound": "Ergebnis nicht gefunden"

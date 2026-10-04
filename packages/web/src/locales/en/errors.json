@@ -53,7 +53,12 @@
     "questionEmpty": "Question cannot be empty",
     "subjectEmpty": "Subject cannot be empty",
     "tooFewAnswers": "A question must have at least 2 answers",
-    "tooManyAnswers": "A question cannot have more than 4 answers"
+    "tooManyAnswers": "A question cannot have more than 4 answers",
+    "estimationInvalidRange": "The maximum must be greater than the minimum",
+    "estimationSolutionOutOfRange": "The correct answer must be between the minimum and the maximum",
+    "estimationStepInvalid": "The step must be greater than 0",
+    "estimationMarginNegative": "The margin cannot be negative",
+    "estimationInvalidOptions": "Estimation settings are missing or invalid"
   },
   "result": {
     "notFound": "Result not found"

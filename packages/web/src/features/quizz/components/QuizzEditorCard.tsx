@@ -1,4 +1,4 @@
-import { MEDIA_TYPES } from "@razzia/common/constants"
+import { MEDIA_TYPES, QUESTION_TYPES } from "@razzia/common/constants"
 import type { Question, QuestionMedia } from "@razzia/common/types/game"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import clsx from "clsx"
@@ -76,18 +76,26 @@ const QuizzEditorCard = ({
 
       <SlideMedia media={question.media} />
 
-      <div className="grid grid-cols-2 gap-1">
-        {question.answers.map((_, i) => (
-          <div
-            key={i}
-            className="border-accent flex h-4 flex-1 items-center rounded-md border px-0.5"
-          >
-            {question.solutions?.includes(i) && (
-              <div className="ml-auto size-1.5 rounded-full bg-green-400" />
-            )}
+      {question.type === QUESTION_TYPES.ESTIMATION ? (
+        <div className="border-accent flex h-4 items-center rounded-md border px-1.5">
+          <div className="bg-accent relative h-1 w-full rounded-full">
+            <div className="bg-correct absolute top-1/2 left-1/2 size-1.5 -translate-1/2 rounded-full" />
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-1">
+          {question.answers.map((_, i) => (
+            <div
+              key={i}
+              className="border-accent flex h-4 flex-1 items-center rounded-md border px-0.5"
+            >
+              {question.solutions?.includes(i) && (
+                <div className="bg-correct ml-auto size-1.5 rounded-full" />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {canDelete && (
         <AlertDialog

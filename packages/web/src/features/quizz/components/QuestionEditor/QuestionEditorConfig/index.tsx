@@ -22,9 +22,12 @@ const QuestionEditorConfig = () => {
   const questionType = currentQuestion.type
 
   const handleTypeChange = (nextType: QuestionType) => {
+    const { defaultOptions, initialValues } = QUESTION_REGISTRY[nextType]
+
     updateQuestion(currentIndex, {
       type: nextType,
-      options: QUESTION_REGISTRY[nextType].defaultOptions,
+      options: defaultOptions,
+      ...initialValues(currentQuestion),
     })
   }
 

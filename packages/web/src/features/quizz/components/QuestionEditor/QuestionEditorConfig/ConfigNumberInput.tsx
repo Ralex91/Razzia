@@ -16,9 +16,10 @@ interface Props {
   fallback?: number
   min?: number
   max?: number
+  id?: string
 }
 
-const ConfigNumberInput = ({ name, fallback, min, max }: Props) => {
+const ConfigNumberInput = ({ name, fallback, min, max, id }: Props) => {
   const { questionPath } = useQuizzEditor()
   const { field, fieldState } = useController<QuizzFormValues, NumberFieldPath>(
     { name: questionPath(name) },
@@ -46,6 +47,7 @@ const ConfigNumberInput = ({ name, fallback, min, max }: Props) => {
   return (
     <>
       <Input
+        id={id}
         variant="sm"
         type="number"
         min={min}

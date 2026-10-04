@@ -61,5 +61,9 @@
   "usernamePlaceholder": "Nombre de usuario aquí",
   "waitingForAnswers": "Esperando que los jugadores respondan",
   "waitingForPlayers": "Esperando jugadores",
-  "wrong": "Mala suerte"
+  "wrong": "Mala suerte",
+  "estimation": {
+    "yourAnswer": "Tu respuesta",
+    "rangeHint": "Entre {{min}} y {{max}}"
+  }
 }

@@ -4,4 +4,6 @@ export { default as ConfigComponent } from "@razzia/web/features/questions/singl
 
 export { default as SolutionPicker } from "@razzia/web/features/questions/single/components/SinglePicker"
 
+export { choiceInitialValues as initialValues } from "@razzia/web/features/questions/utils"
+
 export const labelKey = "quizz:questionType.single"
