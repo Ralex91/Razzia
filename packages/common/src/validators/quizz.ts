@@ -6,6 +6,9 @@ import {
   QUIZZ_MODES,
   SCORING_MODES,
 } from "@razzia/common/constants"
+import { QUESTION_REFINEMENTS } from "@razzia/common/validators/questions"
+import { multiOptionsValidator } from "@razzia/common/validators/questions/choice"
+import { estimationOptionsValidator } from "@razzia/common/validators/questions/estimation"
 import { z } from "zod"
 
 export const questionMediaValidator = z.object({
@@ -27,19 +30,12 @@ export const mediaUploadValidator = z.object({
     .max(MAX_MEDIA_SIZE, "errors:media.tooLarge"),
 })
 
-const multiOptionsValidator = z.object({
-  scoringMode: z.enum(SCORING_MODES),
-})
-
-const questionValidator = z.object({
+const questionSchema = z.object({
   type: z.enum(QUESTION_TYPES),
   question: z.string().min(1, "errors:quizz.questionEmpty"),
   media: questionMediaValidator.optional(),
-  answers: z
-    .array(z.string().min(1, "errors:quizz.answerEmpty"))
-    .min(2, "errors:quizz.tooFewAnswers")
-    .max(4, "errors:quizz.tooManyAnswers"),
-  solutions: z.array(z.number().int().min(0)).optional(),
+  answers: z.array(z.string().min(1, "errors:quizz.answerEmpty")),
+  solutions: z.array(z.number()).optional(),
   cooldown: z
     .number()
     .int()
@@ -52,7 +48,15 @@ const questionValidator = z.object({
     .min(0, "errors:quizz.maxPointsNegative")
     .optional(),
   penalty: z.number().int().min(0, "errors:quizz.penaltyNegative").optional(),
-  options: multiOptionsValidator.optional(),
+  options: z
+    .union([multiOptionsValidator, estimationOptionsValidator])
+    .optional(),
+})
+
+const questionValidator = questionSchema.superRefine((question, ctx) => {
+  QUESTION_REFINEMENTS[question.type](question, (path, message) =>
+    ctx.addIssue({ code: "custom", path, message }),
+  )
 })
 
 export const quizzValidator = z
@@ -109,7 +113,8 @@ export const normalizeLegacyQuizz = (data: unknown): unknown => {
           question.solutions === undefined || Array.isArray(question.solutions)
             ? question.solutions
             : [question.solutions],
-        ...(isRecord(question.options)
+        ...(isRecord(question.options) &&
+        question.type !== QUESTION_TYPES.ESTIMATION
           ? {
               options: {
                 scoringMode: SCORING_MODES.BALANCED,

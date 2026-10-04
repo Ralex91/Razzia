@@ -1,5 +1,6 @@
 import type {
   ACCEPTED_MEDIA_TYPES,
+  ESTIMATION_INPUT_MODES,
   MEDIA_TYPES,
   QUESTION_TYPES,
   QUIZZ_MODES,
@@ -16,7 +17,18 @@ export interface MultiQuestionOptions {
   scoringMode: ScoringMode
 }
 
-export type QuestionOptions = MultiQuestionOptions
+export type EstimationInputMode =
+  (typeof ESTIMATION_INPUT_MODES)[keyof typeof ESTIMATION_INPUT_MODES]
+
+export interface EstimationQuestionOptions {
+  inputMode: EstimationInputMode
+  min: number
+  max: number
+  step: number
+  margin: number
+}
+
+export type QuestionOptions = MultiQuestionOptions | EstimationQuestionOptions
 
 export interface Player {
   id: string

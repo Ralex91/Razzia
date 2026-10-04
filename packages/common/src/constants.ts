@@ -66,6 +66,12 @@ export const QUIZZ_MODES = {
 export const QUESTION_TYPES = {
   SINGLE: "single",
   MULTI: "multi",
+  ESTIMATION: "estimation",
+} as const
+
+export const ESTIMATION_INPUT_MODES = {
+  SLIDER: "slider",
+  INPUT: "input",
 } as const
 
 export const SCORING_MODES = {
