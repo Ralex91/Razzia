@@ -52,6 +52,7 @@ Quiz Options:
 - `questions`: Array of question objects containing:
   - `type`: `"single"` (exactly one answer), `"multi"` (one or more) or `"estimation"` (a number, see [Estimation questions](#estimation-questions)). Defaults to `"single"` when omitted
   - `question`: The question text
+  - `category`: Optional round name, see [Categories](#categories)
   - `answers`: Array of possible answers (2-4 options)
   - `media`: Optional media object displayed with the question:
     - `type`: `"image"`, `"video"`, or `"audio"`
@@ -91,6 +92,22 @@ An `"estimation"` question asks for a number instead of offering answers to pick
 - `options.min` / `options.max`: Bounds of the accepted values, `max` must be greater than `min`
 - `options.step`: Precision of the slider (must be greater than 0)
 - `options.margin`: How far from the expected value an answer still counts as correct. An exact answer earns `maxPoints`, an answer at the edge of the margin earns half of it, and anything further away earns nothing (and the `penalty`, if any). A margin of `0` only accepts the exact value
+
+## Categories
+
+By default the leaderboard is shown after every question. To play in rounds instead, give consecutive questions the same `category`: the leaderboard is then skipped inside the round and only shown when the category changes, with the score movement of the whole round.
+
+```json
+{ "question": "What is Canada's capital?", "category": "Geography", ... },
+{ "question": "What is the longest river?", "category": "Geography", ... },
+{ "question": "Who sang Thriller?", "category": "Music", ... }
+```
+
+Here the leaderboard appears once after the two geography questions, and the music question goes straight to the podium as the last one.
+
+- Questions without a `category` keep showing the leaderboard after each question
+- A round is a run of consecutive questions: a category that comes back later in the quiz starts a new round
+- Categories have no effect in `"survey"` mode, which has no leaderboard
 
 > **Note:** the app automatically adds and manages an `id` field inside each quiz file the first time it's loaded — you don't need to set it yourself, and editing it manually may cause conflicts if it collides with another quiz's id.
 

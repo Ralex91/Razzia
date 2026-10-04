@@ -33,6 +33,7 @@ export const mediaUploadValidator = z.object({
 const questionSchema = z.object({
   type: z.enum(QUESTION_TYPES),
   question: z.string().min(1, "errors:quizz.questionEmpty"),
+  category: z.string().optional(),
   media: questionMediaValidator.optional(),
   answers: z.array(z.string().min(1, "errors:quizz.answerEmpty")),
   solutions: z.array(z.number()).optional(),

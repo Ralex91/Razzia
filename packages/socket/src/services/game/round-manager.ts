@@ -94,7 +94,7 @@ export class RoundManager {
       {
         name: "leaderboard",
         gameModes: [QUIZZ_MODES.QUIZ],
-        skip: () => this.isLastQuestion(),
+        skip: () => this.isLastQuestion() || this.isSameCategoryNext(),
         enter: () => {
           this.showLeaderboard()
         },
@@ -121,6 +121,13 @@ export class RoundManager {
 
   private isLastQuestion(): boolean {
     return !this.opts.quizz.questions[this.currentQuestion + 1]
+  }
+
+  private isSameCategoryNext(): boolean {
+    const category = this.question.category?.trim()
+    const next = this.opts.quizz.questions[this.currentQuestion + 1]
+
+    return Boolean(category) && next?.category?.trim() === category
   }
 
   private isSurvey(): boolean {
@@ -399,7 +406,7 @@ export class RoundManager {
     this.recordHistory(currentPlayers)
 
     this.leaderboard = sortedPlayers
-    this.tempOldLeaderboard = oldLeaderboard
+    this.tempOldLeaderboard ??= oldLeaderboard
     this.playersAnswers = []
   }
 

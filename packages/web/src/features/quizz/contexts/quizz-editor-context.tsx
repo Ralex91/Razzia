@@ -92,7 +92,9 @@ export const QuizzEditorProvider = ({
   const questionIds = fields.map((field) => field.id)
 
   const addQuestion = () => {
-    append(defaultQuestion())
+    const category = questions.at(-1)?.category
+
+    append({ ...defaultQuestion(), ...(category ? { category } : {}) })
     setCurrentIndex(questions.length)
   }
 

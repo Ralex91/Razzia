@@ -65,6 +65,7 @@ export interface UploadedMedia {
 export interface Question {
   type: QuestionType
   question: string
+  category?: string
   media?: QuestionMedia
   answers: string[]
   solutions?: number[]

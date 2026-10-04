@@ -1,3 +1,4 @@
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import type { QuestionType } from "@razzia/common/types/game"
 import {
   Select,
@@ -10,14 +11,20 @@ import {
   QUESTION_REGISTRY,
   QUESTION_TYPE_LIST,
 } from "@razzia/web/features/questions"
+import CategoryField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/CategoryField"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { LayoutList } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorConfig = () => {
-  const { currentQuestion, currentQuestionId, currentIndex, updateQuestion } =
-    useQuizzEditor()
+  const {
+    currentQuestion,
+    currentQuestionId,
+    currentIndex,
+    gameMode,
+    updateQuestion,
+  } = useQuizzEditor()
   const { t } = useTranslation()
   const questionType = currentQuestion.type
 
@@ -58,6 +65,8 @@ const QuestionEditorConfig = () => {
           </SelectContent>
         </Select>
       </ConfigField>
+
+      {gameMode === QUIZZ_MODES.QUIZ && <CategoryField />}
 
       <ConfigComponent key={currentQuestionId} />
     </aside>
