@@ -1,5 +1,6 @@
 import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
 import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
+import AnswerNote from "@razzia/web/features/game/components/AnswerNote"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const Responses = ({ data }: Props) => {
-  const { question, answers, responses, solutions, type } = data
+  const { question, answers, responses, solutions, type, note } = data
   const { ResponsesComponent } = QUESTION_REGISTRY[type]
   const percentages = calculatePercentages(responses)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
@@ -57,6 +58,7 @@ const Responses = ({ data }: Props) => {
           {question}
         </h2>
         <ResponsesComponent data={data} />
+        <AnswerNote note={note} />
       </div>
     )
   }
@@ -89,7 +91,8 @@ const Responses = ({ data }: Props) => {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
+        <AnswerNote note={note} />
         <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
           {answers.map((answer, key) => (
             <AnswerButton
