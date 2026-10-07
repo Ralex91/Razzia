@@ -62,6 +62,8 @@
     },
     "mediaUrlPlaceholder": "Introduce la URL...",
     "placeholder": "Empieza a escribir tu pregunta...",
+    "note": "Explicación",
+    "notePlaceholder": "Añade una explicación que se muestra al revelar la respuesta",
     "estimation": {
       "correctAnswer": "Respuesta correcta"
     }

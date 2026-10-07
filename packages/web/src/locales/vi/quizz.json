@@ -62,6 +62,8 @@
     },
     "mediaUrlPlaceholder": "Nhập URL...",
     "placeholder": "Nhập câu hỏi của bạn...",
+    "note": "Giải thích",
+    "notePlaceholder": "Thêm phần giải thích hiển thị khi công bố đáp án",
     "estimation": {
       "correctAnswer": "Đáp án đúng"
     }
