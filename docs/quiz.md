@@ -53,6 +53,7 @@ Quiz Options:
   - `type`: `"single"` (exactly one answer), `"multi"` (one or more) or `"estimation"` (a number, see [Estimation questions](#estimation-questions)). Defaults to `"single"` when omitted
   - `question`: The question text
   - `category`: Optional round name, see [Categories](#categories)
+  - `note`: Optional explanation shown on the main screen when the answer is revealed, e.g. `"Red, green and blue are the primary colors of light"`
   - `answers`: Array of possible answers (2-4 options)
   - `media`: Optional media object displayed with the question:
     - `type`: `"image"`, `"video"`, or `"audio"`

@@ -66,6 +66,7 @@ interface ManagerExtraStatus {
     media?: QuestionMedia
     type: QuestionType
     options?: QuestionOptions
+    note?: string
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }
