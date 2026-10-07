@@ -66,6 +66,7 @@ export interface Question {
   type: QuestionType
   question: string
   category?: string
+  note?: string
   media?: QuestionMedia
   answers: string[]
   solutions?: number[]

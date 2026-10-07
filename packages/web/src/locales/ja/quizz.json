@@ -62,6 +62,8 @@
     },
     "mediaUrlPlaceholder": "URLを入力...",
     "placeholder": "質問を入力してください...",
+    "note": "解説",
+    "notePlaceholder": "答えの発表時に表示される解説を追加",
     "estimation": {
       "correctAnswer": "正解"
     }
