@@ -36,7 +36,7 @@ const ConfigNumberInput = ({ name, fallback, min, max, id }: Props) => {
       return
     }
 
-    field.onChange(Math.min(max ?? num, Math.max(min ?? num, num)))
+    field.onChange(Math.min(max ?? Infinity, Math.max(min ?? -Infinity, num)))
   }
 
   const handleBlur = () => {
