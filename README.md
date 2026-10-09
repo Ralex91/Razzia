@@ -19,36 +19,46 @@ Razzia is a straightforward and open-source quiz platform, allowing users to hos
   <img width="30%" src=".github/previews/3.png" alt="Question Screen">
 </p>
 
-## ⚙️ Prerequisites
-
-Choose one of the following deployment methods:
-
-### Without Docker
-
-- Node.js : version 24 or higher
-- PNPM : version 10.16 or higher (learn more [here](https://pnpm.io/))
-
-### With Docker
-
-- Docker and Docker Compose
-
 ## 📖 Getting Started
-
-Choose your deployment method:
 
 ### 🐳 Using Docker (Recommended)
 
-Using Docker Compose (recommended):
-You can find the docker compose configuration in the repository:
-[docker-compose.yml](/compose.yml)
+Requires Docker and Docker Compose.
 
-Create a `.env` next to it with your manager password (see Configuration below), then:
+> The image is also available on GHCR: `ghcr.io/ralex91/razzia:latest`.
+
+1. Create a `compose.yml`:
+
+```yaml
+services:
+  razzia:
+    image: ralex91/razzia:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config:/app/config
+    env_file:
+      - .env
+```
+
+2. Create a `.env` next to it:
+
+```bash
+MANAGER_PASSWORD=your-password
+```
+
+3. Start it:
 
 ```bash
 docker compose up -d
 ```
 
-Or using Docker directly:
+Open http://localhost:3000 to play and http://localhost:3000/manager to host a game.
+
+Your quizzes and results are stored in `./config`, created on first run with an example quiz. Edit them from your host, they persist across updates.
+
+<details>
+<summary>Without Compose</summary>
 
 ```bash
 docker run -d \
@@ -58,71 +68,36 @@ docker run -d \
   ralex91/razzia:latest
 ```
 
-The image is also published on the GitHub Container Registry, if you prefer using it instead of Docker Hub:
-
-```bash
-docker run -d \
-  -p 3000:3000 \
-  -e MANAGER_PASSWORD=your-password \
-  -v ./config:/app/config \
-  ghcr.io/ralex91/razzia:latest
-```
-
-**Configuration Volume:**
-The `-v ./config:/app/config` option mounts a local `config` folder to persist your quizzes and results. This allows you to:
-
-- Edit your quizzes directly on your host machine
-- Keep your content when updating the container
-- Easily backup your quizzes and game results
-
-The folder will be created automatically on first run with an example quiz to get you started.
-
-The application will be available at http://localhost:3000
+</details>
 
 ### 🛠️ Without Docker
 
-1. Clone the repository:
+Requires Node.js 24+ and [pnpm](https://pnpm.io/) 10.16+.
+
+1. Clone and install:
 
 ```bash
 git clone https://github.com/Ralex91/Razzia.git
-cd ./Razzia
-```
-
-2. Install dependencies:
-
-```bash
+cd Razzia
 pnpm install
 ```
 
-3. Set your manager password:
+2. Create your `.env` and set `MANAGER_PASSWORD` in it. `WEB_PORT` (default `3000`) and `SOCKET_PORT` (default `3001`) are optional:
 
 ```bash
 cp .env.example .env
 ```
 
-4. Build and start the application:
+3. Build and start:
 
 ```bash
-# Development mode
-pnpm dev
-
-# Production mode
 pnpm build
 pnpm start
 ```
 
-## ⚙️ Configuration
+Open http://localhost:3000 to play and http://localhost:3000/manager to host a game.
 
-**⚠️ Required:** set a manager password before going live. Copy `.env.example` to `.env`:
-
-```bash
-MANAGER_PASSWORD=your-password
-JWT_SECRET=
-```
-
-Manager access stays blocked until `MANAGER_PASSWORD` is set. `JWT_SECRET` is optional: left empty, a new secret is generated at every start, which logs managers out on each restart — harmless, since running games are lost on a restart anyway.
-
-With Docker, `compose.yml` reads the same `.env` through `env_file`.
+> Want to work on the code? See [CONTRIBUTING.md](.github/CONTRIBUTING.md) to run it in development mode.
 
 ## 📚 Documentation
 
