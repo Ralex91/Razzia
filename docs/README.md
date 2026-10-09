@@ -8,5 +8,6 @@ This folder covers the basic setup (config, quizzes, branding) as well as more a
 - [Reverse Proxy](reverse-proxy.md): running Razzia behind Traefik, Nginx, Caddy, or another reverse proxy.
 - [WebSocket Protocol](websocket-protocol.md): the player-facing event protocol, for building custom clients (e.g. a physical buzzer).
 - [HTTP API](http-api.md): the `/api` surface — sessions, quiz and result CRUD, game creation.
+- [Testing](testing.md): running and writing the unit, integration and e2e tests.
 
 Back to the [main README](../README.md).
