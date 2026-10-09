@@ -1,3 +1,4 @@
+import { ACCEPTED_MEDIA_TYPES } from "@razzia/common/src/constants.ts"
 import tailwindcss from "@tailwindcss/vite"
 import { tanstackRouter } from "@tanstack/router-plugin/vite"
 import react from "@vitejs/plugin-react"
@@ -6,8 +7,7 @@ import type { IncomingMessage, ServerResponse } from "node:http"
 import path from "node:path"
 import { fileURLToPath } from "url"
 import { defineConfig, type Plugin } from "vite"
-import { ACCEPTED_MEDIA_TYPES } from "../common/src/constants"
-import { version } from "../../package.json" with { type: "json" }
+import packageJson from "../../package.json" with { type: "json" }
 
 const configDir = (name: string) =>
   fileURLToPath(new URL(`../../config/${name}`, import.meta.url))
@@ -83,7 +83,7 @@ const configServer = (): Plugin => ({
 
 export default defineConfig({
   define: {
-    __APP_VERSION__: JSON.stringify(version),
+    __APP_VERSION__: JSON.stringify(packageJson.version),
   },
   plugins: [
     tanstackRouter({
