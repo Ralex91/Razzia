@@ -82,7 +82,10 @@ const ConfigResults = () => {
             </button>
             <AlertDialog
               trigger={
-                <button className="ml-2 shrink-0 rounded-sm p-2 hover:bg-red-600/10">
+                <button
+                  className="ml-2 shrink-0 rounded-sm p-2 hover:bg-red-600/10"
+                  title={t("manager:result.delete")}
+                >
                   <Trash2 className="size-4 stroke-red-500" />
                 </button>
               }

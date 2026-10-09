@@ -21,5 +21,7 @@
   "seconds": "seg",
   "skip": "Omitir",
   "submit": "Enviar",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "previous": "Anterior",
+  "changeLanguage": "Cambiar idioma"
 }

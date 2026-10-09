@@ -79,7 +79,7 @@
   "titleQuizzPlaceholder": "Titolo del quiz...",
   "media": {
     "delete": "Elimina file",
-    "deleteConfirm": "Eliminare \"{{name}}\"? Le domande che lo usano in qualsiasi quiz perderanno il loro contenuto multimediale.",
+    "deleteConfirm": "Eliminare \"{{name}}\"? Verrà rimosso da questo quiz e gli altri quiz che lo usano non potranno più mostrarlo.",
     "library": "Libreria multimediale",
     "libraryEmpty": "La tua libreria è vuota",
     "upload": "Carica",
@@ -96,6 +96,10 @@
     "view": {
       "grid": "Vista griglia",
       "list": "Vista elenco"
-    }
-  }
+    },
+    "filterByType": "Filtra per tipo"
+  },
+  "addAnswer": "Aggiungi risposta",
+  "removeAnswer": "Rimuovi risposta",
+  "markCorrect": "Segna {{label}} come corretta"
 }

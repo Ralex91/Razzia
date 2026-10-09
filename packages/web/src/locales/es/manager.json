@@ -13,7 +13,8 @@
     "notFound": "No se encontró ningún cuestionario",
     "pleaseCreate": "Por favor crea un cuestionario primero",
     "pleaseSelect": "Por favor selecciona un cuestionario",
-    "startGame": "Iniciar juego"
+    "startGame": "Iniciar juego",
+    "edit": "Editar cuestionario"
   },
   "result": {
     "delete": "Eliminar resultado",

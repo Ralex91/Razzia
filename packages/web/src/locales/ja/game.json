@@ -59,5 +59,8 @@
   "estimation": {
     "yourAnswer": "あなたの回答",
     "rangeHint": "{{min}} から {{max}} の間"
-  }
+  },
+  "showQrCode": "QRコードを表示",
+  "streak": "連続正解",
+  "pinDigit": "PIN の {{position}} 桁目"
 }

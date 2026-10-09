@@ -60,5 +60,8 @@
   "estimation": {
     "yourAnswer": "La tua risposta",
     "rangeHint": "Tra {{min}} e {{max}}"
-  }
+  },
+  "showQrCode": "Mostra codice QR",
+  "streak": "Serie di risposte",
+  "pinDigit": "Cifra {{position}} del PIN"
 }

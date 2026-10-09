@@ -61,7 +61,9 @@ const EstimationConfig = () => {
             value={options.inputMode}
             onValueChange={handleInputModeChange}
           >
-            <SelectTrigger>
+            <SelectTrigger
+              aria-label={t("quizz:question.config.estimation.inputMode")}
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -84,7 +86,10 @@ const EstimationConfig = () => {
             icon={<Footprints className="size-4" />}
             label={t("quizz:question.config.estimation.step")}
           />
-          <ConfigNumberInput name="options.step" />
+          <ConfigNumberInput
+            name="options.step"
+            label={t("quizz:question.config.estimation.step")}
+          />
           <ConfigField.Description>
             {t("quizz:question.config.estimation.stepHint")}
           </ConfigField.Description>
@@ -96,7 +101,11 @@ const EstimationConfig = () => {
               icon={<Crosshair className="size-4" />}
               label={t("quizz:question.config.estimation.margin")}
             />
-            <ConfigNumberInput name="options.margin" min={0} />
+            <ConfigNumberInput
+              name="options.margin"
+              label={t("quizz:question.config.estimation.margin")}
+              min={0}
+            />
             <ConfigField.Description>
               {t("quizz:question.config.estimation.marginHint")}
             </ConfigField.Description>

@@ -79,7 +79,7 @@
   "titleQuizzPlaceholder": "Quizz title...",
   "media": {
     "delete": "Delete media",
-    "deleteConfirm": "Delete \"{{name}}\"? Questions using it in any quizz will lose their media.",
+    "deleteConfirm": "Delete \"{{name}}\"? It will be removed from this quizz, and other quizzes using it will no longer be able to show it.",
     "library": "Media library",
     "libraryEmpty": "Your library is empty",
     "upload": "Upload",
@@ -96,6 +96,10 @@
     "view": {
       "grid": "Grid view",
       "list": "List view"
-    }
-  }
+    },
+    "filterByType": "Filter by type"
+  },
+  "addAnswer": "Add answer",
+  "removeAnswer": "Remove answer",
+  "markCorrect": "Mark {{label}} as correct"
 }

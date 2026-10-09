@@ -77,7 +77,10 @@ const MediaLibraryToolbar = ({
       </div>
 
       <Select value={filter} onValueChange={handleFilterChange}>
-        <SelectTrigger className="h-10 w-40">
+        <SelectTrigger
+          aria-label={t("quizz:media.filterByType")}
+          className="h-10 w-40"
+        >
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

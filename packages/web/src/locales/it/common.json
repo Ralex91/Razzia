@@ -21,5 +21,7 @@
   "seconds": "sec",
   "skip": "Salta",
   "submit": "Invia",
-  "close": "Chiudi"
+  "close": "Chiudi",
+  "previous": "Precedente",
+  "changeLanguage": "Cambia lingua"
 }

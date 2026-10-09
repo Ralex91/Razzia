@@ -21,6 +21,7 @@ const ResultModalHeader = () => {
         <button
           disabled={questionIndex === 0}
           onClick={goPrev}
+          title={t("common:previous")}
           className="text-muted-foreground hover:bg-muted rounded p-1 disabled:opacity-30"
         >
           <ChevronLeft className="size-5" />
@@ -28,12 +29,14 @@ const ResultModalHeader = () => {
         <button
           disabled={questionIndex === total - 1}
           onClick={goNext}
+          title={t("common:next")}
           className="text-muted-foreground hover:bg-muted rounded p-1 disabled:opacity-30"
         >
           <ChevronRight className="size-5" />
         </button>
         <button
           onClick={onClose}
+          title={t("common:close")}
           className="text-muted-foreground hover:bg-muted hover:text-accent-foreground ml-1 rounded p-1"
         >
           <X className="size-5" />

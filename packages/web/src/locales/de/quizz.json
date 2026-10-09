@@ -79,7 +79,7 @@
   "titleQuizzPlaceholder": "Quiz-Titel...",
   "media": {
     "delete": "Medium löschen",
-    "deleteConfirm": "\"{{name}}\" löschen? Fragen, die es in einem Quiz verwenden, verlieren ihr Medium.",
+    "deleteConfirm": "\"{{name}}\" löschen? Es wird aus diesem Quiz entfernt, und andere Quiz, die es verwenden, können es nicht mehr anzeigen.",
     "library": "Mediathek",
     "libraryEmpty": "Deine Mediathek ist leer",
     "upload": "Hochladen",
@@ -96,6 +96,10 @@
     "view": {
       "grid": "Rasteransicht",
       "list": "Listenansicht"
-    }
-  }
+    },
+    "filterByType": "Nach Typ filtern"
+  },
+  "addAnswer": "Antwort hinzufügen",
+  "removeAnswer": "Antwort entfernen",
+  "markCorrect": "{{label}} als richtig markieren"
 }

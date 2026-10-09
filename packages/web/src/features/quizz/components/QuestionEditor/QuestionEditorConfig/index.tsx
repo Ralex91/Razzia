@@ -53,7 +53,7 @@ const QuestionEditorConfig = () => {
           label={t("quizz:question.config.answerMode")}
         />
         <Select value={questionType} onValueChange={handleTypeChange}>
-          <SelectTrigger>
+          <SelectTrigger aria-label={t("quizz:question.config.answerMode")}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

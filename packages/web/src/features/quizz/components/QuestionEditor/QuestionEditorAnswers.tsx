@@ -63,6 +63,7 @@ const QuestionEditorAnswers = () => {
         <div className="flex gap-2">
           <button
             onClick={removeAnswer}
+            aria-label={t("quizz:removeAnswer")}
             disabled={currentQuestion.answers.length <= 2}
             className="bg-accent text-accent-foreground hover:bg-accent flex size-7 items-center justify-center rounded-lg disabled:opacity-40"
           >
@@ -70,6 +71,7 @@ const QuestionEditorAnswers = () => {
           </button>
           <button
             onClick={addAnswer}
+            aria-label={t("quizz:addAnswer")}
             disabled={currentQuestion.answers.length >= 4}
             className="bg-accent text-accent-foreground hover:bg-accent flex size-7 items-center justify-center rounded-lg disabled:opacity-40"
           >

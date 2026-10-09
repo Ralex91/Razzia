@@ -59,7 +59,10 @@ const GameSettingsModal = () => {
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Tooltip content={t("game:settings.title")}>
-        <Dialog.Trigger className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60">
+        <Dialog.Trigger
+          aria-label={t("game:settings.title")}
+          className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60"
+        >
           <Settings className="size-5" />
         </Dialog.Trigger>
       </Tooltip>

@@ -91,16 +91,17 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
           </div>
         ) : (
           <AlertDialog.Root open={qrOpen} onOpenChange={setQrOpen}>
-            <AlertDialog.Trigger asChild>
-              <div className="group relative flex h-40 shrink-0 cursor-pointer rounded-xl bg-white p-2">
-                <QRCodeSVG
-                  className="h-auto w-auto"
-                  value={`${webUrl}?pin=${inviteCode}`}
-                />
-                <div className="absolute inset-0 flex items-center justify-center rounded-xl opacity-0 transition-opacity group-hover:opacity-100">
-                  <div className="rounded-md bg-black/80 p-2">
-                    <Maximize2 className="size-6 text-white" />
-                  </div>
+            <AlertDialog.Trigger
+              aria-label={t("game:showQrCode")}
+              className="group relative flex h-40 shrink-0 cursor-pointer rounded-xl bg-white p-2"
+            >
+              <QRCodeSVG
+                className="h-auto w-auto"
+                value={`${webUrl}?pin=${inviteCode}`}
+              />
+              <div className="absolute inset-0 flex items-center justify-center rounded-xl opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="rounded-md bg-black/80 p-2">
+                  <Maximize2 className="size-6 text-white" />
                 </div>
               </div>
             </AlertDialog.Trigger>
@@ -113,6 +114,7 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
               >
                 <button
                   onClick={handleCloseQrCode}
+                  aria-label={t("common:close")}
                   className="hover:bg-muted absolute -top-3 -right-3 rounded-full bg-white p-1.5 shadow-md"
                 >
                   <X className="text-foreground size-6" />
