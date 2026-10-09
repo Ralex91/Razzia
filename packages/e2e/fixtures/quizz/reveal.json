@@ -1,0 +1,20 @@
+{
+  "id": "e2e-reveal",
+  "gameMode": "quiz",
+  "subject": "E2E Reveal",
+  "questions": [
+    {
+      "type": "single",
+      "question": "Which city is shown?",
+      "note": "Paris has been the capital of France since 987.",
+      "media": {
+        "type": "image",
+        "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      },
+      "answers": ["Paris", "Rome"],
+      "solutions": [0],
+      "cooldown": 3,
+      "time": 30
+    }
+  ]
+}

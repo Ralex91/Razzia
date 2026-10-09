@@ -5,6 +5,7 @@ catalog:
   "@types/node": "^26.6.3"
   hono: "^4.13.9"
   http-status-codes: "^2.3.0"
+  i18next: "^26.4.2"
   socket.io: "^4.8.4"
   socket.io-client: "^4.8.4"
   typescript: "^7.0.2"
