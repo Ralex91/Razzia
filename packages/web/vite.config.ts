@@ -81,6 +81,23 @@ const configServer = (): Plugin => ({
   },
 })
 
+const webPort = Number(process.env.WEB_PORT) || 3000
+const socketUrl = `http://localhost:${Number(process.env.SOCKET_PORT) || 3001}`
+
+const serverOptions = {
+  port: webPort,
+  host: "0.0.0.0",
+  proxy: {
+    "/ws": {
+      target: socketUrl,
+      ws: true,
+    },
+    "/api": {
+      target: socketUrl,
+    },
+  },
+}
+
 export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
@@ -107,32 +124,8 @@ export default defineConfig({
       ),
     },
   },
-  server: {
-    port: 3000,
-    host: "0.0.0.0",
-    proxy: {
-      "/ws": {
-        target: "http://localhost:3001",
-        ws: true,
-      },
-      "/api": {
-        target: "http://localhost:3001",
-      },
-    },
-  },
-  preview: {
-    port: 3000,
-    host: "0.0.0.0",
-    proxy: {
-      "/ws": {
-        target: "http://localhost:3001",
-        ws: true,
-      },
-      "/api": {
-        target: "http://localhost:3001",
-      },
-    },
-  },
+  server: serverOptions,
+  preview: serverOptions,
   build: {
     chunkSizeWarningLimit: 2000,
   },

@@ -3,7 +3,7 @@ import { app, createSocketServer } from "@razzia/socket/app"
 import { initConfig } from "@razzia/socket/services/config"
 import Registry from "@razzia/socket/services/registry"
 
-const WS_PORT = 3001
+const WS_PORT = Number(process.env.SOCKET_PORT) || 3001
 
 initConfig()
 

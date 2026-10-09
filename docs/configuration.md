@@ -18,6 +18,8 @@ JWT_SECRET=
 | ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `MANAGER_PASSWORD` | Yes      | Unlocks the manager interface. Until it is set, manager access is refused with `errors:manager.passwordNotConfigured`. |
 | `JWT_SECRET`       | No       | Signs session tokens. Must be at least 32 characters; a shorter value is ignored.                                      |
+| `WEB_PORT`         | No       | Without Docker only: port the app is served on. Defaults to `3000`.                                                    |
+| `SOCKET_PORT`      | No       | Without Docker only: port of the socket server, proxied behind the web port. Defaults to `3001`.                       |
 
 `pnpm dev` and `pnpm start` load `.env` automatically. With Docker, `compose.yml` reads the same file through `env_file`, or you can set the variables inline with `environment:`. With a bare `docker run`, pass them with `-e MANAGER_PASSWORD=...`.
 
