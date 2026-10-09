@@ -3,3 +3,4 @@
 .env
 .secrets
 release.json
+/coverage

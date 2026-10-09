@@ -185,6 +185,11 @@ const GameWrapper = ({
                 >
                   <button
                     onClick={toggleFullscreen}
+                    aria-label={t(
+                      isFullscreen
+                        ? "common:exitFullscreen"
+                        : "common:fullscreen",
+                    )}
                     className="flex items-center justify-center rounded-lg bg-black/40 px-2.5 text-white drop-shadow-md hover:bg-black/60"
                   >
                     {isFullscreen ? (

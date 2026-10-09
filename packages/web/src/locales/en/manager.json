@@ -13,7 +13,8 @@
     "notFound": "No quizz found",
     "pleaseCreate": "Please create a quizz first",
     "pleaseSelect": "Please select a quizz",
-    "startGame": "Start game"
+    "startGame": "Start game",
+    "edit": "Edit quizz"
   },
   "result": {
     "delete": "Delete result",

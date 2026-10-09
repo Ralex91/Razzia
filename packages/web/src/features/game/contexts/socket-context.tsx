@@ -33,6 +33,7 @@ export const socketClient: TypedSocket = io("/", {
   reconnection: true,
   reconnectionAttempts: Infinity,
   reconnectionDelay: 1000,
+  closeOnBeforeunload: true,
   auth: (cb) => {
     ensureSession()
       .then((session) => cb({ token: session.token }))

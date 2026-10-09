@@ -20,10 +20,10 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
   const { result, questionResult, getPlayerPoints } = useResultModal()
   const { t } = useTranslation()
 
-  const { playerName, answerIds } = playerAnswer
+  const { playerName, answerIds, correct, points } = playerAnswer
   const hasAnswer = answerIds !== null && answerIds.length > 0
 
-  const isCorrect = isAnswerCorrect(questionResult, answerIds)
+  const isCorrect = correct ?? isAnswerCorrect(questionResult, answerIds)
   const isEstimation = isEstimationOptions(questionResult.options)
 
   return (
@@ -71,7 +71,7 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
         </td>
       )}
       <td className="text-foreground px-4 py-2.5 text-right font-semibold">
-        {getPlayerPoints(playerName)}
+        {points ?? getPlayerPoints(playerName)}
       </td>
     </tr>
   )

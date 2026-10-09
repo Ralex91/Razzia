@@ -24,6 +24,7 @@
   "pinLabel": "Mã PIN",
   "playersJoined": "Người chơi đã tham gia",
   "questionPrefix": "Câu hỏi #",
+  "rank_ordinal_one": "hạng {{count}}",
   "rank_ordinal_other": "hạng {{count}}",
   "reconnect": "Kết nối lại",
   "reconnectTitle": "Bạn đang ở trong một trò chơi",
@@ -59,5 +60,8 @@
   "estimation": {
     "yourAnswer": "Câu trả lời của bạn",
     "rangeHint": "Từ {{min}} đến {{max}}"
-  }
+  },
+  "showQrCode": "Hiện mã QR",
+  "streak": "Chuỗi trả lời đúng",
+  "pinDigit": "Chữ số {{position}} của mã PIN"
 }

@@ -79,7 +79,7 @@
   "titleQuizzPlaceholder": "Titre du quizz...",
   "media": {
     "delete": "Supprimer le média",
-    "deleteConfirm": "Supprimer « {{name}} » ? Les questions qui l'utilisent, dans tous les quizz, perdront leur média.",
+    "deleteConfirm": "Supprimer « {{name}} » ? Il sera retiré de ce quizz, et les autres quizz qui l'utilisent ne pourront plus l'afficher.",
     "library": "Médiathèque",
     "libraryEmpty": "Ta médiathèque est vide",
     "upload": "Importer",
@@ -96,6 +96,10 @@
     "view": {
       "grid": "Vue grille",
       "list": "Vue liste"
-    }
-  }
+    },
+    "filterByType": "Filtrer par type"
+  },
+  "addAnswer": "Ajouter une réponse",
+  "removeAnswer": "Retirer une réponse",
+  "markCorrect": "Marquer {{label}} comme bonne réponse"
 }

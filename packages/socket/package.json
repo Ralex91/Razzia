@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "rolldown": "^1.2.11",
+    "socket.io-client": "catalog:",
     "tsx": "^4.23.15"
   }
 }

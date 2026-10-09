@@ -1,0 +1,23 @@
+{
+  "id": "e2e-quizz",
+  "gameMode": "quiz",
+  "subject": "E2E Quizz",
+  "questions": [
+    {
+      "type": "single",
+      "question": "What is the capital of France?",
+      "answers": ["Paris", "Lyon"],
+      "solutions": [0],
+      "cooldown": 3,
+      "time": 30
+    },
+    {
+      "type": "single",
+      "question": "How much is 2 + 2?",
+      "answers": ["3", "4"],
+      "solutions": [1],
+      "cooldown": 3,
+      "time": 30
+    }
+  ]
+}

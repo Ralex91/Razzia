@@ -135,6 +135,7 @@ const ConfigManageQuizz = () => {
             <div className="flex gap-0.5">
               <button
                 className="text-accent-foreground hover:bg-accent-foreground/10 rounded-sm p-2"
+                title={t("manager:quizz.edit")}
                 onClick={() =>
                   navigate({
                     to: "/manager/quizz/$quizzId",
@@ -155,7 +156,10 @@ const ConfigManageQuizz = () => {
 
               <AlertDialog
                 trigger={
-                  <button className="rounded-sm p-2 hover:bg-red-600/10">
+                  <button
+                    className="rounded-sm p-2 hover:bg-red-600/10"
+                    title={t("manager:quizz.delete")}
+                  >
                     <Trash2 className="size-4 stroke-red-500" />
                   </button>
                 }

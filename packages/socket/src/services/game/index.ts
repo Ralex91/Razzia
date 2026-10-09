@@ -18,10 +18,13 @@ import { RoundManager } from "@razzia/socket/services/game/round-manager"
 import Registry from "@razzia/socket/services/registry"
 import { createInviteCode } from "@razzia/socket/utils/game"
 import { createNickname } from "@razzia/socket/utils/nickname"
+import { SECOND_MS } from "@razzia/socket/utils/sleep"
 import { getClientId } from "@razzia/socket/utils/socket"
 import { v7 as uuid } from "uuid"
 
 const registry = Registry.getInstance()
+
+const MANAGER_GRACE_SECONDS = 30
 
 class Game {
   readonly gameId: string
@@ -40,6 +43,7 @@ class Game {
   private readonly playerManager: PlayerManager
   private readonly round: RoundManager
   private readonly cooldown: CooldownTimer
+  private managerGraceTimer: NodeJS.Timeout | null = null
 
   private lastBroadcastStatus: {
     name: Status
@@ -178,6 +182,25 @@ class Game {
   dispose() {
     this.round.clearAutoAdvance()
     this.cooldown.abort()
+    this.cancelManagerGrace()
+  }
+
+  waitForManager(onTimeout: () => void) {
+    this.cancelManagerGrace()
+    this.managerGraceTimer = setTimeout(() => {
+      this.managerGraceTimer = null
+
+      if (!this._manager.connected && !this.started) {
+        onTimeout()
+      }
+    }, MANAGER_GRACE_SECONDS * SECOND_MS)
+  }
+
+  private cancelManagerGrace() {
+    if (this.managerGraceTimer) {
+      clearTimeout(this.managerGraceTimer)
+      this.managerGraceTimer = null
+    }
   }
 
   kickPlayer(playerId: string) {
@@ -201,15 +224,19 @@ class Game {
   }
 
   private reconnectManager(socket: Socket) {
-    if (this._manager.connected) {
-      socket.emit(EVENTS.GAME.RESET, "errors:game.managerAlreadyConnected")
-
-      return
-    }
+    const previousSocketId = this._manager.connected ? this._manager.id : null
 
     socket.join(this.gameId)
     this._manager.id = socket.id
     this._manager.connected = true
+    this.cancelManagerGrace()
+
+    if (previousSocketId && previousSocketId !== socket.id) {
+      this.io
+        .to(previousSocketId)
+        .emit(EVENTS.GAME.RESET, "errors:game.managerAlreadyConnected")
+      this.io.in(previousSocketId).disconnectSockets(true)
+    }
 
     const status = (() => {
       if (this.managerStatus) {
@@ -252,17 +279,16 @@ class Game {
       return
     }
 
-    if (player.connected) {
-      socket.emit(EVENTS.GAME.RESET, "errors:game.playerAlreadyConnected")
-
-      return
-    }
-
     socket.join(this.gameId)
 
     const oldSocketId = player.id
+    const replacesConnection = player.connected && oldSocketId !== socket.id
     this.playerManager.updateSocketId(oldSocketId, socket.id)
     player.connected = true
+
+    if (replacesConnection) {
+      this.io.in(oldSocketId).disconnectSockets(true)
+    }
 
     const status = this.playerStatus.get(oldSocketId) ??
       this.lastBroadcastStatus ?? {
@@ -311,6 +337,7 @@ class Game {
   setPlayerDisconnected(socketId: string) {
     this.playerManager.setDisconnected(socketId)
     this.playerManager.broadcastCount()
+    this.round.endIfEveryoneAnswered()
   }
 
   // Game flow

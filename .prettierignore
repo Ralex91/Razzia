@@ -1,7 +1,12 @@
 /config
 
 **/node_modules
+.pnpm-store
 **/dist
 **/route.gen.ts
 pnpm-lock.yaml
 
+/packages/e2e/.config
+/packages/e2e/test-results
+/packages/e2e/playwright-report
+/coverage

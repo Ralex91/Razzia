@@ -65,7 +65,12 @@ const BaseConfig = () => {
               label={t("quizz:question.config.maxPoints")}
               unit="pts"
             />
-            <ConfigNumberInput name="maxPoints" fallback={MAX_POINTS} min={0} />
+            <ConfigNumberInput
+              name="maxPoints"
+              label={t("quizz:question.config.maxPoints")}
+              fallback={MAX_POINTS}
+              min={0}
+            />
             <ConfigField.Description>
               {t("quizz:question.config.maxPointsHint")}
             </ConfigField.Description>
@@ -78,6 +83,7 @@ const BaseConfig = () => {
               unit={isPenaltyEnabled ? "pts" : undefined}
               action={
                 <Switch
+                  aria-label={t("quizz:question.config.penalty")}
                   checked={isPenaltyEnabled}
                   onCheckedChange={handleTogglePenalty}
                 />
@@ -86,6 +92,7 @@ const BaseConfig = () => {
             {isPenaltyEnabled && (
               <ConfigNumberInput
                 name="penalty"
+                label={t("quizz:question.config.penalty")}
                 fallback={DEFAULT_PENALTY}
                 min={1}
               />
@@ -105,7 +112,9 @@ const BaseConfig = () => {
                 value={scoringMode}
                 onValueChange={handleScoringModeChange}
               >
-                <SelectTrigger>
+                <SelectTrigger
+                  aria-label={t("quizz:question.config.scoringMode")}
+                >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -131,7 +140,12 @@ const BaseConfig = () => {
             label={t("quizz:question.config.questionDisplay")}
             unit="sec"
           />
-          <ConfigNumberInput name="cooldown" min={3} max={15} />
+          <ConfigNumberInput
+            name="cooldown"
+            label={t("quizz:question.config.questionDisplay")}
+            min={3}
+            max={15}
+          />
           <ConfigField.Description>
             {t("quizz:question.config.questionDisplayHint")}
           </ConfigField.Description>
@@ -144,12 +158,19 @@ const BaseConfig = () => {
             unit={isTimeLimitEnabled ? "sec" : undefined}
             action={
               <Switch
+                aria-label={t("quizz:question.config.answerTime")}
                 checked={isTimeLimitEnabled}
                 onCheckedChange={handleToggleTimeLimit}
               />
             }
           />
-          {isTimeLimitEnabled && <ConfigNumberInput name="time" min={5} />}
+          {isTimeLimitEnabled && (
+            <ConfigNumberInput
+              name="time"
+              label={t("quizz:question.config.answerTime")}
+              min={5}
+            />
+          )}
           <ConfigField.Description>
             {isTimeLimitEnabled
               ? t("quizz:question.config.answerTimeHint")

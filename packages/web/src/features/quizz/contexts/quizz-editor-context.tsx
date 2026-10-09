@@ -15,6 +15,7 @@ import {
   useState,
   type PropsWithChildren,
 } from "react"
+import { flushSync } from "react-dom"
 import {
   FormProvider,
   useFieldArray,
@@ -37,6 +38,7 @@ interface QuizzEditorContextType {
   currentIndex: number
   currentQuestion: Question
   currentQuestionId: string
+  isRemoving: boolean
   setCurrentIndex: (_index: number) => void
   addQuestion: () => void
   removeQuestion: (_index: number) => void
@@ -84,6 +86,7 @@ export const QuizzEditorProvider = ({
     name: "questions",
   })
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [removingFrom, setRemovingFrom] = useState<Question[] | null>(null)
 
   const questions = useWatch({ control, name: "questions" })
   const gameMode = useWatch({ control, name: "gameMode" })
@@ -99,6 +102,7 @@ export const QuizzEditorProvider = ({
   }
 
   const removeQuestion = (index: number) => {
+    flushSync(() => setRemovingFrom(questions))
     remove(index)
 
     setCurrentIndex((current) => {
@@ -141,6 +145,7 @@ export const QuizzEditorProvider = ({
           currentIndex,
           currentQuestion,
           currentQuestionId: questionIds[safeIndex],
+          isRemoving: removingFrom === questions,
           setCurrentIndex,
           addQuestion,
           removeQuestion,

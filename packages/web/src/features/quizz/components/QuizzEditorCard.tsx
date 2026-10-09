@@ -102,6 +102,7 @@ const QuizzEditorCard = ({
           trigger={
             <button
               onClick={(e) => e.stopPropagation()}
+              aria-label={t("quizz:question.deleteQuestion")}
               className="text-muted-foreground bg-background absolute top-1.5 right-1.5 hidden rounded-sm p-1 group-hover:block hover:bg-red-50 hover:text-red-500"
             >
               <Trash2 className="size-3.5" />

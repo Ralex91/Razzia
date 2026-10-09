@@ -1,0 +1,54 @@
+{
+  "id": "e2e-scoring",
+  "gameMode": "quiz",
+  "subject": "E2E Scoring",
+  "questions": [
+    {
+      "type": "single",
+      "question": "Single choice worth 500 points",
+      "category": "Round",
+      "answers": ["Right", "Wrong"],
+      "solutions": [0],
+      "cooldown": 3,
+      "time": -1,
+      "maxPoints": 500
+    },
+    {
+      "type": "multi",
+      "question": "Balanced multiple choice",
+      "category": "Round",
+      "answers": ["Red", "Blue", "Green"],
+      "solutions": [0, 1],
+      "cooldown": 3,
+      "time": -1,
+      "options": { "scoringMode": "balanced" }
+    },
+    {
+      "type": "multi",
+      "question": "Strict multiple choice with a penalty",
+      "category": "Round",
+      "answers": ["Red", "Blue", "Green"],
+      "solutions": [0, 1],
+      "cooldown": 3,
+      "time": -1,
+      "penalty": 200,
+      "options": { "scoringMode": "strict" }
+    },
+    {
+      "type": "estimation",
+      "question": "Estimate 50",
+      "category": "Round",
+      "answers": [],
+      "solutions": [50],
+      "cooldown": 3,
+      "time": -1,
+      "options": {
+        "inputMode": "input",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "margin": 10
+      }
+    }
+  ]
+}

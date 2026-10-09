@@ -86,7 +86,7 @@ const routes = new Hono()
       if (password !== managerPassword) {
         return c.json(
           { error: "errors:manager.invalidPassword" },
-          StatusCodes.UNAUTHORIZED,
+          StatusCodes.FORBIDDEN,
         )
       }
 

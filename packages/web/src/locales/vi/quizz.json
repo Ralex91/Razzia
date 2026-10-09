@@ -79,7 +79,7 @@
   "titleQuizzPlaceholder": "Tiêu đề trò chơi...",
   "media": {
     "delete": "Xóa media",
-    "deleteConfirm": "Xóa \"{{name}}\"? Các câu hỏi đang dùng media này trong mọi trò chơi sẽ mất media.",
+    "deleteConfirm": "Xóa \"{{name}}\"? Media sẽ bị gỡ khỏi trò chơi này, và các trò chơi khác đang dùng nó sẽ không thể hiển thị nữa.",
     "library": "Thư viện media",
     "libraryEmpty": "Thư viện của bạn đang trống",
     "upload": "Tải lên",
@@ -96,6 +96,10 @@
     "view": {
       "grid": "Dạng lưới",
       "list": "Dạng danh sách"
-    }
-  }
+    },
+    "filterByType": "Lọc theo loại"
+  },
+  "addAnswer": "Thêm câu trả lời",
+  "removeAnswer": "Xóa câu trả lời",
+  "markCorrect": "Đánh dấu {{label}} là đúng"
 }

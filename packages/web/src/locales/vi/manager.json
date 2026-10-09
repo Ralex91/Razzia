@@ -13,7 +13,8 @@
     "notFound": "Không tìm thấy trò chơi",
     "pleaseCreate": "Vui lòng tạo trò chơi trước",
     "pleaseSelect": "Vui lòng chọn một trò chơi",
-    "startGame": "Bắt đầu trò chơi"
+    "startGame": "Bắt đầu trò chơi",
+    "edit": "Sửa trò chơi"
   },
   "result": {
     "delete": "Xóa kết quả",

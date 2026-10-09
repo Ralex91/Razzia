@@ -10,17 +10,30 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   const registry = Registry.getInstance()
   const clientId = getClientId(socket)
 
+  const closeLobby = (game: Game) => {
+    game.abortCooldown()
+    io.to(game.gameId).emit(
+      EVENTS.GAME.RESET,
+      "errors:game.managerDisconnected",
+    )
+    registry.removeGame(game.gameId)
+  }
+
   const handleManagerLeave = (game: Game) => {
     game.setManagerDisconnected()
     registry.markGameAsEmpty(game)
 
     if (!game.started) {
-      game.abortCooldown()
-      io.to(game.gameId).emit(
-        EVENTS.GAME.RESET,
-        "errors:game.managerDisconnected",
-      )
-      registry.removeGame(game.gameId)
+      closeLobby(game)
+    }
+  }
+
+  const handleManagerDisconnect = (game: Game) => {
+    game.setManagerDisconnected()
+    registry.markGameAsEmpty(game)
+
+    if (!game.started) {
+      game.waitForManager(() => closeLobby(game))
     }
   }
 
@@ -136,7 +149,7 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
 
     if (managerGame) {
       console.log(`Manager disconnected from game ${managerGame.inviteCode}`)
-      handleManagerLeave(managerGame)
+      handleManagerDisconnect(managerGame)
 
       return
     }

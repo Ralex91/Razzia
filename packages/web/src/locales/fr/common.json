@@ -21,5 +21,7 @@
   "seconds": "sec",
   "skip": "Passer",
   "submit": "Valider",
-  "close": "Fermer"
+  "close": "Fermer",
+  "previous": "Précédent",
+  "changeLanguage": "Changer de langue"
 }

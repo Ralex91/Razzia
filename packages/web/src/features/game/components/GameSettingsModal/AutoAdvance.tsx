@@ -3,9 +3,11 @@ import Switch from "@razzia/web/components/Switch"
 import NumberField from "@razzia/web/components/forms/NumberField"
 import SettingRow from "@razzia/web/features/game/components/GameSettingsModal/SettingRow"
 import { Controller, useFormContext, useWatch } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 
 const AutoAdvance = () => {
   const { control } = useFormContext<GameSettings>()
+  const { t } = useTranslation()
   const enable = useWatch({ control, name: "autoAdvance.enable" })
 
   return (
@@ -18,7 +20,11 @@ const AutoAdvance = () => {
             label="game:settings.autoAdvance.label"
             hint="game:settings.autoAdvance.hint"
           >
-            <Switch checked={field.value} onCheckedChange={field.onChange} />
+            <Switch
+              aria-label={t("game:settings.autoAdvance.label")}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
           </SettingRow>
         )}
       />

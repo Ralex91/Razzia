@@ -27,6 +27,7 @@ const RoomLockButton = ({ className }: Props) => {
     <Tooltip content={t(locked ? "game:lock.unlock" : "game:lock.lock")}>
       <button
         onClick={handleToggle}
+        aria-label={t(locked ? "game:lock.unlock" : "game:lock.lock")}
         aria-pressed={locked}
         className={clsx("flex items-center justify-center", className)}
       >
