@@ -29,6 +29,7 @@ import { PlayerManager } from "@razzia/socket/services/game/player-manager"
 import {
   countAnswers,
   scoreQuestion,
+  type ScoredPlayer,
 } from "@razzia/socket/services/scoring/round"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import sleep, { SECOND_MS } from "@razzia/socket/utils/sleep"
@@ -74,6 +75,7 @@ export class RoundManager {
   private currentStep = -1
   private playersAnswers: Answer[] = []
   private startTime = 0
+  private acceptingAnswers = false
   private leaderboard: Player[] = []
   private tempOldLeaderboard: Player[] | null = null
   private questionsHistory: QuestionResult[] = []
@@ -224,6 +226,7 @@ export class RoundManager {
     this.clearAutoAdvance()
 
     if (this.isAskingQuestion()) {
+      this.acceptingAnswers = false
       this.opts.cooldown.abort()
 
       return
@@ -310,6 +313,7 @@ export class RoundManager {
     }
 
     this.startTime = Date.now()
+    this.acceptingAnswers = true
 
     this.opts.broadcast(STATUS.SELECT_ANSWER, {
       question: this.question.question,
@@ -324,6 +328,8 @@ export class RoundManager {
 
     await this.opts.cooldown.start(this.question.time)
 
+    this.acceptingAnswers = false
+
     if (!this.started) {
       return
     }
@@ -333,16 +339,24 @@ export class RoundManager {
 
   // ── Steps ────────────────────────────────────────────────────────────────
 
-  private recordHistory(players: Player[]): void {
+  private recordHistory(players: Player[], scored: ScoredPlayer[] = []): void {
     this.questionsHistory.push({
       ...this.question,
       solutions: this.isSurvey() ? undefined : this.question.solutions,
-      playerAnswers: players.map((player) => ({
-        playerName: player.username,
-        answerIds:
-          this.playersAnswers.find((a) => a.playerId === player.id)
-            ?.answerIds ?? null,
-      })),
+      playerAnswers: players.map((player) => {
+        const score = scored.find((s) => s.id === player.id)
+
+        return {
+          playerName: player.username,
+          answerIds:
+            this.playersAnswers.find((a) => a.playerId === player.id)
+              ?.answerIds ?? null,
+          ...(score && {
+            correct: score.lastCorrect,
+            points: score.lastPoints,
+          }),
+        }
+      }),
     })
   }
 
@@ -403,7 +417,7 @@ export class RoundManager {
       responses: answerCounts,
     })
 
-    this.recordHistory(currentPlayers)
+    this.recordHistory(currentPlayers, sortedPlayers)
 
     this.leaderboard = sortedPlayers
     this.tempOldLeaderboard ??= oldLeaderboard
@@ -505,7 +519,7 @@ export class RoundManager {
   selectAnswer(socket: Socket, answerIds: number[]): void {
     const player = this.opts.players.findById(socket.id)
 
-    if (!player) {
+    if (!player || !this.acceptingAnswers) {
       return
     }
 
@@ -549,8 +563,20 @@ export class RoundManager {
       .to(this.opts.gameId)
       .emit(EVENTS.GAME.PLAYER_ANSWER, this.playersAnswers.length)
     this.opts.players.broadcastCount()
+    this.endIfEveryoneAnswered()
+  }
 
-    if (this.playersAnswers.length === this.opts.players.count()) {
+  endIfEveryoneAnswered(): void {
+    if (!this.acceptingAnswers) {
+      return
+    }
+
+    const connected = this.opts.players.getAll().filter((p) => p.connected)
+    const everyoneAnswered = connected.every((player) =>
+      this.playersAnswers.some((a) => a.playerId === player.id),
+    )
+
+    if (connected.length > 0 && everyoneAnswered) {
       this.opts.cooldown.abort()
     }
   }

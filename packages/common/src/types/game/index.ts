@@ -110,6 +110,8 @@ export interface GameUpdateQuestion {
 export interface PlayerAnswerRecord {
   playerName: string
   answerIds: number[] | null
+  correct?: boolean
+  points?: number
 }
 
 export type QuestionResult = Question & {
