@@ -18,6 +18,13 @@ const envSchema = z.object({
         `JWT_SECRET must be at least ${MIN_SECRET_LENGTH} characters`,
       ),
   ),
+  GAME_SPEED: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.coerce
+      .number()
+      .positive("GAME_SPEED must be a positive number")
+      .default(1),
+  ),
 })
 
 const parsed = envSchema.safeParse(process.env)
@@ -31,6 +38,8 @@ if (!parsed.success) {
 }
 
 export const managerPassword = parsed.data.MANAGER_PASSWORD
+
+export const gameSpeed = parsed.data.GAME_SPEED
 
 export const jwtSecret =
   parsed.data.JWT_SECRET ?? randomBytes(32).toString("hex")

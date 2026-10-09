@@ -1,5 +1,6 @@
 import { EVENTS, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { Server } from "@razzia/common/types/game/socket"
+import { SECOND_MS } from "@razzia/socket/utils/sleep"
 
 export class CooldownTimer {
   private readonly io: Server
@@ -25,7 +26,7 @@ export class CooldownTimer {
             clearInterval(interval)
             resolve()
           }
-        }, 1000)
+        }, SECOND_MS)
       })
     }
 
@@ -43,7 +44,7 @@ export class CooldownTimer {
 
         this.io.to(this.gameId).emit(EVENTS.GAME.COOLDOWN, count)
         count -= 1
-      }, 1000)
+      }, SECOND_MS)
     })
   }
 

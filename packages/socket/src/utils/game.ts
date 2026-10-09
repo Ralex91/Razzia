@@ -3,6 +3,7 @@ import type { Question } from "@razzia/common/types/game"
 import type { Socket } from "@razzia/common/types/game/socket"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
+import { SECOND_MS } from "@razzia/socket/utils/sleep"
 import { getClientId } from "@razzia/socket/utils/socket"
 
 type GameCallback = (_game: Game) => void | Promise<void>
@@ -84,7 +85,7 @@ export const timeToPoint = (startTime: number, question: Question): number => {
   let points = maxPoints
 
   const actualTime = Date.now()
-  const tempsPasseEnSecondes = (actualTime - startTime) / 1000
+  const tempsPasseEnSecondes = (actualTime - startTime) / SECOND_MS
 
   points -= (maxPoints / question.time) * tempsPasseEnSecondes
   points = Math.max(0, points)

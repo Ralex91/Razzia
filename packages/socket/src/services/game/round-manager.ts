@@ -31,7 +31,7 @@ import {
   scoreQuestion,
 } from "@razzia/socket/services/scoring/round"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
-import sleep from "@razzia/socket/utils/sleep"
+import sleep, { SECOND_MS } from "@razzia/socket/utils/sleep"
 import { nanoid } from "nanoid"
 
 type BroadcastFn = <T extends Status>(
@@ -174,7 +174,7 @@ export class RoundManager {
 
       this.clearAutoAdvance()
       this.advance()
-    }, 1000)
+    }, SECOND_MS)
   }
 
   // ── Flow ─────────────────────────────────────────────────────────────────
