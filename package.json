@@ -13,15 +13,20 @@
     "lint:fix": "oxlint --fix",
     "format": "prettier --check . --log-level warn",
     "format:fix": "prettier --write . --log-level warn",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "act:release": "act release -W .github/workflows/docker-release.yml --env GITHUB_REF_NAME=v0.0.1 -P ubuntu-latest=catthehacker/ubuntu:act-latest -s DOCKERHUB_USERNAME=dry-run"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
+    "@vitest/coverage-v8": "^5.0.3",
     "dotenv-cli": "^11.0.0",
     "oxlint": "latest",
     "oxlint-tsgolint": "^7.0.2003",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "^5.0.3"
   }
 }

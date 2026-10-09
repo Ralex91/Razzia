@@ -5,3 +5,4 @@
 **/route.gen.ts
 pnpm-lock.yaml
 
+/coverage
