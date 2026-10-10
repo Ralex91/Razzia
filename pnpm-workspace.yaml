@@ -2,8 +2,8 @@ packages:
   - "packages/*"
 
 catalog:
-  "@types/node": "^26.6.3"
-  hono: "^4.13.9"
+  "@types/node": "^26.6.4"
+  hono: "^4.13.13"
   http-status-codes: "^2.3.0"
   i18next: "^26.4.2"
   socket.io: "^4.8.4"
