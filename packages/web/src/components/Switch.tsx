@@ -1,5 +1,5 @@
-import * as RadixSwitch from "@radix-ui/react-switch"
 import clsx from "clsx"
+import { Switch as RadixSwitch } from "radix-ui"
 import type { ComponentProps } from "react"
 import { twMerge } from "tailwind-merge"
 

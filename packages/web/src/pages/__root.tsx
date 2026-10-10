@@ -1,21 +1,21 @@
 import ErrorPage from "@razzia/web/components/ErrorPage"
 import NotFound from "@razzia/web/components/NotFound"
-import {
-  SocketProvider,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
+import { SocketProvider } from "@razzia/web/features/game/contexts/socket-context"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createRootRoute, Outlet } from "@tanstack/react-router"
+import { Tooltip } from "radix-ui"
 import { useEffect } from "react"
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
 const GameLayout = () => {
-  const { isConnected, connect } = useSocket()
-
-  useEffect(() => {
-    if (!isConnected) {
-      connect()
-    }
-  }, [connect, isConnected])
-
   useEffect(() => {
     document.body.classList.add("bg-secondary")
 
@@ -33,9 +33,13 @@ const GameLayout = () => {
 
 export const Route = createRootRoute({
   component: () => (
-    <SocketProvider>
-      <GameLayout />
-    </SocketProvider>
+    <QueryClientProvider client={queryClient}>
+      <SocketProvider>
+        <Tooltip.Provider delayDuration={150}>
+          <GameLayout />
+        </Tooltip.Provider>
+      </SocketProvider>
+    </QueryClientProvider>
   ),
   errorComponent: ({ error }) => (
     <div className="bg-secondary antialiased">

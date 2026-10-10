@@ -18,3 +18,7 @@ compose.yml
 .prettierignore
 .prettierrc.json
 oxlint.config.ts
+packages/e2e
+!packages/e2e/package.json
+**/*.test.ts
+**/test

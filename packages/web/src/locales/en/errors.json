@@ -1,19 +1,32 @@
 {
+  "api": {
+    "notFound": "The requested resource does not exist",
+    "serverError": "The server encountered an error, please try again"
+  },
   "auth": {
     "invalidInviteCode": "Invalid invite code",
-    "usernameTooLong": "Username cannot exceed 20 characters",
+    "joinTicketInvalid": "Your join request expired, please enter the PIN again",
+    "sessionFailed": "Could not start a session, please reload the page",
+    "tokenInvalid": "Invalid session token",
+    "tokenMissing": "Missing session token",
+    "unauthorized": "You are not authorized",
+    "usernameTooLong": "Username cannot exceed 24 characters",
     "usernameTooShort": "Username cannot be less than 4 characters"
   },
   "game": {
+    "alreadyStarted": "Game already started",
     "expired": "Game expired",
+    "invalidAutoAdvanceDelay": "Delay must be between 3 and 600 seconds",
     "kickedByManager": "You have been kicked by the manager",
+    "locked": "Game locked",
     "managerAlreadyConnected": "Manager already connected",
+    "managerCannotJoin": "You cannot join your own game",
     "managerDisconnected": "Manager disconnected",
     "noPlayersConnected": "No players connected",
-    "managerCannotJoin": "You cannot join your own game",
     "notFound": "Game not found",
     "playerAlreadyConnected": "Player already connected"
   },
+  "invalidRequest": "Invalid request",
   "manager": {
     "failedToReadConfig": "Failed to read game config",
     "invalidPassword": "Invalid password",
@@ -26,20 +39,41 @@
   },
   "quizz": {
     "answerEmpty": "An answer cannot be empty",
+    "cooldownTooLong": "Question display time cannot exceed 15 seconds",
+    "cooldownTooShort": "Question display time must be at least 3 seconds",
     "failedToDelete": "Failed to delete quizz",
     "failedToSave": "Quizz is incomplete, make sure all questions have a title and at least one correct answer",
     "failedToUpdate": "Failed to update quizz",
     "invalidMediaUrl": "Media URL must be a valid URL",
+    "maxPointsNegative": "Points cannot be negative",
     "noQuestions": "A quizz must have at least one question",
+    "noSolution": "Pick at least one correct answer",
     "notFound": "Quizz not found",
+    "penaltyNegative": "Penalty cannot be negative",
     "questionEmpty": "Question cannot be empty",
     "subjectEmpty": "Subject cannot be empty",
     "tooFewAnswers": "A question must have at least 2 answers",
-    "tooManyAnswers": "A question cannot have more than 4 answers"
+    "tooManyAnswers": "A question cannot have more than 4 answers",
+    "estimationInvalidRange": "The maximum must be greater than the minimum",
+    "estimationSolutionOutOfRange": "The correct answer must be between the minimum and the maximum",
+    "estimationStepInvalid": "The step must be greater than 0",
+    "estimationMarginNegative": "The margin cannot be negative",
+    "estimationInvalidOptions": "Estimation settings are missing or invalid"
+  },
+  "result": {
+    "notFound": "Result not found"
   },
   "route": {
     "back": "Go back home",
     "description": "An unexpected error occurred. Please try again.",
     "title": "Something went wrong"
+  },
+  "media": {
+    "invalidName": "Invalid media name",
+    "invalidType": "Unsupported file, upload an image, an audio or a video file",
+    "missingFile": "No file was sent",
+    "notFound": "Media not found",
+    "tooLarge": "File is too large",
+    "uploadFailed": "Failed to upload the file"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "id": "e2e-survey",
+  "gameMode": "survey",
+  "subject": "E2E Survey",
+  "questions": [
+    {
+      "type": "single",
+      "question": "Which season do you prefer?",
+      "answers": ["Summer", "Winter"],
+      "cooldown": 3,
+      "time": 30
+    }
+  ]
+}

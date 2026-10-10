@@ -5,6 +5,7 @@ import {
   type ClipboardEvent,
   type KeyboardEvent,
 } from "react"
+import { useTranslation } from "react-i18next"
 
 interface Props {
   value: string
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const PinInput = ({ value, onChange, length = 6, className }: Props) => {
+  const { t } = useTranslation()
   const refs = useRef<Array<HTMLInputElement | null>>([])
 
   const padded = value.padEnd(length, " ").slice(0, length)
@@ -86,6 +88,7 @@ const PinInput = ({ value, onChange, length = 6, className }: Props) => {
           }}
           type="text"
           inputMode="numeric"
+          aria-label={t("game:pinDigit", { position: i + 1 })}
           maxLength={1}
           value={digit}
           onChange={handleChange(i)}

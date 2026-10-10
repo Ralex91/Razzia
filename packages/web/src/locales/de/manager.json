@@ -13,7 +13,8 @@
     "notFound": "Kein Quiz gefunden",
     "pleaseCreate": "Bitte erstelle zuerst ein Quiz",
     "pleaseSelect": "Bitte wähle ein Quiz aus",
-    "startGame": "Spiel starten"
+    "startGame": "Spiel starten",
+    "edit": "Quiz bearbeiten"
   },
   "result": {
     "delete": "Ergebnis löschen",
@@ -35,7 +36,13 @@
       "points": "Punkte"
     },
     "playerCount": "{{count}} Spieler",
-    "timeLimitSuffix": "s Zeitlimit"
+    "timeLimitSuffix": "s Zeitlimit",
+    "estimation": {
+      "answered": "Geantwortet",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "Außerhalb der Toleranz",
+      "average": "Durchschnittliche Antwort: {{value}}"
+    }
   },
   "tabs": {
     "play": "Spielen",

@@ -3,24 +3,51 @@ import type { Question } from "@razzia/common/types/game"
 import type { Socket } from "@razzia/common/types/game/socket"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
-import { nanoid } from "nanoid"
+import { SECOND_MS } from "@razzia/socket/utils/sleep"
+import { getClientId } from "@razzia/socket/utils/socket"
 
-export const withGame = (
+type GameCallback = (_game: Game) => void | Promise<void>
+
+const resolveGame = (gameId: string | undefined): Game | undefined =>
+  gameId ? Registry.getInstance().getGameById(gameId) : undefined
+
+export const withManagerGame = (
   gameId: string | undefined,
   socket: Socket,
-  callback: (_game: Game) => void | Promise<void>,
+  callback: GameCallback,
 ): void => {
-  if (!gameId) {
+  const game = resolveGame(gameId)
+
+  if (!game) {
     socket.emit("game:errorMessage", "errors:game.notFound")
 
     return
   }
 
-  const registry = Registry.getInstance()
-  const game = registry.getGameById(gameId)
+  if (game.manager.clientId !== getClientId(socket)) {
+    socket.emit("game:errorMessage", "errors:auth.unauthorized")
+
+    return
+  }
+
+  callback(game)
+}
+
+export const withPlayerGame = (
+  gameId: string | undefined,
+  socket: Socket,
+  callback: GameCallback,
+): void => {
+  const game = resolveGame(gameId)
 
   if (!game) {
     socket.emit("game:errorMessage", "errors:game.notFound")
+
+    return
+  }
+
+  if (!game.players.some((p) => p.clientId === getClientId(socket))) {
+    socket.emit("game:errorMessage", "errors:auth.unauthorized")
 
     return
   }
@@ -41,21 +68,6 @@ export const createInviteCode = (length = 6) => {
   return result
 }
 
-export const normalizeFilename = (subject: string) => {
-  const slug = subject
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/gu, "")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/gu, "-")
-    .replace(/[^a-z0-9-]/gu, "")
-    .slice(0, 10)
-
-  const shortId = nanoid(8)
-
-  return `${slug}-${shortId}`
-}
-
 export const orderToPoint = (
   index: number,
   totalPlayers: number,
@@ -73,7 +85,7 @@ export const timeToPoint = (startTime: number, question: Question): number => {
   let points = maxPoints
 
   const actualTime = Date.now()
-  const tempsPasseEnSecondes = (actualTime - startTime) / 1000
+  const tempsPasseEnSecondes = (actualTime - startTime) / SECOND_MS
 
   points -= (maxPoints / question.time) * tempsPasseEnSecondes
   points = Math.max(0, points)

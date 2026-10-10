@@ -4,18 +4,24 @@
   "connecting": "接続中...",
   "delete": "削除",
   "exit": "退出",
+  "exitFullscreen": "全画面表示を終了",
+  "fullscreen": "全画面表示",
   "language": {
     "de": "Deutsch - ドイツ語",
     "en": "English - 英語",
     "es": "Español - スペイン語",
     "fr": "Français - フランス語",
     "it": "Italiano - イタリア語",
-    "ja": "日本語 - 日本語"
+    "ja": "日本語 - 日本語",
+    "vi": "Tiếng Việt - ベトナム語"
   },
   "loading": "読み込み中...",
   "next": "次へ",
   "save": "保存",
   "seconds": "秒",
   "skip": "スキップ",
-  "submit": "送信"
+  "submit": "送信",
+  "close": "閉じる",
+  "previous": "前へ",
+  "changeLanguage": "言語を変更"
 }

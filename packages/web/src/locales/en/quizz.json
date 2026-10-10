@@ -3,6 +3,10 @@
   "addQuestion": "Add question",
   "answersCountSuffix": " answers",
   "deleteQuestion": "Delete question",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Survey"
+  },
   "noQuestionYet": "No question yet",
   "question": {
     "addMediaHint": "Add an image, video or audio to your question",
@@ -15,6 +19,9 @@
       "questionDisplayHint": "Duration before answers appear",
       "timings": "Timings",
       "answerMode": "Answer mode",
+      "category": "Category",
+      "categoryPlaceholder": "e.g. Geography",
+      "categoryHint": "Consecutive questions with the same category form a round. The leaderboard is only shown when the category changes.",
       "scoring": "Scoring",
       "maxPoints": "Max points",
       "maxPointsHint": "Maximum points awarded for a correct answer",
@@ -26,7 +33,25 @@
       "scoringMode.lenient": "Lenient",
       "scoringModeHint.strict": "Full points only if all correct answers are selected and no wrong ones",
       "scoringModeHint.balanced": "Partial points: correct selections minus wrong ones",
-      "scoringModeHint.lenient": "Points per correct answer, no penalty for wrong ones"
+      "scoringModeHint.lenient": "Points per correct answer, no penalty for wrong ones",
+      "estimation": {
+        "title": "Estimation",
+        "inputMode": "Input type",
+        "inputModes": {
+          "slider": "Slider",
+          "input": "Free input"
+        },
+        "inputModeHint": {
+          "slider": "Players pick a value with a slider between the bounds",
+          "input": "Players type a number between the bounds"
+        },
+        "min": "Minimum",
+        "max": "Maximum",
+        "step": "Step",
+        "stepHint": "Precision of the slider and the expected answer",
+        "margin": "Margin",
+        "marginHint": "Answers within this distance of the correct answer score from 100% (exact) down to 50%. Answers outside score nothing."
+      }
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",
@@ -36,13 +61,45 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Enter URL...",
-    "placeholder": "Start typing your question..."
+    "placeholder": "Start typing your question...",
+    "note": "Explanation",
+    "notePlaceholder": "Add an explanation shown when the answer is revealed",
+    "estimation": {
+      "correctAnswer": "Correct answer"
+    }
+  },
+  "questionHasErrors": "This question has errors",
+  "questionType": {
+    "single": "Single choice",
+    "multi": "Multiple choice",
+    "estimation": "Estimation"
   },
   "quizzSaved": "Quizz saved successfully",
   "quizzUpdated": "Quizz updated successfully",
-  "questionType": {
-    "single": "Single choice",
-    "multi": "Multiple choice"
+  "titleQuizzPlaceholder": "Quizz title...",
+  "media": {
+    "delete": "Delete media",
+    "deleteConfirm": "Delete \"{{name}}\"? It will be removed from this quizz, and other quizzes using it will no longer be able to show it.",
+    "library": "Media library",
+    "libraryEmpty": "Your library is empty",
+    "upload": "Upload",
+    "uploadHint": "Images, audio or video, up to {{size}} MB",
+    "search": "Search media...",
+    "filter": {
+      "all": "All"
+    },
+    "use": "Use",
+    "dropHint": "Drop your images, audio and video files here, or use the Upload button",
+    "dropHere": "Drop to upload",
+    "noResults": "No media matches your search",
+    "fromUrl": "Add from a URL",
+    "view": {
+      "grid": "Grid view",
+      "list": "List view"
+    },
+    "filterByType": "Filter by type"
   },
-  "titleQuizzPlaceholder": "Quizz title..."
+  "addAnswer": "Add answer",
+  "removeAnswer": "Remove answer",
+  "markCorrect": "Mark {{label}} as correct"
 }

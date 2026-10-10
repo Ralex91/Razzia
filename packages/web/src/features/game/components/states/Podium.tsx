@@ -10,8 +10,12 @@ interface Props {
   data: ManagerStatusDataMap["FINISHED"]
 }
 
+const SUSPENSE_MIN_PLAYERS = 3
+const SUSPENSE_SPOTLIGHT_STEP = 3
+
 const usePodiumAnimation = (topLength: number) => {
-  const [apparition, setApparition] = useState(0)
+  const hasSuspense = topLength >= SUSPENSE_MIN_PLAYERS
+  const [apparition, setApparition] = useState(() => (hasSuspense ? 0 : 4))
 
   const [sfxtThree] = useSound(SFX.PODIUM.THREE, { volume: 0.1 })
   const [sfxSecond] = useSound(SFX.PODIUM.SECOND, { volume: 0.1 })
@@ -35,12 +39,6 @@ const usePodiumAnimation = (topLength: number) => {
   }, [apparition, sfxFirst, sfxSecond, sfxtThree, sfxRool, sfxRoolStop])
 
   useEffect(() => {
-    if (topLength < 3) {
-      setApparition(4)
-
-      return
-    }
-
     if (apparition >= 4) {
       return
     }
@@ -52,7 +50,7 @@ const usePodiumAnimation = (topLength: number) => {
     return () => clearInterval(interval)
   }, [apparition, topLength])
 
-  return apparition
+  return { apparition, hasSuspense }
 }
 
 const medalColor = [
@@ -96,7 +94,7 @@ const Medal = ({ rank }: { rank: number }) => {
 }
 
 const Podium = ({ data: { subject, top } }: Props) => {
-  const apparition = usePodiumAnimation(top.length)
+  const { apparition, hasSuspense } = usePodiumAnimation(top.length)
 
   const { width, height } = useScreenSize()
 
@@ -110,7 +108,7 @@ const Podium = ({ data: { subject, top } }: Props) => {
         />
       )}
 
-      {apparition >= 3 && top.length >= 3 && (
+      {hasSuspense && apparition >= SUSPENSE_SPOTLIGHT_STEP && (
         <div className="pointer-events-none absolute min-h-dvh w-full overflow-hidden">
           <div className="spotlight"></div>
         </div>

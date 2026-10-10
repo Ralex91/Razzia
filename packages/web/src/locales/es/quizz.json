@@ -3,6 +3,10 @@
   "addQuestion": "Añadir pregunta",
   "answersCountSuffix": " respuestas",
   "deleteQuestion": "Eliminar pregunta",
+  "gameMode": {
+    "quiz": "Cuestionario",
+    "survey": "Encuesta"
+  },
   "noQuestionYet": "Aún no hay preguntas",
   "question": {
     "addMediaHint": "Añade una imagen, video o audio a tu pregunta",
@@ -15,6 +19,9 @@
       "questionDisplayHint": "Duración antes de que aparezcan las respuestas",
       "timings": "Tiempos",
       "answerMode": "Modo de respuesta",
+      "category": "Categoría",
+      "categoryPlaceholder": "p. ej. Geografía",
+      "categoryHint": "Las preguntas consecutivas con la misma categoría forman una ronda. La clasificación solo se muestra cuando cambia la categoría.",
       "scoring": "Puntuación",
       "maxPoints": "Puntos máx.",
       "maxPointsHint": "Puntos máximos otorgados por una respuesta correcta",
@@ -26,7 +33,25 @@
       "scoringMode.lenient": "Permisivo",
       "scoringModeHint.strict": "Puntos solo si todas las respuestas correctas están marcadas y ninguna incorrecta",
       "scoringModeHint.balanced": "Puntos parciales: selecciones correctas menos las incorrectas",
-      "scoringModeHint.lenient": "Puntos por respuesta correcta, sin penalización por incorrectas"
+      "scoringModeHint.lenient": "Puntos por respuesta correcta, sin penalización por incorrectas",
+      "estimation": {
+        "title": "Estimación",
+        "inputMode": "Tipo de entrada",
+        "inputModes": {
+          "slider": "Deslizador",
+          "input": "Entrada libre"
+        },
+        "inputModeHint": {
+          "slider": "Los jugadores eligen un valor con un deslizador entre los límites",
+          "input": "Los jugadores escriben un número entre los límites"
+        },
+        "min": "Mínimo",
+        "max": "Máximo",
+        "step": "Paso",
+        "stepHint": "Precisión del deslizador y de la respuesta esperada",
+        "margin": "Margen",
+        "marginHint": "Las respuestas dentro de esta distancia de la respuesta correcta obtienen del 100 % (exacta) al 50 %. Fuera de ella no obtienen nada."
+      }
     },
     "deleteQuestion": "Eliminar pregunta",
     "deleteQuestionConfirm": "¿Estás seguro de que quieres eliminar esta pregunta?",
@@ -36,13 +61,45 @@
       "video": "Video"
     },
     "mediaUrlPlaceholder": "Introduce la URL...",
-    "placeholder": "Empieza a escribir tu pregunta..."
+    "placeholder": "Empieza a escribir tu pregunta...",
+    "note": "Explicación",
+    "notePlaceholder": "Añade una explicación que se muestra al revelar la respuesta",
+    "estimation": {
+      "correctAnswer": "Respuesta correcta"
+    }
+  },
+  "questionHasErrors": "Esta pregunta contiene errores",
+  "questionType": {
+    "single": "Opción única",
+    "multi": "Opción múltiple",
+    "estimation": "Estimación"
   },
   "quizzSaved": "Cuestionario guardado con éxito",
   "quizzUpdated": "Cuestionario actualizado con éxito",
-  "questionType": {
-    "single": "Opción única",
-    "multi": "Opción múltiple"
+  "titleQuizzPlaceholder": "Título del cuestionario...",
+  "media": {
+    "delete": "Eliminar archivo",
+    "deleteConfirm": "¿Eliminar \"{{name}}\"? Se quitará de este quiz y los demás quiz que lo usan ya no podrán mostrarlo.",
+    "library": "Biblioteca multimedia",
+    "libraryEmpty": "Tu biblioteca está vacía",
+    "upload": "Subir",
+    "uploadHint": "Imágenes, audio o vídeo, hasta {{size}} MB",
+    "search": "Buscar archivos...",
+    "filter": {
+      "all": "Todo"
+    },
+    "use": "Usar",
+    "dropHint": "Suelta aquí tus imágenes, audios y vídeos, o usa el botón Subir",
+    "dropHere": "Suelta para subir",
+    "noResults": "Ningún archivo coincide con tu búsqueda",
+    "fromUrl": "Añadir desde una URL",
+    "view": {
+      "grid": "Vista de cuadrícula",
+      "list": "Vista de lista"
+    },
+    "filterByType": "Filtrar por tipo"
   },
-  "titleQuizzPlaceholder": "Título del cuestionario..."
+  "addAnswer": "Añadir respuesta",
+  "removeAnswer": "Quitar respuesta",
+  "markCorrect": "Marcar {{label}} como correcta"
 }

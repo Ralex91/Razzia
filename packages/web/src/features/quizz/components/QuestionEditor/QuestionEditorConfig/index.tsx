@@ -1,3 +1,4 @@
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import type { QuestionType } from "@razzia/common/types/game"
 import {
   Select,
@@ -10,20 +11,30 @@ import {
   QUESTION_REGISTRY,
   QUESTION_TYPE_LIST,
 } from "@razzia/web/features/questions"
+import CategoryField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/CategoryField"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { LayoutList } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorConfig = () => {
-  const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
+  const {
+    currentQuestion,
+    currentQuestionId,
+    currentIndex,
+    gameMode,
+    updateQuestion,
+  } = useQuizzEditor()
   const { t } = useTranslation()
   const questionType = currentQuestion.type
 
   const handleTypeChange = (nextType: QuestionType) => {
+    const { defaultOptions, initialValues } = QUESTION_REGISTRY[nextType]
+
     updateQuestion(currentIndex, {
       type: nextType,
-      options: QUESTION_REGISTRY[nextType].defaultOptions,
+      options: defaultOptions,
+      ...initialValues(currentQuestion),
     })
   }
 
@@ -42,7 +53,7 @@ const QuestionEditorConfig = () => {
           label={t("quizz:question.config.answerMode")}
         />
         <Select value={questionType} onValueChange={handleTypeChange}>
-          <SelectTrigger>
+          <SelectTrigger aria-label={t("quizz:question.config.answerMode")}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -55,7 +66,9 @@ const QuestionEditorConfig = () => {
         </Select>
       </ConfigField>
 
-      <ConfigComponent />
+      {gameMode === QUIZZ_MODES.QUIZ && <CategoryField />}
+
+      <ConfigComponent key={currentQuestionId} />
     </aside>
   )
 }

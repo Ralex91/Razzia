@@ -1,11 +1,13 @@
 import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
 import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
+import AnswerNote from "@razzia/web/features/game/components/AnswerNote"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
   SFX,
 } from "@razzia/web/features/game/utils/constants"
 import { calculatePercentages } from "@razzia/web/features/game/utils/score"
+import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import useSound from "use-sound"
@@ -14,10 +16,10 @@ interface Props {
   data: ManagerStatusDataMap["SHOW_RESPONSES"]
 }
 
-const Responses = ({
-  data: { question, answers, responses, solutions },
-}: Props) => {
-  const [percentages, setPercentages] = useState<Record<string, string>>({})
+const Responses = ({ data }: Props) => {
+  const { question, answers, responses, solutions, type, note } = data
+  const { ResponsesComponent } = QUESTION_REGISTRY[type]
+  const percentages = calculatePercentages(responses)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
 
   const [sfxResults] = useSound(SFX.RESULTS_SOUND, {
@@ -37,8 +39,6 @@ const Responses = ({
   useEffect(() => {
     stopMusic()
     sfxResults()
-
-    setPercentages(calculatePercentages(responses))
   }, [responses, playMusic, stopMusic, sfxResults])
 
   useEffect(() => {
@@ -50,6 +50,18 @@ const Responses = ({
   useEffect(() => {
     stopMusic()
   }, [playMusic, stopMusic])
+
+  if (ResponsesComponent) {
+    return (
+      <div className="flex h-full flex-1 flex-col items-center justify-center gap-8 pb-4">
+        <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
+          {question}
+        </h2>
+        <ResponsesComponent data={data} />
+        <AnswerNote note={note} />
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
@@ -79,17 +91,17 @@ const Responses = ({
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
+        <AnswerNote note={note} />
         <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
           {answers.map((answer, key) => (
             <AnswerButton
               key={key}
               className={clsx(ANSWERS_COLORS[key], {
-                // oxlint-disable-next-line typescript/no-unnecessary-condition
-                "opacity-65": responses && !solutions.includes(key),
+                "opacity-65": solutions && !solutions.includes(key),
               })}
               label={ANSWERS_LABELS[key]}
-              correct={solutions.includes(key)}
+              correct={solutions ? solutions.includes(key) : undefined}
             >
               {answer}
             </AnswerButton>

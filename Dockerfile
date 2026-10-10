@@ -10,6 +10,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY packages/common/package.json ./packages/common/
 COPY packages/web/package.json ./packages/web/
 COPY packages/socket/package.json ./packages/socket/
+COPY packages/e2e/package.json ./packages/e2e/
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
@@ -18,7 +19,7 @@ COPY . .
 RUN pnpm build
 
 # ---- RUNNER ----
-FROM alpine:3.24.1 AS runner
+FROM alpine:3.24.2 AS runner
 
 RUN apk add --no-cache nginx nodejs supervisor
 

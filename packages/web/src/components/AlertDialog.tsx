@@ -1,5 +1,5 @@
-import * as RadixAlertDialog from "@radix-ui/react-alert-dialog"
 import Button from "@razzia/web/components/Button"
+import { AlertDialog as RadixAlertDialog } from "radix-ui"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -25,7 +25,7 @@ const AlertDialog = ({
       <RadixAlertDialog.Trigger asChild>{trigger}</RadixAlertDialog.Trigger>
 
       <RadixAlertDialog.Portal>
-        <RadixAlertDialog.Overlay className="data-[state=open]:animate-fade-in fixed inset-0 z-50 bg-black/40" />
+        <RadixAlertDialog.Overlay className="data-[state=open]:animate-fade fixed inset-0 z-50 bg-black/40" />
 
         <RadixAlertDialog.Content
           onClick={(e) => e.stopPropagation()}

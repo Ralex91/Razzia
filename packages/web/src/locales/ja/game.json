@@ -1,30 +1,66 @@
 {
+  "answerNoted": "ありがとう、記録しました",
+  "confirm": "確認",
   "correct": "正解！",
   "gamePinLabel": "ゲームPIN:",
+  "generatedUsernameNotice": "参加するとランダムなニックネームが割り当てられます。",
   "hud": {
     "answers": "回答数",
     "time": "時間"
   },
+  "media": {
+    "showImage": "画像を表示",
+    "showVideo": "動画を表示"
+  },
+  "question": {
+    "show": "問題を表示"
+  },
   "joinInstruction": "以下でゲームに参加してください",
   "leaderboard": "リーダーボード",
+  "lock": {
+    "lock": "ルームをロック",
+    "unlock": "ルームのロックを解除"
+  },
   "pinLabel": "PINコード",
+  "playersJoined": "参加プレイヤー数",
+  "questionPrefix": "問題 #",
+  "rank_ordinal_other": "{{count}}位",
   "reconnect": "再接続",
   "reconnectTitle": "ゲームに参加していました",
-  "playersJoined": "参加プレイヤー数: ",
-  "questionPrefix": "問題 #",
-  "rank": {
-    "1": "1位",
-    "2": "2位",
-    "3": "3位",
-    "other": "{{rank}}位"
-  },
-  "rankSuffix": "位",
   "resultBehind": "、差は ",
   "resultTop": "あなたの順位は ",
-  "startGame": "ゲーム開始",
+  "settings": {
+    "autoAdvance": {
+      "hint": "正解発表とランキングのあと自動的に次へ進みます。",
+      "label": "自動で進む",
+      "leaderboardDelay": "ランキング",
+      "responsesDelay": "結果"
+    },
+    "generatedUsernames": {
+      "label": "ニックネームを生成",
+      "hint": "プレイヤーは自分で入力する代わりに生成された名前から選びます。"
+    },
+    "answersOnly": {
+      "label": "回答のみ",
+      "hint": "プレイヤーには回答ボタンだけが表示され、問題はボタンで読み直せます。"
+    },
+    "title": "ゲーム設定"
+  },
+  "startGame": "開始",
+  "summary": {
+    "title": "アンケート終了",
+    "participants": "参加者",
+    "questions": "質問"
+  },
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
   "waitingForPlayers": "プレイヤーを待っています",
   "wrong": "残念！",
-  "confirm": "確認"
+  "estimation": {
+    "yourAnswer": "あなたの回答",
+    "rangeHint": "{{min}} から {{max}} の間"
+  },
+  "showQrCode": "QRコードを表示",
+  "streak": "連続正解",
+  "pinDigit": "PIN の {{position}} 桁目"
 }

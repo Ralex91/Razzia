@@ -1,39 +1,41 @@
 import { EVENTS } from "@razzia/common/constants"
-import type { Player } from "@razzia/common/types/game"
+import type { Player, QuizzMode } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import { usernameValidator } from "@razzia/common/validators/auth"
 import { getClientId } from "@razzia/socket/utils/socket"
 
+export interface PlayerManagerOptions {
+  io: Server
+  gameId: string
+  gameMode: QuizzMode
+  getManagerId: () => string
+}
+
 export class PlayerManager {
   private readonly io: Server
   private readonly gameId: string
+  private readonly gameMode: QuizzMode
   private readonly getManagerId: () => string
   private players: Player[] = []
 
-  constructor(io: Server, gameId: string, getManagerId: () => string) {
+  constructor({ io, gameId, gameMode, getManagerId }: PlayerManagerOptions) {
     this.io = io
     this.gameId = gameId
+    this.gameMode = gameMode
     this.getManagerId = getManagerId
   }
 
-  join(socket: Socket, username: string): void {
+  join(socket: Socket, username: string): string | null {
     const clientId = getClientId(socket)
 
     if (this.findByClientId(clientId)) {
-      socket.emit(
-        EVENTS.GAME.ERROR_MESSAGE,
-        "errors:game.playerAlreadyConnected",
-      )
-
-      return
+      return "errors:game.playerAlreadyConnected"
     }
 
     const result = usernameValidator.safeParse(username)
 
     if (result.error) {
-      socket.emit(EVENTS.GAME.ERROR_MESSAGE, result.error.issues[0].message)
-
-      return
+      return result.error.issues[0].message
     }
 
     socket.join(this.gameId)
@@ -50,14 +52,16 @@ export class PlayerManager {
     this.players.push(player)
     this.io.to(this.getManagerId()).emit(EVENTS.MANAGER.NEW_PLAYER, player)
     this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.players.length)
-    socket.emit(EVENTS.GAME.SUCCESS_JOIN, this.gameId)
+    socket.emit(EVENTS.GAME.SUCCESS_JOIN, {
+      gameId: this.gameId,
+      username,
+      gameMode: this.gameMode,
+    })
+
+    return null
   }
 
-  kick(socket: Socket, playerId: string): boolean {
-    if (this.getManagerId() !== socket.id) {
-      return false
-    }
-
+  kick(playerId: string): boolean {
     const player = this.findById(playerId)
 
     if (!player) {

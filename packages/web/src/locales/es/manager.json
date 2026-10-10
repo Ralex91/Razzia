@@ -13,7 +13,8 @@
     "notFound": "No se encontró ningún cuestionario",
     "pleaseCreate": "Por favor crea un cuestionario primero",
     "pleaseSelect": "Por favor selecciona un cuestionario",
-    "startGame": "Iniciar juego"
+    "startGame": "Iniciar juego",
+    "edit": "Editar cuestionario"
   },
   "result": {
     "delete": "Eliminar resultado",
@@ -35,7 +36,13 @@
       "points": "Puntos"
     },
     "playerCount": "{{count}} jugador(es)",
-    "timeLimitSuffix": "s de tiempo límite"
+    "timeLimitSuffix": "s de tiempo límite",
+    "estimation": {
+      "answered": "Respondieron",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "Fuera del margen",
+      "average": "Respuesta promedio: {{value}}"
+    }
   },
   "tabs": {
     "play": "Jugar",

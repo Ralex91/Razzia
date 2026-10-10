@@ -13,7 +13,8 @@
     "notFound": "クイズが見つかりません",
     "pleaseCreate": "先にクイズを作成してください",
     "pleaseSelect": "クイズを選択してください",
-    "startGame": "ゲーム開始"
+    "startGame": "ゲーム開始",
+    "edit": "クイズを編集"
   },
   "result": {
     "delete": "結果を削除",
@@ -35,7 +36,13 @@
       "points": "ポイント"
     },
     "playerCount": "{{count}}人",
-    "timeLimitSuffix": "秒制限"
+    "timeLimitSuffix": "秒制限",
+    "estimation": {
+      "answered": "回答済み",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "許容範囲外",
+      "average": "平均回答: {{value}}"
+    }
   },
   "tabs": {
     "play": "プレイ",

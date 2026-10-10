@@ -1,31 +1,61 @@
-import { EVENTS } from "@razzia/common/constants"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
 import Input from "@razzia/web/components/Input"
-import {
-  useEvent,
-  useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
+import { joinGame } from "@razzia/web/features/game/queries"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
-
+import { createStatus } from "@razzia/web/features/game/utils/createStatus"
+import { ApiError } from "@razzia/web/lib/api"
+import { useMutation } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
+import { StatusCodes } from "http-status-codes"
 import { type KeyboardEvent, useState } from "react"
+import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const Username = () => {
-  const { socket } = useSocket()
-  const { gameId, login, setStatus } = usePlayerStore()
+  const { inviteCode, generatedUsernames, updatePlayer } = usePlayerStore()
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const { t } = useTranslation()
 
+  const { mutate: join, isPending } = useMutation({
+    mutationFn: joinGame,
+    onSuccess: ({ gameId, ticket, username: name }) => {
+      localStorage.setItem("game_id", gameId)
+
+      if (inviteCode) {
+        localStorage.setItem("game_pin", inviteCode)
+      }
+
+      updatePlayer({
+        gameId,
+        joinTicket: ticket,
+        player: name ? { username: name, points: 0 } : null,
+        status: createStatus(STATUS.WAIT, { text: "game:waitingForPlayers" }),
+      })
+      navigate({ to: "/party/$gameId", params: { gameId } })
+    },
+    onError: (error) => {
+      toast.error(
+        t(error instanceof ApiError ? error.key : "errors:route.description"),
+      )
+
+      if (error instanceof ApiError && error.status === StatusCodes.NOT_FOUND) {
+        updatePlayer({ inviteCode: null, generatedUsernames: false })
+      }
+    },
+  })
+
   const handleLogin = () => {
-    if (!gameId) {
+    if (!inviteCode) {
       return
     }
 
-    socket.emit(EVENTS.PLAYER.LOGIN, { gameId, data: { username } })
+    join({
+      inviteCode,
+      username: generatedUsernames ? undefined : username,
+    })
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -34,12 +64,18 @@ const Username = () => {
     }
   }
 
-  useEvent(EVENTS.GAME.SUCCESS_JOIN, (joinedGameId) => {
-    setStatus(STATUS.WAIT, { text: "game:waitingForPlayers" })
-    login(username)
-
-    navigate({ to: "/party/$gameId", params: { gameId: joinedGameId } })
-  })
+  if (generatedUsernames) {
+    return (
+      <Card>
+        <p className="mb-4 text-center text-lg font-semibold">
+          {t("game:generatedUsernameNotice")}
+        </p>
+        <Button onClick={handleLogin} disabled={isPending}>
+          {t("common:submit")}
+        </Button>
+      </Card>
+    )
+  }
 
   return (
     <Card>
@@ -49,7 +85,7 @@ const Username = () => {
         onKeyDown={handleKeyDown}
         placeholder={t("game:usernamePlaceholder")}
       />
-      <Button className="mt-4" onClick={handleLogin}>
+      <Button className="mt-4" onClick={handleLogin} disabled={isPending}>
         {t("common:submit")}
       </Button>
     </Card>

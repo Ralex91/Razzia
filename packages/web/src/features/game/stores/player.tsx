@@ -1,34 +1,39 @@
+import { QUIZZ_MODES } from "@razzia/common/constants"
+import type { QuizzMode } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
-import {
-  createStatus,
-  type Status,
-} from "@razzia/web/features/game/utils/createStatus"
+import type { Status } from "@razzia/web/features/game/utils/createStatus"
 import { create } from "zustand"
 
-interface PlayerState {
+interface PlayerInfo {
   username?: string
   points?: number
 }
 
-interface PlayerStore<T> {
+interface PlayerState<T> {
   gameId: string | null
-  player: PlayerState | null
+  inviteCode: string | null
+  gameMode: QuizzMode
+  generatedUsernames: boolean
+  joinTicket: string | null
+  player: PlayerInfo | null
   status: Status<T> | null
-
-  setGameId: (_gameId: string | null) => void
-
-  setPlayer: (_state: PlayerState) => void
-  login: (_gameId: string) => void
-  join: (_username: string) => void
-  updatePoints: (_points: number) => void
-
-  setStatus: <K extends keyof T>(_name: K, _data: T[K]) => void
-
-  reset: () => void
 }
 
-const initialState = {
+type PlayerStore<T> = PlayerState<T> & {
+  updatePlayer: (
+    _state:
+      | Partial<PlayerState<T>>
+      | ((_state: PlayerState<T>) => Partial<PlayerState<T>>),
+  ) => void
+  resetPlayer: () => void
+}
+
+const initialState: PlayerState<StatusDataMap> = {
   gameId: null,
+  inviteCode: null,
+  gameMode: QUIZZ_MODES.QUIZ,
+  generatedUsernames: false,
+  joinTicket: null,
   player: null,
   status: null,
 }
@@ -36,27 +41,7 @@ const initialState = {
 export const usePlayerStore = create<PlayerStore<StatusDataMap>>((set) => ({
   ...initialState,
 
-  setGameId: (gameId) => set({ gameId }),
+  updatePlayer: (state) => set(state),
 
-  setPlayer: (player: PlayerState) => set({ player }),
-  login: (username) =>
-    set((state) => ({
-      player: { ...state.player, username },
-    })),
-
-  join: (gameId) => {
-    set((state) => ({
-      gameId,
-      player: { ...state.player, points: 0 },
-    }))
-  },
-
-  updatePoints: (points) =>
-    set((state) => ({
-      player: { ...state.player, points },
-    })),
-
-  setStatus: (name, data) => set({ status: createStatus(name, data) }),
-
-  reset: () => set(initialState),
+  resetPlayer: () => set(initialState),
 }))

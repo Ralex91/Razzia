@@ -3,4 +3,4 @@
 .env
 .secrets
 release.json
-web2
+/coverage

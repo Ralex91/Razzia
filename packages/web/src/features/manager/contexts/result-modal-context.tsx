@@ -1,4 +1,5 @@
 import type { GameResult, QuestionResult } from "@razzia/common/types/game"
+import { isAnswerCorrect } from "@razzia/web/features/questions/utils"
 import {
   createContext,
   useContext,
@@ -40,8 +41,8 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     (pa) => pa.answerIds !== null && pa.answerIds.length > 0,
   ).length
 
-  const correctCount = questionResult.playerAnswers.filter((pa) =>
-    pa.answerIds?.some((id) => questionResult.solutions.includes(id)),
+  const correctCount = questionResult.playerAnswers.filter(
+    (pa) => pa.correct ?? isAnswerCorrect(questionResult, pa.answerIds),
   ).length
 
   const correctPct =

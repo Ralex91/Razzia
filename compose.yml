@@ -5,3 +5,9 @@ services:
       - "3000:3000"
     volumes:
       - ./config:/app/config
+    env_file:
+      - .env
+    # Or set them inline instead of using an .env file:
+    # environment:
+    #   MANAGER_PASSWORD: "change-me"
+    #   JWT_SECRET: "" # optional, 32+ characters

@@ -4,18 +4,24 @@
   "connecting": "Connexion...",
   "delete": "Supprimer",
   "exit": "Quitter",
+  "exitFullscreen": "Quitter le plein écran",
+  "fullscreen": "Plein écran",
   "language": {
     "de": "Deutsch - Allemand",
     "en": "English - Anglais",
     "es": "Español - Espagnol",
     "fr": "Français - Français",
     "it": "Italiano - Italien",
-    "ja": "日本語 - Japonais"
+    "ja": "日本語 - Japonais",
+    "vi": "Tiếng Việt - Vietnamien"
   },
   "loading": "Chargement...",
   "next": "Suivant",
   "save": "Enregistrer",
   "seconds": "sec",
   "skip": "Passer",
-  "submit": "Valider"
+  "submit": "Valider",
+  "close": "Fermer",
+  "previous": "Précédent",
+  "changeLanguage": "Changer de langue"
 }

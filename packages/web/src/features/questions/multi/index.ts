@@ -10,6 +10,8 @@ export { default as ConfigComponent } from "@razzia/web/features/questions/multi
 
 export { default as SolutionPicker } from "@razzia/web/features/questions/multi/components/MultiPicker"
 
+export { choiceInitialValues as initialValues } from "@razzia/web/features/questions/utils"
+
 export const labelKey = "quizz:questionType.multi"
 
 export const defaultOptions: MultiQuestionOptions = {

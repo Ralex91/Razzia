@@ -15,6 +15,7 @@ const LANGUAGES = [
   { code: "fr", label: "common:language.fr" },
   { code: "it", label: "common:language.it" },
   { code: "ja", label: "common:language.ja" },
+  { code: "vi", label: "common:language.vi" },
 ]
 
 const LanguageSwitcher = () => {
@@ -27,6 +28,7 @@ const LanguageSwitcher = () => {
       onValueChange={(lang) => i18n.changeLanguage(lang)}
     >
       <SelectTrigger
+        aria-label={t("common:changeLanguage")}
         hideChevron
         className="text-accent-foreground w-auto gap-1.5 border px-2 py-1.5"
       >
