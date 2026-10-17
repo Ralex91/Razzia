@@ -45,7 +45,6 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
   useEvent(
     EVENTS.MANAGER.PLAYER_UPDATED,
     ({ previousId, player, timedOut }) => {
-      // Updater form: several players often drop or come back at once.
       setPlayerList((list) =>
         list.map((p) => (p.id === previousId ? { ...player, timedOut } : p)),
       )

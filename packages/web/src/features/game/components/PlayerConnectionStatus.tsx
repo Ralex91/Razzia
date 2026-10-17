@@ -11,11 +11,6 @@ interface Props {
   timedOut?: boolean
 }
 
-// Rendered only while the player is disconnected, so every drop starts at zero
-// (also after the manager reloads the page). A timed out connection was
-// already silent for a while when the server noticed it, so the clock shows
-// at once; a closed one (often a page reload) gets 10 s to come back first.
-// One minute after the clock it turns red, and `data-lost` lets the tile dim.
 const PlayerConnectionStatus = ({ timedOut = false }: Props) => {
   const [stage, setStage] = useState<"none" | "reconnecting" | "lost">(
     timedOut ? "reconnecting" : "none",

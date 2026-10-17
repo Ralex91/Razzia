@@ -336,8 +336,6 @@ class Game {
     return player
   }
 
-  // `timedOut`: the connection went silent (ping timeout) rather than closing,
-  // so the server already waited before noticing.
   setPlayerDisconnected(socketId: string, timedOut = false) {
     this.playerManager.setDisconnected(socketId)
     this.playerManager.broadcastCount()
