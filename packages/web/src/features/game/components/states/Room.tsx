@@ -1,6 +1,7 @@
 import { EVENTS } from "@razzia/common/constants"
 import type { Player } from "@razzia/common/types/game"
 import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
+import PlayerConnectionStatus from "@razzia/web/features/game/components/PlayerConnectionStatus"
 import {
   useEvent,
   useSocket,
@@ -21,7 +22,8 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
   const { gameId, players, locked } = useManagerStore()
   const { socket } = useSocket()
   const webUrl = window.location.origin
-  const [playerList, setPlayerList] = useState<Player[]>(players)
+  const [playerList, setPlayerList] =
+    useState<Array<Player & { timedOut?: boolean }>>(players)
   const [qrOpen, setQrOpen] = useState(false)
   const qrContentRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
@@ -39,6 +41,16 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
   useEvent(EVENTS.MANAGER.PLAYER_KICKED, (playerId) => {
     setPlayerList(playerList.filter((p) => p.id !== playerId))
   })
+
+  useEvent(
+    EVENTS.MANAGER.PLAYER_UPDATED,
+    ({ previousId, player, timedOut }) => {
+      // Updater form: several players often drop or come back at once.
+      setPlayerList((list) =>
+        list.map((p) => (p.id === previousId ? { ...player, timedOut } : p)),
+      )
+    },
+  )
 
   const handleKick = (playerId: string) => () => {
     if (!gameId) {
@@ -137,12 +149,18 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
         {playerList.map((player) => (
           <div
             key={player.id}
-            className="bg-primary rounded-xl px-4 py-3 font-bold text-white"
+            className="bg-primary has-[[data-lost]]:bg-primary/50 relative rounded-xl px-4 py-3 font-bold text-white has-[[data-lost]]:text-white/60"
             onClick={handleKick(player.id)}
           >
             <span className="cursor-pointer text-3xl drop-shadow-sm hover:line-through hover:decoration-3">
               {player.username}
             </span>
+            {!player.connected && (
+              <PlayerConnectionStatus
+                key={String(player.timedOut)}
+                timedOut={player.timedOut}
+              />
+            )}
           </div>
         ))}
       </div>

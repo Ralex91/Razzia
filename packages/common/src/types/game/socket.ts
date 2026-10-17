@@ -88,6 +88,11 @@ export interface ServerToClientEvents {
   [EVENTS.MANAGER.NEW_PLAYER]: (_player: Player) => void
   [EVENTS.MANAGER.REMOVE_PLAYER]: (_playerId: string) => void
   [EVENTS.MANAGER.PLAYER_KICKED]: (_playerId: string) => void
+  [EVENTS.MANAGER.PLAYER_UPDATED]: (_update: {
+    previousId: string
+    player: Player
+    timedOut: boolean
+  }) => void
   [EVENTS.MANAGER.LOCK_UPDATED]: (_locked: boolean) => void
 }
 

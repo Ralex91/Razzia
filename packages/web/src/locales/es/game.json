@@ -22,6 +22,8 @@
     "unlock": "Desbloquear la sala"
   },
   "pinLabel": "Código PIN",
+  "playerConnectionLost": "Conexión perdida",
+  "playerReconnecting": "Esperando reconexión",
   "playersJoined": "Jugadores conectados",
   "questionPrefix": "Pregunta #",
   "rank_ordinal_other": "{{count}}.º puesto",

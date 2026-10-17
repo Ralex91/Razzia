@@ -22,6 +22,8 @@
     "unlock": "Raum entsperren"
   },
   "pinLabel": "PIN-Code",
+  "playerConnectionLost": "Verbindung getrennt",
+  "playerReconnecting": "Wartet auf erneute Verbindung",
   "playersJoined": "Verbundene Spieler",
   "questionPrefix": "Frage #",
   "rank_ordinal_other": "{{count}}. Platz",

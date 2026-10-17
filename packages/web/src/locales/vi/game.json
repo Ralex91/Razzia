@@ -22,6 +22,8 @@
     "unlock": "Mở khóa phòng"
   },
   "pinLabel": "Mã PIN",
+  "playerConnectionLost": "Mất kết nối",
+  "playerReconnecting": "Đang chờ kết nối lại",
   "playersJoined": "Người chơi đã tham gia",
   "questionPrefix": "Câu hỏi #",
   "rank_ordinal_one": "hạng {{count}}",

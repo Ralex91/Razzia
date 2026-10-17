@@ -453,6 +453,41 @@ describe("survey flow", () => {
   })
 })
 
+describe("player connection updates", () => {
+  it("tells the manager when a player's connection times out", () => {
+    const { game, sockets, lastEvent } = setup(createQuizz([createQuestion()]))
+    const [alice] = sockets
+
+    game.setPlayerDisconnected(alice.id, true)
+
+    expect(
+      lastEvent(MANAGER, EVENTS.MANAGER.PLAYER_UPDATED)?.data,
+    ).toMatchObject({
+      previousId: alice.id,
+      player: { id: alice.id, connected: false },
+      timedOut: true,
+    })
+  })
+
+  it("tells the manager when a player comes back on a new socket", () => {
+    const { game, sockets, createSocket, lastEvent } = setup(
+      createQuizz([createQuestion()]),
+    )
+    const [alice] = sockets
+
+    game.setPlayerDisconnected(alice.id)
+    game.reconnect(createSocket("alice-new", "alice"))
+
+    expect(
+      lastEvent(MANAGER, EVENTS.MANAGER.PLAYER_UPDATED)?.data,
+    ).toMatchObject({
+      previousId: alice.id,
+      player: { id: "alice-new", connected: true },
+      timedOut: false,
+    })
+  })
+})
+
 describe("reconnection", () => {
   it("restores a disconnected player on a new socket", async () => {
     const { game, sockets, start, createSocket, lastEvent } = setup(

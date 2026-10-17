@@ -22,6 +22,8 @@
     "unlock": "Unlock the room"
   },
   "pinLabel": "PIN Code",
+  "playerConnectionLost": "Connection lost",
+  "playerReconnecting": "Waiting to reconnect",
   "playersJoined": "Players joined",
   "questionPrefix": "Question #",
   "rank_ordinal_one": "{{count}}st place",

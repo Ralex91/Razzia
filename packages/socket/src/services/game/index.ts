@@ -286,6 +286,7 @@ class Game {
     this.playerManager.updateSocketId(oldSocketId, socket.id)
     this.round.updatePlayerId(oldSocketId, socket.id)
     player.connected = true
+    this.notifyPlayerUpdated(oldSocketId, player)
 
     if (replacesConnection) {
       this.io.in(oldSocketId).disconnectSockets(true)
@@ -335,10 +336,28 @@ class Game {
     return player
   }
 
-  setPlayerDisconnected(socketId: string) {
+  // `timedOut`: the connection went silent (ping timeout) rather than closing,
+  // so the server already waited before noticing.
+  setPlayerDisconnected(socketId: string, timedOut = false) {
     this.playerManager.setDisconnected(socketId)
     this.playerManager.broadcastCount()
     this.round.endIfEveryoneAnswered()
+
+    const player = this.playerManager.findById(socketId)
+
+    if (player) {
+      this.notifyPlayerUpdated(socketId, player, timedOut)
+    }
+  }
+
+  private notifyPlayerUpdated(
+    previousId: string,
+    player: Player,
+    timedOut = false,
+  ) {
+    this.io
+      .to(this._manager.id)
+      .emit(EVENTS.MANAGER.PLAYER_UPDATED, { previousId, player, timedOut })
   }
 
   // Game flow

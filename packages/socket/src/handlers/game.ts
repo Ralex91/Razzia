@@ -142,7 +142,7 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     }
   })
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (reason) => {
     console.log(`A user disconnected : ${socket.id}`)
 
     const managerGame = registry.getGameByManagerSocketId(socket.id)
@@ -157,7 +157,7 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     const playerGame = registry.getGameByPlayerSocketId(socket.id)
 
     if (playerGame) {
-      handlePlayerLeave(playerGame)
+      playerGame.setPlayerDisconnected(socket.id, reason === "ping timeout")
     }
   })
 }

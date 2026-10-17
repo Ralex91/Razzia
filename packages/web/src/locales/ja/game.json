@@ -22,6 +22,8 @@
     "unlock": "ルームのロックを解除"
   },
   "pinLabel": "PINコード",
+  "playerConnectionLost": "接続が切れました",
+  "playerReconnecting": "再接続待ち",
   "playersJoined": "参加プレイヤー数",
   "questionPrefix": "問題 #",
   "rank_ordinal_other": "{{count}}位",

@@ -22,6 +22,8 @@
     "unlock": "Sblocca la stanza"
   },
   "pinLabel": "Codice PIN",
+  "playerConnectionLost": "Connessione persa",
+  "playerReconnecting": "In attesa di riconnessione",
   "playersJoined": "Giocatori connessi",
   "questionPrefix": "Domanda #",
   "rank_ordinal_many": "{{count}}° posto",

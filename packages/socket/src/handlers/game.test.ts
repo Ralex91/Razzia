@@ -176,11 +176,92 @@ describe("game socket handlers", () => {
     const player = await joinGame(game, "alice", "Alice")
     const removed = waitFor(manager, EVENTS.MANAGER.REMOVE_PLAYER)
 
-    player.disconnect()
+    player.emit(EVENTS.PLAYER.LEAVE, { gameId: game.gameId })
 
     await removed
 
     expect(game.players).toHaveLength(0)
+  })
+
+  it("keeps a player in the lobby when their connection drops", async () => {
+    const { game, manager } = await createGame()
+    const player = await joinGame(game, "alice", "Alice")
+    const oldId = player.id
+    const dropped = waitFor(manager, EVENTS.MANAGER.PLAYER_UPDATED)
+
+    player.disconnect()
+
+    expect(await dropped).toMatchObject({
+      previousId: oldId,
+      player: { id: oldId, username: "Alice", connected: false },
+      timedOut: false,
+    })
+
+    const reconnected = await connectAs("alice")
+    const success = waitFor(reconnected, EVENTS.PLAYER.SUCCESS_RECONNECT)
+    const back = waitFor(manager, EVENTS.MANAGER.PLAYER_UPDATED)
+
+    reconnected.emit(EVENTS.PLAYER.RECONNECT, { gameId: game.gameId })
+
+    expect(await success).toMatchObject({ player: { username: "Alice" } })
+    expect(await back).toMatchObject({
+      previousId: oldId,
+      player: { id: reconnected.id, username: "Alice", connected: true },
+    })
+    expect(game.players).toHaveLength(1)
+  })
+
+  it("lets the manager kick a player by the id sent after a lobby reconnect", async () => {
+    const { game, manager } = await createGame()
+    const player = await joinGame(game, "alice", "Alice")
+    const dropped = waitFor(manager, EVENTS.MANAGER.PLAYER_UPDATED)
+
+    player.disconnect()
+    await dropped
+
+    const reconnected = await connectAs("alice")
+    const back = waitFor(manager, EVENTS.MANAGER.PLAYER_UPDATED)
+
+    reconnected.emit(EVENTS.PLAYER.RECONNECT, { gameId: game.gameId })
+
+    const { player: updated } = await back
+    const kicked = waitFor(manager, EVENTS.MANAGER.PLAYER_KICKED)
+
+    manager.emit(EVENTS.MANAGER.KICK_PLAYER, {
+      gameId: game.gameId,
+      playerId: updated.id,
+    })
+
+    expect(await kicked).toBe(reconnected.id)
+    expect(game.players).toHaveLength(0)
+  })
+
+  it("keeps a player connected when a new connection replaces theirs in the lobby", async () => {
+    const { game, manager } = await createGame()
+    const player = await joinGame(game, "alice", "Alice")
+    const oldId = player.id
+    const oldConnectionClosed = new Promise<void>((resolve) => {
+      player.once("disconnect", () => resolve())
+    })
+    const reconnected = await connectAs("alice")
+    const success = waitFor(reconnected, EVENTS.PLAYER.SUCCESS_RECONNECT)
+    const updated = waitFor(manager, EVENTS.MANAGER.PLAYER_UPDATED)
+
+    reconnected.emit(EVENTS.PLAYER.RECONNECT, { gameId: game.gameId })
+
+    expect(await success).toMatchObject({ player: { username: "Alice" } })
+    expect(await updated).toMatchObject({
+      previousId: oldId,
+      player: { id: reconnected.id, connected: true },
+    })
+
+    await oldConnectionClosed
+
+    expect(game.players).toHaveLength(1)
+    expect(game.players[0]).toMatchObject({
+      id: reconnected.id,
+      connected: true,
+    })
   })
 
   it("closes the lobby when the manager exits", async () => {

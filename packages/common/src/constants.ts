@@ -26,6 +26,7 @@ export const EVENTS = {
     NEW_PLAYER: "manager:newPlayer",
     REMOVE_PLAYER: "manager:removePlayer",
     PLAYER_KICKED: "manager:playerKicked",
+    PLAYER_UPDATED: "manager:playerUpdated",
     RECONNECT: "manager:reconnect",
     LEAVE: "manager:leave",
     KICK_PLAYER: "manager:kickPlayer",
