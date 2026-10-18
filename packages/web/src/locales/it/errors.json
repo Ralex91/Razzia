@@ -11,7 +11,7 @@
     "tokenMissing": "Token di sessione mancante",
     "unauthorized": "Non sei autorizzato",
     "usernameTooLong": "Il nome utente non può superare i 24 caratteri",
-    "usernameTooShort": "Il nome utente non può avere meno di 4 caratteri"
+    "usernameTooShort": "Il nome utente non può essere vuoto"
   },
   "game": {
     "alreadyStarted": "Partita già iniziata",

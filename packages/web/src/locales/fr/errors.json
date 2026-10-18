@@ -11,7 +11,7 @@
     "tokenMissing": "Jeton de session manquant",
     "unauthorized": "Vous n'êtes pas autorisé",
     "usernameTooLong": "Le pseudo ne peut pas dépasser 24 caractères",
-    "usernameTooShort": "Le pseudo doit faire au moins 4 caractères"
+    "usernameTooShort": "Le pseudo ne peut pas être vide"
   },
   "game": {
     "alreadyStarted": "La partie a déjà commencé",
