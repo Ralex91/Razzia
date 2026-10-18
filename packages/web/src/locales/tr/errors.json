@@ -11,7 +11,7 @@
     "tokenMissing": "Oturum belirteci eksik",
     "unauthorized": "Yetkiniz yok",
     "usernameTooLong": "Kullanıcı adı 24 karakteri geçemez",
-    "usernameTooShort": "Kullanıcı adı 4 karakterden kısa olamaz"
+    "usernameTooShort": "Kullanıcı adı boş olamaz"
   },
   "game": {
     "alreadyStarted": "Oyun zaten başladı",

@@ -11,7 +11,7 @@
     "tokenMissing": "Thiếu mã phiên",
     "unauthorized": "Bạn không có quyền truy cập",
     "usernameTooLong": "Tên người dùng không được vượt quá 24 ký tự",
-    "usernameTooShort": "Tên người dùng không được ngắn hơn 4 ký tự"
+    "usernameTooShort": "Tên người dùng không được để trống"
   },
   "game": {
     "alreadyStarted": "Trò chơi đã bắt đầu",
