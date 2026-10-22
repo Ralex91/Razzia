@@ -1,0 +1,29 @@
+{
+  "cancel": "Anuluj",
+  "confirm": "Potwierdź",
+  "connecting": "Łączenie...",
+  "delete": "Usuń",
+  "exit": "Wyjdź",
+  "exitFullscreen": "Zamknij pełny ekran",
+  "fullscreen": "Pełny ekran",
+  "language": {
+    "de": "Deutsch - niemiecki",
+    "en": "English - angielski",
+    "es": "Español - hiszpański",
+    "fr": "Français - francuski",
+    "it": "Italiano - włoski",
+    "ja": "日本語 - japoński",
+    "tr": "Türkçe - turecki",
+    "pl": "Polski - polski",
+    "vi": "Tiếng Việt - wietnamski"
+  },
+  "loading": "Ładowanie...",
+  "next": "Dalej",
+  "save": "Zapisz",
+  "seconds": "sek.",
+  "skip": "Pomiń",
+  "submit": "Wyślij",
+  "close": "Zamknij",
+  "previous": "Wstecz",
+  "changeLanguage": "Zmień język"
+}

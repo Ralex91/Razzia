@@ -16,6 +16,7 @@ const LANGUAGES = [
   { code: "it", label: "common:language.it" },
   { code: "ja", label: "common:language.ja" },
   { code: "tr", label: "common:language.tr" },
+  { code: "pl", label: "common:language.pl" },
   { code: "vi", label: "common:language.vi" },
 ]
 

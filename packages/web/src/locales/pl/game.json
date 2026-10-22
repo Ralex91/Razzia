@@ -1,0 +1,68 @@
+{
+  "answerNoted": "Dzięki, zapisano odpowiedź",
+  "confirm": "Potwierdź",
+  "correct": "Brawo!",
+  "gamePinLabel": "PIN gry:",
+  "generatedUsernameNotice": "Po dołączeniu otrzymasz losowy pseudonim.",
+  "hud": {
+    "answers": "Odpowiedzi",
+    "time": "Czas"
+  },
+  "media": {
+    "showImage": "Pokaż obraz",
+    "showVideo": "Pokaż wideo"
+  },
+  "question": {
+    "show": "Pokaż pytanie"
+  },
+  "joinInstruction": "Dołącz do gry na",
+  "leaderboard": "Ranking",
+  "lock": {
+    "lock": "Zablokuj pokój",
+    "unlock": "Odblokuj pokój"
+  },
+  "pinLabel": "Kod PIN",
+  "playerConnectionLost": "Utracono połączenie",
+  "playerReconnecting": "Oczekiwanie na ponowne połączenie",
+  "playersJoined": "Dołączeni gracze",
+  "questionPrefix": "Pytanie nr ",
+  "rank_ordinal_other": "{{count}}. miejsce",
+  "reconnect": "Połącz ponownie",
+  "reconnectTitle": "Byłeś w trakcie gry",
+  "resultBehind": ", tuż za ",
+  "resultTop": "Zajmujesz ",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Przechodź dalej automatycznie po pokazaniu wyniku i rankingu.",
+      "label": "Automatyczne przejście",
+      "leaderboardDelay": "Ranking",
+      "responsesDelay": "Wynik"
+    },
+    "generatedUsernames": {
+      "label": "Generuj pseudonimy",
+      "hint": "Gracze wybierają spośród wygenerowanych nazw zamiast wpisywać własne."
+    },
+    "answersOnly": {
+      "label": "Tylko odpowiedzi",
+      "hint": "Gracze widzą tylko przyciski odpowiedzi oraz przycisk do ponownego przeczytania pytania."
+    },
+    "title": "Ustawienia gry"
+  },
+  "startGame": "Start",
+  "summary": {
+    "title": "Ankieta zakończona",
+    "participants": "Uczestnicy",
+    "questions": "Pytania"
+  },
+  "usernamePlaceholder": "Twoja nazwa",
+  "waitingForAnswers": "Czekamy na odpowiedzi graczy",
+  "waitingForPlayers": "Czekamy na graczy",
+  "wrong": "Niestety",
+  "estimation": {
+    "yourAnswer": "Twoja odpowiedź",
+    "rangeHint": "Od {{min}} do {{max}}"
+  },
+  "showQrCode": "Pokaż kod QR",
+  "streak": "Seria poprawnych odpowiedzi",
+  "pinDigit": "Cyfra PIN nr {{position}}"
+}
