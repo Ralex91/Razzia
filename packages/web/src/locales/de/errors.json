@@ -11,7 +11,7 @@
     "tokenMissing": "Sitzungstoken fehlt",
     "unauthorized": "Nicht autorisiert",
     "usernameTooLong": "Der Benutzername darf nicht mehr als 24 Zeichen haben",
-    "usernameTooShort": "Der Benutzername muss mindestens 4 Zeichen haben"
+    "usernameTooShort": "Der Benutzername darf nicht leer sein"
   },
   "game": {
     "alreadyStarted": "Spiel bereits gestartet",
