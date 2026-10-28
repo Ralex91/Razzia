@@ -7,14 +7,14 @@ settings:
 catalogs:
   default:
     hono:
-      specifier: ^4.13.13
-      version: 4.13.13
+      specifier: ^4.13.14
+      version: 4.13.14
     http-status-codes:
       specifier: ^2.3.0
       version: 2.3.0
     i18next:
-      specifier: ^26.5.8
-      version: 26.5.8
+      specifier: ^26.5.10
+      version: 26.5.10
     socket.io:
       specifier: ^4.8.4
       version: 4.8.4
@@ -92,16 +92,16 @@ importers:
         version: 24.19.2
       i18next:
         specifier: 'catalog:'
-        version: 26.5.8(typescript@7.0.2)
+        version: 26.5.10(typescript@7.0.2)
 
   packages/socket:
     dependencies:
       '@hono/node-server':
         specifier: ^2.1.5
-        version: 2.1.5(hono@4.13.13)
+        version: 2.1.5(hono@4.13.14)
       '@hono/zod-validator':
         specifier: ^0.9.1
-        version: 0.9.1(hono@4.13.13)(zod@4.6.7)
+        version: 0.9.1(hono@4.13.14)(zod@4.6.7)
       '@razzia/common':
         specifier: workspace:*
         version: link:../common
@@ -113,7 +113,7 @@ importers:
         version: 22.2.0
       hono:
         specifier: 'catalog:'
-        version: 4.13.13
+        version: 4.13.14
       http-status-codes:
         specifier: 'catalog:'
         version: 2.3.0
@@ -186,13 +186,13 @@ importers:
         version: 2.1.1
       hono:
         specifier: 'catalog:'
-        version: 4.13.13
+        version: 4.13.14
       http-status-codes:
         specifier: 'catalog:'
         version: 2.3.0
       i18next:
         specifier: 'catalog:'
-        version: 26.5.8(typescript@7.0.2)
+        version: 26.5.10(typescript@7.0.2)
       i18next-browser-languagedetector:
         specifier: ^8.2.2
         version: 8.2.2
@@ -224,8 +224,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-i18next:
-        specifier: ^17.1.6
-        version: 17.1.6(i18next@26.5.8(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
+        specifier: ^17.1.8
+        version: 17.1.8(i18next@26.5.10(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
       socket.io-client:
         specifier: 'catalog:'
         version: 4.8.4
@@ -2340,8 +2340,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  hono@4.13.13:
-    resolution: {integrity: sha512-CQ46U0ZkAGmbT/4UxdzzGJpacP2IeKgY4a5/tOI9AABbpOMfK739wfDXmv1usCk+3RkKj1hQy4/fjhiwa2xlrA==}
+  hono@4.13.14:
+    resolution: {integrity: sha512-yhRLQ21U6qa9Hsu2N7Qcbh8tE+WKEcoErjIo56LeSGiGXGp9sA7UpE86Ui9uexb61KakiGwuHMn2QdV7w6i6kQ==}
     engines: {node: '>=16.9.0'}
 
   howler@2.2.4:
@@ -2356,8 +2356,8 @@ packages:
   i18next-browser-languagedetector@8.2.2:
     resolution: {integrity: sha512-99PKPDVeLj7s4nDJAz+z664/6IWEb2EyssTsknyzc1MY+mmtAXpx3BP862MrKLGRtmSJnlUioPuOE22F+RR+ng==}
 
-  i18next@26.5.8:
-    resolution: {integrity: sha512-EQx2RyhwINMekbykhZpAJQ2ILeJqnYOpRjWEkSVv45pR8yeVbb0thr2zxQ+dOo365OIb7h06BKPtt16WE8Wliw==}
+  i18next@26.5.10:
+    resolution: {integrity: sha512-YS4EiLQhhk0wGThm4Zy+BL2c9rBNIK+kAbksi4l/B+D6kVRQLIFZgu2b/MU2LibJJHwWNTYoOYR52T+jfV8kPQ==}
     peerDependencies:
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
@@ -2845,8 +2845,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  react-i18next@17.1.6:
-    resolution: {integrity: sha512-Chrt5sVco051WgQST6RA3/BePVNC6fBf9BtXhKts0i7vpGVziqyLb5IrmdNtsEYE5vJ0mEDkJHWF1Gie40khXA==}
+  react-i18next@17.1.8:
+    resolution: {integrity: sha512-vGH+Tbhqbv5LdN9KvC9GEmQ6ATxJAjyxPEK0zSCSRlkeDqCPNxVtEOvDNRAz+51HTxc6QPwhnHaFD7ICu6pD1A==}
     peerDependencies:
       i18next: '>= 26.2.0'
       react: '>= 16.8.0'
@@ -3512,13 +3512,13 @@ snapshots:
 
   '@fontsource-variable/rubik@5.3.0': {}
 
-  '@hono/node-server@2.1.5(hono@4.13.13)':
+  '@hono/node-server@2.1.5(hono@4.13.14)':
     dependencies:
-      hono: 4.13.13
+      hono: 4.13.14
 
-  '@hono/zod-validator@0.9.1(hono@4.13.13)(zod@4.6.7)':
+  '@hono/zod-validator@0.9.1(hono@4.13.14)(zod@4.6.7)':
     dependencies:
-      hono: 4.13.13
+      hono: 4.13.14
       zod: 4.6.7
 
   '@hookform/resolvers@6.0.0(react-hook-form@7.91.0(@types/react@19.3.0)(react@19.3.1))(zod@4.6.7)':
@@ -5079,7 +5079,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  hono@4.13.13: {}
+  hono@4.13.14: {}
 
   howler@2.2.4: {}
 
@@ -5091,7 +5091,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.10
 
-  i18next@26.5.8(typescript@7.0.2):
+  i18next@26.5.10(typescript@7.0.2):
     optionalDependencies:
       typescript: 7.0.2
 
@@ -5478,11 +5478,11 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
 
-  react-i18next@17.1.6(i18next@26.5.8(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2):
+  react-i18next@17.1.8(i18next@26.5.10(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2):
     dependencies:
       '@babel/runtime': 7.29.10
       html-parse-stringify: 4.0.1
-      i18next: 26.5.8(typescript@7.0.2)
+      i18next: 26.5.10(typescript@7.0.2)
       react: 19.3.1
       use-sync-external-store: 1.7.0(react@19.3.1)
     optionalDependencies:
