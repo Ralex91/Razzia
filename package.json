@@ -1,7 +1,11 @@
 {
   "name": "razzia",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "type": "module",
+  "packageManager": "pnpm@11.28.7",
+  "engines": {
+    "node": "^24"
+  },
   "scripts": {
     "dev": "dotenv -e .env -- pnpm -r --parallel dev",
     "dev:web": "dotenv -e .env -- pnpm --filter web dev",
@@ -18,17 +22,19 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "pnpm --filter @razzia/e2e test",
     "test:e2e:ui": "pnpm --filter @razzia/e2e test:ui",
+    "docker:build": "docker build -t razzia:local .",
+    "docker:scout": "pnpm docker:build && docker scout quickview razzia:local && docker scout cves razzia:local --only-severity critical,high",
     "act:release": "act release -W .github/workflows/docker-release.yml --env GITHUB_REF_NAME=v0.0.1 -P ubuntu-latest=catthehacker/ubuntu:act-latest -s DOCKERHUB_USERNAME=dry-run"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
-    "@vitest/coverage-v8": "^5.0.3",
+    "@vitest/coverage-v8": "^5.0.5",
     "dotenv-cli": "^11.0.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^7.0.2004",
+    "oxlint-tsgolint": "^7.0.2005",
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "catalog:",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.5"
   }
 }

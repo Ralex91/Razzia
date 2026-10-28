@@ -8,6 +8,9 @@ updates:
       default-days: 3
     target-branch: "dev"
     open-pull-requests-limit: 15
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       npm-minor-patch:
         applies-to: version-updates
@@ -25,6 +28,9 @@ updates:
       default-days: 3
     target-branch: "dev"
     open-pull-requests-limit: 15
+    ignore:
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
     groups:
       docker-minor-patch:
         applies-to: version-updates

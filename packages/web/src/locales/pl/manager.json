@@ -1,0 +1,55 @@
+{
+  "configurationsTitle": "Konfiguracja",
+  "logout": "Wyloguj",
+  "passwordPlaceholder": "Hasło",
+  "quizz": {
+    "create": "Utwórz quiz",
+    "delete": "Usuń quiz",
+    "deleteConfirm": "Czy na pewno chcesz usunąć „{{name}}”? Tej operacji nie można cofnąć.",
+    "deleted": "Quiz został usunięty",
+    "export": "Eksportuj quiz do JSON",
+    "import": "Importuj quiz z JSON",
+    "none": "Nie utworzono jeszcze żadnego quizu",
+    "notFound": "Nie znaleziono quizu",
+    "pleaseCreate": "Najpierw utwórz quiz",
+    "pleaseSelect": "Wybierz quiz",
+    "startGame": "Rozpocznij grę",
+    "edit": "Edytuj quiz"
+  },
+  "result": {
+    "delete": "Usuń wynik",
+    "deleteConfirm": "Usunąć wynik dla „{{name}}”? Tej operacji nie można cofnąć.",
+    "deleted": "Wynik został usunięty",
+    "noAnswer": "Brak odpowiedzi",
+    "none": "Brak wyników – zakończ grę, aby zobaczyć tu raporty",
+    "paginationOf": " z ",
+    "stats": {
+      "correctAnswers": "Poprawne odpowiedzi",
+      "playersAnswered": "Gracze, którzy odpowiedzieli"
+    },
+    "table": {
+      "answered": "Odpowiedź",
+      "correct": " Poprawna",
+      "correctIncorrect": "Poprawne / Błędne",
+      "incorrect": " Błędna",
+      "player": "Gracz",
+      "points": "Punkty"
+    },
+    "playerCount_one": "{{count}} gracz",
+    "playerCount_few": "{{count}} gracze",
+    "playerCount_many": "{{count}} graczy",
+    "playerCount_other": "{{count}} gracza",
+    "timeLimitSuffix": " s na odpowiedź",
+    "estimation": {
+      "answered": "Odpowiedź",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "Poza marginesem",
+      "average": "Średnia odpowiedź: {{value}}"
+    }
+  },
+  "tabs": {
+    "play": "Graj",
+    "quizz": "Quizy",
+    "results": "Wyniki"
+  }
+}

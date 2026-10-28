@@ -1,5 +1,5 @@
 # ---- BASE ----
-FROM node:26-alpine AS base
+FROM node:24.22.1-alpine3.24@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS base
 RUN npm install -g pnpm
 
 # ---- BUILDER ----
@@ -19,16 +19,16 @@ COPY . .
 RUN pnpm build
 
 # ---- RUNNER ----
-FROM alpine:3.24.2 AS runner
+FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS runner
 
-RUN apk add --no-cache nginx nodejs supervisor
+RUN apk upgrade --no-cache && apk add --no-cache nginx nodejs s6
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/supervisord.conf /etc/supervisord.conf
+COPY --chmod=755 docker/s6 /etc/s6
 
 COPY --from=builder /app/packages/web/dist /app/web
 COPY --from=builder /app/packages/socket/dist/index.cjs /app/socket/index.cjs
 
 EXPOSE 3000
 
-CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["s6-svscan", "/etc/s6"]

@@ -8,11 +8,11 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@hono/node-server": "^2.1.4",
+    "@hono/node-server": "^2.1.5",
     "@hono/zod-validator": "^0.9.1",
     "@razzia/common": "workspace:*",
     "dayjs": "^1.11.23",
-    "file-type": "^22.1.1",
+    "file-type": "^22.2.0",
     "hono": "catalog:",
     "http-status-codes": "catalog:",
     "nanoid": "^6.0.2",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "rolldown": "^1.2.13",
+    "rolldown": "^1.2.15",
     "socket.io-client": "catalog:",
     "tsx": "^4.23.15"
   }

@@ -11,7 +11,7 @@
     "tokenMissing": "Missing session token",
     "unauthorized": "You are not authorized",
     "usernameTooLong": "Username cannot exceed 24 characters",
-    "usernameTooShort": "Username cannot be less than 4 characters"
+    "usernameTooShort": "Username cannot be empty"
   },
   "game": {
     "alreadyStarted": "Game already started",

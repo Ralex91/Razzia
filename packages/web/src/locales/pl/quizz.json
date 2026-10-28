@@ -1,0 +1,105 @@
+{
+  "addAnswerPlaceholder": "Dodaj odpowiedź...",
+  "addQuestion": "Dodaj pytanie",
+  "answersCountSuffix": " odpowiedzi",
+  "deleteQuestion": "Usuń pytanie",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Ankieta"
+  },
+  "noQuestionYet": "Brak pytań",
+  "question": {
+    "addMediaHint": "Dodaj do pytania obraz, wideo lub dźwięk",
+    "config": {
+      "answerTime": "Czas na odpowiedź",
+      "answerTimeHint": "Ile czasu gracze mają na odpowiedź",
+      "noTimeLimit": "Bez limitu czasu",
+      "noTimeLimitHint": "Punkty przyznawane są według kolejności odpowiedzi. Czas na odpowiedź nie jest ograniczony.",
+      "questionDisplay": "Wyświetlanie pytania",
+      "questionDisplayHint": "Czas, po którym pojawią się odpowiedzi",
+      "timings": "Czas",
+      "answerMode": "Tryb odpowiedzi",
+      "category": "Kategoria",
+      "categoryPlaceholder": "np. Geografia",
+      "categoryHint": "Kolejne pytania z tą samą kategorią tworzą rundę. Ranking pojawia się dopiero przy zmianie kategorii.",
+      "scoring": "Punktacja",
+      "maxPoints": "Maks. punktów",
+      "maxPointsHint": "Maksymalna liczba punktów za poprawną odpowiedź",
+      "penalty": "Kara",
+      "penaltyHint": "Punkty odejmowane za błędną odpowiedź (wynik nie spadnie poniżej 0)",
+      "scoringMode": "Tryb punktacji",
+      "scoringMode.strict": "Ścisły",
+      "scoringMode.balanced": "Zrównoważony",
+      "scoringMode.lenient": "Łagodny",
+      "scoringModeHint.strict": "Pełne punkty tylko wtedy, gdy zaznaczono wszystkie poprawne odpowiedzi i żadnej błędnej",
+      "scoringModeHint.balanced": "Częściowe punkty: poprawne zaznaczenia minus błędne",
+      "scoringModeHint.lenient": "Punkty za każdą poprawną odpowiedź, bez kary za błędne",
+      "estimation": {
+        "title": "Szacowanie",
+        "inputMode": "Sposób odpowiedzi",
+        "inputModes": {
+          "slider": "Suwak",
+          "input": "Dowolna liczba"
+        },
+        "inputModeHint": {
+          "slider": "Gracze wybierają wartość suwakiem w podanym zakresie",
+          "input": "Gracze wpisują liczbę z podanego zakresu"
+        },
+        "min": "Minimum",
+        "max": "Maksimum",
+        "step": "Krok",
+        "stepHint": "Dokładność suwaka i oczekiwanej odpowiedzi",
+        "margin": "Margines",
+        "marginHint": "Odpowiedzi mieszczące się w tej odległości od poprawnej dostają od 100% (dokładne trafienie) do 50% punktów. Odpowiedzi poza marginesem nie dostają nic."
+      }
+    },
+    "deleteQuestion": "Usuń pytanie",
+    "deleteQuestionConfirm": "Czy na pewno chcesz usunąć to pytanie?",
+    "media": {
+      "audio": "Dźwięk",
+      "image": "Obraz",
+      "video": "Wideo"
+    },
+    "mediaUrlPlaceholder": "Wpisz adres URL...",
+    "placeholder": "Zacznij wpisywać pytanie...",
+    "note": "Wyjaśnienie",
+    "notePlaceholder": "Dodaj wyjaśnienie wyświetlane po odsłonięciu odpowiedzi",
+    "estimation": {
+      "correctAnswer": "Poprawna odpowiedź"
+    }
+  },
+  "questionHasErrors": "To pytanie zawiera błędy",
+  "questionType": {
+    "single": "Jednokrotny wybór",
+    "multi": "Wielokrotny wybór",
+    "estimation": "Szacowanie"
+  },
+  "quizzSaved": "Quiz został zapisany",
+  "quizzUpdated": "Quiz został zaktualizowany",
+  "titleQuizzPlaceholder": "Tytuł quizu...",
+  "media": {
+    "delete": "Usuń plik",
+    "deleteConfirm": "Usunąć „{{name}}”? Plik zostanie usunięty z tego quizu, a inne quizy, które go używają, nie będą mogły go już wyświetlić.",
+    "library": "Biblioteka multimediów",
+    "libraryEmpty": "Twoja biblioteka jest pusta",
+    "upload": "Prześlij",
+    "uploadHint": "Obrazy, dźwięk lub wideo, do {{size}} MB",
+    "search": "Szukaj multimediów...",
+    "filter": {
+      "all": "Wszystkie"
+    },
+    "use": "Użyj",
+    "dropHint": "Upuść tutaj obrazy, pliki audio i wideo albo użyj przycisku Prześlij",
+    "dropHere": "Upuść, aby przesłać",
+    "noResults": "Brak multimediów pasujących do wyszukiwania",
+    "fromUrl": "Dodaj z adresu URL",
+    "view": {
+      "grid": "Widok siatki",
+      "list": "Widok listy"
+    },
+    "filterByType": "Filtruj według typu"
+  },
+  "addAnswer": "Dodaj odpowiedź",
+  "removeAnswer": "Usuń odpowiedź",
+  "markCorrect": "Oznacz {{label}} jako poprawną"
+}

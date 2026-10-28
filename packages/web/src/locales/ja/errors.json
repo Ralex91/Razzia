@@ -11,7 +11,7 @@
     "tokenMissing": "セッショントークンがありません",
     "unauthorized": "権限がありません",
     "usernameTooLong": "ユーザー名は24文字以内にしてください",
-    "usernameTooShort": "ユーザー名は4文字以上にしてください"
+    "usernameTooShort": "ユーザー名を入力してください"
   },
   "game": {
     "alreadyStarted": "ゲームはすでに開始されています",

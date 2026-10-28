@@ -1,0 +1,47 @@
+name: Docker Scout
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_run:
+    workflows: [Docker Release]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Scan published image
+        uses: docker/scout-action@a4119c5a8c5076236a54e4ce99531f7e4dd2ef84 # v1.27.0
+        with:
+          command: cves
+          image: registry://ralex91/razzia:latest
+          platform: linux/amd64
+          sarif-file: scout.sarif
+
+      - name: Upload results to GitHub Security
+        if: ${{ !env.ACT }}
+        uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          sarif_file: scout.sarif
+          category: docker-scout
+
+      - name: Fail on fixable critical or high vulnerabilities
+        uses: docker/scout-action@a4119c5a8c5076236a54e4ce99531f7e4dd2ef84 # v1.27.0
+        with:
+          command: cves
+          image: registry://ralex91/razzia:latest
+          platform: linux/amd64
+          only-fixed: true
+          only-severities: critical,high
+          exit-code: true

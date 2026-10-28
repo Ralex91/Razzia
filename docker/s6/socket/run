@@ -1,0 +1,3 @@
+#!/bin/sh
+export NODE_ENV=production CONFIG_PATH=/app/config SOCKET_PORT=3001
+exec node /app/socket/index.cjs

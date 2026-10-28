@@ -1,0 +1,79 @@
+{
+  "api": {
+    "notFound": "Żądany zasób nie istnieje",
+    "serverError": "Wystąpił błąd serwera, spróbuj ponownie"
+  },
+  "auth": {
+    "invalidInviteCode": "Nieprawidłowy kod zaproszenia",
+    "joinTicketInvalid": "Twoje zgłoszenie dołączenia wygasło, wpisz PIN ponownie",
+    "sessionFailed": "Nie udało się rozpocząć sesji, odśwież stronę",
+    "tokenInvalid": "Nieprawidłowy token sesji",
+    "tokenMissing": "Brak tokenu sesji",
+    "unauthorized": "Nie masz uprawnień",
+    "usernameTooLong": "Nazwa użytkownika nie może mieć więcej niż 24 znaki",
+    "usernameTooShort": "Nazwa użytkownika nie może być pusta"
+  },
+  "game": {
+    "alreadyStarted": "Gra już się rozpoczęła",
+    "expired": "Gra wygasła",
+    "invalidAutoAdvanceDelay": "Opóźnienie musi wynosić od 3 do 600 sekund",
+    "kickedByManager": "Prowadzący usunął cię z gry",
+    "locked": "Gra jest zablokowana",
+    "managerAlreadyConnected": "Prowadzący jest już połączony",
+    "managerCannotJoin": "Nie możesz dołączyć do własnej gry",
+    "managerDisconnected": "Prowadzący się rozłączył",
+    "noPlayersConnected": "Brak połączonych graczy",
+    "notFound": "Nie znaleziono gry",
+    "playerAlreadyConnected": "Gracz jest już połączony"
+  },
+  "invalidRequest": "Nieprawidłowe żądanie",
+  "manager": {
+    "failedToReadConfig": "Nie udało się odczytać konfiguracji gry",
+    "invalidPassword": "Nieprawidłowe hasło",
+    "passwordNotConfigured": "Hasło prowadzącego nie zostało skonfigurowane"
+  },
+  "notFound": {
+    "back": "Wróć na stronę główną",
+    "description": "Strona, której szukasz, nie istnieje.",
+    "title": "Nie znaleziono strony"
+  },
+  "quizz": {
+    "answerEmpty": "Odpowiedź nie może być pusta",
+    "cooldownTooLong": "Czas wyświetlania pytania nie może przekraczać 15 sekund",
+    "cooldownTooShort": "Czas wyświetlania pytania musi wynosić co najmniej 3 sekundy",
+    "failedToDelete": "Nie udało się usunąć quizu",
+    "failedToSave": "Quiz jest niekompletny, upewnij się, że każde pytanie ma treść i co najmniej jedną poprawną odpowiedź",
+    "failedToUpdate": "Nie udało się zaktualizować quizu",
+    "invalidMediaUrl": "Adres multimediów musi być prawidłowym adresem URL",
+    "maxPointsNegative": "Liczba punktów nie może być ujemna",
+    "noQuestions": "Quiz musi zawierać co najmniej jedno pytanie",
+    "noSolution": "Wybierz co najmniej jedną poprawną odpowiedź",
+    "notFound": "Nie znaleziono quizu",
+    "penaltyNegative": "Kara nie może być ujemna",
+    "questionEmpty": "Pytanie nie może być puste",
+    "subjectEmpty": "Tytuł nie może być pusty",
+    "tooFewAnswers": "Pytanie musi mieć co najmniej 2 odpowiedzi",
+    "tooManyAnswers": "Pytanie nie może mieć więcej niż 4 odpowiedzi",
+    "estimationInvalidRange": "Maksimum musi być większe niż minimum",
+    "estimationSolutionOutOfRange": "Poprawna odpowiedź musi mieścić się między minimum a maksimum",
+    "estimationStepInvalid": "Krok musi być większy od 0",
+    "estimationMarginNegative": "Margines nie może być ujemny",
+    "estimationInvalidOptions": "Brak ustawień szacowania lub są one nieprawidłowe"
+  },
+  "result": {
+    "notFound": "Nie znaleziono wyniku"
+  },
+  "route": {
+    "back": "Wróć na stronę główną",
+    "description": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
+    "title": "Coś poszło nie tak"
+  },
+  "media": {
+    "invalidName": "Nieprawidłowa nazwa pliku multimedialnego",
+    "invalidType": "Nieobsługiwany plik, prześlij obraz, plik audio lub wideo",
+    "missingFile": "Nie przesłano żadnego pliku",
+    "notFound": "Nie znaleziono pliku multimedialnego",
+    "tooLarge": "Plik jest za duży",
+    "uploadFailed": "Nie udało się przesłać pliku"
+  }
+}

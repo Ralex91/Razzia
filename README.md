@@ -72,7 +72,7 @@ docker run -d \
 
 ### 🛠️ Without Docker
 
-Requires Node.js 24+ and [pnpm](https://pnpm.io/) 10.16+.
+Requires Node.js 24 and [pnpm](https://pnpm.io/) 10.16+.
 
 1. Clone and install:
 
