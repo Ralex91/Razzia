@@ -34,17 +34,54 @@ test("logs the manager out", async ({ page }) => {
   await expect(page).toHaveURL(/\/manager$/u)
 })
 
-test("switches the language and keeps it after a reload", async ({ page }) => {
-  await page.goto("/")
-  await page.getByRole("combobox", { name: t("common:changeLanguage") }).click()
-  await page.getByRole("option", { name: t("common:language.fr") }).click()
+for (const lang of ["fr", "pt"]) {
+  test(`switches to ${lang} and keeps it after a reload`, async ({ page }) => {
+    await page.goto("/")
+    await page
+      .getByRole("combobox", { name: t("common:changeLanguage") })
+      .click()
+    await page
+      .getByRole("option", { name: t(`common:language.${lang}`) })
+      .click()
 
-  await expect(page.getByText(t("game:pinLabel", { lng: "fr" }))).toBeVisible()
-  await expect(
-    page.getByRole("button", { name: t("common:submit", { lng: "fr" }) }),
-  ).toBeVisible()
+    await expect(
+      page.getByText(t("game:pinLabel", { lng: lang })),
+    ).toBeVisible()
+    await expect(
+      page.getByRole("button", { name: t("common:submit", { lng: lang }) }),
+    ).toBeVisible()
 
-  await page.reload()
+    await page.reload()
 
-  await expect(page.getByText(t("game:pinLabel", { lng: "fr" }))).toBeVisible()
+    await expect(
+      page.getByText(t("game:pinLabel", { lng: lang })),
+    ).toBeVisible()
+  })
+}
+
+test.describe("portuguese browser", () => {
+  test.use({ locale: "pt-BR" })
+
+  test("detects portuguese and translates manager errors", async ({ page }) => {
+    await page.goto("/")
+    await expect(
+      page.getByRole("combobox", {
+        name: t("common:changeLanguage", { lng: "pt" }),
+      }),
+    ).toHaveText("PT")
+    await expect(
+      page.getByRole("button", { name: t("common:submit", { lng: "pt" }) }),
+    ).toBeVisible()
+
+    await page.goto("/manager")
+    await page
+      .getByPlaceholder(t("manager:passwordPlaceholder", { lng: "pt" }))
+      .fill("wrong")
+    await page
+      .getByRole("button", { name: t("common:submit", { lng: "pt" }) })
+      .click()
+    await expect(
+      page.getByText(t("errors:manager.invalidPassword", { lng: "pt" })),
+    ).toBeVisible()
+  })
 })
