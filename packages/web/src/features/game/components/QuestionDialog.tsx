@@ -1,5 +1,6 @@
 import { MEDIA_TYPES } from "@razzia/common/constants"
 import type { QuestionMedia as QuestionMediaType } from "@razzia/common/types/game"
+import { shouldCloseMediaDialog } from "@razzia/web/features/game/utils/mediaDialog"
 import clsx from "clsx"
 import { X } from "lucide-react"
 import { Dialog, VisuallyHidden } from "radix-ui"
@@ -35,7 +36,7 @@ const QuestionDialog = ({
 
         <Dialog.Content
           aria-describedby={undefined}
-          onClick={(e) => e.target === e.currentTarget && setOpen(false)}
+          onClick={(e) => shouldCloseMediaDialog(e.target) && setOpen(false)}
           className="data-[state=open]:animate-fade fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 p-4"
         >
           {showQuestion ? (
