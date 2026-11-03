@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Scan published image
-        uses: docker/scout-action@a4119c5a8c5076236a54e4ce99531f7e4dd2ef84 # v1.27.0
+        uses: docker/scout-action@e7e2a72bf1485d10a58f30696b6c513b261ce4fa # v1.29.0
         with:
           command: cves
           image: registry://ralex91/razzia:latest
@@ -37,7 +37,7 @@ jobs:
           category: docker-scout
 
       - name: Fail on fixable critical or high vulnerabilities
-        uses: docker/scout-action@a4119c5a8c5076236a54e4ce99531f7e4dd2ef84 # v1.27.0
+        uses: docker/scout-action@e7e2a72bf1485d10a58f30696b6c513b261ce4fa # v1.29.0
         with:
           command: cves
           image: registry://ralex91/razzia:latest
