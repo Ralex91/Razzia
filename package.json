@@ -29,7 +29,7 @@
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
     "@vitest/coverage-v8": "^5.0.5",
-    "dotenv-cli": "^11.0.0",
+    "dotenv-cli": "^11.1.0",
     "oxlint": "latest",
     "oxlint-tsgolint": "^7.0.2005",
     "prettier": "^3.9.10",
