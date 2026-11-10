@@ -28,13 +28,13 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
-    "@vitest/coverage-v8": "^5.0.5",
-    "dotenv-cli": "^11.0.0",
+    "@vitest/coverage-v8": "^5.1.0",
+    "dotenv-cli": "^11.1.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^7.0.2005",
+    "oxlint-tsgolint": "^7.0.2006",
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "catalog:",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   }
 }
