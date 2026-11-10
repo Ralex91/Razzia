@@ -1,5 +1,5 @@
 # ---- BASE ----
-FROM node:24.22.2-alpine3.24@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 AS base
+FROM node:26.13.0-alpine3.24@sha256:8996bb5821d62a8fd9bb27c1cb07462f3fdce6e47d640c6a881ead0b064ce216 AS base
 RUN npm install -g pnpm
 
 # ---- BUILDER ----
@@ -21,7 +21,7 @@ RUN pnpm build
 # ---- RUNNER ----
 FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS runner
 
-RUN apk upgrade --no-cache && apk add --no-cache nginx nodejs s6
+RUN apk upgrade --no-cache && apk add --no-cache nginx nodejs-current s6
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY --chmod=755 docker/s6 /etc/s6

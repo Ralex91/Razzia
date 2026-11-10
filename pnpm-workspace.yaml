@@ -2,7 +2,7 @@ packages:
   - "packages/*"
 
 catalog:
-  "@types/node": "^24.19.2"
+  "@types/node": "^26.6.6"
   hono: "^4.13.17"
   http-status-codes: "^2.3.0"
   i18next: "^26.7.2"

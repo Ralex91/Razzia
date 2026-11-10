@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@11.28.7",
   "engines": {
-    "node": "^24"
+    "node": "^26"
   },
   "scripts": {
     "dev": "dotenv -e .env -- pnpm -r --parallel dev",
