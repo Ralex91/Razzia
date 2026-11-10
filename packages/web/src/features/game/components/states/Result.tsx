@@ -1,11 +1,11 @@
+import { useEffect } from "react"
+import { useTranslation } from "react-i18next"
+import useSound from "use-sound"
 import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 import CricleCheck from "@razzia/web/features/game/components/icons/CricleCheck"
 import CricleXmark from "@razzia/web/features/game/components/icons/CricleXmark"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { SFX } from "@razzia/web/features/game/utils/constants"
-import { useEffect } from "react"
-import { useTranslation } from "react-i18next"
-import useSound from "use-sound"
 
 interface Props {
   data: CommonStatusDataMap["SHOW_RESULT"]

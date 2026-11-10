@@ -15,8 +15,8 @@
     "clean": "pnpm -r exec rm -rf dist node_modules",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "format": "prettier --check . --log-level warn",
-    "format:fix": "prettier --write . --log-level warn",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -30,10 +30,9 @@
     "@stylistic/eslint-plugin": "latest",
     "@vitest/coverage-v8": "^5.1.0",
     "dotenv-cli": "^11.1.0",
+    "oxfmt": "^0.77.0",
     "oxlint": "latest",
     "oxlint-tsgolint": "^7.0.2006",
-    "prettier": "^3.9.10",
-    "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "catalog:",
     "vitest": "^5.1.0"
   }

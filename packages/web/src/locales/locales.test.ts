@@ -1,7 +1,7 @@
-import { EVENTS } from "@razzia/common/constants"
 import fs from "fs"
 import { extname, join } from "path"
 import { describe, expect, it } from "vitest"
+import { EVENTS } from "@razzia/common/constants"
 
 const LOCALES_DIR = import.meta.dirname
 const PACKAGES_DIR = join(import.meta.dirname, "../../..")

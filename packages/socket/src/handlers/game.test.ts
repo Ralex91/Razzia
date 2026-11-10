@@ -1,19 +1,19 @@
+import type { AddressInfo } from "net"
 import { createAdaptorServer } from "@hono/node-server"
-import { EVENTS, SESSION_ROLES } from "@razzia/common/constants"
+import { io as connect, type Socket as ClientSocket } from "socket.io-client"
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest"
 import type { SessionRole } from "@razzia/common/types/auth"
 import type {
   ClientToServerEvents,
   Server,
   ServerToClientEvents,
 } from "@razzia/common/types/game/socket"
+import { EVENTS, SESSION_ROLES } from "@razzia/common/constants"
 import { app, createSocketServer } from "@razzia/socket/app"
 import { mintJoinTicket, mintToken } from "@razzia/socket/services/auth"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
 import { createQuestion, createQuizz } from "@razzia/socket/test/fixtures"
-import type { AddressInfo } from "net"
-import { io as connect, type Socket as ClientSocket } from "socket.io-client"
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest"
 
 type Client = ClientSocket<ServerToClientEvents, ClientToServerEvents>
 

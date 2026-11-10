@@ -1,7 +1,7 @@
+import { useTranslation } from "react-i18next"
 import type { UploadedMedia } from "@razzia/common/types/game"
 import MediaDeleteButton from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaDeleteButton"
 import MediaThumbnail from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaThumbnail"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   media: UploadedMedia
@@ -17,7 +17,7 @@ const MediaCard = ({ media, onSelect, onDelete }: Props) => {
       <button
         onClick={onSelect}
         title={media.name}
-        className="focus-visible:ring-primary w-full overflow-hidden rounded-xl text-left ring-2 ring-transparent transition focus-visible:outline-none"
+        className="w-full overflow-hidden rounded-xl text-left ring-2 ring-transparent transition focus-visible:ring-primary focus-visible:outline-none"
       >
         <div className="relative aspect-square overflow-hidden rounded-xl">
           <MediaThumbnail media={media} />
@@ -29,7 +29,7 @@ const MediaCard = ({ media, onSelect, onDelete }: Props) => {
           </div>
         </div>
 
-        <p className="text-foreground mt-1.5 truncate px-0.5 text-sm font-semibold">
+        <p className="mt-1.5 truncate px-0.5 text-sm font-semibold text-foreground">
           {media.name}
         </p>
       </button>
@@ -37,7 +37,7 @@ const MediaCard = ({ media, onSelect, onDelete }: Props) => {
       <MediaDeleteButton
         media={media}
         onDelete={onDelete}
-        className="bg-background absolute top-2 right-2 shadow-md focus-visible:opacity-100 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100"
+        className="absolute top-2 right-2 bg-background shadow-md focus-visible:opacity-100 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100"
       />
     </div>
   )

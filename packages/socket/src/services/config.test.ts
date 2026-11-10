@@ -1,5 +1,8 @@
-import { QUIZZ_MODES } from "@razzia/common/constants"
+import fs from "fs"
+import { join } from "path"
+import { beforeEach, describe, expect, it } from "vitest"
 import type { GameResult } from "@razzia/common/types/game"
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import {
   deleteQuizz,
   deleteResult,
@@ -16,9 +19,6 @@ import {
 } from "@razzia/socket/services/config"
 import { DomainError } from "@razzia/socket/services/errors"
 import { createQuestion, createQuizz } from "@razzia/socket/test/fixtures"
-import fs from "fs"
-import { join } from "path"
-import { beforeEach, describe, expect, it } from "vitest"
 
 const quizzDir = () => getPath("quizz")
 const resultsDir = () => getPath("results")

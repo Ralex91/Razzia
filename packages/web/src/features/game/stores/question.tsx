@@ -1,5 +1,5 @@
-import type { GameUpdateQuestion } from "@razzia/common/types/game"
 import { create } from "zustand"
+import type { GameUpdateQuestion } from "@razzia/common/types/game"
 
 interface QuestionStore {
   questionStates: GameUpdateQuestion | null

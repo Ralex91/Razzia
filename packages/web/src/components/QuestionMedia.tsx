@@ -1,5 +1,5 @@
-import { MEDIA_TYPES } from "@razzia/common/constants"
 import type { QuestionMedia as QuestionMediaType } from "@razzia/common/types/game"
+import { MEDIA_TYPES } from "@razzia/common/constants"
 
 interface Props {
   media?: QuestionMediaType

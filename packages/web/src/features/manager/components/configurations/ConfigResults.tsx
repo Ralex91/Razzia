@@ -1,3 +1,8 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Trash2 } from "lucide-react"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import AlertDialog from "@razzia/web/components/AlertDialog"
 import { SkeletonRows } from "@razzia/web/components/Skeleton"
 import ResultModal from "@razzia/web/features/manager/components/ResultModal"
@@ -8,11 +13,6 @@ import {
   resultsListQuery,
 } from "@razzia/web/features/manager/queries"
 import { ApiError } from "@razzia/web/lib/api"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Trash2 } from "lucide-react"
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 const formatDate = (iso: string) => {
   const d = new Date(iso)
@@ -66,16 +66,16 @@ const ConfigResults = () => {
         {results.map((r) => (
           <div
             key={r.id}
-            className="border-accent flex h-14 w-full items-center justify-between rounded-md border-2 p-3"
+            className="flex h-14 w-full items-center justify-between rounded-md border-2 border-accent p-3"
           >
             <button
               className="min-w-0 flex-1 text-left"
               onClick={() => setSelectedId(r.id)}
             >
-              <p className="text-foreground truncate font-medium">
+              <p className="truncate font-medium text-foreground">
                 {r.subject}
               </p>
-              <p className="text-muted-foreground text-xs">
+              <p className="text-xs text-muted-foreground">
                 {formatDate(r.date)} -{" "}
                 {t("manager:result.playerCount", { count: r.playerCount })}
               </p>
@@ -100,7 +100,7 @@ const ConfigResults = () => {
         ))}
 
         {results.length === 0 && (
-          <p className="text-muted-foreground my-8 text-center">
+          <p className="my-8 text-center text-muted-foreground">
             {t("manager:result.none")}
           </p>
         )}

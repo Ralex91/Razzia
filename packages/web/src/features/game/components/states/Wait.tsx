@@ -1,6 +1,6 @@
+import { useTranslation } from "react-i18next"
 import type { PlayerStatusDataMap } from "@razzia/common/types/game/status"
 import Loader from "@razzia/web/components/Loader"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   data: PlayerStatusDataMap["WAIT"]

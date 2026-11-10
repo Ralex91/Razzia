@@ -1,5 +1,5 @@
-import { estimationAccuracy } from "@razzia/common/questions/estimation"
 import { describe, expect, it } from "vitest"
+import { estimationAccuracy } from "@razzia/common/questions/estimation"
 
 describe("estimationAccuracy", () => {
   it("gives full accuracy for an exact answer", () => {

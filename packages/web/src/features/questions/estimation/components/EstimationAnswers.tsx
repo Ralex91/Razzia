@@ -1,3 +1,7 @@
+import clsx from "clsx"
+import { useState, type CSSProperties } from "react"
+import { useTranslation } from "react-i18next"
+import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
 import { ESTIMATION_INPUT_MODES } from "@razzia/common/constants"
 import Button from "@razzia/web/components/Button"
 import Input from "@razzia/web/components/Input"
@@ -7,10 +11,6 @@ import {
   getRangeRatio,
   snapToStep,
 } from "@razzia/web/features/questions/estimation/utils"
-import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
-import clsx from "clsx"
-import { useState, type CSSProperties } from "react"
-import { useTranslation } from "react-i18next"
 
 const BADGE_CLASS =
   "text-foreground rounded-md bg-white px-2 py-0.5 font-bold shadow-md"
@@ -53,8 +53,8 @@ const EstimationAnswers = ({
     return (
       <div className="mx-auto mb-6 flex w-full max-w-7xl flex-col gap-3 px-2 pt-6">
         <div className="relative h-4 rounded-full bg-white/90 shadow-md">
-          <div className="anim-slider-fill-slow bg-primary absolute inset-y-0 left-0 rounded-full" />
-          <div className="anim-slider-thumb-slow bg-primary absolute top-1/2 size-11 -translate-1/2 rounded-full border-5 border-white shadow-lg" />
+          <div className="anim-slider-fill-slow absolute inset-y-0 left-0 rounded-full bg-primary" />
+          <div className="anim-slider-thumb-slow absolute top-1/2 size-11 -translate-1/2 rounded-full border-5 border-white bg-primary shadow-lg" />
         </div>
         <div className="flex justify-between">
           <span className={clsx(BADGE_CLASS, "text-lg")}>
@@ -85,7 +85,7 @@ const EstimationAnswers = ({
       >
         {isSlider ? (
           <>
-            <output className="text-foreground mx-auto min-w-24 rounded-xl bg-white px-4 py-1 text-center text-3xl font-bold shadow-md">
+            <output className="mx-auto min-w-24 rounded-xl bg-white px-4 py-1 text-center text-3xl font-bold text-foreground shadow-md">
               {formatValue(value)}
             </output>
             <div className="flex flex-col gap-3 pt-3">

@@ -1,5 +1,3 @@
-import FieldError from "@razzia/web/components/forms/FieldError"
-import Input from "@razzia/web/components/Input"
 import clsx from "clsx"
 import {
   useController,
@@ -7,6 +5,8 @@ import {
   type FieldValues,
 } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import FieldError from "@razzia/web/components/forms/FieldError"
+import Input from "@razzia/web/components/Input"
 
 interface Props<T extends FieldValues> {
   name: FieldPathByValue<T, number>
@@ -33,7 +33,7 @@ const NumberField = <T extends FieldValues>({
       {label && (
         <label
           htmlFor={field.name}
-          className="text-muted-foreground text-sm font-medium"
+          className="text-sm font-medium text-muted-foreground"
         >
           {t(label)}
         </label>

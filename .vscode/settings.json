@@ -1,9 +1,8 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
     "source.fixAll.oxc": "explicit"
   },
   "files.associations": {

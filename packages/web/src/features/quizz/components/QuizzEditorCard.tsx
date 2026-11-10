@@ -1,10 +1,10 @@
-import { MEDIA_TYPES, QUESTION_TYPES } from "@razzia/common/constants"
-import type { Question, QuestionMedia } from "@razzia/common/types/game"
-import AlertDialog from "@razzia/web/components/AlertDialog"
 import clsx from "clsx"
 import { CircleAlert, Music, Trash2, Video } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
+import type { Question, QuestionMedia } from "@razzia/common/types/game"
+import { MEDIA_TYPES, QUESTION_TYPES } from "@razzia/common/constants"
+import AlertDialog from "@razzia/web/components/AlertDialog"
 
 const SlideMedia = ({ media }: { media?: QuestionMedia }) => {
   if (media?.type === MEDIA_TYPES.IMAGE) {
@@ -14,11 +14,11 @@ const SlideMedia = ({ media }: { media?: QuestionMedia }) => {
   }
 
   if (media?.type === MEDIA_TYPES.VIDEO) {
-    return <Video className="text-muted-foreground mx-auto size-10" />
+    return <Video className="mx-auto size-10 text-muted-foreground" />
   }
 
   if (media?.type === MEDIA_TYPES.AUDIO) {
-    return <Music className="text-muted-foreground mx-auto size-10" />
+    return <Music className="mx-auto size-10 text-muted-foreground" />
   }
 
   return null
@@ -50,7 +50,7 @@ const QuizzEditorCard = ({
       onClick={onClick}
       className={twMerge(
         clsx(
-          "group border-accent bg-background relative flex h-36 cursor-pointer flex-col justify-between gap-1 rounded-lg border-2 px-6 py-2",
+          "group relative flex h-36 cursor-pointer flex-col justify-between gap-1 rounded-lg border-2 border-accent bg-background px-6 py-2",
           {
             "border-primary": isActive,
             "border-red-500": isInvalid,
@@ -59,7 +59,7 @@ const QuizzEditorCard = ({
       )}
     >
       <div className="absolute top-2 left-2 flex items-center gap-1">
-        <span className="text-muted-foreground text-xs font-semibold">
+        <span className="text-xs font-semibold text-muted-foreground">
           {index + 1}
         </span>
 
@@ -70,16 +70,16 @@ const QuizzEditorCard = ({
           />
         )}
       </div>
-      <p className="text-foreground truncate px-3 text-center text-xs font-semibold">
+      <p className="truncate px-3 text-center text-xs font-semibold text-foreground">
         {question.question || t("quizz:noQuestionYet")}
       </p>
 
       <SlideMedia media={question.media} />
 
       {question.type === QUESTION_TYPES.ESTIMATION ? (
-        <div className="border-accent flex h-4 items-center rounded-md border px-1.5">
-          <div className="bg-accent relative h-1 w-full rounded-full">
-            <div className="bg-correct absolute top-1/2 left-1/2 size-1.5 -translate-1/2 rounded-full" />
+        <div className="flex h-4 items-center rounded-md border border-accent px-1.5">
+          <div className="relative h-1 w-full rounded-full bg-accent">
+            <div className="absolute top-1/2 left-1/2 size-1.5 -translate-1/2 rounded-full bg-correct" />
           </div>
         </div>
       ) : (
@@ -87,10 +87,10 @@ const QuizzEditorCard = ({
           {question.answers.map((_, i) => (
             <div
               key={i}
-              className="border-accent flex h-4 flex-1 items-center rounded-md border px-0.5"
+              className="flex h-4 flex-1 items-center rounded-md border border-accent px-0.5"
             >
               {question.solutions?.includes(i) && (
-                <div className="bg-correct ml-auto size-1.5 rounded-full" />
+                <div className="ml-auto size-1.5 rounded-full bg-correct" />
               )}
             </div>
           ))}
@@ -103,7 +103,7 @@ const QuizzEditorCard = ({
             <button
               onClick={(e) => e.stopPropagation()}
               aria-label={t("quizz:question.deleteQuestion")}
-              className="text-muted-foreground bg-background absolute top-1.5 right-1.5 hidden rounded-sm p-1 group-hover:block hover:bg-red-50 hover:text-red-500"
+              className="absolute top-1.5 right-1.5 hidden rounded-sm bg-background p-1 text-muted-foreground group-hover:block hover:bg-red-50 hover:text-red-500"
             >
               <Trash2 className="size-3.5" />
             </button>

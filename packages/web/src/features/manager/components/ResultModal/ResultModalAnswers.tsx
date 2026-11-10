@@ -1,3 +1,7 @@
+import clsx from "clsx"
+import { Check, Clock, ImageOff, Music, Video, X } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import type { QuestionMedia } from "@razzia/common/types/game"
 import {
   MEDIA_TYPES,
   NO_TIME_LIMIT,
@@ -8,16 +12,12 @@ import {
   isEstimationOptions,
   isMultiOptions,
 } from "@razzia/common/questions/options"
-import type { QuestionMedia } from "@razzia/common/types/game"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
 import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
 import { formatValue } from "@razzia/web/features/questions/estimation/utils"
-import clsx from "clsx"
-import { Check, Clock, ImageOff, Music, Video, X } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 interface AnswerRow {
   label: string
@@ -40,23 +40,23 @@ const MediaPreview = ({ media }: { media?: QuestionMedia }) => {
 
   if (media?.type === MEDIA_TYPES.VIDEO) {
     return (
-      <div className="bg-accent flex h-16 w-24 items-center justify-center rounded-lg md:h-38 md:w-full">
-        <Video className="text-muted-foreground size-6 md:size-10" />
+      <div className="flex h-16 w-24 items-center justify-center rounded-lg bg-accent md:h-38 md:w-full">
+        <Video className="size-6 text-muted-foreground md:size-10" />
       </div>
     )
   }
 
   if (media?.type === MEDIA_TYPES.AUDIO) {
     return (
-      <div className="bg-accent flex h-16 w-24 items-center justify-center rounded-lg md:h-38 md:w-full">
-        <Music className="text-muted-foreground size-6 md:size-10" />
+      <div className="flex h-16 w-24 items-center justify-center rounded-lg bg-accent md:h-38 md:w-full">
+        <Music className="size-6 text-muted-foreground md:size-10" />
       </div>
     )
   }
 
   return (
-    <div className="bg-accent flex h-16 w-24 items-center justify-center rounded-lg md:h-38 md:w-full">
-      <ImageOff className="text-muted-foreground size-6 md:size-10" />
+    <div className="flex h-16 w-24 items-center justify-center rounded-lg bg-accent md:h-38 md:w-full">
+      <ImageOff className="size-6 text-muted-foreground md:size-10" />
     </div>
   )
 }
@@ -145,10 +145,10 @@ const ResultModalAnswers = () => {
   ]
 
   return (
-    <div className="border-accent flex flex-col border-b-2 md:flex-row">
-      <div className="border-accent bg-muted/30 flex shrink-0 flex-row items-center gap-4 border-b-2 p-4 md:w-66 md:flex-col md:justify-center md:border-r-2 md:border-b-0">
+    <div className="flex flex-col border-b-2 border-accent md:flex-row">
+      <div className="flex shrink-0 flex-row items-center gap-4 border-b-2 border-accent bg-muted/30 p-4 md:w-66 md:flex-col md:justify-center md:border-r-2 md:border-b-0">
         <MediaPreview media={questionResult.media} />
-        <div className="text-muted-foreground flex items-center gap-2 text-xs">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <Clock className="size-3.5" />
           <span>
             {questionResult.time === NO_TIME_LIMIT
@@ -156,7 +156,7 @@ const ResultModalAnswers = () => {
               : `${questionResult.time}${t("manager:result.timeLimitSuffix")}`}
           </span>
           {scoringMode && (
-            <div className="bg-accent text-accent-foreground rounded-md px-2 py-0.5 font-semibold">
+            <div className="rounded-md bg-accent px-2 py-0.5 font-semibold text-accent-foreground">
               {t(`quizz:question.config.scoringMode.${scoringMode}`)}
             </div>
           )}
@@ -164,13 +164,13 @@ const ResultModalAnswers = () => {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-1.5 overflow-hidden px-4 py-3 md:gap-2 md:px-5 md:py-4">
-        <p className="text-md text-foreground mb-1 font-semibold">
+        <p className="text-md mb-1 font-semibold text-foreground">
           {questionResult.question}
         </p>
 
         {questionResult.type === QUESTION_TYPES.ESTIMATION &&
           average !== null && (
-            <p className="text-muted-foreground mb-1 text-xs">
+            <p className="mb-1 text-xs text-muted-foreground">
               {t("manager:result.estimation.average", {
                 value: formatValue(Math.round(average * 100) / 100),
               })}
@@ -197,8 +197,8 @@ const ResultModalAnswers = () => {
                   {row.answerLabel}
                 </div>
               ) : (
-                <div className="border-accent flex size-6 shrink-0 items-center justify-center rounded-md border-2 bg-white">
-                  <X className="text-muted-foreground size-3 stroke-4" />
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-md border-2 border-accent bg-white">
+                  <X className="size-3 stroke-4 text-muted-foreground" />
                 </div>
               )}
 
@@ -213,7 +213,7 @@ const ResultModalAnswers = () => {
               {result.gameMode !== QUIZZ_MODES.SURVEY && (
                 <div className="shrink-0">
                   {row.isCorrect ? (
-                    <Check className="text-correct size-5 stroke-4" />
+                    <Check className="size-5 stroke-4 text-correct" />
                   ) : (
                     <X
                       className={clsx(
@@ -225,7 +225,7 @@ const ResultModalAnswers = () => {
                 </div>
               )}
 
-              <span className="text-accent-foreground text-center text-sm font-semibold">
+              <span className="text-center text-sm font-semibold text-accent-foreground">
                 {row.count}
               </span>
             </div>

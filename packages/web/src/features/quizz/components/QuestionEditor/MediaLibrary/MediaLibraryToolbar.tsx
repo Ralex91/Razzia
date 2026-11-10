@@ -1,5 +1,8 @@
-import { MEDIA_TYPES } from "@razzia/common/constants"
+import type { ChangeEvent } from "react"
+import { LayoutGrid, List, Search, Upload } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import type { UploadedMediaType } from "@razzia/common/types/game"
+import { MEDIA_TYPES } from "@razzia/common/constants"
 import {
   Select,
   SelectContent,
@@ -9,9 +12,6 @@ import {
 } from "@razzia/web/components/Select"
 import ToggleGroup from "@razzia/web/components/ToggleGroup"
 import { UPLOAD_ACCEPT } from "@razzia/web/features/quizz/hooks/useUploadMedia"
-import { LayoutGrid, List, Search, Upload } from "lucide-react"
-import type { ChangeEvent } from "react"
-import { useTranslation } from "react-i18next"
 
 export type MediaFilter = "all" | UploadedMediaType
 
@@ -66,13 +66,13 @@ const MediaLibraryToolbar = ({
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="relative min-w-48 flex-1">
-        <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="search"
           value={search}
           onChange={handleSearchChange}
           placeholder={t("quizz:media.search")}
-          className="focus:border-primary border-accent text-foreground h-10 w-full rounded-lg border-2 pr-3 pl-9 text-sm font-semibold focus:outline-none"
+          className="h-10 w-full rounded-lg border-2 border-accent pr-3 pl-9 text-sm font-semibold text-foreground focus:border-primary focus:outline-none"
         />
       </div>
 
@@ -103,7 +103,7 @@ const MediaLibraryToolbar = ({
         }))}
       />
 
-      <label className="bg-primary flex h-10 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95]">
+      <label className="flex h-10 cursor-pointer items-center gap-1.5 rounded-lg bg-primary px-3 text-sm font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95]">
         <Upload className="size-4" />
         {t("quizz:media.upload")}
         <input

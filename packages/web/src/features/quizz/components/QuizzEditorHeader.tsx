@@ -1,5 +1,11 @@
-import { QUIZZ_MODES } from "@razzia/common/constants"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import clsx from "clsx"
+import { Controller, useFormContext } from "react-hook-form"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import type { QuizzValidated } from "@razzia/common/validators/quizz"
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import Button from "@razzia/web/components/Button"
 import FieldError from "@razzia/web/components/forms/FieldError"
 import Input from "@razzia/web/components/Input"
@@ -14,12 +20,6 @@ import {
   type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { ApiError } from "@razzia/web/lib/api"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useNavigate } from "@tanstack/react-router"
-import clsx from "clsx"
-import { Controller, useFormContext } from "react-hook-form"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 const QUIZZ_MODE_LIST = Object.values(QUIZZ_MODES)
 
@@ -86,7 +86,7 @@ const QuizzEditorHeader = () => {
   )
 
   return (
-    <header className="bg-background z-20 flex h-14 items-center justify-between gap-4 px-4 shadow-sm">
+    <header className="z-20 flex h-14 items-center justify-between gap-4 bg-background px-4 shadow-sm">
       <div className="flex items-center gap-4">
         <Controller
           control={control}
@@ -132,12 +132,12 @@ const QuizzEditorHeader = () => {
 
       <div className="flex gap-2">
         <Button
-          className="text-md bg-accent text-accent-foreground px-4 py-2 font-semibold"
+          className="text-md bg-accent px-4 py-2 font-semibold text-accent-foreground"
           onClick={handleExit}
         >
           {t("common:exit")}
         </Button>
-        <Button className="bg-primary text-md px-4 py-2" onClick={handleSave}>
+        <Button className="text-md bg-primary px-4 py-2" onClick={handleSave}>
           {t("common:save")}
         </Button>
       </div>

@@ -1,3 +1,7 @@
+import { Crosshair, Footprints, SlidersHorizontal } from "lucide-react"
+import { useEffect } from "react"
+import { useFormContext } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import type { EstimationInputMode } from "@razzia/common/types/game"
 import { ESTIMATION_INPUT_MODES, QUIZZ_MODES } from "@razzia/common/constants"
 import {
@@ -16,10 +20,6 @@ import {
   useQuizzEditor,
   type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { Crosshair, Footprints, SlidersHorizontal } from "lucide-react"
-import { useEffect } from "react"
-import { useFormContext } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 
 const EstimationConfig = () => {
   const {

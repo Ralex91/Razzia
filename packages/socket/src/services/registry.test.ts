@@ -1,5 +1,5 @@
-import type Game from "@razzia/socket/services/game"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import type Game from "@razzia/socket/services/game"
 
 const EMPTY_GAME_TIMEOUT_MS = 5 * 60_000
 const CLEANUP_INTERVAL_MS = 60_000

@@ -1,9 +1,9 @@
-import Background from "@razzia/web/components/Background"
-import Button from "@razzia/web/components/Button"
-import Card from "@razzia/web/components/Card"
 import { useRouter } from "@tanstack/react-router"
 import { CircleX } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import Background from "@razzia/web/components/Background"
+import Button from "@razzia/web/components/Button"
+import Card from "@razzia/web/components/Card"
 
 const ErrorPage = ({ error }: { error: unknown }) => {
   const { t } = useTranslation()
@@ -18,12 +18,12 @@ const ErrorPage = ({ error }: { error: unknown }) => {
           <h1 className="text-xl font-bold text-gray-800">
             {t("errors:route.title")}
           </h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-sm text-muted-foreground">
             {t("errors:route.description")}
           </p>
         </div>
         {message && (
-          <pre className="bg-accent max-h-60 overflow-auto rounded-md px-3 py-2 text-left font-mono text-sm wrap-break-word">
+          <pre className="max-h-60 overflow-auto rounded-md bg-accent px-3 py-2 text-left font-mono text-sm wrap-break-word">
             {message}
           </pre>
         )}

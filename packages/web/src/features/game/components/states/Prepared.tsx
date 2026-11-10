@@ -1,7 +1,7 @@
+import { useTranslation } from "react-i18next"
 import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 import PreparedAnswers from "@razzia/web/features/game/components/PreparedAnswers"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   data: CommonStatusDataMap["SHOW_PREPARED"]

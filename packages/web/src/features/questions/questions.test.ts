@@ -1,18 +1,18 @@
-import {
-  ESTIMATION_INPUT_MODES,
-  QUESTION_TYPES,
-} from "@razzia/common/constants"
+import { describe, expect, it } from "vitest"
 import type {
   EstimationQuestionOptions,
   Question,
 } from "@razzia/common/types/game"
+import {
+  ESTIMATION_INPUT_MODES,
+  QUESTION_TYPES,
+} from "@razzia/common/constants"
 import { calculatePercentages } from "@razzia/web/features/game/utils/score"
 import {
   getRangeRatio,
   snapToStep,
 } from "@razzia/web/features/questions/estimation/utils"
 import { isAnswerCorrect } from "@razzia/web/features/questions/utils"
-import { describe, expect, it } from "vitest"
 
 const estimationOptions = (
   overrides: Partial<EstimationQuestionOptions> = {},

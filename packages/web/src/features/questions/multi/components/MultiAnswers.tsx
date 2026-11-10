@@ -1,13 +1,13 @@
+import clsx from "clsx"
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
 import Button from "@razzia/web/components/Button"
 import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
-import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
-import clsx from "clsx"
-import { useState } from "react"
-import { useTranslation } from "react-i18next"
 
 const MultiAnswers = ({
   answers,

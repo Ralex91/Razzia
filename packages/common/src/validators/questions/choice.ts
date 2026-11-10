@@ -1,10 +1,10 @@
+import { z } from "zod"
+import type { QuestionRefinement } from "@razzia/common/validators/questions"
 import {
   MAX_ANSWERS,
   MIN_ANSWERS,
   SCORING_MODES,
 } from "@razzia/common/constants"
-import type { QuestionRefinement } from "@razzia/common/validators/questions"
-import { z } from "zod"
 
 export const multiOptionsValidator = z.object({
   scoringMode: z.enum(SCORING_MODES),

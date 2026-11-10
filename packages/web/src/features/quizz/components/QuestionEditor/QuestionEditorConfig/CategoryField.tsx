@@ -1,8 +1,8 @@
+import { Tag } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import Combobox from "@razzia/web/components/Combobox"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { Tag } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 const CategoryField = () => {
   const { questions, currentQuestion, currentIndex, updateQuestion } =

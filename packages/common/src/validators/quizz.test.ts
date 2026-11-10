@@ -1,16 +1,16 @@
+import { describe, expect, it } from "vitest"
+import type { Question, Quizz } from "@razzia/common/types/game"
 import {
   ESTIMATION_INPUT_MODES,
   QUESTION_TYPES,
   QUIZZ_MODES,
   SCORING_MODES,
 } from "@razzia/common/constants"
-import type { Question, Quizz } from "@razzia/common/types/game"
 import {
   normalizeLegacyQuizz,
   questionMediaValidator,
   quizzValidator,
 } from "@razzia/common/validators/quizz"
-import { describe, expect, it } from "vitest"
 
 const choiceQuestion = (overrides: Partial<Question> = {}): Question => ({
   type: QUESTION_TYPES.SINGLE,

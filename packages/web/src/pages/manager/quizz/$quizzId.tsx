@@ -1,3 +1,8 @@
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { useEffect, useRef } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import Skeleton from "@razzia/web/components/Skeleton"
 import { quizzQuery } from "@razzia/web/features/manager/queries"
 import QuestionEditor from "@razzia/web/features/quizz/components/QuestionEditor"
@@ -5,11 +10,6 @@ import QuizzEditorHeader from "@razzia/web/features/quizz/components/QuizzEditor
 import QuizzEditorSidebar from "@razzia/web/features/quizz/components/QuizzEditorSidebar"
 import { QuizzEditorProvider } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { ApiError } from "@razzia/web/lib/api"
-import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useEffect, useRef } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 const QuizzEditPage = () => {
   const { quizzId } = Route.useParams()
@@ -33,8 +33,8 @@ const QuizzEditPage = () => {
 
   if (isPending) {
     return (
-      <div className="bg-muted relative flex h-svh flex-col">
-        <header className="bg-background z-20 flex h-14 shrink-0 items-center justify-between gap-4 px-4 shadow-sm">
+      <div className="relative flex h-svh flex-col bg-muted">
+        <header className="z-20 flex h-14 shrink-0 items-center justify-between gap-4 bg-background px-4 shadow-sm">
           <Skeleton className="h-9 w-64" />
           <div className="flex gap-2">
             <Skeleton className="h-10 w-20" />
@@ -42,7 +42,7 @@ const QuizzEditPage = () => {
           </div>
         </header>
         <div className="flex flex-1 overflow-hidden">
-          <aside className="bg-background z-10 m-3 flex w-72 shrink-0 flex-col gap-2 rounded-xl p-3 shadow-sm">
+          <aside className="z-10 m-3 flex w-72 shrink-0 flex-col gap-2 rounded-xl bg-background p-3 shadow-sm">
             <Skeleton className="h-20" />
             <Skeleton className="h-20" />
             <Skeleton className="h-20" />
@@ -58,12 +58,12 @@ const QuizzEditPage = () => {
   }
 
   if (!quizz) {
-    return <div className="bg-muted h-svh" />
+    return <div className="h-svh bg-muted" />
   }
 
   return (
     <QuizzEditorProvider initialData={quizz}>
-      <div className="bg-muted relative flex h-svh flex-col">
+      <div className="relative flex h-svh flex-col bg-muted">
         <QuizzEditorHeader />
         <div className="flex flex-1 overflow-hidden">
           <QuizzEditorSidebar />

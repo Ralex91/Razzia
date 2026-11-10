@@ -16,18 +16,18 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import Button from "@razzia/web/components/Button"
-import QuizzEditorCard from "@razzia/web/features/quizz/components/QuizzEditorCard"
-import type { Question } from "@razzia/common/types/game"
-import {
-  useQuizzEditor,
-  type QuizzFormValues,
-} from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
 import { Plus } from "lucide-react"
 import { useRef } from "react"
 import { useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import type { Question } from "@razzia/common/types/game"
+import Button from "@razzia/web/components/Button"
+import QuizzEditorCard from "@razzia/web/features/quizz/components/QuizzEditorCard"
+import {
+  useQuizzEditor,
+  type QuizzFormValues,
+} from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 
 interface SortableItemProps {
   id: string
@@ -125,7 +125,7 @@ const QuizzEditorSidebar = () => {
   }
 
   return (
-    <aside className="bg-background z-10 m-3 flex w-72 shrink-0 flex-col gap-2 overflow-auto rounded-xl p-3 shadow-sm">
+    <aside className="z-10 m-3 flex w-72 shrink-0 flex-col gap-2 overflow-auto rounded-xl bg-background p-3 shadow-sm">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -159,7 +159,7 @@ const QuizzEditorSidebar = () => {
 
       <Button
         onClick={addQuestion}
-        className="bg text-md bg-accent text-accent-foreground mt-1 mb-8 flex items-center justify-center gap-1"
+        className="bg text-md mt-1 mb-8 flex items-center justify-center gap-1 bg-accent text-accent-foreground"
       >
         <Plus className="size-6" />
         {t("quizz:addQuestion")}

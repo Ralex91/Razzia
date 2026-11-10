@@ -1,3 +1,4 @@
+import fs from "fs"
 import { BASIC_QUIZZ } from "@razzia/e2e/utils/constants"
 import {
   addAnswer,
@@ -15,7 +16,6 @@ import {
 } from "@razzia/e2e/utils/editor"
 import { expect, test } from "@razzia/e2e/utils/fixtures"
 import { t } from "@razzia/e2e/utils/i18n"
-import fs from "fs"
 
 const PNG = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",

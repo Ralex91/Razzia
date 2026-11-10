@@ -6,7 +6,7 @@ type Props = PropsWithChildren<{
 
 const ConfigSection = ({ title, children }: Props) => (
   <div className="flex flex-col gap-3">
-    <h3 className="text-muted-foreground text-sm font-bold tracking-wide uppercase">
+    <h3 className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
       {title}
     </h3>
     {children}

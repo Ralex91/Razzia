@@ -1,8 +1,3 @@
-import type {
-  ClientToServerEvents,
-  ServerToClientEvents,
-} from "@razzia/common/types/game/socket"
-import { clearToken, ensureSession } from "@razzia/web/lib/session"
 import React, {
   createContext,
   useCallback,
@@ -13,6 +8,11 @@ import React, {
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { io, Socket } from "socket.io-client"
+import type {
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from "@razzia/common/types/game/socket"
+import { clearToken, ensureSession } from "@razzia/web/lib/session"
 
 type TypedSocket = Socket<ServerToClientEvents, ClientToServerEvents>
 

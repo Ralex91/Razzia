@@ -1,7 +1,7 @@
-import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 import { ListChecks, Users } from "lucide-react"
 import { motion } from "motion/react"
 import { useTranslation } from "react-i18next"
+import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 
 interface Props {
   data: CommonStatusDataMap["SUMMARY"]
@@ -56,7 +56,7 @@ const Summary = ({
               damping: 24,
               delay: 0.15 + index * 0.1,
             }}
-            className="bg-primary flex items-center gap-4 rounded-xl p-5 text-white"
+            className="flex items-center gap-4 rounded-xl bg-primary p-5 text-white"
           >
             <span className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-black/15">
               <Icon className="size-6" />

@@ -1,6 +1,11 @@
-import { EVENTS } from "@razzia/common/constants"
+import { Lock, Maximize2, X } from "lucide-react"
+import { QRCodeSVG } from "qrcode.react"
+import { AlertDialog } from "radix-ui"
+import { useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 import type { Player } from "@razzia/common/types/game"
 import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
+import { EVENTS } from "@razzia/common/constants"
 import PlayerConnectionStatus from "@razzia/web/features/game/components/PlayerConnectionStatus"
 import {
   useEvent,
@@ -8,11 +13,6 @@ import {
 } from "@razzia/web/features/game/contexts/socket-context"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useOnClickOutside } from "@razzia/web/hooks/useOnClickOutside"
-import { Lock, Maximize2, X } from "lucide-react"
-import { QRCodeSVG } from "qrcode.react"
-import { AlertDialog } from "radix-ui"
-import { useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   data: ManagerStatusDataMap["SHOW_ROOM"]
@@ -126,9 +126,9 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
                 <button
                   onClick={handleCloseQrCode}
                   aria-label={t("common:close")}
-                  className="hover:bg-muted absolute -top-3 -right-3 rounded-full bg-white p-1.5 shadow-md"
+                  className="absolute -top-3 -right-3 rounded-full bg-white p-1.5 shadow-md hover:bg-muted"
                 >
-                  <X className="text-foreground size-6" />
+                  <X className="size-6 text-foreground" />
                 </button>
                 <QRCodeSVG
                   className="size-56 md:size-70 lg:size-95"
@@ -148,7 +148,7 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
         {playerList.map((player) => (
           <div
             key={player.id}
-            className="bg-primary has-[[data-lost]]:bg-primary/50 relative rounded-xl px-4 py-3 font-bold text-white has-[[data-lost]]:text-white/60"
+            className="relative rounded-xl bg-primary px-4 py-3 font-bold text-white has-[[data-lost]]:bg-primary/50 has-[[data-lost]]:text-white/60"
             onClick={handleKick(player.id)}
           >
             <span className="cursor-pointer text-3xl drop-shadow-sm hover:line-through hover:decoration-3">

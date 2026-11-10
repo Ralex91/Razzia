@@ -1,4 +1,3 @@
-import Input from "@razzia/web/components/Input"
 import clsx from "clsx"
 import { Popover } from "radix-ui"
 import {
@@ -8,6 +7,7 @@ import {
   type ComponentProps,
   type KeyboardEvent,
 } from "react"
+import Input from "@razzia/web/components/Input"
 
 type Props = Omit<
   ComponentProps<typeof Input>,
@@ -119,7 +119,7 @@ const Combobox = ({
               e.preventDefault()
             }
           }}
-          className="border-accent bg-background z-50 max-h-60 w-(--radix-popover-trigger-width) overflow-y-auto rounded-lg border p-1 shadow-md"
+          className="z-50 max-h-60 w-(--radix-popover-trigger-width) overflow-y-auto rounded-lg border border-accent bg-background p-1 shadow-md"
         >
           {suggestions.map((option, index) => (
             <div
@@ -131,7 +131,7 @@ const Combobox = ({
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => handleSelect(option)}
               className={clsx(
-                "text-foreground cursor-pointer truncate rounded-sm px-3 py-1.5 text-sm",
+                "cursor-pointer truncate rounded-sm px-3 py-1.5 text-sm text-foreground",
                 index === activeIndex && "bg-muted",
               )}
             >

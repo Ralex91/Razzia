@@ -1,10 +1,10 @@
 import { expect, type Page } from "@playwright/test"
+import fs from "fs"
+import { join } from "path"
 import type { Question, Quizz } from "@razzia/common/types/game"
 import { CONFIG_PATH } from "@razzia/e2e/utils/constants"
 import { t } from "@razzia/e2e/utils/i18n"
 import { loginManager } from "@razzia/e2e/utils/manager"
-import fs from "fs"
-import { join } from "path"
 
 export const openQuizzTab = async (page: Page) => {
   await loginManager(page)

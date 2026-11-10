@@ -1,6 +1,6 @@
+import { describe, expect, it } from "vitest"
 import { createDefaultGameSettings } from "@razzia/common/constants"
 import { gameSettingsValidator } from "@razzia/common/validators/game"
-import { describe, expect, it } from "vitest"
 
 const autoAdvance = (responsesDelay: number) => ({
   autoAdvance: { enable: true, responsesDelay, leaderboardDelay: 5 },

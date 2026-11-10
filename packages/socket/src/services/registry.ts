@@ -1,5 +1,5 @@
-import type Game from "@razzia/socket/services/game"
 import dayjs from "dayjs"
+import type Game from "@razzia/socket/services/game"
 
 interface EmptyGame {
   since: number

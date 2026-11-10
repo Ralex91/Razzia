@@ -1,7 +1,7 @@
-import { QUIZZ_MODES } from "@razzia/common/constants"
-import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
 import { Users } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import { QUIZZ_MODES } from "@razzia/common/constants"
+import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
 
 const CorrectAnswersStat = () => {
   const { correctPct } = useResultModal()
@@ -9,7 +9,7 @@ const CorrectAnswersStat = () => {
 
   return (
     <div className="flex flex-1 items-center justify-between px-5 py-3">
-      <p className="text-muted-foreground text-xs">
+      <p className="text-xs text-muted-foreground">
         {t("manager:result.stats.correctAnswers")}
       </p>
       <div className="flex items-center gap-2">
@@ -38,7 +38,7 @@ const CorrectAnswersStat = () => {
             />
           </svg>
         </div>
-        <span className="text-foreground text-sm font-semibold">
+        <span className="text-sm font-semibold text-foreground">
           {correctPct}%
         </span>
       </div>
@@ -51,16 +51,16 @@ const ResultModalStats = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="divide-accent border-accent bg-muted/30 flex shrink-0 divide-x-2 border-b-2">
+    <div className="flex shrink-0 divide-x-2 divide-accent border-b-2 border-accent bg-muted/30">
       {result.gameMode !== QUIZZ_MODES.SURVEY && <CorrectAnswersStat />}
 
       <div className="flex flex-1 items-center justify-between px-5 py-3">
-        <p className="text-muted-foreground text-xs">
+        <p className="text-xs text-muted-foreground">
           {t("manager:result.stats.playersAnswered")}
         </p>
         <div className="flex items-center gap-2">
           <Users className="size-4 text-blue-500" />
-          <span className="text-foreground text-sm font-semibold">
+          <span className="text-sm font-semibold text-foreground">
             {answeredCount}/{totalPlayers}
           </span>
         </div>

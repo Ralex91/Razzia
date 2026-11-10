@@ -1,3 +1,7 @@
+import clsx from "clsx"
+import { useId, useState } from "react"
+import { useController } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { QUIZZ_MODES } from "@razzia/common/constants"
 import FieldError from "@razzia/web/components/forms/FieldError"
 import Input from "@razzia/web/components/Input"
@@ -8,10 +12,6 @@ import {
   useQuizzEditor,
   type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import clsx from "clsx"
-import { useId, useState } from "react"
-import { useController } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 
 const EstimationEditor = () => {
   const { currentQuestion, gameMode, questionPath } = useQuizzEditor()
@@ -79,7 +79,7 @@ const EstimationEditor = () => {
           solutionLabel={t("quizz:question.estimation.correctAnswer")}
           {...bounds}
           bubble={
-            <label className="bg-correct flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs text-white shadow-md">
+            <label className="flex flex-col items-center gap-1 rounded-xl bg-correct px-3 py-2 text-xs text-white shadow-md">
               {t("quizz:question.estimation.correctAnswer")}
               <Input
                 variant="sm"

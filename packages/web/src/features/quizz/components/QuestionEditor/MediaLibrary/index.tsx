@@ -1,13 +1,20 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import clsx from "clsx"
+import { X } from "lucide-react"
+import { Dialog } from "radix-ui"
+import { type DragEvent, useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import type { UploadedMedia } from "@razzia/common/types/game"
 import Loader from "@razzia/web/components/Loader"
 import MediaCard from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaCard"
 import MediaDropOverlay from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaDropOverlay"
-import MediaRow from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaRow"
 import MediaLibraryEmpty from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaLibraryEmpty"
 import MediaLibraryToolbar, {
   type MediaFilter,
   type MediaView,
 } from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaLibraryToolbar"
+import MediaRow from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary/MediaRow"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import { useUploadMedia } from "@razzia/web/features/quizz/hooks/useUploadMedia"
 import {
@@ -16,13 +23,6 @@ import {
   mediaListQuery,
 } from "@razzia/web/features/quizz/queries"
 import { ApiError } from "@razzia/web/lib/api"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import clsx from "clsx"
-import { X } from "lucide-react"
-import { Dialog } from "radix-ui"
-import { type DragEvent, useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   open: boolean
@@ -103,23 +103,23 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="data-[state=open]:animate-fade fixed inset-0 z-50 bg-black/40" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-fade" />
 
         <Dialog.Content
           aria-describedby={undefined}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className="bg-background data-[state=open]:animate-fade fixed top-1/2 left-1/2 z-50 flex h-[85dvh] w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-xl p-4 shadow-xl sm:p-6"
+          className="fixed top-1/2 left-1/2 z-50 flex h-[85dvh] w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-xl bg-background p-4 shadow-xl data-[state=open]:animate-fade sm:p-6"
         >
           <div className="flex items-center justify-between gap-4">
-            <Dialog.Title className="text-foreground text-lg font-semibold">
+            <Dialog.Title className="text-lg font-semibold text-foreground">
               {t("quizz:media.library")}
             </Dialog.Title>
 
             <Dialog.Close
               aria-label={t("common:close")}
-              className="hover:bg-muted text-muted-foreground hover:text-foreground rounded-md p-1"
+              className="rounded-md p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               <X className="size-5" />
             </Dialog.Close>
@@ -138,14 +138,14 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
           <div className="relative min-h-0 flex-1">
             {isPending && (
               <div className="flex h-full items-center justify-center">
-                <Loader className="text-primary size-12" />
+                <Loader className="size-12 text-primary" />
               </div>
             )}
 
             {isEmpty && <MediaLibraryEmpty />}
 
             {hasNoResults && (
-              <p className="text-muted-foreground py-12 text-center">
+              <p className="py-12 text-center text-muted-foreground">
                 {t("quizz:media.noResults")}
               </p>
             )}
@@ -163,13 +163,13 @@ const MediaLibrary = ({ open, onOpenChange }: Props) => {
                   <div
                     key={`pending-${index}`}
                     className={clsx(
-                      "bg-accent/60 flex animate-pulse items-center justify-center",
+                      "flex animate-pulse items-center justify-center bg-accent/60",
                       view === "grid"
                         ? "aspect-square rounded-xl"
                         : "h-15 rounded-lg",
                     )}
                   >
-                    <Loader className="text-primary size-8" />
+                    <Loader className="size-8 text-primary" />
                   </div>
                 ))}
 

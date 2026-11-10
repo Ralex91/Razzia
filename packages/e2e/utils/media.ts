@@ -1,6 +1,6 @@
-import { CONFIG_PATH } from "@razzia/e2e/utils/constants"
 import fs from "fs"
 import { join } from "path"
+import { CONFIG_PATH } from "@razzia/e2e/utils/constants"
 
 export const PNG = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",

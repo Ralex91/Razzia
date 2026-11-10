@@ -1,8 +1,8 @@
-import type { UploadedMedia } from "@razzia/common/types/game"
-import AlertDialog from "@razzia/web/components/AlertDialog"
 import clsx from "clsx"
 import { Trash2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import type { UploadedMedia } from "@razzia/common/types/game"
+import AlertDialog from "@razzia/web/components/AlertDialog"
 
 interface Props {
   media: UploadedMedia

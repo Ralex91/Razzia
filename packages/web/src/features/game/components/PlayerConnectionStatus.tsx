@@ -1,8 +1,8 @@
-import Tooltip from "@razzia/web/components/Tooltip"
 import clsx from "clsx"
 import { Clock } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import Tooltip from "@razzia/web/components/Tooltip"
 
 const CLOSED_DELAY_MS = 10_000
 const LOST_AFTER_MS = 60_000

@@ -1,3 +1,9 @@
+import { useMutation } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { StatusCodes } from "http-status-codes"
+import { type KeyboardEvent, useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
@@ -6,12 +12,6 @@ import { joinGame } from "@razzia/web/features/game/queries"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { createStatus } from "@razzia/web/features/game/utils/createStatus"
 import { ApiError } from "@razzia/web/lib/api"
-import { useMutation } from "@tanstack/react-query"
-import { useNavigate } from "@tanstack/react-router"
-import { StatusCodes } from "http-status-codes"
-import { type KeyboardEvent, useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 const Username = () => {
   const { inviteCode, generatedUsernames, updatePlayer } = usePlayerStore()

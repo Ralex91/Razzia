@@ -1,4 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
+import { StatusCodes } from "http-status-codes"
 import {
   checkGameValidator,
   createGameValidator,
@@ -13,7 +14,6 @@ import { getQuizz } from "@razzia/socket/services/config"
 import Game from "@razzia/socket/services/game"
 import { getIo } from "@razzia/socket/services/io"
 import Registry from "@razzia/socket/services/registry"
-import { StatusCodes } from "http-status-codes"
 
 const routes = apiFactory
   .createApp()

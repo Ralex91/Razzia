@@ -1,5 +1,5 @@
-import { EVENTS, NO_TIME_LIMIT } from "@razzia/common/constants"
 import type { Server } from "@razzia/common/types/game/socket"
+import { EVENTS, NO_TIME_LIMIT } from "@razzia/common/constants"
 import { SECOND_MS } from "@razzia/socket/utils/sleep"
 
 export class CooldownTimer {

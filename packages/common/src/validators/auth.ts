@@ -1,5 +1,5 @@
-import { SESSION_ROLES } from "@razzia/common/constants"
 import z from "zod"
+import { SESSION_ROLES } from "@razzia/common/constants"
 
 export const usernameValidator = z
   .string()

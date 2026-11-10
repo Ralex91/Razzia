@@ -1,7 +1,7 @@
-import type { ApiType } from "@razzia/socket/api"
-import { clearToken, ensureSession } from "@razzia/web/lib/session"
 import { hc } from "hono/client"
 import { StatusCodes } from "http-status-codes"
+import type { ApiType } from "@razzia/socket/api"
+import { clearToken, ensureSession } from "@razzia/web/lib/session"
 
 export class ApiError extends Error {
   readonly status: StatusCodes

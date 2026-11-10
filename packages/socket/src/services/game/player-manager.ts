@@ -1,6 +1,6 @@
-import { EVENTS } from "@razzia/common/constants"
 import type { Player, QuizzMode } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
+import { EVENTS } from "@razzia/common/constants"
 import { usernameValidator } from "@razzia/common/validators/auth"
 import { getClientId } from "@razzia/socket/utils/socket"
 

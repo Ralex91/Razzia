@@ -1,8 +1,8 @@
+import { createFileRoute, redirect } from "@tanstack/react-router"
 import { SESSION_ROLES } from "@razzia/common/constants"
 import Background from "@razzia/web/components/Background"
 import Configurations from "@razzia/web/features/manager/components/configurations"
 import { getRole } from "@razzia/web/lib/session"
-import { createFileRoute, redirect } from "@tanstack/react-router"
 
 const ManagerConfigPage = () => (
   <Background>

@@ -1,6 +1,6 @@
+import { useTranslation } from "react-i18next"
 import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   data: CommonStatusDataMap["FINISHED"]

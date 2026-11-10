@@ -1,8 +1,8 @@
-import { SCORING_MODES } from "@razzia/common/constants"
 import type {
   MultiQuestionOptions,
   ScoringMode,
 } from "@razzia/common/types/game"
+import { SCORING_MODES } from "@razzia/common/constants"
 
 export { default as AnswerComponent } from "@razzia/web/features/questions/multi/components/MultiAnswers"
 

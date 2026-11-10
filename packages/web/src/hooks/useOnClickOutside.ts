@@ -1,7 +1,12 @@
 import { type RefObject, useEffect } from "react"
 
 type EventType =
-  "mousedown" | "mouseup" | "touchstart" | "touchend" | "focusin" | "focusout"
+  | "mousedown"
+  | "mouseup"
+  | "touchstart"
+  | "touchend"
+  | "focusin"
+  | "focusout"
 
 interface Options {
   ref: RefObject<HTMLElement | null> | Array<RefObject<HTMLElement | null>>

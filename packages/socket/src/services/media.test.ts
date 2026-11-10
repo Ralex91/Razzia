@@ -1,12 +1,12 @@
+import fs from "fs"
+import { join } from "path"
+import { beforeEach, describe, expect, it } from "vitest"
 import { getPath } from "@razzia/socket/services/config"
 import {
   deleteMedia,
   listMedia,
   saveMedia,
 } from "@razzia/socket/services/media"
-import fs from "fs"
-import { join } from "path"
-import { beforeEach, describe, expect, it } from "vitest"
 
 const PNG_BYTES = Buffer.from(
   "89504e470d0a1a0a0000000d4948445200000001000000010806000000",

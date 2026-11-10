@@ -1,8 +1,8 @@
+import { type KeyboardEvent, useState } from "react"
+import { useTranslation } from "react-i18next"
 import Button from "@razzia/web/components/Button"
 import Card from "@razzia/web/components/Card"
 import Input from "@razzia/web/components/Input"
-import { type KeyboardEvent, useState } from "react"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   onSubmit: (_password: string) => void

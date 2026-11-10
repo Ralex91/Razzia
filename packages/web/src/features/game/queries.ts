@@ -1,5 +1,5 @@
-import { api, unwrap } from "@razzia/web/lib/api"
 import { queryOptions } from "@tanstack/react-query"
+import { api, unwrap } from "@razzia/web/lib/api"
 
 export const checkInviteCode = (inviteCode: string) =>
   unwrap(api.games.check.$post({ json: { inviteCode } }))

@@ -8,11 +8,11 @@ interface LabelProps {
 }
 
 const Label = ({ icon, label, unit, action }: LabelProps) => (
-  <div className="text-foreground flex items-center gap-2 text-sm font-semibold">
+  <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
     {icon}
     {label}
     {unit && (
-      <span className="text-muted-foreground text-xs font-normal">
+      <span className="text-xs font-normal text-muted-foreground">
         ({unit})
       </span>
     )}
@@ -21,7 +21,7 @@ const Label = ({ icon, label, unit, action }: LabelProps) => (
 )
 
 const Description = ({ children }: { children: string }) => (
-  <p className="text-muted-foreground text-xs">{children}</p>
+  <p className="text-xs text-muted-foreground">{children}</p>
 )
 
 const ConfigField = ({ children }: PropsWithChildren) => (

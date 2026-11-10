@@ -1,9 +1,9 @@
+import z from "zod"
 import { AUTO_ADVANCE_DELAY } from "@razzia/common/constants"
 import {
   inviteCodeValidator,
   usernameValidator,
 } from "@razzia/common/validators/auth"
-import z from "zod"
 
 export const createGameValidator = z.object({
   quizzId: z.string().min(1, "errors:quizz.notFound"),

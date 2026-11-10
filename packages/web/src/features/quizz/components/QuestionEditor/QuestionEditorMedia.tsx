@@ -1,17 +1,3 @@
-import { MAX_MEDIA_SIZE, MEDIA_TYPES } from "@razzia/common/constants"
-import type { QuestionMediaType } from "@razzia/common/types/game"
-import { questionMediaValidator } from "@razzia/common/validators/quizz"
-import Button from "@razzia/web/components/Button"
-import Card from "@razzia/web/components/Card"
-import Input from "@razzia/web/components/Input"
-import Loader from "@razzia/web/components/Loader"
-import QuestionMedia from "@razzia/web/components/QuestionMedia"
-import MediaLibrary from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary"
-import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import {
-  UPLOAD_ACCEPT,
-  useUploadMedia,
-} from "@razzia/web/features/quizz/hooks/useUploadMedia"
 import clsx from "clsx"
 import {
   ChevronDown,
@@ -26,6 +12,20 @@ import {
 import { type ChangeEvent, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+import type { QuestionMediaType } from "@razzia/common/types/game"
+import { MAX_MEDIA_SIZE, MEDIA_TYPES } from "@razzia/common/constants"
+import { questionMediaValidator } from "@razzia/common/validators/quizz"
+import Button from "@razzia/web/components/Button"
+import Card from "@razzia/web/components/Card"
+import Input from "@razzia/web/components/Input"
+import Loader from "@razzia/web/components/Loader"
+import QuestionMedia from "@razzia/web/components/QuestionMedia"
+import MediaLibrary from "@razzia/web/features/quizz/components/QuestionEditor/MediaLibrary"
+import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+import {
+  UPLOAD_ACCEPT,
+  useUploadMedia,
+} from "@razzia/web/features/quizz/hooks/useUploadMedia"
 
 const MEDIA_TYPE_BUTTONS = [
   { type: MEDIA_TYPES.IMAGE, icon: Image },
@@ -97,14 +97,14 @@ const QuestionEditorMedia = () => {
 
       {!questionMedia?.type && (
         <Card className="my-auto flex max-h-100 w-full max-w-xl flex-1 flex-col items-center justify-center gap-2">
-          <ImageOff className="stroke-accent-foreground size-16" />
-          <p className="text-accent-foreground text-center text-sm">
+          <ImageOff className="size-16 stroke-accent-foreground" />
+          <p className="text-center text-sm text-accent-foreground">
             {t("quizz:question.addMediaHint")}
           </p>
           <div className="flex flex-wrap justify-center gap-2">
             <label
               aria-disabled={isUploading}
-              className="bg-primary flex cursor-pointer items-center gap-1.5 rounded-lg p-2 text-lg font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95] aria-disabled:cursor-wait aria-disabled:opacity-50"
+              className="flex cursor-pointer items-center gap-1.5 rounded-lg bg-primary p-2 text-lg font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95] aria-disabled:cursor-wait aria-disabled:opacity-50"
             >
               {isUploading ? (
                 <Loader className="size-6 text-white" />
@@ -131,7 +131,7 @@ const QuestionEditorMedia = () => {
             </Button>
           </div>
 
-          <p className="text-accent-foreground text-center text-xs">
+          <p className="text-center text-xs text-accent-foreground">
             {t("quizz:media.uploadHint", {
               size: MAX_MEDIA_SIZE / 1024 / 1024,
             })}
@@ -140,7 +140,7 @@ const QuestionEditorMedia = () => {
           <button
             onClick={handleToggleUrl}
             aria-expanded={isUrlOpen}
-            className="text-accent-foreground hover:text-foreground mt-2 flex items-center gap-1 text-sm font-semibold"
+            className="mt-2 flex items-center gap-1 text-sm font-semibold text-accent-foreground hover:text-foreground"
           >
             <Link className="size-4" />
             {t("quizz:media.fromUrl")}
@@ -182,7 +182,7 @@ const QuestionEditorMedia = () => {
       {questionMedia?.type && (
         <div className="absolute bottom-4">
           <Button
-            className="bg-accent text-foreground hover:bg-accent rounded-sm px-4 py-2 font-semibold transition-colors"
+            className="rounded-sm bg-accent px-4 py-2 font-semibold text-foreground transition-colors hover:bg-accent"
             onClick={handleRemoveMedia}
           >
             {t("common:delete")}

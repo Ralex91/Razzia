@@ -1,19 +1,19 @@
+import type { ComponentType } from "react"
 import type {
   Question,
   QuestionOptions,
   QuestionType,
   ScoringMode,
 } from "@razzia/common/types/game"
-import * as estimation from "@razzia/web/features/questions/estimation"
-import * as multi from "@razzia/web/features/questions/multi"
-import * as single from "@razzia/web/features/questions/single"
 import type {
   AnswerComponentProps,
   PreparedComponentProps,
   ResponsesComponentProps,
   SolutionPickerProps,
 } from "@razzia/web/features/questions/types"
-import type { ComponentType } from "react"
+import * as estimation from "@razzia/web/features/questions/estimation"
+import * as multi from "@razzia/web/features/questions/multi"
+import * as single from "@razzia/web/features/questions/single"
 
 interface QuestionRegistryEntry {
   labelKey: string

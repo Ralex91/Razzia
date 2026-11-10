@@ -1,9 +1,9 @@
-import { SESSION_ROLES } from "@razzia/common/constants"
 import type {
   SessionClaims,
   SessionResponse,
   SessionRole,
 } from "@razzia/common/types/auth"
+import { SESSION_ROLES } from "@razzia/common/constants"
 
 const TOKEN_KEY = "token"
 

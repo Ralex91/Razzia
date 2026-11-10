@@ -1,8 +1,8 @@
-import { MEDIA_TYPES } from "@razzia/common/constants"
-import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
-import { SFX } from "@razzia/web/features/game/utils/constants"
 import { useEffect } from "react"
 import useSound from "use-sound"
+import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
+import { MEDIA_TYPES } from "@razzia/common/constants"
+import { SFX } from "@razzia/web/features/game/utils/constants"
 
 interface Props {
   data: CommonStatusDataMap["SHOW_QUESTION"]
@@ -31,7 +31,7 @@ const Question = ({ data: { question, media, cooldown } }: Props) => {
         )}
       </div>
       <div
-        className="bg-primary mb-20 h-4 self-start justify-self-end rounded-full"
+        className="mb-20 h-4 self-start justify-self-end rounded-full bg-primary"
         style={{ animation: `progressBar ${cooldown}s linear forwards` }}
       ></div>
     </section>

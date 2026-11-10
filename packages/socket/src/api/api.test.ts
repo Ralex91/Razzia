@@ -1,5 +1,16 @@
-import { QUIZZ_MODES, SESSION_ROLES } from "@razzia/common/constants"
+import fs from "fs"
+import { StatusCodes } from "http-status-codes"
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest"
 import type { SessionResponse } from "@razzia/common/types/auth"
+import { QUIZZ_MODES, SESSION_ROLES } from "@razzia/common/constants"
 import { app } from "@razzia/socket/app"
 import { mintToken, verifyJoinTicket } from "@razzia/socket/services/auth"
 import {
@@ -12,17 +23,6 @@ import { setIo } from "@razzia/socket/services/io"
 import Registry from "@razzia/socket/services/registry"
 import { createFakeIo } from "@razzia/socket/test/fake-io"
 import { createQuestion, createQuizz } from "@razzia/socket/test/fixtures"
-import fs from "fs"
-import { StatusCodes } from "http-status-codes"
-import {
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vitest"
 
 interface RequestOptions {
   method?: string
