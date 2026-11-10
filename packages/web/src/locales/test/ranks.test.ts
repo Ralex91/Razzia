@@ -3,10 +3,10 @@ import i18next, { type Resource } from "i18next"
 import { join } from "path"
 import { beforeAll, describe, expect, it } from "vitest"
 
-const LOCALES_DIR = import.meta.dirname
+const LOCALES_DIR = join(import.meta.dirname, "..")
 const languages = fs
   .readdirSync(LOCALES_DIR)
-  .filter((name) => !name.includes("."))
+  .filter((name) => !name.includes(".") && name !== "test")
 
 const resources = Object.fromEntries(
   languages.map((lang) => [
