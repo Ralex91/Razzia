@@ -8,7 +8,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@hono/node-server": "^2.1.5",
+    "@hono/node-server": "^2.1.6",
     "@hono/zod-validator": "^0.9.1",
     "@razzia/common": "workspace:*",
     "dayjs": "^1.11.23",
