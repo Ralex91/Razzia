@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import { CircleQuestionMark, Image, Video } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import useSound from "use-sound"
 import type { QuestionMediaType } from "@razzia/common/types/game"
@@ -54,12 +54,6 @@ const Answers = ({
     volume: 0.1,
   })
 
-  const [playMusic, { stop: stopMusic }] = useSound(SFX.ANSWERS.MUSIC, {
-    volume: 0.2,
-    interrupt: true,
-    loop: true,
-  })
-
   const handleSubmit = (answerKeys: number[]) => {
     if (!player || !gameId) {
       return
@@ -73,24 +67,6 @@ const Answers = ({
     })
     sfxPop()
   }
-
-  useEffect(() => {
-    const disabledMusicMedia: QuestionMediaType[] = [
-      MEDIA_TYPES.AUDIO,
-      MEDIA_TYPES.VIDEO,
-    ]
-
-    if (disabledMusicMedia.includes(media?.type)) {
-      return
-    }
-
-    playMusic()
-
-    return () => {
-      stopMusic()
-    }
-    // oxlint-disable-next-line
-  }, [playMusic])
 
   useEvent(EVENTS.GAME.COOLDOWN, (sec) => {
     setCooldown(sec)
