@@ -1,0 +1,105 @@
+{
+  "addAnswerPlaceholder": "Adicionar uma resposta...",
+  "addQuestion": "Adicionar pergunta",
+  "answersCountSuffix": " respostas",
+  "deleteQuestion": "Excluir pergunta",
+  "gameMode": {
+    "quiz": "Quiz",
+    "survey": "Enquete"
+  },
+  "noQuestionYet": "Nenhuma pergunta ainda",
+  "question": {
+    "addMediaHint": "Adicione uma imagem, um vídeo ou um áudio à pergunta",
+    "config": {
+      "answerTime": "Tempo de resposta",
+      "answerTimeHint": "Tempo que os jogadores têm para responder",
+      "noTimeLimit": "Sem limite de tempo",
+      "noTimeLimitHint": "Os pontos são atribuídos pela ordem das respostas. Não há limite de tempo para responder.",
+      "questionDisplay": "Exibição da pergunta",
+      "questionDisplayHint": "Tempo antes de as respostas aparecerem",
+      "timings": "Tempos",
+      "answerMode": "Modo de resposta",
+      "category": "Categoria",
+      "categoryPlaceholder": "Ex.: Geografia",
+      "categoryHint": "Perguntas consecutivas da mesma categoria formam uma rodada. A classificação só aparece quando a categoria muda.",
+      "scoring": "Pontuação",
+      "maxPoints": "Pontuação máxima",
+      "maxPointsHint": "Máximo de pontos por uma resposta correta",
+      "penalty": "Penalidade",
+      "penaltyHint": "Pontos descontados por uma resposta incorreta (o total não pode ficar abaixo de 0)",
+      "scoringMode": "Modo de pontuação",
+      "scoringMode.strict": "Rigoroso",
+      "scoringMode.balanced": "Equilibrado",
+      "scoringMode.lenient": "Tolerante",
+      "scoringModeHint.strict": "Pontuação total somente ao selecionar todas as respostas corretas e nenhuma incorreta",
+      "scoringModeHint.balanced": "Pontuação parcial: seleções corretas menos as incorretas",
+      "scoringModeHint.lenient": "Pontos por resposta correta, sem penalidade pelas incorretas",
+      "estimation": {
+        "title": "Estimativa",
+        "inputMode": "Tipo de entrada",
+        "inputModes": {
+          "slider": "Controle deslizante",
+          "input": "Entrada livre"
+        },
+        "inputModeHint": {
+          "slider": "Os jogadores selecionam um valor entre os limites com um controle deslizante",
+          "input": "Os jogadores digitam um número entre os limites"
+        },
+        "min": "Mínimo",
+        "max": "Máximo",
+        "step": "Incremento",
+        "stepHint": "Precisão do controle deslizante e da resposta esperada",
+        "margin": "Margem",
+        "marginHint": "Respostas dentro desta distância da resposta correta recebem de 100% (valor exato) a 50% dos pontos. Respostas fora da margem não pontuam."
+      }
+    },
+    "deleteQuestion": "Excluir pergunta",
+    "deleteQuestionConfirm": "Tem certeza de que deseja excluir esta pergunta?",
+    "media": {
+      "audio": "Áudio",
+      "image": "Imagem",
+      "video": "Vídeo"
+    },
+    "mediaUrlPlaceholder": "Digite a URL...",
+    "placeholder": "Digite sua pergunta...",
+    "note": "Explicação",
+    "notePlaceholder": "Adicione uma explicação para mostrar quando a resposta for revelada",
+    "estimation": {
+      "correctAnswer": "Resposta correta"
+    }
+  },
+  "questionHasErrors": "Esta pergunta tem erros",
+  "questionType": {
+    "single": "Escolha única",
+    "multi": "Múltipla escolha",
+    "estimation": "Estimativa"
+  },
+  "quizzSaved": "Quiz salvo com sucesso",
+  "quizzUpdated": "Quiz atualizado com sucesso",
+  "titleQuizzPlaceholder": "Título do quiz...",
+  "media": {
+    "delete": "Excluir mídia",
+    "deleteConfirm": "Excluir \"{{name}}\"? A mídia será removida deste quiz, e outros quizzes que a utilizam não poderão mais exibi-la.",
+    "library": "Biblioteca de mídia",
+    "libraryEmpty": "Sua biblioteca está vazia",
+    "upload": "Enviar arquivo",
+    "uploadHint": "Imagens, áudios ou vídeos de até {{size}} MB",
+    "search": "Buscar mídia...",
+    "filter": {
+      "all": "Todos"
+    },
+    "use": "Usar",
+    "dropHint": "Solte suas imagens, áudios e vídeos aqui ou use o botão Enviar arquivo",
+    "dropHere": "Solte para enviar",
+    "noResults": "Nenhuma mídia corresponde à sua busca",
+    "fromUrl": "Adicionar por URL",
+    "view": {
+      "grid": "Visualização em grade",
+      "list": "Visualização em lista"
+    },
+    "filterByType": "Filtrar por tipo"
+  },
+  "addAnswer": "Adicionar resposta",
+  "removeAnswer": "Remover resposta",
+  "markCorrect": "Marcar {{label}} como correta"
+}

@@ -1,0 +1,68 @@
+{
+  "answerNoted": "Resposta registrada!",
+  "confirm": "Confirmar",
+  "correct": "Muito bem!",
+  "gamePinLabel": "PIN da partida:",
+  "generatedUsernameNotice": "Você receberá um apelido aleatório ao entrar.",
+  "hud": {
+    "answers": "Respostas",
+    "time": "Tempo"
+  },
+  "media": {
+    "showImage": "Mostrar imagem",
+    "showVideo": "Mostrar vídeo"
+  },
+  "question": {
+    "show": "Mostrar a pergunta"
+  },
+  "joinInstruction": "Entre na partida em",
+  "leaderboard": "Classificação",
+  "lock": {
+    "lock": "Bloquear a sala",
+    "unlock": "Desbloquear a sala"
+  },
+  "pinLabel": "Código PIN",
+  "playerConnectionLost": "Conexão perdida",
+  "playerReconnecting": "Aguardando reconexão",
+  "playersJoined": "Jogadores na sala",
+  "questionPrefix": "Pergunta nº ",
+  "rank_ordinal_other": "{{count}}º lugar",
+  "reconnect": "Reconectar",
+  "reconnectTitle": "Você estava em uma partida",
+  "resultBehind": ", atrás de ",
+  "resultTop": "Você terminou em ",
+  "settings": {
+    "autoAdvance": {
+      "hint": "Avança automaticamente após a exibição das respostas e da classificação.",
+      "label": "Avançar automaticamente",
+      "leaderboardDelay": "Classificação",
+      "responsesDelay": "Resultado"
+    },
+    "generatedUsernames": {
+      "label": "Gerar apelidos",
+      "hint": "Os jogadores escolhem entre nomes gerados em vez de digitar o próprio nome."
+    },
+    "answersOnly": {
+      "label": "Somente respostas",
+      "hint": "Os jogadores veem apenas os botões de resposta, com um botão para ler a pergunta novamente."
+    },
+    "title": "Configurações da partida"
+  },
+  "startGame": "Iniciar",
+  "summary": {
+    "title": "Enquete concluída",
+    "participants": "Participantes",
+    "questions": "Perguntas"
+  },
+  "usernamePlaceholder": "Seu nome de usuário",
+  "waitingForAnswers": "Aguardando as respostas dos jogadores",
+  "waitingForPlayers": "Aguardando jogadores",
+  "wrong": "Não foi dessa vez",
+  "estimation": {
+    "yourAnswer": "Sua resposta",
+    "rangeHint": "Entre {{min}} e {{max}}"
+  },
+  "showQrCode": "Mostrar código QR",
+  "streak": "Sequência de acertos",
+  "pinDigit": "Dígito {{position}} do PIN"
+}
