@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "正解は最小値と最大値の間である必要があります",
     "estimationStepInvalid": "刻み幅は 0 より大きくする必要があります",
     "estimationMarginNegative": "許容範囲は負の値にできません",
-    "estimationInvalidOptions": "数値推定の設定がないか、無効です"
+    "estimationInvalidOptions": "数値推定の設定がないか、無効です",
+    "invalidField": "「{{field}}」の値が無効です",
+    "invalidOptions": "この質問の設定が無効です。回答モードを変更するとリセットされます",
+    "invalidQuestion": "この質問に無効な値が含まれています"
   },
   "result": {
     "notFound": "結果が見つかりません"

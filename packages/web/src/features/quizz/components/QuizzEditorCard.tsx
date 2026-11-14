@@ -1,3 +1,4 @@
+import type { FieldErrors } from "react-hook-form"
 import clsx from "clsx"
 import { CircleAlert, Music, Trash2, Video } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -5,6 +6,8 @@ import { twMerge } from "tailwind-merge"
 import type { Question, QuestionMedia } from "@razzia/common/types/game"
 import { MEDIA_TYPES, QUESTION_TYPES } from "@razzia/common/constants"
 import AlertDialog from "@razzia/web/components/AlertDialog"
+import Tooltip from "@razzia/web/components/Tooltip"
+import { getErrorMessages } from "@razzia/web/features/quizz/utils/errors"
 
 const SlideMedia = ({ media }: { media?: QuestionMedia }) => {
   if (media?.type === MEDIA_TYPES.IMAGE) {
@@ -28,7 +31,7 @@ interface Props {
   question: Question
   index: number
   isActive: boolean
-  isInvalid: boolean
+  errors?: FieldErrors<Question>
   canDelete: boolean
   onClick: () => void
   onDelete: () => void
@@ -38,12 +41,13 @@ const QuizzEditorCard = ({
   question,
   index,
   isActive,
-  isInvalid,
+  errors,
   canDelete,
   onClick,
   onDelete,
 }: Props) => {
   const { t } = useTranslation()
+  const errorMessages = getErrorMessages(errors, t)
 
   return (
     <div
@@ -53,21 +57,37 @@ const QuizzEditorCard = ({
           "group relative flex h-36 cursor-pointer flex-col justify-between gap-1 rounded-lg border-2 border-accent bg-background px-6 py-2",
           {
             "border-primary": isActive,
-            "border-red-500": isInvalid,
+            "border-red-500": errorMessages.length > 0,
           },
         ),
       )}
     >
-      <div className="absolute top-2 left-2 flex items-center gap-1">
+      <div className="absolute top-2 left-2 flex flex-col items-center gap-1">
         <span className="text-xs font-semibold text-muted-foreground">
           {index + 1}
         </span>
 
-        {isInvalid && (
-          <CircleAlert
-            aria-label={t("quizz:questionHasErrors")}
-            className="size-3.5 text-red-500"
-          />
+        {errorMessages.length > 0 && (
+          <Tooltip
+            side="right"
+            className="bg-red-600"
+            arrowClassName="fill-red-600"
+            content={
+              <ul className="flex max-w-64 flex-col gap-1">
+                {errorMessages.map((message) => (
+                  <li key={message}>{message}</li>
+                ))}
+              </ul>
+            }
+          >
+            <span
+              role="img"
+              aria-label={t("quizz:questionHasErrors")}
+              className="flex"
+            >
+              <CircleAlert className="size-3.5 text-red-500" />
+            </span>
+          </Tooltip>
         )}
       </div>
       <p className="truncate px-3 text-center text-xs font-semibold text-foreground">

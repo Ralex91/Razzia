@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "Poprawna odpowiedź musi mieścić się między minimum a maksimum",
     "estimationStepInvalid": "Krok musi być większy od 0",
     "estimationMarginNegative": "Margines nie może być ujemny",
-    "estimationInvalidOptions": "Brak ustawień szacowania lub są one nieprawidłowe"
+    "estimationInvalidOptions": "Brak ustawień szacowania lub są one nieprawidłowe",
+    "invalidField": "Nieprawidłowa wartość pola „{{field}}”",
+    "invalidOptions": "Ustawienia tego pytania są nieprawidłowe. Zmień tryb odpowiedzi, aby je zresetować",
+    "invalidQuestion": "To pytanie zawiera nieprawidłową wartość"
   },
   "result": {
     "notFound": "Nie znaleziono wyniku"

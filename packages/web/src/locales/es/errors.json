@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "La respuesta correcta debe estar entre el mínimo y el máximo",
     "estimationStepInvalid": "El paso debe ser mayor que 0",
     "estimationMarginNegative": "El margen no puede ser negativo",
-    "estimationInvalidOptions": "La configuración de la estimación falta o no es válida"
+    "estimationInvalidOptions": "La configuración de la estimación falta o no es válida",
+    "invalidField": "Valor no válido para «{{field}}»",
+    "invalidOptions": "La configuración de esta pregunta no es válida. Cambia el modo de respuesta para restablecerla",
+    "invalidQuestion": "Esta pregunta contiene un valor no válido"
   },
   "result": {
     "notFound": "Resultado no encontrado"

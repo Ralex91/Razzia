@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "The correct answer must be between the minimum and the maximum",
     "estimationStepInvalid": "The step must be greater than 0",
     "estimationMarginNegative": "The margin cannot be negative",
-    "estimationInvalidOptions": "Estimation settings are missing or invalid"
+    "estimationInvalidOptions": "Estimation settings are missing or invalid",
+    "invalidField": "Invalid value for \"{{field}}\"",
+    "invalidOptions": "The settings of this question are invalid. Change the answer mode to reset them",
+    "invalidQuestion": "This question contains an invalid value"
   },
   "result": {
     "notFound": "Result not found"
