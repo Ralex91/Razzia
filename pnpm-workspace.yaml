@@ -3,7 +3,7 @@ packages:
 
 catalog:
   "@types/node": "^26.6.6"
-  hono: "^4.13.17"
+  hono: "^4.13.18"
   http-status-codes: "^2.3.0"
   i18next: "^26.7.2"
   socket.io: "^4.8.4"
