@@ -19,7 +19,7 @@ const readNamespaces = (lang: string) =>
 const resources: Resource = Object.fromEntries(
   fs
     .readdirSync(LOCALES_DIR, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
+    .filter((entry) => entry.isDirectory() && entry.name !== "test")
     .map((entry) => [entry.name, readNamespaces(entry.name)]),
 )
 
