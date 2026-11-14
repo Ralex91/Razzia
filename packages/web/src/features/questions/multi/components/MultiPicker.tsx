@@ -1,9 +1,9 @@
-import { ANSWERS_LABELS } from "@razzia/web/features/game/utils/constants"
-import type { SolutionPickerProps } from "@razzia/web/features/questions/types"
-import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
 import { Check } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import type { SolutionPickerProps } from "@razzia/web/features/questions/types"
+import { ANSWERS_LABELS } from "@razzia/web/features/game/utils/constants"
+import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 
 const MultiSolutionPicker = ({ index, isSelected }: SolutionPickerProps) => {
   const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
@@ -30,7 +30,7 @@ const MultiSolutionPicker = ({ index, isSelected }: SolutionPickerProps) => {
       aria-pressed={isSelected}
       className={clsx(
         "flex size-6 shrink-0 items-center justify-center rounded-md transition-colors",
-        isSelected ? "text-correct bg-white" : "bg-white/20",
+        isSelected ? "bg-white text-correct" : "bg-white/20",
       )}
     >
       {isSelected && <Check className="size-4 stroke-5" />}

@@ -23,7 +23,7 @@ const FieldError = ({ id, errors, pill = false, className }: Props) => {
       id={id}
       className={twMerge(
         "text-sm font-semibold text-red-600",
-        pill && "bg-background w-fit rounded-lg px-2 py-1",
+        pill && "w-fit rounded-lg bg-background px-2 py-1",
         className,
       )}
     >

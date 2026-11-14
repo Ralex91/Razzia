@@ -1,11 +1,14 @@
-import {
-  ACCEPTED_MEDIA_TYPES,
-  MEDIA_URL_PREFIX,
-} from "@razzia/common/constants"
+import { fileTypeFromBuffer } from "file-type"
+import fs from "fs"
+import { extname, join } from "path"
 import type {
   UploadedMedia,
   UploadedMediaType,
 } from "@razzia/common/types/game"
+import {
+  ACCEPTED_MEDIA_TYPES,
+  MEDIA_URL_PREFIX,
+} from "@razzia/common/constants"
 import { getPath } from "@razzia/socket/services/config"
 import {
   invalidInput,
@@ -13,9 +16,6 @@ import {
   unsupportedMediaType,
 } from "@razzia/socket/services/errors"
 import { normalizeFilename } from "@razzia/socket/utils/file"
-import { fileTypeFromBuffer } from "file-type"
-import fs from "fs"
-import { extname, join } from "path"
 
 const MAX_SLUG_LENGTH = 32
 

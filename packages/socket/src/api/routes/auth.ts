@@ -1,6 +1,9 @@
 import { zValidator } from "@hono/zod-validator"
-import { SESSION_ROLES } from "@razzia/common/constants"
+import { Hono, type Context } from "hono"
+import { JwtTokenExpired } from "hono/utils/jwt/types"
+import { StatusCodes } from "http-status-codes"
 import type { SessionResponse } from "@razzia/common/types/auth"
+import { SESSION_ROLES } from "@razzia/common/constants"
 import {
   managerLoginValidator,
   sessionRequestValidator,
@@ -14,9 +17,6 @@ import {
   verifyIgnoringExpiry,
   verifyToken,
 } from "@razzia/socket/services/auth"
-import { Hono, type Context } from "hono"
-import { JwtTokenExpired } from "hono/utils/jwt/types"
-import { StatusCodes } from "http-status-codes"
 
 const readRequestToken = async (c: Context): Promise<string | undefined> => {
   try {

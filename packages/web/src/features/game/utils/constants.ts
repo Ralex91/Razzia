@@ -1,3 +1,4 @@
+import { STATUS } from "@razzia/common/types/game/status"
 import Answers from "@razzia/web/features/game/components/states/Answers"
 import Leaderboard from "@razzia/web/features/game/components/states/Leaderboard"
 import PlayerFinished from "@razzia/web/features/game/components/states/PlayerFinished"
@@ -10,8 +11,6 @@ import Room from "@razzia/web/features/game/components/states/Room"
 import Start from "@razzia/web/features/game/components/states/Start"
 import Summary from "@razzia/web/features/game/components/states/Summary"
 import Wait from "@razzia/web/features/game/components/states/Wait"
-
-import { STATUS } from "@razzia/common/types/game/status"
 
 export const ANSWERS_COLORS = [
   "bg-[var(--color-answer-1)] text-white",

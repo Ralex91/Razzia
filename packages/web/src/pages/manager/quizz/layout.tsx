@@ -1,6 +1,6 @@
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 import { SESSION_ROLES } from "@razzia/common/constants"
 import { getRole } from "@razzia/web/lib/session"
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/manager/quizz")({
   beforeLoad: () => {

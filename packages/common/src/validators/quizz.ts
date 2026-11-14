@@ -1,3 +1,4 @@
+import { z } from "zod"
 import {
   MAX_MEDIA_SIZE,
   MEDIA_TYPES,
@@ -9,7 +10,6 @@ import {
 import { QUESTION_REFINEMENTS } from "@razzia/common/validators/questions"
 import { multiOptionsValidator } from "@razzia/common/validators/questions/choice"
 import { estimationOptionsValidator } from "@razzia/common/validators/questions/estimation"
-import { z } from "zod"
 
 export const questionMediaValidator = z.object({
   type: z

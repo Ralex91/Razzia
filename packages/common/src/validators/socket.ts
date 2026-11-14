@@ -1,5 +1,5 @@
-import { EVENTS, MAX_ANSWERS } from "@razzia/common/constants"
 import { z } from "zod"
+import { EVENTS, MAX_ANSWERS } from "@razzia/common/constants"
 
 const gameMessageValidator = z.object({ gameId: z.string().min(1) })
 

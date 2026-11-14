@@ -1,7 +1,3 @@
-import { ACCEPTED_MEDIA_TYPES, MAX_MEDIA_SIZE } from "@razzia/common/constants"
-import type { UploadedMedia } from "@razzia/common/types/game"
-import { mediaKeys, uploadMedia } from "@razzia/web/features/quizz/queries"
-import { ApiError } from "@razzia/web/lib/api"
 import {
   useIsMutating,
   useMutation,
@@ -9,6 +5,10 @@ import {
 } from "@tanstack/react-query"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+import type { UploadedMedia } from "@razzia/common/types/game"
+import { ACCEPTED_MEDIA_TYPES, MAX_MEDIA_SIZE } from "@razzia/common/constants"
+import { mediaKeys, uploadMedia } from "@razzia/web/features/quizz/queries"
+import { ApiError } from "@razzia/web/lib/api"
 
 export const UPLOAD_ACCEPT = Object.entries(ACCEPTED_MEDIA_TYPES)
   .flatMap(([mime, { ext }]) => [mime, ext])

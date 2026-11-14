@@ -1,5 +1,5 @@
-import clsx from "clsx"
 import type { LucideIcon } from "lucide-react"
+import clsx from "clsx"
 import { ToggleGroup as RadixToggleGroup } from "radix-ui"
 import { twMerge } from "tailwind-merge"
 
@@ -34,7 +34,7 @@ const ToggleGroup = <T extends string>({
     }}
     className={twMerge(
       clsx(
-        "bg-accent flex h-10 items-center gap-0.5 rounded-lg p-0.5",
+        "flex h-10 items-center gap-0.5 rounded-lg bg-accent p-0.5",
         className,
       ),
     )}
@@ -45,7 +45,7 @@ const ToggleGroup = <T extends string>({
         value={itemValue}
         aria-label={iconOnly ? label : undefined}
         className={clsx(
-          "text-muted-foreground data-[state=on]:bg-background data-[state=on]:text-foreground focus-visible:outline-primary flex h-full cursor-pointer items-center gap-1.5 rounded-md text-sm font-semibold focus-visible:outline-2",
+          "flex h-full cursor-pointer items-center gap-1.5 rounded-md text-sm font-semibold text-muted-foreground focus-visible:outline-2 focus-visible:outline-primary data-[state=on]:bg-background data-[state=on]:text-foreground",
           iconOnly ? "px-2.5" : "px-3",
         )}
       >

@@ -1,3 +1,7 @@
+import clsx from "clsx"
+import { Minus, Plus } from "lucide-react"
+import { Controller, useFormContext } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { MAX_ANSWERS, MIN_ANSWERS, QUIZZ_MODES } from "@razzia/common/constants"
 import FieldError from "@razzia/web/components/forms/FieldError"
 import {
@@ -9,10 +13,6 @@ import {
   useQuizzEditor,
   type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import clsx from "clsx"
-import { Minus, Plus } from "lucide-react"
-import { Controller, useFormContext } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 
 const QuestionEditorAnswers = () => {
   const {
@@ -56,7 +56,7 @@ const QuestionEditorAnswers = () => {
   return (
     <div className="z-10 flex flex-col gap-3">
       <div className="flex items-center justify-between px-1">
-        <div className="text-muted-foreground bg-background rounded-lg px-2 py-1 text-sm font-semibold">
+        <div className="rounded-lg bg-background px-2 py-1 text-sm font-semibold text-muted-foreground">
           {currentQuestion.answers.length}
           {t("quizz:answersCountSuffix")}
         </div>
@@ -65,7 +65,7 @@ const QuestionEditorAnswers = () => {
             onClick={removeAnswer}
             aria-label={t("quizz:removeAnswer")}
             disabled={currentQuestion.answers.length <= MIN_ANSWERS}
-            className="bg-accent text-accent-foreground hover:bg-accent flex size-7 items-center justify-center rounded-lg disabled:opacity-40"
+            className="flex size-7 items-center justify-center rounded-lg bg-accent text-accent-foreground hover:bg-accent disabled:opacity-40"
           >
             <Minus className="size-4" />
           </button>
@@ -73,7 +73,7 @@ const QuestionEditorAnswers = () => {
             onClick={addAnswer}
             aria-label={t("quizz:addAnswer")}
             disabled={currentQuestion.answers.length >= MAX_ANSWERS}
-            className="bg-accent text-accent-foreground hover:bg-accent flex size-7 items-center justify-center rounded-lg disabled:opacity-40"
+            className="flex size-7 items-center justify-center rounded-lg bg-accent text-accent-foreground hover:bg-accent disabled:opacity-40"
           >
             <Plus className="size-4" />
           </button>

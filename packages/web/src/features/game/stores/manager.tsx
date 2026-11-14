@@ -1,8 +1,8 @@
-import { createDefaultGameSettings } from "@razzia/common/constants"
+import { create } from "zustand"
 import type { GameSettings, Player } from "@razzia/common/types/game"
 import type { StatusDataMap } from "@razzia/common/types/game/status"
 import type { Status } from "@razzia/web/features/game/utils/createStatus"
-import { create } from "zustand"
+import { createDefaultGameSettings } from "@razzia/common/constants"
 
 interface ManagerState<T> {
   gameId: string | null

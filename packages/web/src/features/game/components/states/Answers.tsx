@@ -1,6 +1,11 @@
-import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
+import clsx from "clsx"
+import { CircleQuestionMark, Image, Video } from "lucide-react"
+import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
+import useSound from "use-sound"
 import type { QuestionMediaType } from "@razzia/common/types/game"
 import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
+import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
 import QuestionMedia from "@razzia/web/components/QuestionMedia"
 import QuestionDialog from "@razzia/web/features/game/components/QuestionDialog"
 import {
@@ -11,11 +16,6 @@ import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { SFX } from "@razzia/web/features/game/utils/constants"
 import { QUESTION_REGISTRY } from "@razzia/web/features/questions"
 import useScreenSize from "@razzia/web/hooks/useScreenSize"
-import clsx from "clsx"
-import { CircleQuestionMark, Image, Video } from "lucide-react"
-import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
-import useSound from "use-sound"
 
 // Tailwind sm breakpoint
 const MOBILE_BREAKPOINT = 640
@@ -113,7 +113,7 @@ const Answers = ({
             question={question}
             media={isPopupMedia ? media : undefined}
             label={t("game:question.show")}
-            className="hover:bg-accent absolute top-4 right-4 flex size-11 items-center justify-center rounded-md bg-white text-black"
+            className="absolute top-4 right-4 flex size-11 items-center justify-center rounded-md bg-white text-black hover:bg-accent"
             showQuestion
           >
             <CircleQuestionMark className="size-6" />
@@ -135,7 +135,7 @@ const Answers = ({
             <QuestionDialog
               question={question}
               media={media}
-              className="hover:bg-accent flex items-center gap-2 rounded-lg bg-white px-4 py-2 font-bold text-black drop-shadow-md"
+              className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 font-bold text-black drop-shadow-md hover:bg-accent"
             >
               <MediaIcon className="size-5" />
               {t(

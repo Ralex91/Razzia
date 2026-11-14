@@ -1,7 +1,7 @@
-import type { GameResult } from "@razzia/common/types/game"
-import { CONFIG_PATH } from "@razzia/e2e/utils/constants"
 import fs from "fs"
 import { join } from "path"
+import type { GameResult } from "@razzia/common/types/game"
+import { CONFIG_PATH } from "@razzia/e2e/utils/constants"
 
 export const seedResult = (result: Omit<GameResult, "id" | "date">) => {
   const dir = join(CONFIG_PATH, "results")

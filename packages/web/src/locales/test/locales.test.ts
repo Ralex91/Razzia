@@ -1,10 +1,10 @@
-import { EVENTS } from "@razzia/common/constants"
 import fs from "fs"
 import { extname, join } from "path"
 import { describe, expect, it } from "vitest"
+import { EVENTS } from "@razzia/common/constants"
 
-const LOCALES_DIR = import.meta.dirname
-const PACKAGES_DIR = join(import.meta.dirname, "../../..")
+const LOCALES_DIR = join(import.meta.dirname, "..")
+const PACKAGES_DIR = join(import.meta.dirname, "../../../..")
 const REFERENCE = "en"
 const KEY_PATTERN = /["'`]((?:common|errors|game|manager|quizz):[\w.-]+)["'`]/gu
 
@@ -85,7 +85,10 @@ const referenceKeys = baseKeys(REFERENCE)
 
 const languages = fs
   .readdirSync(LOCALES_DIR, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory() && entry.name !== REFERENCE)
+  .filter(
+    (entry) =>
+      entry.isDirectory() && entry.name !== REFERENCE && entry.name !== "test",
+  )
   .map((entry) => entry.name)
 
 describe("translations", () => {

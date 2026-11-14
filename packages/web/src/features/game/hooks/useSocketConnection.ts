@@ -1,5 +1,5 @@
-import { useSocket } from "@razzia/web/features/game/contexts/socket-context"
 import { useEffect } from "react"
+import { useSocket } from "@razzia/web/features/game/contexts/socket-context"
 
 const DISCONNECT_DELAY_MS = 1000
 

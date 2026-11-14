@@ -13,8 +13,8 @@ const SettingRow = ({ label, hint, children }: Props) => {
   return (
     <div className="mt-6 flex items-start justify-between gap-4">
       <div>
-        <p className="text-foreground font-medium">{t(label)}</p>
-        {hint && <p className="text-muted-foreground text-sm">{t(hint)}</p>}
+        <p className="font-medium text-foreground">{t(label)}</p>
+        {hint && <p className="text-sm text-muted-foreground">{t(hint)}</p>}
       </div>
 
       <div className="mt-1 shrink-0">{children}</div>

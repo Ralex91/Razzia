@@ -1,8 +1,8 @@
+import { Controller, useFormContext } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import type { GameSettings } from "@razzia/common/types/game"
 import Switch from "@razzia/web/components/Switch"
 import SettingRow from "@razzia/web/features/game/components/GameSettingsModal/SettingRow"
-import { Controller, useFormContext } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 
 const GeneratedUsernames = () => {
   const { control } = useFormContext<GameSettings>()

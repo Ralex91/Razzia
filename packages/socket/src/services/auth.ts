@@ -1,17 +1,17 @@
-import { SESSION_ROLES } from "@razzia/common/constants"
+import { sign, verify } from "hono/jwt"
+import { v7 as uuid } from "uuid"
 import type {
   JoinTicketClaims,
   SessionClaims,
   SessionResponse,
   SessionRole,
 } from "@razzia/common/types/auth"
+import { SESSION_ROLES } from "@razzia/common/constants"
 import {
   joinTicketClaimsValidator,
   sessionClaimsValidator,
 } from "@razzia/common/validators/auth"
 import { jwtSecret } from "@razzia/socket/env"
-import { sign, verify } from "hono/jwt"
-import { v7 as uuid } from "uuid"
 
 const ALGORITHM = "HS256"
 const PLAYER_TTL = 60 * 60 * 24 * 30

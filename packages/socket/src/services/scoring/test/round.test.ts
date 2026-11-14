@@ -1,9 +1,9 @@
+import { describe, expect, it } from "vitest"
 import {
   countAnswers,
   scoreQuestion,
 } from "@razzia/socket/services/scoring/round"
 import { createPlayer, createQuestion } from "@razzia/socket/test/fixtures"
-import { describe, expect, it } from "vitest"
 
 const alice = () => createPlayer({ id: "alice", username: "Alice" })
 const bob = () => createPlayer({ id: "bob", username: "Bob" })

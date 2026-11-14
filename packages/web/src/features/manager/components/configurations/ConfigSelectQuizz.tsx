@@ -1,3 +1,10 @@
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import clsx from "clsx"
+import { Check } from "lucide-react"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { STATUS } from "@razzia/common/types/game/status"
 import Button from "@razzia/web/components/Button"
 import Skeleton, { SkeletonRows } from "@razzia/web/components/Skeleton"
@@ -8,13 +15,6 @@ import {
   quizzListQuery,
 } from "@razzia/web/features/manager/queries"
 import { ApiError } from "@razzia/web/lib/api"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { useNavigate } from "@tanstack/react-router"
-import clsx from "clsx"
-import { Check } from "lucide-react"
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 const ConfigSelectQuizz = () => {
   const { data, isPending } = useQuery(quizzListQuery())
@@ -85,17 +85,17 @@ const ConfigSelectQuizz = () => {
         {quizzList.map((quizz) => (
           <button
             key={quizz.id}
-            className="border-accent flex h-12 w-full items-center justify-between rounded-md border-2 p-3"
+            className="flex h-12 w-full items-center justify-between rounded-md border-2 border-accent p-3"
             onClick={handleSelect(quizz.id)}
           >
-            <p className="text-foreground truncate font-medium">
+            <p className="truncate font-medium text-foreground">
               {quizz.subject}
             </p>
 
             <div
               className={clsx(
-                "bg-muted size-6 rounded",
-                selected === quizz.id && "bg-primary border-primary/80",
+                "size-6 rounded bg-muted",
+                selected === quizz.id && "border-primary/80 bg-primary",
               )}
             >
               {selected === quizz.id && (
@@ -105,7 +105,7 @@ const ConfigSelectQuizz = () => {
           </button>
         ))}
         {!quizzList.length && (
-          <div className="text-muted-foreground my-8 text-center">
+          <div className="my-8 text-center text-muted-foreground">
             <p>{t("manager:quizz.notFound")}</p>
             <p className="text-sm">{t("manager:quizz.pleaseCreate")}</p>
           </div>

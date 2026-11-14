@@ -1,7 +1,7 @@
+import { queryOptions } from "@tanstack/react-query"
 import type { GameSettings } from "@razzia/common/types/game"
 import type { QuizzValidated } from "@razzia/common/validators/quizz"
 import { api, unwrap, unwrapEmpty } from "@razzia/web/lib/api"
-import { queryOptions } from "@tanstack/react-query"
 
 export const quizzKeys = {
   all: ["quizz"] as const,

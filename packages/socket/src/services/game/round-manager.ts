@@ -1,12 +1,4 @@
-// oxlint-disable typescript/no-unnecessary-condition
-import {
-  EVENTS,
-  MAX_POINTS,
-  MEDIA_TYPES,
-  NO_TIME_LIMIT,
-  QUIZZ_MODES,
-} from "@razzia/common/constants"
-import { isEstimationOptions } from "@razzia/common/questions/options"
+import { nanoid } from "nanoid"
 import type {
   Answer,
   GameResult,
@@ -19,6 +11,15 @@ import type {
   QuizzMode,
 } from "@razzia/common/types/game"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
+// oxlint-disable typescript/no-unnecessary-condition
+import {
+  EVENTS,
+  MAX_POINTS,
+  MEDIA_TYPES,
+  NO_TIME_LIMIT,
+  QUIZZ_MODES,
+} from "@razzia/common/constants"
+import { isEstimationOptions } from "@razzia/common/questions/options"
 import {
   type Status,
   STATUS,
@@ -33,7 +34,6 @@ import {
 } from "@razzia/socket/services/scoring/round"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import sleep, { SECOND_MS } from "@razzia/socket/utils/sleep"
-import { nanoid } from "nanoid"
 
 type BroadcastFn = <T extends Status>(
   _status: T,

@@ -1,5 +1,7 @@
-import { QUIZZ_MODES } from "@razzia/common/constants"
+import { LayoutList } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import type { QuestionType } from "@razzia/common/types/game"
+import { QUIZZ_MODES } from "@razzia/common/constants"
 import {
   Select,
   SelectContent,
@@ -14,8 +16,6 @@ import {
 import CategoryField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/CategoryField"
 import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigField"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { LayoutList } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 const QuestionEditorConfig = () => {
   const {
@@ -46,7 +46,7 @@ const QuestionEditorConfig = () => {
   }))
 
   return (
-    <aside className="bg-background z-10 m-3 flex max-h-[calc(100%-1.5rem)] w-68 shrink-0 flex-col gap-3 self-start overflow-y-auto rounded-xl p-4 shadow-sm">
+    <aside className="z-10 m-3 flex max-h-[calc(100%-1.5rem)] w-68 shrink-0 flex-col gap-3 self-start overflow-y-auto rounded-xl bg-background p-4 shadow-sm">
       <ConfigField>
         <ConfigField.Label
           icon={<LayoutList className="size-4" />}

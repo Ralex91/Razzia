@@ -1,9 +1,9 @@
-import type { GameSettings } from "@razzia/common/types/game"
-import Switch from "@razzia/web/components/Switch"
-import NumberField from "@razzia/web/components/forms/NumberField"
-import SettingRow from "@razzia/web/features/game/components/GameSettingsModal/SettingRow"
 import { Controller, useFormContext, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import type { GameSettings } from "@razzia/common/types/game"
+import NumberField from "@razzia/web/components/forms/NumberField"
+import Switch from "@razzia/web/components/Switch"
+import SettingRow from "@razzia/web/features/game/components/GameSettingsModal/SettingRow"
 
 const AutoAdvance = () => {
   const { control } = useFormContext<GameSettings>()

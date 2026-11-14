@@ -1,7 +1,7 @@
-import Background from "@razzia/web/components/Background"
-import Button from "@razzia/web/components/Button"
 import { useNavigate } from "@tanstack/react-router"
 import { useTranslation } from "react-i18next"
+import Background from "@razzia/web/components/Background"
+import Button from "@razzia/web/components/Button"
 
 const NotFound = () => {
   const { t } = useTranslation()

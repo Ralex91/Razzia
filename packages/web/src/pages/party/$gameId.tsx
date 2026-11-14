@@ -1,3 +1,7 @@
+import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
+import { useEffect, useRef } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { EVENTS } from "@razzia/common/constants"
 import { STATUS } from "@razzia/common/types/game/status"
 import GameWrapper from "@razzia/web/features/game/components/GameWrapper"
@@ -14,10 +18,6 @@ import {
   isKeyOf,
 } from "@razzia/web/features/game/utils/constants"
 import { createStatus } from "@razzia/web/features/game/utils/createStatus"
-import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
-import { useEffect, useRef } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 const PlayerGamePage = () => {
   const navigate = useNavigate()

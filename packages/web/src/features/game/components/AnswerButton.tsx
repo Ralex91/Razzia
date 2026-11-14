@@ -1,6 +1,6 @@
+import type { ButtonHTMLAttributes, PropsWithChildren } from "react"
 import clsx from "clsx"
 import { Check, X } from "lucide-react"
-import type { ButtonHTMLAttributes, PropsWithChildren } from "react"
 
 type Props = PropsWithChildren &
   ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -54,7 +54,7 @@ const AnswerButton = ({
         {selected !== undefined && correct === undefined && (
           <span
             className={clsx(
-              "text-foreground col-start-3 row-start-1 flex shrink-0 items-center justify-center rounded-md",
+              "col-start-3 row-start-1 flex shrink-0 items-center justify-center rounded-md text-foreground",
               large ? "size-6 md:size-8" : "size-5 md:size-6",
               selected ? "bg-white" : "bg-white/20",
             )}

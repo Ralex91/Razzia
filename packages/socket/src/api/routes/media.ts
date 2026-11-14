@@ -1,4 +1,6 @@
 import { zValidator } from "@hono/zod-validator"
+import { bodyLimit } from "hono/body-limit"
+import { StatusCodes } from "http-status-codes"
 import { MAX_MEDIA_SIZE } from "@razzia/common/constants"
 import { mediaUploadValidator } from "@razzia/common/validators/quizz"
 import { apiFactory } from "@razzia/socket/api/factory"
@@ -9,8 +11,6 @@ import {
   listMedia,
   saveMedia,
 } from "@razzia/socket/services/media"
-import { bodyLimit } from "hono/body-limit"
-import { StatusCodes } from "http-status-codes"
 
 const MULTIPART_OVERHEAD = 64 * 1024
 

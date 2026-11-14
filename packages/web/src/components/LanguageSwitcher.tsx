@@ -1,3 +1,5 @@
+import { Globe } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import {
   Select,
   SelectContent,
@@ -5,8 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@razzia/web/components/Select"
-import { Globe } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 const LANGUAGES = [
   { code: "de", label: "common:language.de" },
@@ -32,9 +32,9 @@ const LanguageSwitcher = () => {
       <SelectTrigger
         aria-label={t("common:changeLanguage")}
         hideChevron
-        className="text-accent-foreground w-auto gap-1.5 border px-2 py-1.5"
+        className="w-auto gap-1.5 border px-2 py-1.5 text-accent-foreground"
       >
-        <Globe className="text-muted-foreground size-4" />
+        <Globe className="size-4 text-muted-foreground" />
         <SelectValue>{normalizedLanguage.toUpperCase()}</SelectValue>
       </SelectTrigger>
       <SelectContent className="w-auto min-w-32">

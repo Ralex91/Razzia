@@ -1,10 +1,10 @@
-import ErrorPage from "@razzia/web/components/ErrorPage"
-import NotFound from "@razzia/web/components/NotFound"
-import { SocketProvider } from "@razzia/web/features/game/contexts/socket-context"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createRootRoute, Outlet } from "@tanstack/react-router"
 import { Tooltip } from "radix-ui"
 import { useEffect } from "react"
+import ErrorPage from "@razzia/web/components/ErrorPage"
+import NotFound from "@razzia/web/components/NotFound"
+import { SocketProvider } from "@razzia/web/features/game/contexts/socket-context"
 
 const queryClient = new QueryClient({
   defaultOptions: {

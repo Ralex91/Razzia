@@ -1,9 +1,9 @@
-import { MEDIA_TYPES } from "@razzia/common/constants"
-import type { QuestionMedia as QuestionMediaType } from "@razzia/common/types/game"
 import clsx from "clsx"
 import { X } from "lucide-react"
 import { Dialog, VisuallyHidden } from "radix-ui"
 import { type PropsWithChildren, useState } from "react"
+import type { QuestionMedia as QuestionMediaType } from "@razzia/common/types/game"
+import { MEDIA_TYPES } from "@razzia/common/constants"
 
 type Props = PropsWithChildren & {
   question: string
@@ -31,12 +31,12 @@ const QuestionDialog = ({
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="data-[state=open]:animate-fade fixed inset-0 z-50 bg-black/60" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 data-[state=open]:animate-fade" />
 
         <Dialog.Content
           aria-describedby={undefined}
           onClick={(e) => e.target === e.currentTarget && setOpen(false)}
-          className="data-[state=open]:animate-fade fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 p-4"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 p-4 data-[state=open]:animate-fade"
         >
           {showQuestion ? (
             <Dialog.Title className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl">

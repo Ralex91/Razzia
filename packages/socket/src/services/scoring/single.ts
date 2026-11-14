@@ -1,6 +1,6 @@
-import { QUESTION_TYPES } from "@razzia/common/constants"
 import type { Question } from "@razzia/common/types/game"
 import type { ScoringFn } from "@razzia/socket/services/scoring"
+import { QUESTION_TYPES } from "@razzia/common/constants"
 
 export const type = QUESTION_TYPES.SINGLE
 

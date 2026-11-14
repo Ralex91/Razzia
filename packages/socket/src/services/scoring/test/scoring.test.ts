@@ -1,11 +1,11 @@
-import { QUESTION_TYPES, SCORING_MODES } from "@razzia/common/constants"
+import { describe, expect, it } from "vitest"
 import type { ScoringMode } from "@razzia/common/types/game"
+import { QUESTION_TYPES, SCORING_MODES } from "@razzia/common/constants"
 import { QUESTION_SCORING } from "@razzia/socket/services/scoring"
 import {
   createEstimationQuestion,
   createQuestion,
 } from "@razzia/socket/test/fixtures"
-import { describe, expect, it } from "vitest"
 
 describe("single choice scoring", () => {
   const score = QUESTION_SCORING[QUESTION_TYPES.SINGLE]

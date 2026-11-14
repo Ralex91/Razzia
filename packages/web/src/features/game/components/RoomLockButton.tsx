@@ -1,10 +1,10 @@
+import clsx from "clsx"
+import { Lock, LockOpen } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { EVENTS } from "@razzia/common/constants"
 import Tooltip from "@razzia/web/components/Tooltip"
 import { useSocket } from "@razzia/web/features/game/contexts/socket-context"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
-import clsx from "clsx"
-import { Lock, LockOpen } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 interface Props {
   className?: string

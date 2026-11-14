@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it, vi } from "vitest"
 import { SESSION_ROLES } from "@razzia/common/constants"
 import {
   mintJoinTicket,
@@ -6,7 +7,6 @@ import {
   verifyJoinTicket,
   verifyToken,
 } from "@razzia/socket/services/auth"
-import { afterEach, describe, expect, it, vi } from "vitest"
 
 const PLAYER_TTL = 60 * 60 * 24 * 30
 const MANAGER_TTL = 60 * 60 * 12

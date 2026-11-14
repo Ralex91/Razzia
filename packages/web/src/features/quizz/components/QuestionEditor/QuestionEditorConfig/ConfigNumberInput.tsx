@@ -1,13 +1,13 @@
-import Input from "@razzia/web/components/Input"
-import FieldError from "@razzia/web/components/forms/FieldError"
+import clsx from "clsx"
+import { useState } from "react"
+import { useController, type FieldPathByValue } from "react-hook-form"
 import type { Question } from "@razzia/common/types/game"
+import FieldError from "@razzia/web/components/forms/FieldError"
+import Input from "@razzia/web/components/Input"
 import {
   useQuizzEditor,
   type QuizzFormValues,
 } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import clsx from "clsx"
-import { useState } from "react"
-import { useController, type FieldPathByValue } from "react-hook-form"
 
 type NumberFieldPath = FieldPathByValue<QuizzFormValues, number | undefined>
 

@@ -1,8 +1,8 @@
-import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+import type { ChangeEvent } from "react"
 import clsx from "clsx"
 import { Lightbulb } from "lucide-react"
-import type { ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
+import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 
 const QuestionEditorNote = () => {
   const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
@@ -15,19 +15,19 @@ const QuestionEditorNote = () => {
   return (
     <label
       className={clsx(
-        "bg-background z-10 mx-auto flex w-full max-w-3xl cursor-text items-start gap-3 rounded-xl px-4 py-3 shadow-sm transition-opacity",
+        "z-10 mx-auto flex w-full max-w-3xl cursor-text items-start gap-3 rounded-xl bg-background px-4 py-3 shadow-sm transition-opacity",
         !currentQuestion.note &&
           "opacity-60 focus-within:opacity-100 hover:opacity-100",
       )}
     >
-      <Lightbulb className="text-primary mt-0.5 size-5 shrink-0" />
+      <Lightbulb className="mt-0.5 size-5 shrink-0 text-primary" />
       <textarea
         value={currentQuestion.note ?? ""}
         onChange={handleChange}
         aria-label={t("quizz:question.note")}
         placeholder={t("quizz:question.notePlaceholder")}
         rows={1}
-        className="placeholder:text-muted-foreground text-foreground field-sizing-content max-h-32 min-w-0 flex-1 resize-none bg-transparent font-semibold outline-none"
+        className="field-sizing-content max-h-32 min-w-0 flex-1 resize-none bg-transparent font-semibold text-foreground outline-none placeholder:text-muted-foreground"
       />
     </label>
   )

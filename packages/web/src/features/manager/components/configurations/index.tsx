@@ -1,3 +1,8 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { LogOut } from "lucide-react"
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Card from "@razzia/web/components/Card"
 import LanguageSwitcher from "@razzia/web/components/LanguageSwitcher"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
@@ -7,11 +12,6 @@ import ConfigSelectQuizz from "@razzia/web/features/manager/components/configura
 import ConfigTabButton from "@razzia/web/features/manager/components/configurations/ConfigTabButton"
 import { managerLogout } from "@razzia/web/features/manager/queries"
 import { setToken } from "@razzia/web/lib/session"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useNavigate } from "@tanstack/react-router"
-import { LogOut } from "lucide-react"
-import { useState } from "react"
-import { useTranslation } from "react-i18next"
 
 const tabs = [
   {
@@ -59,7 +59,7 @@ const Configurations = () => {
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
           <button
-            className="text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-sm p-1.5"
+            className="rounded-sm p-1.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             onClick={() => logout()}
             title={t("manager:logout")}
           >
@@ -67,7 +67,7 @@ const Configurations = () => {
           </button>
         </div>
       </div>
-      <div className="bg-muted flex shrink-0 overflow-hidden rounded-lg">
+      <div className="flex shrink-0 overflow-hidden rounded-lg bg-muted">
         {tabs.map((tab, index) => (
           <ConfigTabButton
             key={tab.nameKey}
@@ -78,7 +78,7 @@ const Configurations = () => {
           </ConfigTabButton>
         ))}
       </div>
-      <hr className="text-muted my-4 border" />
+      <hr className="my-4 border text-muted" />
       <div className="flex min-h-0 flex-1 flex-col">
         <TabComponent />
       </div>

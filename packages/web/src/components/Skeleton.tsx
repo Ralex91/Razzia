@@ -7,7 +7,7 @@ interface Props {
 
 const Skeleton = ({ className }: Props) => (
   <div
-    className={twMerge(clsx("bg-muted animate-pulse rounded-md", className))}
+    className={twMerge(clsx("animate-pulse rounded-md bg-muted", className))}
     aria-hidden
   />
 )

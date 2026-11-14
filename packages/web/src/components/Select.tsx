@@ -1,7 +1,7 @@
+import type { ComponentProps } from "react"
 import clsx from "clsx"
 import { Check, ChevronDown } from "lucide-react"
 import { Select as RadixSelect } from "radix-ui"
-import type { ComponentProps } from "react"
 import { twMerge } from "tailwind-merge"
 
 export const Select = RadixSelect.Root
@@ -21,7 +21,7 @@ export const SelectTrigger = ({
   <RadixSelect.Trigger
     className={twMerge(
       clsx(
-        "focus:border-primary border-accent text-foreground bg-background flex w-full cursor-pointer items-center justify-between rounded-lg border-2 px-3 py-2 text-sm font-semibold focus:outline-none",
+        "flex w-full cursor-pointer items-center justify-between rounded-lg border-2 border-accent bg-background px-3 py-2 text-sm font-semibold text-foreground focus:border-primary focus:outline-none",
         className,
       ),
     )}
@@ -30,7 +30,7 @@ export const SelectTrigger = ({
     {children}
     {!hideChevron && (
       <RadixSelect.Icon>
-        <ChevronDown className="text-muted-foreground size-4" />
+        <ChevronDown className="size-4 text-muted-foreground" />
       </RadixSelect.Icon>
     )}
   </RadixSelect.Trigger>
@@ -49,7 +49,7 @@ export const SelectContent = ({
       sideOffset={4}
       className={twMerge(
         clsx(
-          "border-accent bg-background z-50 w-(--radix-select-trigger-width) overflow-hidden rounded-lg border shadow-md",
+          "z-50 w-(--radix-select-trigger-width) overflow-hidden rounded-lg border border-accent bg-background shadow-md",
           className,
         ),
       )}
@@ -70,7 +70,7 @@ export const SelectItem = ({
   <RadixSelect.Item
     className={twMerge(
       clsx(
-        "text-foreground hover:bg-muted focus:bg-muted flex cursor-pointer items-center justify-between gap-3 rounded-sm px-3 py-1.5 text-sm outline-none data-[state=checked]:font-semibold",
+        "flex cursor-pointer items-center justify-between gap-3 rounded-sm px-3 py-1.5 text-sm text-foreground outline-none hover:bg-muted focus:bg-muted data-[state=checked]:font-semibold",
         className,
       ),
     )}
@@ -78,7 +78,7 @@ export const SelectItem = ({
   >
     <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
     <RadixSelect.ItemIndicator>
-      <Check className="text-muted-foreground size-3.5" />
+      <Check className="size-3.5 text-muted-foreground" />
     </RadixSelect.ItemIndicator>
   </RadixSelect.Item>
 )

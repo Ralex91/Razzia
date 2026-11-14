@@ -1,10 +1,10 @@
 {
   "name": "razzia",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "type": "module",
   "packageManager": "pnpm@11.28.7",
   "engines": {
-    "node": "^24"
+    "node": "^26"
   },
   "scripts": {
     "dev": "dotenv -e .env -- pnpm -r --parallel dev",
@@ -15,8 +15,8 @@
     "clean": "pnpm -r exec rm -rf dist node_modules",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "format": "prettier --check . --log-level warn",
-    "format:fix": "prettier --write . --log-level warn",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -28,13 +28,12 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "latest",
-    "@vitest/coverage-v8": "^5.0.5",
-    "dotenv-cli": "^11.0.0",
+    "@vitest/coverage-v8": "^5.1.0",
+    "dotenv-cli": "^11.1.0",
+    "oxfmt": "^0.77.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^7.0.2005",
-    "prettier": "^3.9.10",
-    "prettier-plugin-tailwindcss": "^0.8.1",
+    "oxlint-tsgolint": "^7.0.2006",
     "typescript": "catalog:",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   }
 }

@@ -1,5 +1,5 @@
-import { EVENTS } from "@razzia/common/constants"
 import type { SocketContext } from "@razzia/socket/handlers/types"
+import { EVENTS } from "@razzia/common/constants"
 import { verifyJoinTicket } from "@razzia/socket/services/auth"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"

@@ -1,6 +1,9 @@
+import clsx from "clsx"
+import { Check, X } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import type { PlayerAnswerRecord } from "@razzia/common/types/game"
 import { QUIZZ_MODES } from "@razzia/common/constants"
 import { isEstimationOptions } from "@razzia/common/questions/options"
-import type { PlayerAnswerRecord } from "@razzia/common/types/game"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
@@ -8,9 +11,6 @@ import {
 import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
 import { formatValue } from "@razzia/web/features/questions/estimation/utils"
 import { isAnswerCorrect } from "@razzia/web/features/questions/utils"
-import clsx from "clsx"
-import { Check, X } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 interface RowProps {
   playerAnswer: PlayerAnswerRecord
@@ -31,7 +31,7 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
       <td className="px-5 py-2.5 font-medium">{playerName}</td>
       <td className="px-4 py-2.5">
         {hasAnswer && isEstimation && (
-          <span className="bg-accent text-accent-foreground inline-flex rounded-md px-2 py-1 text-xs font-bold">
+          <span className="inline-flex rounded-md bg-accent px-2 py-1 text-xs font-bold text-accent-foreground">
             {formatValue(answerIds[0])}
           </span>
         )}
@@ -53,12 +53,12 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
             ))}
           </div>
         )}
-        {!hasAnswer && <span className="text-muted-foreground text-xs">-</span>}
+        {!hasAnswer && <span className="text-xs text-muted-foreground">-</span>}
       </td>
       {result.gameMode !== QUIZZ_MODES.SURVEY && (
         <td className="px-4 py-2.5">
           {isCorrect ? (
-            <span className="text-correct flex items-center gap-1">
+            <span className="flex items-center gap-1 text-correct">
               <Check className="size-4 stroke-4" />
               {t("manager:result.table.correct")}
             </span>
@@ -70,7 +70,7 @@ const ResultModalTableRow = ({ playerAnswer }: RowProps) => {
           )}
         </td>
       )}
-      <td className="text-foreground px-4 py-2.5 text-right font-semibold">
+      <td className="px-4 py-2.5 text-right font-semibold text-foreground">
         {points ?? getPlayerPoints(playerName)}
       </td>
     </tr>
@@ -84,7 +84,7 @@ const ResultModalTable = () => {
   return (
     <table className="w-full text-sm">
       <thead className="sticky top-0">
-        <tr className="border-accent bg-muted text-muted-foreground border-b-2 text-left text-xs font-semibold tracking-wide uppercase">
+        <tr className="border-b-2 border-accent bg-muted text-left text-xs font-semibold tracking-wide text-muted-foreground uppercase">
           <th className="px-5 py-2.5">{t("manager:result.table.player")}</th>
           <th className="px-4 py-2.5">{t("manager:result.table.answered")}</th>
           {result.gameMode !== QUIZZ_MODES.SURVEY && (
@@ -97,7 +97,7 @@ const ResultModalTable = () => {
           </th>
         </tr>
       </thead>
-      <tbody className="divide-muted divide-y-2">
+      <tbody className="divide-y-2 divide-muted">
         {questionResult.playerAnswers.map((playerAnswer, i) => (
           <ResultModalTableRow key={i} playerAnswer={playerAnswer} />
         ))}

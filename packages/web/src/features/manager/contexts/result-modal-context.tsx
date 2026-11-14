@@ -1,11 +1,11 @@
-import type { GameResult, QuestionResult } from "@razzia/common/types/game"
-import { isAnswerCorrect } from "@razzia/web/features/questions/utils"
 import {
   createContext,
   useContext,
   useState,
   type PropsWithChildren,
 } from "react"
+import type { GameResult, QuestionResult } from "@razzia/common/types/game"
+import { isAnswerCorrect } from "@razzia/web/features/questions/utils"
 
 interface ResultModalContextType {
   result: GameResult

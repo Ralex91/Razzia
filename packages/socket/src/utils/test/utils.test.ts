@@ -1,8 +1,8 @@
+import { afterEach, describe, expect, it, vi } from "vitest"
 import { createQuestion } from "@razzia/socket/test/fixtures"
 import { normalizeFilename } from "@razzia/socket/utils/file"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import { createNickname } from "@razzia/socket/utils/nickname"
-import { afterEach, describe, expect, it, vi } from "vitest"
 
 afterEach(() => {
   vi.useRealTimers()

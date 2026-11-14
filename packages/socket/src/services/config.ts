@@ -1,19 +1,19 @@
-import { EXAMPLE_QUIZZ, QUIZZ_MODES } from "@razzia/common/constants"
+import fs from "fs"
+import { nanoid } from "nanoid"
+import { join, resolve } from "path"
 import type {
   GameResult,
   GameResultMeta,
   QuizzMode,
   QuizzWithId,
 } from "@razzia/common/types/game"
+import { EXAMPLE_QUIZZ, QUIZZ_MODES } from "@razzia/common/constants"
 import {
   normalizeLegacyQuizz,
   quizzValidator,
 } from "@razzia/common/validators/quizz"
 import { invalidInput, notFound } from "@razzia/socket/services/errors"
 import { normalizeFilename } from "@razzia/socket/utils/file"
-import fs from "fs"
-import { nanoid } from "nanoid"
-import { join, resolve } from "path"
 
 const inContainerPath = process.env.CONFIG_PATH
 

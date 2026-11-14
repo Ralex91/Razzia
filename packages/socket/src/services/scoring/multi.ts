@@ -1,7 +1,7 @@
-import { QUESTION_TYPES, SCORING_MODES } from "@razzia/common/constants"
-import { isMultiOptions } from "@razzia/common/questions/options"
 import type { Question } from "@razzia/common/types/game"
 import type { ScoringFn } from "@razzia/socket/services/scoring"
+import { QUESTION_TYPES, SCORING_MODES } from "@razzia/common/constants"
+import { isMultiOptions } from "@razzia/common/questions/options"
 
 export const type = QUESTION_TYPES.MULTI
 

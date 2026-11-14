@@ -1,4 +1,9 @@
-import { EVENTS } from "@razzia/common/constants"
+import type { z } from "zod"
+import {
+  Server as ServerIO,
+  Socket as SocketIO,
+  type DefaultEventsMap,
+} from "socket.io"
 import type { SessionRole } from "@razzia/common/types/auth"
 import type {
   GameSettings,
@@ -8,12 +13,7 @@ import type {
 } from "@razzia/common/types/game"
 import type { Status, StatusDataMap } from "@razzia/common/types/game/status"
 import type { clientEventValidators } from "@razzia/common/validators/socket"
-import {
-  Server as ServerIO,
-  Socket as SocketIO,
-  type DefaultEventsMap,
-} from "socket.io"
-import type { z } from "zod"
+import { EVENTS } from "@razzia/common/constants"
 
 export interface SocketData {
   clientId: string

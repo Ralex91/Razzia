@@ -1,10 +1,10 @@
+import clsx from "clsx"
+import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
 import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@razzia/web/features/game/utils/constants"
-import type { AnswerComponentProps } from "@razzia/web/features/questions/types"
-import clsx from "clsx"
 
 const SingleAnswers = ({
   answers,

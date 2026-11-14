@@ -1,6 +1,6 @@
-import { EVENTS } from "@razzia/common/constants"
 import type { Server, Socket } from "@razzia/common/types/game/socket"
 import type { Status } from "@razzia/common/types/game/status"
+import { EVENTS } from "@razzia/common/constants"
 
 export interface Emitted {
   room: string

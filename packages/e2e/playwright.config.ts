@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test"
-import { CONFIG_PATH, MANAGER_PASSWORD } from "@razzia/e2e/utils/constants"
 import fs from "fs"
 import { join } from "path"
+import { CONFIG_PATH, MANAGER_PASSWORD } from "@razzia/e2e/utils/constants"
 
 const root = join(import.meta.dirname, "../..")
 

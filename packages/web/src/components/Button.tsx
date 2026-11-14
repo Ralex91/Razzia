@@ -1,5 +1,5 @@
-import clsx from "clsx"
 import type { ButtonHTMLAttributes, PropsWithChildren } from "react"
+import clsx from "clsx"
 import { twMerge } from "tailwind-merge"
 
 type Size = "sm" | "md" | "lg"
@@ -26,7 +26,7 @@ const Button = ({
   <button
     className={twMerge(
       clsx(
-        "bg-primary rounded-lg font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100 disabled:active:brightness-100",
+        "rounded-lg bg-primary font-semibold text-white hover:brightness-[1.05] active:brightness-[0.95] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100 disabled:active:brightness-100",
         sizeClasses[size],
         className,
       ),

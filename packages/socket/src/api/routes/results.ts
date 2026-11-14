@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes"
 import { apiFactory } from "@razzia/socket/api/factory"
 import { requireManager } from "@razzia/socket/api/middleware"
 import {
@@ -5,7 +6,6 @@ import {
   getResultById,
   getResultsMeta,
 } from "@razzia/socket/services/config"
-import { StatusCodes } from "http-status-codes"
 
 const routes = apiFactory
   .createApp()

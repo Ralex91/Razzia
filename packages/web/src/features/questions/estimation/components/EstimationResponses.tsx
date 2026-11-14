@@ -1,3 +1,6 @@
+import clsx from "clsx"
+import { Check, Users } from "lucide-react"
+import type { ResponsesComponentProps } from "@razzia/web/features/questions/types"
 import { estimationAccuracy } from "@razzia/common/questions/estimation"
 import {
   formatValue,
@@ -5,9 +8,6 @@ import {
   getRangeRatio,
   toPercent,
 } from "@razzia/web/features/questions/estimation/utils"
-import type { ResponsesComponentProps } from "@razzia/web/features/questions/types"
-import clsx from "clsx"
-import { Check, Users } from "lucide-react"
 
 const BADGE_CLASS =
   "text-foreground rounded-xl bg-white px-4 py-1.5 text-2xl font-bold shadow-md"
@@ -49,11 +49,11 @@ const EstimationResponses = ({
             className="absolute bottom-0 flex -translate-x-1/2 flex-col items-center rounded-xl bg-white px-4 py-1.5 whitespace-nowrap shadow-lg"
             style={{ left: clampBadge((fromRatio + toRatio) / 2) }}
           >
-            <span className="text-correct flex items-center gap-2 text-3xl font-bold">
+            <span className="flex items-center gap-2 text-3xl font-bold text-correct">
               <Users className="size-7 stroke-3" />
               {inRangeCount}
             </span>
-            <span className="text-muted-foreground text-sm font-bold">
+            <span className="text-sm font-bold text-muted-foreground">
               {formatValue(rangeFrom)} – {formatValue(rangeTo)}
             </span>
           </div>
@@ -64,14 +64,14 @@ const EstimationResponses = ({
         </span>
         <div className="relative h-4 rounded-full bg-white/90 shadow-md">
           <div
-            className="bg-correct/70 absolute inset-y-0 rounded-full"
+            className="absolute inset-y-0 rounded-full bg-correct/70"
             style={{
               left: toPercent(fromRatio),
               right: toPercent(1 - toRatio),
             }}
           />
           <span
-            className="bg-correct absolute top-1/2 size-10 -translate-1/2 rounded-full border-4 border-white shadow-lg"
+            className="absolute top-1/2 size-10 -translate-1/2 rounded-full border-4 border-white bg-correct shadow-lg"
             style={{ left: toPercent(getRangeRatio(solution, estimation)) }}
           />
         </div>
@@ -79,7 +79,7 @@ const EstimationResponses = ({
 
         <div className="relative col-start-2 h-12">
           <span
-            className="bg-correct absolute top-1 flex -translate-x-1/2 items-center gap-2 rounded-xl px-4 py-1.5 text-2xl font-bold whitespace-nowrap text-white shadow-lg"
+            className="absolute top-1 flex -translate-x-1/2 items-center gap-2 rounded-xl bg-correct px-4 py-1.5 text-2xl font-bold whitespace-nowrap text-white shadow-lg"
             style={{ left: clampBadge(getRangeRatio(solution, estimation)) }}
           >
             <Check className="size-6 stroke-4" />

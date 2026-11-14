@@ -1,5 +1,5 @@
-import { Tooltip as RadixTooltip } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
+import { Tooltip as RadixTooltip } from "radix-ui"
 
 type Props = {
   content: ReactNode
@@ -19,7 +19,7 @@ const Tooltip = ({
       <RadixTooltip.Content
         side={side}
         sideOffset={sideOffset}
-        className="data-[state=delayed-open]:animate-fade z-50 rounded-lg bg-black/40 px-2 py-1 text-sm font-semibold text-white drop-shadow-md"
+        className="z-50 rounded-lg bg-black/40 px-2 py-1 text-sm font-semibold text-white drop-shadow-md data-[state=delayed-open]:animate-fade"
       >
         {content}
         <RadixTooltip.Arrow className="fill-black/40" />

@@ -11,3 +11,5 @@ services:
     # environment:
     #   MANAGER_PASSWORD: "change-me"
     #   JWT_SECRET: "" # optional, 32+ characters
+    #   PUID: 1000 # optional, user owning ./config
+    #   PGID: 1000 # optional, group owning ./config

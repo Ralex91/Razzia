@@ -1,10 +1,12 @@
+import { ArrowBigDownDash, Clock, ListChecks, Star, Timer } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import type { ScoringMode } from "@razzia/common/types/game"
 import {
   MAX_POINTS,
   NO_TIME_LIMIT,
   QUIZZ_MODES,
 } from "@razzia/common/constants"
 import { isMultiOptions } from "@razzia/common/questions/options"
-import type { ScoringMode } from "@razzia/common/types/game"
 import {
   Select,
   SelectContent,
@@ -18,8 +20,6 @@ import ConfigField from "@razzia/web/features/quizz/components/QuestionEditor/Qu
 import ConfigNumberInput from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigNumberInput"
 import ConfigSection from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
-import { ArrowBigDownDash, Clock, ListChecks, Star, Timer } from "lucide-react"
-import { useTranslation } from "react-i18next"
 
 const DEFAULT_TIME = 20
 const DEFAULT_PENALTY = 100

@@ -65,10 +65,10 @@ const PartyManagerGameIdRoute = PartyManagerGameIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof authIndexRoute
   '/manager/quizz': typeof ManagerQuizzLayoutRouteWithChildren
   '/manager/config': typeof ManagerConfigRoute
   '/party/$gameId': typeof PartyGameIdRoute
-  '/': typeof authIndexRoute
   '/manager/quizz/$quizzId': typeof ManagerQuizzQuizzIdRoute
   '/party/manager/$gameId': typeof PartyManagerGameIdRoute
   '/manager/': typeof authManagerIndexRoute
@@ -98,10 +98,10 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/manager/quizz'
     | '/manager/config'
     | '/party/$gameId'
-    | '/'
     | '/manager/quizz/$quizzId'
     | '/party/manager/$gameId'
     | '/manager/'
@@ -141,7 +141,7 @@ declare module '@tanstack/react-router' {
     '/(auth)': {
       id: '/(auth)'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof authLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }

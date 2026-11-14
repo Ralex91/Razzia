@@ -1,12 +1,12 @@
-import { ACCEPTED_MEDIA_TYPES } from "@razzia/common/src/constants.ts"
+import type { IncomingMessage, ServerResponse } from "node:http"
 import tailwindcss from "@tailwindcss/vite"
 import { tanstackRouter } from "@tanstack/router-plugin/vite"
 import react from "@vitejs/plugin-react"
 import fs from "node:fs"
-import type { IncomingMessage, ServerResponse } from "node:http"
 import path from "node:path"
 import { fileURLToPath } from "url"
 import { defineConfig, type Plugin } from "vite"
+import { ACCEPTED_MEDIA_TYPES } from "@razzia/common/src/constants.ts"
 import packageJson from "../../package.json" with { type: "json" }
 
 const configDir = (name: string) =>

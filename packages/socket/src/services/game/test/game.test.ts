@@ -1,3 +1,6 @@
+import fs from "fs"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import type { Question, Quizz } from "@razzia/common/types/game"
 import {
   EVENTS,
   NO_TIME_LIMIT,
@@ -5,7 +8,6 @@ import {
   QUIZZ_MODES,
   SCORING_MODES,
 } from "@razzia/common/constants"
-import type { Question, Quizz } from "@razzia/common/types/game"
 import { STATUS } from "@razzia/common/types/game/status"
 import {
   getPath,
@@ -19,8 +21,6 @@ import {
   createQuestion,
   createQuizz,
 } from "@razzia/socket/test/fixtures"
-import fs from "fs"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 const FIRST_QUESTION_DELAY_MS = 8000
 const NEXT_QUESTION_DELAY_MS = 2000

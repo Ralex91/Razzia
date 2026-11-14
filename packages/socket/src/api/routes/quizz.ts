@@ -1,4 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
+import { StatusCodes } from "http-status-codes"
 import { quizzValidator } from "@razzia/common/validators/quizz"
 import { apiFactory } from "@razzia/socket/api/factory"
 import { requireManager } from "@razzia/socket/api/middleware"
@@ -10,7 +11,6 @@ import {
   saveQuizz,
   updateQuizz,
 } from "@razzia/socket/services/config"
-import { StatusCodes } from "http-status-codes"
 
 const routes = apiFactory
   .createApp()

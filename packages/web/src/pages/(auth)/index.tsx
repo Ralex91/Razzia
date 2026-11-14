@@ -1,8 +1,8 @@
+import { createFileRoute } from "@tanstack/react-router"
 import Reconnect from "@razzia/web/features/game/components/join/Reconnect"
 import Room from "@razzia/web/features/game/components/join/Room"
 import Username from "@razzia/web/features/game/components/join/Username"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
-import { createFileRoute } from "@tanstack/react-router"
 
 const PlayerAuthPage = () => {
   const { inviteCode } = usePlayerStore()
