@@ -3,52 +3,44 @@ on:
   release:
     types: [published]
 
-env:
-  DOCKER_PLATFORMS: |
-    linux/amd64
-    linux/arm64
+permissions:
+  contents: read
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
+  build:
+    name: Build (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
       packages: write
+    outputs:
+      push: ${{ steps.mode.outputs.push }}
+    strategy:
+      matrix:
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            cache: linux-amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            cache: linux-arm64
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Extract version and tags
+      - name: Detect local run
+        id: mode
+        run: echo "push=$([ -z "$ACT" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Extract image names
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
-          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
-            VERSION=${GITHUB_REF_NAME#v}
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-            
-            # Extract major.minor (ex: 1.2.3 -> 1.2)
-            MAJOR_MINOR=$(echo $VERSION | cut -d. -f1,2)
-            echo "MAJOR_MINOR=$MAJOR_MINOR" >> $GITHUB_ENV
-          else
-            echo "VERSION=latest" >> $GITHUB_ENV
-            echo "MAJOR_MINOR=latest" >> $GITHUB_ENV
-          fi
-
-      - name: Extract repository name (lowercase)
-        run: echo "REPO_NAME=$(basename ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      - name: Extract full repository path (lowercase, for GHCR)
-        run: echo "GHCR_REPO=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
-        with:
-          platforms: ${{ env.DOCKER_PLATFORMS }}
+          echo "DOCKERHUB_IMAGE=$DOCKERHUB_USERNAME/$(basename "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
+          echo "GHCR_IMAGE=ghcr.io/$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-        with:
-          version: latest
-          install: true
-          platforms: ${{ env.DOCKER_PLATFORMS }}
 
       - name: Log in to Docker Hub
         if: ${{ !env.ACT }}
@@ -65,21 +57,90 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push by digest
+        id: build
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
-          platforms: ${{ env.DOCKER_PLATFORMS }}
-          push: ${{ !env.ACT }}
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}:${{ env.VERSION }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}:${{ env.MAJOR_MINOR }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}:latest
-            ghcr.io/${{ env.GHCR_REPO }}:${{ env.VERSION }}
-            ghcr.io/${{ env.GHCR_REPO }}:${{ env.MAJOR_MINOR }}
-            ghcr.io/${{ env.GHCR_REPO }}:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          platforms: ${{ matrix.platform }}
+          outputs: type=image,"name=${{ env.DOCKERHUB_IMAGE }},${{ env.GHCR_IMAGE }}",push-by-digest=true,name-canonical=true,push=${{ steps.mode.outputs.push }}
+          cache-from: type=gha,scope=${{ matrix.cache }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.cache }}
           no-cache-filters: runner
-          build-args: |
-            BUILDKIT_INLINE_CACHE=1
+
+      - name: Export digest
+        if: ${{ !env.ACT }}
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          touch "$RUNNER_TEMP/digests/${DIGEST#sha256:}"
+
+      - name: Upload digest
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: digests-${{ matrix.cache }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    name: Publish multi-arch image
+    runs-on: ubuntu-24.04
+    needs: build
+    if: ${{ needs.build.outputs.push == 'true' }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+
+      - name: Extract image names and tags
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        run: |
+          echo "DOCKERHUB_IMAGE=$DOCKERHUB_USERNAME/$(basename "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
+          echo "GHCR_IMAGE=ghcr.io/$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1,2)" >> "$GITHUB_ENV"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push manifests
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          for IMAGE in "$DOCKERHUB_IMAGE" "$GHCR_IMAGE"; do
+            SOURCES=()
+            for DIGEST in *; do
+              SOURCES+=("$IMAGE@sha256:$DIGEST")
+            done
+            docker buildx imagetools create \
+              -t "$IMAGE:$VERSION" \
+              -t "$IMAGE:$MAJOR_MINOR" \
+              -t "$IMAGE:latest" \
+              "${SOURCES[@]}"
+          done
+
+      - name: Inspect image
+        run: docker buildx imagetools inspect "$GHCR_IMAGE:$VERSION"

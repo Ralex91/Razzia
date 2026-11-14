@@ -35,8 +35,10 @@ jobs:
         include:
           - platform: linux/amd64
             runner: ubuntu-24.04
+            cache: linux-amd64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
+            cache: linux-arm64
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -57,7 +59,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           load: true
           tags: razzia:scan
-          cache-from: type=gha
+          cache-from: type=gha,scope=${{ matrix.cache }}
           no-cache-filters: runner
 
       - name: Fail on fixable critical or high vulnerabilities
