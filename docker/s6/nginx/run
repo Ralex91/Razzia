@@ -1,2 +1,5 @@
 #!/bin/sh
-exec nginx -g "daemon off;"
+PUID=${PUID:-1000}
+PGID=${PGID:-1000}
+chown -R "$PUID:$PGID" /run/nginx /var/lib/nginx /var/log/nginx
+exec s6-applyuidgid -u "$PUID" -g "$PGID" -G "" nginx -g "daemon off;"

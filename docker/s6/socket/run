@@ -1,3 +1,7 @@
 #!/bin/sh
 export NODE_ENV=production CONFIG_PATH=/app/config SOCKET_PORT=3001
-exec node /app/socket/index.cjs
+PUID=${PUID:-1000}
+PGID=${PGID:-1000}
+mkdir -p /app/config
+find /app/config \( ! -user "$PUID" -o ! -group "$PGID" \) -exec chown -h "$PUID:$PGID" {} +
+exec s6-applyuidgid -u "$PUID" -g "$PGID" -G "" node /app/socket/index.cjs
