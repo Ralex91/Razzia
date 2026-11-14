@@ -10,6 +10,7 @@ import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { useAnswersMusic } from "@razzia/web/features/game/hooks/useAnswersMusic"
 import { useSocketConnection } from "@razzia/web/features/game/hooks/useSocketConnection"
 import { usePlayerStore } from "@razzia/web/features/game/stores/player"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
@@ -29,6 +30,7 @@ const PlayerGamePage = () => {
   const syncedRef = useRef(false)
 
   useSocketConnection()
+  useAnswersMusic(status)
 
   useEffect(() => {
     if (!isConnected) {
