@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "Doğru cevap minimum ile maksimum arasında olmalıdır",
     "estimationStepInvalid": "Adım 0'dan büyük olmalıdır",
     "estimationMarginNegative": "Tolerans negatif olamaz",
-    "estimationInvalidOptions": "Tahmin ayarları eksik veya geçersiz"
+    "estimationInvalidOptions": "Tahmin ayarları eksik veya geçersiz",
+    "invalidField": "\"{{field}}\" için geçersiz değer",
+    "invalidOptions": "Bu sorunun ayarları geçersiz. Sıfırlamak için cevaplama modunu değiştirin",
+    "invalidQuestion": "Bu soru geçersiz bir değer içeriyor"
   },
   "result": {
     "notFound": "Sonuç bulunamadı"

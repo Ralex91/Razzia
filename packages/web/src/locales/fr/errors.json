@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "La bonne réponse doit être comprise entre le minimum et le maximum",
     "estimationStepInvalid": "Le pas doit être supérieur à 0",
     "estimationMarginNegative": "La marge ne peut pas être négative",
-    "estimationInvalidOptions": "Les réglages de l'estimation sont manquants ou invalides"
+    "estimationInvalidOptions": "Les réglages de l'estimation sont manquants ou invalides",
+    "invalidField": "Valeur invalide pour « {{field}} »",
+    "invalidOptions": "Les réglages de cette question sont invalides. Changez le mode de réponse pour les réinitialiser",
+    "invalidQuestion": "Cette question contient une valeur invalide"
   },
   "result": {
     "notFound": "Résultat introuvable"
