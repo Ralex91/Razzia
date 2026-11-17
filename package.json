@@ -30,9 +30,9 @@
     "@stylistic/eslint-plugin": "latest",
     "@vitest/coverage-v8": "^5.1.0",
     "dotenv-cli": "^11.1.0",
-    "oxfmt": "^0.77.0",
+    "oxfmt": "^0.78.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^7.0.2006",
+    "oxlint-tsgolint": "^7.0.2007",
     "typescript": "catalog:",
     "vitest": "^5.1.0"
   }
