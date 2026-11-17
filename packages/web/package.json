@@ -33,7 +33,7 @@
     "react-dom": "^19.3.1",
     "react-hook-form": "^7.92.0",
     "react-hot-toast": "^2.6.1",
-    "react-i18next": "^17.1.13",
+    "react-i18next": "^18.0.1",
     "socket.io-client": "catalog:",
     "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.5",

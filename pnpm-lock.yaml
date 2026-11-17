@@ -40,7 +40,7 @@ importers:
     devDependencies:
       '@stylistic/eslint-plugin':
         specifier: latest
-        version: 6.0.0-beta.6(eslint@10.3.0(jiti@2.7.0))(oxlint@1.93.0(oxlint-tsgolint@7.0.2006))
+        version: 6.0.0(eslint@10.3.0(jiti@2.7.0))(oxlint@1.93.0(oxlint-tsgolint@7.0.2006))
       '@vitest/coverage-v8':
         specifier: ^5.1.0
         version: 5.1.0(vitest@5.1.0)
@@ -221,8 +221,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-i18next:
-        specifier: ^17.1.13
-        version: 17.1.13(i18next@26.7.2(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
+        specifier: ^18.0.1
+        version: 18.0.1(@types/react@19.3.0)(i18next@26.7.2(typescript@7.0.2))(react@19.3.1)(typescript@7.0.2)
       socket.io-client:
         specifier: 'catalog:'
         version: 4.8.4
@@ -1910,8 +1910,8 @@ packages:
   '@standard-schema/utils@0.3.0':
     resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
-  '@stylistic/eslint-plugin@6.0.0-beta.6':
-    resolution: {integrity: sha512-DqDQZSrV/0AZ/4qLxaQUtNxafk3qWfeG5xOHx64ELjHWSHt2GtELZR6ClrNVvQwo/d13Atf8Hrh/s/ZnuJk57w==}
+  '@stylistic/eslint-plugin@6.0.0':
+    resolution: {integrity: sha512-phICSey4OqR8nkSwmoeXsl9EBzv30Zqbge4jrK3CU02GhjTgZ+y5qhTTg92EDK5j7JhX2xzp4VvH+YYUknQ8/Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
@@ -2989,18 +2989,16 @@ packages:
       '@types/react-dom':
         optional: true
 
-  react-i18next@17.1.13:
-    resolution: {integrity: sha512-ZxhOSlyKSKPtbUNPLwYMmE3w3bhoc0jaZJZ6bc7wGOT6cLbrbs//6m01HxCLtFdSjHvFpwFwoPhxxzIlHSs9cw==}
+  react-i18next@18.0.1:
+    resolution: {integrity: sha512-kPWXI0E/lrPj3+/umcKNzYZVnWmEedLiamMzDIHfbs+5ANf6yzvlZsjKou8f7kaGkfMMDLIZBejV+4aSN1CyBw==}
+    engines: {node: '>=22'}
     peerDependencies:
-      i18next: '>= 26.2.0'
-      react: '>= 16.8.0'
-      react-dom: '*'
-      react-native: '*'
+      '@types/react': '*'
+      i18next: '>= 27.0.1'
+      react: '>= 18.0.0'
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
+      '@types/react':
         optional: true
       typescript:
         optional: true
@@ -4743,7 +4741,7 @@ snapshots:
 
   '@standard-schema/utils@0.3.0': {}
 
-  '@stylistic/eslint-plugin@6.0.0-beta.6(eslint@10.3.0(jiti@2.7.0))(oxlint@1.93.0(oxlint-tsgolint@7.0.2006))':
+  '@stylistic/eslint-plugin@6.0.0(eslint@10.3.0(jiti@2.7.0))(oxlint@1.93.0(oxlint-tsgolint@7.0.2006))':
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.3.0(jiti@2.7.0))
       '@typescript-eslint/types': 8.72.2
@@ -5751,15 +5749,13 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
 
-  react-i18next@17.1.13(i18next@26.7.2(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2):
+  react-i18next@18.0.1(@types/react@19.3.0)(i18next@26.7.2(typescript@7.0.2))(react@19.3.1)(typescript@7.0.2):
     dependencies:
-      '@babel/runtime': 7.29.13
       html-parse-stringify: 4.0.1
       i18next: 26.7.2(typescript@7.0.2)
       react: 19.3.1
-      use-sync-external-store: 1.7.0(react@19.3.1)
     optionalDependencies:
-      react-dom: 19.3.1(react@19.3.1)
+      '@types/react': 19.3.0
       typescript: 7.0.2
 
   react-remove-scroll-bar@2.3.8(@types/react@19.3.0)(react@19.3.1):
