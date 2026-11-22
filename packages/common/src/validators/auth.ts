@@ -3,8 +3,13 @@ import { SESSION_ROLES } from "@razzia/common/constants"
 
 export const usernameValidator = z
   .string()
+  .trim()
   .min(1, "errors:auth.usernameTooShort")
   .max(24, "errors:auth.usernameTooLong")
+  .refine(
+    (value) => /[\p{L}\p{N}\p{S}\p{P}]/u.test(value),
+    "errors:auth.usernameTooShort",
+  )
 
 export const inviteCodeValidator = z
   .string()

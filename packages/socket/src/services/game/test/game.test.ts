@@ -83,6 +83,19 @@ describe("joining a game", () => {
     expect(game.players[0].username).not.toBe("Ignored")
   })
 
+  it("trims usernames and refuses invisible ones", () => {
+    const { game, createSocket } = setup(createQuizz([createQuestion()]), [])
+
+    expect(game.join(createSocket("a"), "   ")).toBe(
+      "errors:auth.usernameTooShort",
+    )
+    expect(game.join(createSocket("b"), "\u200B\u200B")).toBe(
+      "errors:auth.usernameTooShort",
+    )
+    expect(game.join(createSocket("c"), "  Alice  ")).toBeNull()
+    expect(game.players.map((p) => p.username)).toEqual(["Alice"])
+  })
+
   it("refuses players once the game is locked", () => {
     const { game, createSocket, lastEvent } = setup(
       createQuizz([createQuestion()]),

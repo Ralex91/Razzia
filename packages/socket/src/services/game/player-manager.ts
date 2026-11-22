@@ -53,7 +53,7 @@ export class PlayerManager {
       id: socket.id,
       clientId,
       connected: true,
-      username,
+      username: result.data,
       points: 0,
       streak: 0,
     }
@@ -63,7 +63,7 @@ export class PlayerManager {
     this.broadcastCount()
     socket.emit(EVENTS.GAME.SUCCESS_JOIN, {
       gameId: this.gameId,
-      username,
+      username: result.data,
       gameMode: this.gameMode,
     })
 
