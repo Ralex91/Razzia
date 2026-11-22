@@ -470,6 +470,39 @@ describe("quiz flow", () => {
 
     expect(status(MANAGER)?.name).toBe(STATUS.SHOW_LEADERBOARD)
   })
+
+  it("stops the round once the game is disposed", async () => {
+    const { game, start, emitted } = setup(
+      createQuizz([createQuestion(), createQuestion()]),
+    )
+
+    game.updateSettings({
+      autoAdvance: { enable: true, responsesDelay: 3, leaderboardDelay: 3 },
+    })
+
+    await start()
+    game.dispose()
+
+    const emittedBefore = emitted.length
+
+    await vi.advanceTimersByTimeAsync(120_000)
+
+    expect(emitted.slice(emittedBefore)).toEqual([])
+    expect(getResultsMeta()).toEqual([])
+  })
+
+  it("stops the game disposed before the first question", async () => {
+    const { game, manager, emitted } = setup(createQuizz([createQuestion()]))
+
+    void game.start(manager)
+    game.dispose()
+
+    const emittedBefore = emitted.length
+
+    await vi.advanceTimersByTimeAsync(120_000)
+
+    expect(emitted.slice(emittedBefore)).toEqual([])
+  })
 })
 
 describe("game result", () => {

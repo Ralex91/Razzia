@@ -219,6 +219,10 @@ export class RoundManager {
 
     await sleep(3)
 
+    if (!this.started) {
+      return
+    }
+
     this.opts.io.to(this.opts.gameId).emit(EVENTS.GAME.START_COOLDOWN)
     await this.opts.cooldown.start(3)
 
@@ -575,6 +579,8 @@ export class RoundManager {
   }
 
   dispose(): void {
+    this.started = false
+    this.acceptingAnswers = false
     this.clearAutoAdvance()
     this.broadcastAnswerCount.cancel()
   }
