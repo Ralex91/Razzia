@@ -3,6 +3,7 @@ import type { Server, Socket } from "@razzia/common/types/game/socket"
 import { EVENTS } from "@razzia/common/constants"
 import { usernameValidator } from "@razzia/common/validators/auth"
 import { getClientId } from "@razzia/socket/utils/socket"
+import { throttle } from "@razzia/socket/utils/throttle"
 
 export interface PlayerManagerOptions {
   io: Server
@@ -19,6 +20,9 @@ export class PlayerManager {
   private readonly getManagerId: () => string
   private readonly isStarted: () => boolean
   private players: Player[] = []
+  readonly broadcastCount = throttle(() => {
+    this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.joinedCount())
+  })
 
   constructor({
     io,
@@ -143,9 +147,5 @@ export class PlayerManager {
     }
 
     return this.players.filter((p) => p.connected).length
-  }
-
-  broadcastCount(): void {
-    this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.joinedCount())
   }
 }

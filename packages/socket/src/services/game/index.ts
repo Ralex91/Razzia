@@ -181,7 +181,8 @@ class Game {
   }
 
   dispose() {
-    this.round.clearAutoAdvance()
+    this.round.dispose()
+    this.playerManager.broadcastCount.cancel()
     this.cooldown.abort()
     this.cancelManagerGrace()
   }

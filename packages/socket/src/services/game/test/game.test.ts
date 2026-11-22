@@ -21,6 +21,7 @@ import {
   createQuestion,
   createQuizz,
 } from "@razzia/socket/test/fixtures"
+import { BROADCAST_INTERVAL_MS } from "@razzia/socket/utils/throttle"
 
 const FIRST_QUESTION_DELAY_MS = 8000
 const NEXT_QUESTION_DELAY_MS = 2000
@@ -118,13 +119,23 @@ describe("joining a game", () => {
     )
   })
 
-  it("notifies the manager and the players", () => {
-    const { game, lastEvent } = setup(createQuizz([createQuestion()]))
+  it("notifies the manager and the players", async () => {
+    const { game, lastEvent, events } = setup(createQuizz([createQuestion()]), [
+      "Alice",
+      "Bob",
+      "Carol",
+    ])
+    const totals = () =>
+      events(game.gameId, EVENTS.GAME.TOTAL_PLAYERS).map((e) => e.data)
 
     expect(lastEvent(MANAGER, EVENTS.MANAGER.NEW_PLAYER)?.data).toMatchObject({
-      username: "Bob",
+      username: "Carol",
     })
-    expect(lastEvent(game.gameId, EVENTS.GAME.TOTAL_PLAYERS)?.data).toBe(2)
+    expect(totals()).toEqual([1])
+
+    await vi.advanceTimersByTimeAsync(BROADCAST_INTERVAL_MS)
+
+    expect(totals()).toEqual([1, 3])
   })
 
   it("lets the manager kick a player", () => {
@@ -278,6 +289,32 @@ describe("quiz flow", () => {
 
     expect(status("bob")?.data).toMatchObject({ correct: true, points: 1000 })
     expect(status("alice")?.data).toMatchObject({ correct: false })
+  })
+
+  it("batches the answer count sent to the room", async () => {
+    const { game, sockets, start, events } = setup(
+      createQuizz([createQuestion()]),
+      ["Alice", "Bob", "Carol"],
+    )
+    const [alice, bob] = sockets
+    const counts = () =>
+      events(game.gameId, EVENTS.GAME.PLAYER_ANSWER).map((e) => e.data)
+
+    const totals = () => events(game.gameId, EVENTS.GAME.TOTAL_PLAYERS).length
+
+    await start()
+
+    const totalsBefore = totals()
+
+    game.selectAnswer(alice, [0])
+    game.selectAnswer(bob, [0])
+
+    expect(counts()).toEqual([1])
+    expect(totals()).toBe(totalsBefore)
+
+    await vi.advanceTimersByTimeAsync(BROADCAST_INTERVAL_MS)
+
+    expect(counts()).toEqual([1, 2])
   })
 
   it("ends the round once every connected player answered", async () => {
@@ -531,17 +568,19 @@ describe("player connection updates", () => {
     })
   })
 
-  it("only counts connected players in the lobby", () => {
+  it("only counts connected players in the lobby", async () => {
     const { game, sockets, createSocket, lastEvent } = setup(
       createQuizz([createQuestion()]),
     )
     const [alice] = sockets
 
     game.setPlayerDisconnected(alice.id)
+    await vi.advanceTimersByTimeAsync(BROADCAST_INTERVAL_MS)
 
     expect(lastEvent(game.gameId, EVENTS.GAME.TOTAL_PLAYERS)?.data).toBe(1)
 
     game.reconnect(createSocket("alice-new", "alice"))
+    await vi.advanceTimersByTimeAsync(BROADCAST_INTERVAL_MS)
 
     expect(lastEvent(game.gameId, EVENTS.GAME.TOTAL_PLAYERS)?.data).toBe(2)
   })
