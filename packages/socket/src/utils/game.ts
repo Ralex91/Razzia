@@ -4,7 +4,7 @@ import { MAX_POINTS } from "@razzia/common/constants"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
 import { SECOND_MS } from "@razzia/socket/utils/sleep"
-import { getClientId } from "@razzia/socket/utils/socket"
+import { getClientId, isManagerSocket } from "@razzia/socket/utils/socket"
 
 type GameCallback = (_game: Game) => void | Promise<void>
 
@@ -24,7 +24,10 @@ export const withManagerGame = (
     return
   }
 
-  if (game.manager.clientId !== getClientId(socket)) {
+  if (
+    !isManagerSocket(socket) ||
+    game.manager.clientId !== getClientId(socket)
+  ) {
     socket.emit("game:errorMessage", "errors:auth.unauthorized")
 
     return

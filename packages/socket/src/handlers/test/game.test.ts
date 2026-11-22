@@ -157,6 +157,26 @@ describe("game socket handlers", () => {
     expect(game.locked).toBe(false)
   })
 
+  it("refuses manager events from a player token of the manager", async () => {
+    const { game } = await createGame()
+    const loggedOut = await connectAs("manager")
+    const reset = waitFor(loggedOut, EVENTS.GAME.RESET)
+
+    loggedOut.emit(EVENTS.MANAGER.RECONNECT, { gameId: game.gameId })
+
+    expect(await reset).toBe("errors:auth.unauthorized")
+
+    const error = waitFor(loggedOut, EVENTS.GAME.ERROR_MESSAGE)
+
+    loggedOut.emit(EVENTS.MANAGER.SET_LOCK, {
+      gameId: game.gameId,
+      locked: true,
+    })
+
+    expect(await error).toBe("errors:auth.unauthorized")
+    expect(game.locked).toBe(false)
+  })
+
   it("lets the manager kick a player", async () => {
     const { game, manager } = await createGame()
     const player = await joinGame(game, "alice", "Alice")
