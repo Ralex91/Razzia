@@ -7,7 +7,12 @@ import {
   joinGameValidator,
 } from "@razzia/common/validators/game"
 import { apiFactory } from "@razzia/socket/api/factory"
-import { requireManager, requireSession } from "@razzia/socket/api/middleware"
+import {
+  DEFAULT_BODY_LIMIT,
+  limitBody,
+  requireManager,
+  requireSession,
+} from "@razzia/socket/api/middleware"
 import { i18nHook } from "@razzia/socket/api/validation"
 import { mintJoinTicket } from "@razzia/socket/services/auth"
 import { getQuizz } from "@razzia/socket/services/config"
@@ -17,6 +22,7 @@ import Registry from "@razzia/socket/services/registry"
 
 const routes = apiFactory
   .createApp()
+  .use(limitBody(DEFAULT_BODY_LIMIT))
   .post(
     "/",
     requireManager,

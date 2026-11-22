@@ -53,6 +53,7 @@
     "questionEmpty": "Pytanie nie może być puste",
     "subjectEmpty": "Tytuł nie może być pusty",
     "tooFewAnswers": "Pytanie musi mieć co najmniej 2 odpowiedzi",
+    "tooLarge": "Quiz jest za duży",
     "tooManyAnswers": "Pytanie nie może mieć więcej niż 4 odpowiedzi",
     "estimationInvalidRange": "Maksimum musi być większe niż minimum",
     "estimationSolutionOutOfRange": "Poprawna odpowiedź musi mieścić się między minimum a maksimum",

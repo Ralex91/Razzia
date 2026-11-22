@@ -1,4 +1,5 @@
 import type { Context } from "hono"
+import { bodyLimit } from "hono/body-limit"
 import { createMiddleware } from "hono/factory"
 import { StatusCodes } from "http-status-codes"
 import type { SessionClaims } from "@razzia/common/types/auth"
@@ -7,6 +8,19 @@ import { type ApiEnv } from "@razzia/socket/api/factory"
 import { verifyToken } from "@razzia/socket/services/auth"
 
 const UNAUTHORIZED = { error: "errors:auth.unauthorized" } as const
+
+export const DEFAULT_BODY_LIMIT = 64 * 1024
+
+export const QUIZZ_BODY_LIMIT = 1024 * 1024
+
+export const limitBody = (
+  maxSize: number,
+  errorKey = "errors:invalidRequest",
+) =>
+  bodyLimit({
+    maxSize,
+    onError: (c) => c.json({ error: errorKey }, StatusCodes.REQUEST_TOO_LONG),
+  })
 
 const getBearerToken = (c: Context): string | undefined => {
   const header = c.req.header("Authorization")

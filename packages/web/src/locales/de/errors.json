@@ -53,6 +53,7 @@
     "questionEmpty": "Die Frage darf nicht leer sein",
     "subjectEmpty": "Das Thema darf nicht leer sein",
     "tooFewAnswers": "Eine Frage muss mindestens 2 Antworten haben",
+    "tooLarge": "Das Quiz ist zu groß",
     "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben",
     "estimationInvalidRange": "Das Maximum muss größer als das Minimum sein",
     "estimationSolutionOutOfRange": "Die richtige Antwort muss zwischen Minimum und Maximum liegen",

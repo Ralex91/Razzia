@@ -53,6 +53,7 @@
     "questionEmpty": "La question ne peut pas être vide",
     "subjectEmpty": "Le sujet ne peut pas être vide",
     "tooFewAnswers": "Une question doit avoir au moins 2 réponses",
+    "tooLarge": "Le quizz est trop volumineux",
     "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses",
     "estimationInvalidRange": "Le maximum doit être supérieur au minimum",
     "estimationSolutionOutOfRange": "La bonne réponse doit être comprise entre le minimum et le maximum",
