@@ -58,7 +58,10 @@
     "estimationSolutionOutOfRange": "Đáp án đúng phải nằm giữa giá trị tối thiểu và tối đa",
     "estimationStepInvalid": "Bước nhảy phải lớn hơn 0",
     "estimationMarginNegative": "Biên độ không được âm",
-    "estimationInvalidOptions": "Cài đặt ước lượng bị thiếu hoặc không hợp lệ"
+    "estimationInvalidOptions": "Cài đặt ước lượng bị thiếu hoặc không hợp lệ",
+    "invalidField": "Giá trị không hợp lệ cho \"{{field}}\"",
+    "invalidOptions": "Cài đặt của câu hỏi này không hợp lệ. Hãy đổi chế độ trả lời để đặt lại",
+    "invalidQuestion": "Câu hỏi này chứa giá trị không hợp lệ"
   },
   "result": {
     "notFound": "Không tìm thấy kết quả"
