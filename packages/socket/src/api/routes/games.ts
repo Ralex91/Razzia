@@ -126,6 +126,13 @@ const routes = apiFactory
 
       const name = game.settings.generatedUsernames ? undefined : username
 
+      if (name && game.isUsernameTaken(name)) {
+        return c.json(
+          { error: "errors:auth.usernameTaken" },
+          StatusCodes.CONFLICT,
+        )
+      }
+
       return c.json({
         gameId: game.gameId,
         ticket: await mintJoinTicket(sub, game.gameId, name),

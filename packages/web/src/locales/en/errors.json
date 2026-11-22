@@ -10,6 +10,7 @@
     "tokenInvalid": "Invalid session token",
     "tokenMissing": "Missing session token",
     "unauthorized": "You are not authorized",
+    "usernameTaken": "This username is already taken",
     "usernameTooLong": "Username cannot exceed 24 characters",
     "usernameTooShort": "Username cannot be empty"
   },

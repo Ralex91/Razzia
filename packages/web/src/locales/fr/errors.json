@@ -10,6 +10,7 @@
     "tokenInvalid": "Jeton de session invalide",
     "tokenMissing": "Jeton de session manquant",
     "unauthorized": "Vous n'êtes pas autorisé",
+    "usernameTaken": "Ce pseudo est déjà pris",
     "usernameTooLong": "Le pseudo ne peut pas dépasser 24 caractères",
     "usernameTooShort": "Le pseudo ne peut pas être vide"
   },

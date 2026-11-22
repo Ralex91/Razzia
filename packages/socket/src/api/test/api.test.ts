@@ -326,6 +326,26 @@ describe("games", () => {
     })
   })
 
+  it("refuses a username already taken in the game", async () => {
+    const { gameId, inviteCode } = await createGame()
+    const { createSocket } = createFakeIo()
+
+    Registry.getInstance()
+      .getGameById(gameId)
+      ?.join(createSocket("alice-socket", "alice"), "Alice")
+
+    const response = await request("/games/join", {
+      method: "POST",
+      token: playerToken,
+      body: { inviteCode, username: " alice " },
+    })
+
+    expect(response.status).toBe(StatusCodes.CONFLICT)
+    expect(await json(response)).toEqual({
+      error: "errors:auth.usernameTaken",
+    })
+  })
+
   it("only lets managers create a game", async () => {
     const { id: quizzId } = saveQuizz(createQuizz([createQuestion()]))
     const create = (token?: string) =>

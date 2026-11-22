@@ -10,6 +10,7 @@
     "tokenInvalid": "Mã phiên không hợp lệ",
     "tokenMissing": "Thiếu mã phiên",
     "unauthorized": "Bạn không có quyền truy cập",
+    "usernameTaken": "Tên người dùng này đã được sử dụng",
     "usernameTooLong": "Tên người dùng không được vượt quá 24 ký tự",
     "usernameTooShort": "Tên người dùng không được để trống"
   },

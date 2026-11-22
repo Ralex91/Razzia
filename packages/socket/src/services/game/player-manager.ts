@@ -5,6 +5,9 @@ import { usernameValidator } from "@razzia/common/validators/auth"
 import { getClientId } from "@razzia/socket/utils/socket"
 import { throttle } from "@razzia/socket/utils/throttle"
 
+const usernameKey = (username: string) =>
+  username.normalize("NFKC").replace(/\p{Cf}/gu, "").toLowerCase()
+
 export interface PlayerManagerOptions {
   io: Server
   gameId: string
@@ -49,6 +52,10 @@ export class PlayerManager {
 
     if (result.error) {
       return result.error.issues[0].message
+    }
+
+    if (this.isUsernameTaken(result.data)) {
+      return "errors:auth.usernameTaken"
     }
 
     socket.join(this.gameId)
@@ -127,6 +134,12 @@ export class PlayerManager {
 
   findById(socketId: string): Player | undefined {
     return this.players.find((p) => p.id === socketId)
+  }
+
+  isUsernameTaken(username: string): boolean {
+    const key = usernameKey(username)
+
+    return this.players.some((p) => usernameKey(p.username) === key)
   }
 
   findByClientId(clientId: string): Player | undefined {

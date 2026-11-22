@@ -10,6 +10,7 @@
     "tokenInvalid": "Ungültiges Sitzungstoken",
     "tokenMissing": "Sitzungstoken fehlt",
     "unauthorized": "Nicht autorisiert",
+    "usernameTaken": "Dieser Benutzername ist bereits vergeben",
     "usernameTooLong": "Der Benutzername darf nicht mehr als 24 Zeichen haben",
     "usernameTooShort": "Der Benutzername darf nicht leer sein"
   },

@@ -10,6 +10,7 @@
     "tokenInvalid": "Geçersiz oturum belirteci",
     "tokenMissing": "Oturum belirteci eksik",
     "unauthorized": "Yetkiniz yok",
+    "usernameTaken": "Bu kullanıcı adı zaten alınmış",
     "usernameTooLong": "Kullanıcı adı 24 karakteri geçemez",
     "usernameTooShort": "Kullanıcı adı boş olamaz"
   },

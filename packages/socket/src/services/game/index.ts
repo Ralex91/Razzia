@@ -180,6 +180,10 @@ class Game {
     return this.playerManager.join(socket, username)
   }
 
+  isUsernameTaken(username: string): boolean {
+    return this.playerManager.isUsernameTaken(username)
+  }
+
   dispose() {
     this.round.dispose()
     this.playerManager.broadcastCount.cancel()

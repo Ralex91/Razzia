@@ -10,6 +10,7 @@
     "tokenInvalid": "セッショントークンが無効です",
     "tokenMissing": "セッショントークンがありません",
     "unauthorized": "権限がありません",
+    "usernameTaken": "このユーザー名はすでに使われています",
     "usernameTooLong": "ユーザー名は24文字以内にしてください",
     "usernameTooShort": "ユーザー名を入力してください"
   },

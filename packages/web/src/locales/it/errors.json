@@ -10,6 +10,7 @@
     "tokenInvalid": "Token di sessione non valido",
     "tokenMissing": "Token di sessione mancante",
     "unauthorized": "Non sei autorizzato",
+    "usernameTaken": "Questo nome utente è già in uso",
     "usernameTooLong": "Il nome utente non può superare i 24 caratteri",
     "usernameTooShort": "Il nome utente non può essere vuoto"
   },

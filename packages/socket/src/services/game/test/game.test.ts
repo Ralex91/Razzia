@@ -97,6 +97,20 @@ describe("joining a game", () => {
     expect(game.players.map((p) => p.username)).toEqual(["Alice"])
   })
 
+  it.each(["Alice", "alice", "ＡＬＩＣＥ", "Al\u200Bice"])(
+    "refuses %s once Alice is taken",
+    (username) => {
+      const { game, createSocket } = setup(createQuizz([createQuestion()]), [
+        "Alice",
+      ])
+
+      expect(game.join(createSocket("other"), username)).toBe(
+        "errors:auth.usernameTaken",
+      )
+      expect(game.join(createSocket("bob"), "Bob")).toBeNull()
+    },
+  )
+
   it("refuses players once the game is locked", () => {
     const { game, createSocket, lastEvent } = setup(
       createQuizz([createQuestion()]),
