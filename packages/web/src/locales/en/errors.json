@@ -40,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "An answer cannot be empty",
-    "cooldownTooLong": "Question display time cannot exceed 15 seconds",
     "cooldownTooShort": "Question display time must be at least 3 seconds",
     "failedToDelete": "Failed to delete quizz",
     "failedToSave": "Quizz is incomplete, make sure all questions have a title and at least one correct answer",

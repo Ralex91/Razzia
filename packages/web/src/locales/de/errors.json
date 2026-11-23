@@ -40,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Eine Antwort darf nicht leer sein",
-    "cooldownTooLong": "Die Anzeigedauer der Frage darf 15 Sekunden nicht überschreiten",
     "cooldownTooShort": "Die Anzeigedauer der Frage muss mindestens 3 Sekunden betragen",
     "failedToDelete": "Quiz konnte nicht gelöscht werden",
     "failedToSave": "Quiz ist unvollständig, stelle sicher, dass alle Fragen einen Titel und mindestens eine richtige Antwort haben",

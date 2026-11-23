@@ -94,13 +94,11 @@ describe("quizzValidator", () => {
     )
   })
 
-  it("bounds the cooldown between 3 and 15 seconds", () => {
+  it("requires a cooldown of at least 3 seconds", () => {
     expect(issues(quizz([choiceQuestion({ cooldown: 2 })]))).toContain(
       "errors:quizz.cooldownTooShort",
     )
-    expect(issues(quizz([choiceQuestion({ cooldown: 16 })]))).toContain(
-      "errors:quizz.cooldownTooLong",
-    )
+    expect(issues(quizz([choiceQuestion({ cooldown: 120 })]))).toEqual([])
   })
 
   it("rejects estimation questions without options", () => {

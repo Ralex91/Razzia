@@ -59,7 +59,7 @@ Quiz Options:
     - `type`: `"image"`, `"video"`, or `"audio"`
     - `url`: URL of the media, either a full `http(s)://` URL or a `/media/...` path for a file uploaded from the editor (stored in `config/media`)
   - `solutions`: Array of correct answer indices (0-based). Use multiple indices for multi-answer questions. Required in `"quiz"` mode, omitted in `"survey"` mode
-  - `cooldown`: Time in seconds before answers are revealed (3-15)
+  - `cooldown`: Time in seconds before answers are revealed (minimum 3)
   - `time`: Time in seconds allowed to answer (5-120)
   - `maxPoints`: Maximum points awarded for a correct answer (default: `1000`, min: `0`)
   - `penalty`: Points deducted for a wrong answer (default: none, min: `0`). The player's total cannot go below 0. Unanswered questions are not penalised.

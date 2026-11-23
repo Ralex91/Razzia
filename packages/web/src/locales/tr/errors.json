@@ -40,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Cevap alanı boş bırakılamaz",
-    "cooldownTooLong": "Soru görüntüleme süresi 15 saniyeyi geçemez",
     "cooldownTooShort": "Soru görüntüleme süresi en az 3 saniye olmalıdır",
     "failedToDelete": "Test silinemedi",
     "failedToSave": "Test tamamlanmadı; tüm soruların bir başlığa ve en az bir doğru cevaba sahip olduğundan emin olun",

@@ -40,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "回答は空にできません",
-    "cooldownTooLong": "質問の表示時間は15秒を超えられません",
     "cooldownTooShort": "質問の表示時間は3秒以上にしてください",
     "failedToDelete": "クイズの削除に失敗しました",
     "failedToSave": "クイズが未完成です。すべての質問にタイトルがあり、少なくとも1つの正解があることを確認してください",

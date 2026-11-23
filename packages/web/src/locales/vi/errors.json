@@ -40,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Đáp án không được để trống",
-    "cooldownTooLong": "Thời gian hiển thị câu hỏi không được vượt quá 15 giây",
     "cooldownTooShort": "Thời gian hiển thị câu hỏi phải ít nhất 3 giây",
     "failedToDelete": "Xóa trò chơi thất bại",
     "failedToSave": "Trò chơi chưa hoàn chỉnh, hãy đảm bảo mọi câu hỏi đều có tiêu đề và ít nhất một đáp án đúng",
