@@ -32,4 +32,4 @@ void i18n.init({
   interpolation: { escapeValue: false },
 })
 
-export const t = (key: string, options?: TOptions) => i18n.t(key, options)
+export const t = (key: string, options?: TOptions) => i18n.t(key, options ?? {})

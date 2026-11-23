@@ -6,7 +6,10 @@ import { getClientId } from "@razzia/socket/utils/socket"
 import { throttle } from "@razzia/socket/utils/throttle"
 
 const usernameKey = (username: string) =>
-  username.normalize("NFKC").replace(/\p{Cf}/gu, "").toLowerCase()
+  username
+    .normalize("NFKC")
+    .replace(/\p{Cf}/gu, "")
+    .toLowerCase()
 
 export interface PlayerManagerOptions {
   io: Server
