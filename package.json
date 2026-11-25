@@ -32,7 +32,7 @@
     "dotenv-cli": "^11.1.0",
     "oxfmt": "^0.79.0",
     "oxlint": "latest",
-    "oxlint-tsgolint": "^7.0.2007",
+    "oxlint-tsgolint": "^7.0.2008",
     "typescript": "catalog:",
     "vitest": "^5.1.1"
   }
