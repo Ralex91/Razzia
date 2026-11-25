@@ -10,6 +10,7 @@
     "tokenInvalid": "Nieprawidłowy token sesji",
     "tokenMissing": "Brak tokenu sesji",
     "unauthorized": "Nie masz uprawnień",
+    "usernameTaken": "Ta nazwa użytkownika jest już zajęta",
     "usernameTooLong": "Nazwa użytkownika nie może mieć więcej niż 24 znaki",
     "usernameTooShort": "Nazwa użytkownika nie może być pusta"
   },
@@ -39,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Odpowiedź nie może być pusta",
-    "cooldownTooLong": "Czas wyświetlania pytania nie może przekraczać 15 sekund",
     "cooldownTooShort": "Czas wyświetlania pytania musi wynosić co najmniej 3 sekundy",
     "failedToDelete": "Nie udało się usunąć quizu",
     "failedToSave": "Quiz jest niekompletny, upewnij się, że każde pytanie ma treść i co najmniej jedną poprawną odpowiedź",
@@ -53,12 +53,16 @@
     "questionEmpty": "Pytanie nie może być puste",
     "subjectEmpty": "Tytuł nie może być pusty",
     "tooFewAnswers": "Pytanie musi mieć co najmniej 2 odpowiedzi",
+    "tooLarge": "Quiz jest za duży",
     "tooManyAnswers": "Pytanie nie może mieć więcej niż 4 odpowiedzi",
     "estimationInvalidRange": "Maksimum musi być większe niż minimum",
     "estimationSolutionOutOfRange": "Poprawna odpowiedź musi mieścić się między minimum a maksimum",
     "estimationStepInvalid": "Krok musi być większy od 0",
     "estimationMarginNegative": "Margines nie może być ujemny",
-    "estimationInvalidOptions": "Brak ustawień szacowania lub są one nieprawidłowe"
+    "estimationInvalidOptions": "Brak ustawień szacowania lub są one nieprawidłowe",
+    "invalidField": "Nieprawidłowa wartość pola „{{field}}”",
+    "invalidOptions": "Ustawienia tego pytania są nieprawidłowe. Zmień tryb odpowiedzi, aby je zresetować",
+    "invalidQuestion": "To pytanie zawiera nieprawidłową wartość"
   },
   "result": {
     "notFound": "Nie znaleziono wyniku"

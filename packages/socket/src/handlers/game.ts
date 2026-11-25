@@ -4,7 +4,7 @@ import { verifyJoinTicket } from "@razzia/socket/services/auth"
 import Game from "@razzia/socket/services/game"
 import Registry from "@razzia/socket/services/registry"
 import { withManagerGame, withPlayerGame } from "@razzia/socket/utils/game"
-import { getClientId } from "@razzia/socket/utils/socket"
+import { getClientId, isManagerSocket } from "@razzia/socket/utils/socket"
 
 export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   const registry = Registry.getInstance()
@@ -64,6 +64,12 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   })
 
   socket.on(EVENTS.MANAGER.RECONNECT, ({ gameId }) => {
+    if (!isManagerSocket(socket)) {
+      socket.emit(EVENTS.GAME.RESET, "errors:auth.unauthorized")
+
+      return
+    }
+
     const game = registry.getManagerGame(gameId, clientId)
 
     if (game) {
@@ -126,6 +132,10 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   )
 
   socket.on(EVENTS.MANAGER.LEAVE, ({ gameId }) => {
+    if (!isManagerSocket(socket)) {
+      return
+    }
+
     const game = registry.getManagerGame(gameId, clientId)
 
     if (game) {

@@ -10,6 +10,7 @@ import {
   useEvent,
   useSocket,
 } from "@razzia/web/features/game/contexts/socket-context"
+import { useAnswersMusic } from "@razzia/web/features/game/hooks/useAnswersMusic"
 import { useSocketConnection } from "@razzia/web/features/game/hooks/useSocketConnection"
 import { useManagerStore } from "@razzia/web/features/game/stores/manager"
 import { useQuestionStore } from "@razzia/web/features/game/stores/question"
@@ -28,6 +29,7 @@ const ManagerGamePage = () => {
   const { t } = useTranslation()
 
   useSocketConnection()
+  useAnswersMusic(status)
 
   useEvent(EVENTS.GAME.STATUS, ({ name, data }) => {
     if (name in GAME_STATE_COMPONENTS_MANAGER) {

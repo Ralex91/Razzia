@@ -10,6 +10,7 @@
     "tokenInvalid": "Ungültiges Sitzungstoken",
     "tokenMissing": "Sitzungstoken fehlt",
     "unauthorized": "Nicht autorisiert",
+    "usernameTaken": "Dieser Benutzername ist bereits vergeben",
     "usernameTooLong": "Der Benutzername darf nicht mehr als 24 Zeichen haben",
     "usernameTooShort": "Der Benutzername darf nicht leer sein"
   },
@@ -39,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Eine Antwort darf nicht leer sein",
-    "cooldownTooLong": "Die Anzeigedauer der Frage darf 15 Sekunden nicht überschreiten",
     "cooldownTooShort": "Die Anzeigedauer der Frage muss mindestens 3 Sekunden betragen",
     "failedToDelete": "Quiz konnte nicht gelöscht werden",
     "failedToSave": "Quiz ist unvollständig, stelle sicher, dass alle Fragen einen Titel und mindestens eine richtige Antwort haben",
@@ -53,12 +53,16 @@
     "questionEmpty": "Die Frage darf nicht leer sein",
     "subjectEmpty": "Das Thema darf nicht leer sein",
     "tooFewAnswers": "Eine Frage muss mindestens 2 Antworten haben",
+    "tooLarge": "Das Quiz ist zu groß",
     "tooManyAnswers": "Eine Frage darf nicht mehr als 4 Antworten haben",
     "estimationInvalidRange": "Das Maximum muss größer als das Minimum sein",
     "estimationSolutionOutOfRange": "Die richtige Antwort muss zwischen Minimum und Maximum liegen",
     "estimationStepInvalid": "Die Schrittweite muss größer als 0 sein",
     "estimationMarginNegative": "Die Toleranz darf nicht negativ sein",
-    "estimationInvalidOptions": "Die Schätzungseinstellungen fehlen oder sind ungültig"
+    "estimationInvalidOptions": "Die Schätzungseinstellungen fehlen oder sind ungültig",
+    "invalidField": "Ungültiger Wert für „{{field}}“",
+    "invalidOptions": "Die Einstellungen dieser Frage sind ungültig. Ändere den Antwortmodus, um sie zurückzusetzen",
+    "invalidQuestion": "Diese Frage enthält einen ungültigen Wert"
   },
   "result": {
     "notFound": "Ergebnis nicht gefunden"

@@ -3,6 +3,13 @@ import type { Server, Socket } from "@razzia/common/types/game/socket"
 import { EVENTS } from "@razzia/common/constants"
 import { usernameValidator } from "@razzia/common/validators/auth"
 import { getClientId } from "@razzia/socket/utils/socket"
+import { throttle } from "@razzia/socket/utils/throttle"
+
+const usernameKey = (username: string) =>
+  username
+    .normalize("NFKC")
+    .replace(/\p{Cf}/gu, "")
+    .toLowerCase()
 
 export interface PlayerManagerOptions {
   io: Server
@@ -19,6 +26,9 @@ export class PlayerManager {
   private readonly getManagerId: () => string
   private readonly isStarted: () => boolean
   private players: Player[] = []
+  readonly broadcastCount = throttle(() => {
+    this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.joinedCount())
+  })
 
   constructor({
     io,
@@ -47,13 +57,17 @@ export class PlayerManager {
       return result.error.issues[0].message
     }
 
+    if (this.isUsernameTaken(result.data)) {
+      return "errors:auth.usernameTaken"
+    }
+
     socket.join(this.gameId)
 
     const player: Player = {
       id: socket.id,
       clientId,
       connected: true,
-      username,
+      username: result.data,
       points: 0,
       streak: 0,
     }
@@ -63,7 +77,7 @@ export class PlayerManager {
     this.broadcastCount()
     socket.emit(EVENTS.GAME.SUCCESS_JOIN, {
       gameId: this.gameId,
-      username,
+      username: result.data,
       gameMode: this.gameMode,
     })
 
@@ -125,6 +139,12 @@ export class PlayerManager {
     return this.players.find((p) => p.id === socketId)
   }
 
+  isUsernameTaken(username: string): boolean {
+    const key = usernameKey(username)
+
+    return this.players.some((p) => usernameKey(p.username) === key)
+  }
+
   findByClientId(clientId: string): Player | undefined {
     return this.players.find((p) => p.clientId === clientId)
   }
@@ -143,9 +163,5 @@ export class PlayerManager {
     }
 
     return this.players.filter((p) => p.connected).length
-  }
-
-  broadcastCount(): void {
-    this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.joinedCount())
   }
 }

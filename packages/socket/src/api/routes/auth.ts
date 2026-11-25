@@ -8,7 +8,11 @@ import {
   managerLoginValidator,
   sessionRequestValidator,
 } from "@razzia/common/validators/auth"
-import { readClaims } from "@razzia/socket/api/middleware"
+import {
+  DEFAULT_BODY_LIMIT,
+  limitBody,
+  readClaims,
+} from "@razzia/socket/api/middleware"
 import { i18nHook } from "@razzia/socket/api/validation"
 import { managerPassword } from "@razzia/socket/env"
 import {
@@ -40,6 +44,7 @@ const freshPlayerSession = (): Promise<SessionResponse> =>
   mintToken(newClientId(), SESSION_ROLES.PLAYER)
 
 const routes = new Hono()
+  .use(limitBody(DEFAULT_BODY_LIMIT))
   .post("/session", async (c) => {
     const token = await readRequestToken(c)
 

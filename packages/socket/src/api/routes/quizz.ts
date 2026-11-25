@@ -2,7 +2,11 @@ import { zValidator } from "@hono/zod-validator"
 import { StatusCodes } from "http-status-codes"
 import { quizzValidator } from "@razzia/common/validators/quizz"
 import { apiFactory } from "@razzia/socket/api/factory"
-import { requireManager } from "@razzia/socket/api/middleware"
+import {
+  limitBody,
+  QUIZZ_BODY_LIMIT,
+  requireManager,
+} from "@razzia/socket/api/middleware"
 import { i18nHook } from "@razzia/socket/api/validation"
 import {
   deleteQuizz,
@@ -15,6 +19,7 @@ import {
 const routes = apiFactory
   .createApp()
   .use(requireManager)
+  .use(limitBody(QUIZZ_BODY_LIMIT, "errors:quizz.tooLarge"))
   .get("/", (c) => c.json({ quizz: getQuizzMeta() }))
   .get("/:id", (c) => c.json(getQuizzById(c.req.param("id"))))
   .post("/", zValidator("json", quizzValidator, i18nHook), (c) =>

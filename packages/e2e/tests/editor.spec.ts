@@ -406,7 +406,7 @@ test("keeps the number settings within their limits", async ({ page }) => {
   await answerInput(page, 1).fill("B")
 
   const fields = [
-    [t("quizz:question.config.questionDisplay"), "99", "15"],
+    [t("quizz:question.config.questionDisplay"), "1", "3"],
     [t("quizz:question.config.answerTime"), "1", "5"],
     [t("quizz:question.config.maxPoints"), "-50", "0"],
   ] as const
@@ -426,7 +426,7 @@ test("keeps the number settings within their limits", async ({ page }) => {
   await saveQuizz(page)
 
   expect(readQuizz(subject)?.questions[0]).toMatchObject({
-    cooldown: 15,
+    cooldown: 3,
     time: 5,
     maxPoints: 0,
   })

@@ -10,6 +10,7 @@
     "tokenInvalid": "Token di sessione non valido",
     "tokenMissing": "Token di sessione mancante",
     "unauthorized": "Non sei autorizzato",
+    "usernameTaken": "Questo nome utente è già in uso",
     "usernameTooLong": "Il nome utente non può superare i 24 caratteri",
     "usernameTooShort": "Il nome utente non può essere vuoto"
   },
@@ -39,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Una risposta non può essere vuota",
-    "cooldownTooLong": "Il tempo di visualizzazione della domanda non può superare i 15 secondi",
     "cooldownTooShort": "Il tempo di visualizzazione della domanda deve essere di almeno 3 secondi",
     "failedToDelete": "Impossibile eliminare il quiz",
     "failedToSave": "Il quiz è incompleto, assicurati che tutte le domande abbiano un titolo e almeno una risposta corretta",
@@ -53,12 +53,16 @@
     "questionEmpty": "La domanda non può essere vuota",
     "subjectEmpty": "Il soggetto non può essere vuoto",
     "tooFewAnswers": "Una domanda deve avere almeno 2 risposte",
+    "tooLarge": "Il quiz è troppo grande",
     "tooManyAnswers": "Una domanda non può avere più di 4 risposte",
     "estimationInvalidRange": "Il massimo deve essere maggiore del minimo",
     "estimationSolutionOutOfRange": "La risposta corretta deve essere compresa tra il minimo e il massimo",
     "estimationStepInvalid": "Il passo deve essere maggiore di 0",
     "estimationMarginNegative": "Il margine non può essere negativo",
-    "estimationInvalidOptions": "Le impostazioni della stima mancano o non sono valide"
+    "estimationInvalidOptions": "Le impostazioni della stima mancano o non sono valide",
+    "invalidField": "Valore non valido per «{{field}}»",
+    "invalidOptions": "Le impostazioni di questa domanda non sono valide. Cambia la modalità risposta per reimpostarle",
+    "invalidQuestion": "Questa domanda contiene un valore non valido"
   },
   "result": {
     "notFound": "Risultato non trovato"

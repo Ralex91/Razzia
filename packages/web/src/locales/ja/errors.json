@@ -10,6 +10,7 @@
     "tokenInvalid": "セッショントークンが無効です",
     "tokenMissing": "セッショントークンがありません",
     "unauthorized": "権限がありません",
+    "usernameTaken": "このユーザー名はすでに使われています",
     "usernameTooLong": "ユーザー名は24文字以内にしてください",
     "usernameTooShort": "ユーザー名を入力してください"
   },
@@ -39,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "回答は空にできません",
-    "cooldownTooLong": "質問の表示時間は15秒を超えられません",
     "cooldownTooShort": "質問の表示時間は3秒以上にしてください",
     "failedToDelete": "クイズの削除に失敗しました",
     "failedToSave": "クイズが未完成です。すべての質問にタイトルがあり、少なくとも1つの正解があることを確認してください",
@@ -53,12 +53,16 @@
     "questionEmpty": "質問は空にできません",
     "subjectEmpty": "主題は空にできません",
     "tooFewAnswers": "質問には少なくとも2つの回答が必要です",
+    "tooLarge": "クイズのサイズが大きすぎます",
     "tooManyAnswers": "質問に設定できる回答は4つまでです",
     "estimationInvalidRange": "最大値は最小値より大きくする必要があります",
     "estimationSolutionOutOfRange": "正解は最小値と最大値の間である必要があります",
     "estimationStepInvalid": "刻み幅は 0 より大きくする必要があります",
     "estimationMarginNegative": "許容範囲は負の値にできません",
-    "estimationInvalidOptions": "数値推定の設定がないか、無効です"
+    "estimationInvalidOptions": "数値推定の設定がないか、無効です",
+    "invalidField": "「{{field}}」の値が無効です",
+    "invalidOptions": "この質問の設定が無効です。回答モードを変更するとリセットされます",
+    "invalidQuestion": "この質問に無効な値が含まれています"
   },
   "result": {
     "notFound": "結果が見つかりません"

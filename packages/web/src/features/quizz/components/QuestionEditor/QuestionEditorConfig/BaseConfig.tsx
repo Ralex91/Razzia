@@ -144,7 +144,6 @@ const BaseConfig = () => {
             name="cooldown"
             label={t("quizz:question.config.questionDisplay")}
             min={3}
-            max={15}
           />
           <ConfigField.Description>
             {t("quizz:question.config.questionDisplayHint")}

@@ -11,6 +11,10 @@ import {
 } from "vitest"
 import type { SessionResponse } from "@razzia/common/types/auth"
 import { QUIZZ_MODES, SESSION_ROLES } from "@razzia/common/constants"
+import {
+  DEFAULT_BODY_LIMIT,
+  QUIZZ_BODY_LIMIT,
+} from "@razzia/socket/api/middleware"
 import { app } from "@razzia/socket/app"
 import { mintToken, verifyJoinTicket } from "@razzia/socket/services/auth"
 import {
@@ -322,6 +326,26 @@ describe("games", () => {
     })
   })
 
+  it("refuses a username already taken in the game", async () => {
+    const { gameId, inviteCode } = await createGame()
+    const { createSocket } = createFakeIo()
+
+    Registry.getInstance()
+      .getGameById(gameId)
+      ?.join(createSocket("alice-socket", "alice"), "Alice")
+
+    const response = await request("/games/join", {
+      method: "POST",
+      token: playerToken,
+      body: { inviteCode, username: " alice " },
+    })
+
+    expect(response.status).toBe(StatusCodes.CONFLICT)
+    expect(await json(response)).toEqual({
+      error: "errors:auth.usernameTaken",
+    })
+  })
+
   it("only lets managers create a game", async () => {
     const { id: quizzId } = saveQuizz(createQuizz([createQuestion()]))
     const create = (token?: string) =>
@@ -379,6 +403,49 @@ describe("results", () => {
 
     expect(missing.status).toBe(StatusCodes.NOT_FOUND)
     expect(await json(missing)).toEqual({ error: "errors:result.notFound" })
+  })
+})
+
+describe("body limits", () => {
+  it.each([
+    ["/auth/session", undefined],
+    ["/auth/manager", undefined],
+    ["/games/check", undefined],
+    ["/games/join", "player"],
+  ])("%s rejects oversized bodies", async (path, as) => {
+    const response = await request(path, {
+      method: "POST",
+      token: as === "player" ? playerToken : undefined,
+      body: { padding: "a".repeat(DEFAULT_BODY_LIMIT) },
+    })
+
+    expect(response.status).toBe(StatusCodes.REQUEST_TOO_LONG)
+    expect(await json(response)).toEqual({ error: "errors:invalidRequest" })
+  })
+
+  it("accepts a quizz larger than the default limit", async () => {
+    const response = await request("/quizz", {
+      method: "POST",
+      token: managerToken,
+      body: createQuizz([
+        createQuestion({ question: "a".repeat(DEFAULT_BODY_LIMIT) }),
+      ]),
+    })
+
+    expect(response.status).toBe(StatusCodes.CREATED)
+  })
+
+  it("rejects a quizz above its limit", async () => {
+    const response = await request("/quizz", {
+      method: "POST",
+      token: managerToken,
+      body: createQuizz([
+        createQuestion({ question: "a".repeat(QUIZZ_BODY_LIMIT) }),
+      ]),
+    })
+
+    expect(response.status).toBe(StatusCodes.REQUEST_TOO_LONG)
+    expect(await json(response)).toEqual({ error: "errors:quizz.tooLarge" })
   })
 })
 

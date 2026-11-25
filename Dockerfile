@@ -19,12 +19,12 @@ COPY . .
 RUN pnpm build
 
 # ---- RUNNER ----
-FROM alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf AS runner
+FROM cgr.dev/chainguard/wolfi-base@sha256:28c39be5a5e1e9b85081c10740e8495f6518a865b23bc6a486637c4b21e74b43 AS runner
 
-RUN apk upgrade --no-cache && apk add --no-cache nginx nodejs-current s6 \
-    && sed -i '/^user /d' /etc/nginx/nginx.conf
+RUN apk upgrade --no-cache && apk add --no-cache nginx-mainline nodejs-26 s6 su-exec \
+    && mkdir -p /run/nginx /var/lib/nginx/tmp /var/log/nginx
 
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY --chmod=755 docker/s6 /etc/s6
 
 COPY --from=builder /app/packages/web/dist /app/web

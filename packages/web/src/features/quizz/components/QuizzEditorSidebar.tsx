@@ -19,7 +19,7 @@ import { CSS } from "@dnd-kit/utilities"
 import clsx from "clsx"
 import { Plus } from "lucide-react"
 import { useRef } from "react"
-import { useFormContext } from "react-hook-form"
+import { useFormContext, type FieldErrors } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import type { Question } from "@razzia/common/types/game"
 import Button from "@razzia/web/components/Button"
@@ -34,7 +34,7 @@ interface SortableItemProps {
   question: Question
   index: number
   isActive: boolean
-  isInvalid: boolean
+  errors?: FieldErrors<Question>
   canDelete: boolean
   onClick: () => void
   onDelete: () => void
@@ -45,7 +45,7 @@ const SortableItem = ({
   question,
   index,
   isActive,
-  isInvalid,
+  errors,
   canDelete,
   onClick,
   onDelete,
@@ -71,7 +71,7 @@ const SortableItem = ({
         question={question}
         index={index}
         isActive={isActive}
-        isInvalid={isInvalid}
+        errors={errors}
         canDelete={canDelete}
         onClick={onClick}
         onDelete={onDelete}
@@ -147,7 +147,7 @@ const QuizzEditorSidebar = () => {
                 question={question}
                 index={index}
                 isActive={currentIndex === index}
-                isInvalid={Boolean(errors.questions?.[index])}
+                errors={errors.questions?.[index]}
                 canDelete={questions.length > 1}
                 onClick={handleSlideClick(index)}
                 onDelete={handleDelete(index)}

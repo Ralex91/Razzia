@@ -81,6 +81,9 @@ const configServer = (): Plugin => ({
   },
 })
 
+const fromHere = (relative: string) =>
+  fileURLToPath(new URL(relative, import.meta.url))
+
 const webPort = Number(process.env.WEB_PORT) || 3000
 const socketUrl = `http://localhost:${Number(process.env.SOCKET_PORT) || 3001}`
 
@@ -124,7 +127,16 @@ export default defineConfig({
       ),
     },
   },
-  server: serverOptions,
+  server: {
+    ...serverOptions,
+    fs: {
+      allow: [
+        fromHere("."),
+        fromHere("../common/src"),
+        fromHere("../../node_modules"),
+      ],
+    },
+  },
   preview: serverOptions,
   build: {
     chunkSizeWarningLimit: 2000,

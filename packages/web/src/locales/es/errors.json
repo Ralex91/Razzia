@@ -10,6 +10,7 @@
     "tokenInvalid": "Token de sesión inválido",
     "tokenMissing": "Falta el token de sesión",
     "unauthorized": "No estás autorizado",
+    "usernameTaken": "Este nombre de usuario ya está en uso",
     "usernameTooLong": "El nombre de usuario no puede superar los 24 caracteres",
     "usernameTooShort": "El nombre de usuario no puede estar vacío"
   },
@@ -39,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Una respuesta no puede estar vacía",
-    "cooldownTooLong": "El tiempo de visualización de la pregunta no puede superar los 15 segundos",
     "cooldownTooShort": "El tiempo de visualización de la pregunta debe ser de al menos 3 segundos",
     "failedToDelete": "Error al eliminar el cuestionario",
     "failedToSave": "El cuestionario está incompleto, asegúrate de que todas las preguntas tengan un título y al menos una respuesta correcta",
@@ -53,12 +53,16 @@
     "questionEmpty": "La pregunta no puede estar vacía",
     "subjectEmpty": "El tema no puede estar vacío",
     "tooFewAnswers": "Una pregunta debe tener al menos 2 respuestas",
+    "tooLarge": "El cuestionario es demasiado grande",
     "tooManyAnswers": "Una pregunta no puede tener más de 4 respuestas",
     "estimationInvalidRange": "El máximo debe ser mayor que el mínimo",
     "estimationSolutionOutOfRange": "La respuesta correcta debe estar entre el mínimo y el máximo",
     "estimationStepInvalid": "El paso debe ser mayor que 0",
     "estimationMarginNegative": "El margen no puede ser negativo",
-    "estimationInvalidOptions": "La configuración de la estimación falta o no es válida"
+    "estimationInvalidOptions": "La configuración de la estimación falta o no es válida",
+    "invalidField": "Valor no válido para «{{field}}»",
+    "invalidOptions": "La configuración de esta pregunta no es válida. Cambia el modo de respuesta para restablecerla",
+    "invalidQuestion": "Esta pregunta contiene un valor no válido"
   },
   "result": {
     "notFound": "Resultado no encontrado"

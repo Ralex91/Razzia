@@ -34,6 +34,7 @@ import {
 } from "@razzia/socket/services/scoring/round"
 import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
 import sleep, { SECOND_MS } from "@razzia/socket/utils/sleep"
+import { throttle } from "@razzia/socket/utils/throttle"
 
 type BroadcastFn = <T extends Status>(
   _status: T,
@@ -74,6 +75,12 @@ export class RoundManager {
   private currentQuestion = 0
   private currentStep = -1
   private playersAnswers: Answer[] = []
+  private answeredIds = new Set<string>()
+  private readonly broadcastAnswerCount = throttle(() => {
+    this.opts.io
+      .to(this.opts.gameId)
+      .emit(EVENTS.GAME.PLAYER_ANSWER, this.playersAnswers.length)
+  })
   private startTime = 0
   private acceptingAnswers = false
   private leaderboard: Player[] = []
@@ -212,6 +219,10 @@ export class RoundManager {
 
     await sleep(3)
 
+    if (!this.started) {
+      return
+    }
+
     this.opts.io.to(this.opts.gameId).emit(EVENTS.GAME.START_COOLDOWN)
     await this.opts.cooldown.start(3)
 
@@ -329,6 +340,7 @@ export class RoundManager {
     await this.opts.cooldown.start(this.question.time)
 
     this.acceptingAnswers = false
+    this.broadcastAnswerCount.cancel()
 
     if (!this.started) {
       return
@@ -378,7 +390,7 @@ export class RoundManager {
       })
 
       this.recordHistory(currentPlayers)
-      this.playersAnswers = []
+      this.resetAnswers()
 
       return
     }
@@ -421,7 +433,7 @@ export class RoundManager {
 
     this.leaderboard = sortedPlayers
     this.tempOldLeaderboard ??= oldLeaderboard
-    this.playersAnswers = []
+    this.resetAnswers()
   }
 
   private showLeaderboard(): void {
@@ -525,7 +537,7 @@ export class RoundManager {
       return
     }
 
-    if (this.playersAnswers.find((a) => a.playerId === socket.id)) {
+    if (this.answeredIds.has(socket.id)) {
       return
     }
 
@@ -556,22 +568,36 @@ export class RoundManager {
       answerIds: submitted,
       points,
     })
+    this.answeredIds.add(socket.id)
 
     this.opts.send(socket.id, STATUS.WAIT, {
       text: "game:waitingForAnswers",
     })
 
-    socket
-      .to(this.opts.gameId)
-      .emit(EVENTS.GAME.PLAYER_ANSWER, this.playersAnswers.length)
-    this.opts.players.broadcastCount()
+    this.broadcastAnswerCount()
     this.endIfEveryoneAnswered()
+  }
+
+  dispose(): void {
+    this.started = false
+    this.acceptingAnswers = false
+    this.clearAutoAdvance()
+    this.broadcastAnswerCount.cancel()
+  }
+
+  private resetAnswers(): void {
+    this.playersAnswers = []
+    this.answeredIds.clear()
   }
 
   updatePlayerId(oldId: string, newId: string): void {
     this.playersAnswers = this.playersAnswers.map((answer) =>
       answer.playerId === oldId ? { ...answer, playerId: newId } : answer,
     )
+
+    if (this.answeredIds.delete(oldId)) {
+      this.answeredIds.add(newId)
+    }
   }
 
   endIfEveryoneAnswered(): void {
@@ -581,7 +607,7 @@ export class RoundManager {
 
     const connected = this.opts.players.getAll().filter((p) => p.connected)
     const everyoneAnswered = connected.every((player) =>
-      this.playersAnswers.some((a) => a.playerId === player.id),
+      this.answeredIds.has(player.id),
     )
 
     if (connected.length > 0 && everyoneAnswered) {

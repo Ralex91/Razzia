@@ -38,11 +38,7 @@ const questionSchema = z.object({
   media: questionMediaValidator.optional(),
   answers: z.array(z.string().min(1, "errors:quizz.answerEmpty")),
   solutions: z.array(z.number()).optional(),
-  cooldown: z
-    .number()
-    .int()
-    .min(3, "errors:quizz.cooldownTooShort")
-    .max(15, "errors:quizz.cooldownTooLong"),
+  cooldown: z.number().int().min(3, "errors:quizz.cooldownTooShort"),
   time: z.number().int().min(-1),
   maxPoints: z
     .number()

@@ -10,6 +10,7 @@
     "tokenInvalid": "Jeton de session invalide",
     "tokenMissing": "Jeton de session manquant",
     "unauthorized": "Vous n'êtes pas autorisé",
+    "usernameTaken": "Ce pseudo est déjà pris",
     "usernameTooLong": "Le pseudo ne peut pas dépasser 24 caractères",
     "usernameTooShort": "Le pseudo ne peut pas être vide"
   },
@@ -39,7 +40,6 @@
   },
   "quizz": {
     "answerEmpty": "Une réponse ne peut pas être vide",
-    "cooldownTooLong": "Le temps d'affichage de la question ne peut pas dépasser 15 secondes",
     "cooldownTooShort": "Le temps d'affichage de la question doit être d'au moins 3 secondes",
     "failedToDelete": "Suppression du quizz a echoué",
     "failedToSave": "Le quizz est incomplet, vérifiez que chaque question a un titre et au moins une bonne réponse",
@@ -53,12 +53,16 @@
     "questionEmpty": "La question ne peut pas être vide",
     "subjectEmpty": "Le sujet ne peut pas être vide",
     "tooFewAnswers": "Une question doit avoir au moins 2 réponses",
+    "tooLarge": "Le quizz est trop volumineux",
     "tooManyAnswers": "Une question ne peut pas avoir plus de 4 réponses",
     "estimationInvalidRange": "Le maximum doit être supérieur au minimum",
     "estimationSolutionOutOfRange": "La bonne réponse doit être comprise entre le minimum et le maximum",
     "estimationStepInvalid": "Le pas doit être supérieur à 0",
     "estimationMarginNegative": "La marge ne peut pas être négative",
-    "estimationInvalidOptions": "Les réglages de l'estimation sont manquants ou invalides"
+    "estimationInvalidOptions": "Les réglages de l'estimation sont manquants ou invalides",
+    "invalidField": "Valeur invalide pour « {{field}} »",
+    "invalidOptions": "Les réglages de cette question sont invalides. Changez le mode de réponse pour les réinitialiser",
+    "invalidQuestion": "Cette question contient une valeur invalide"
   },
   "result": {
     "notFound": "Résultat introuvable"
