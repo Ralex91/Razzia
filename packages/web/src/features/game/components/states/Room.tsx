@@ -31,15 +31,15 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
   useOnClickOutside({ ref: qrContentRef, handler: () => setQrOpen(false) })
 
   useEvent(EVENTS.MANAGER.NEW_PLAYER, (player) => {
-    setPlayerList([...playerList, player])
+    setPlayerList((list) => [...list, player])
   })
 
   useEvent(EVENTS.MANAGER.REMOVE_PLAYER, (playerId) => {
-    setPlayerList(playerList.filter((p) => p.id !== playerId))
+    setPlayerList((list) => list.filter((p) => p.id !== playerId))
   })
 
   useEvent(EVENTS.MANAGER.PLAYER_KICKED, (playerId) => {
-    setPlayerList(playerList.filter((p) => p.id !== playerId))
+    setPlayerList((list) => list.filter((p) => p.id !== playerId))
   })
 
   useEvent(
