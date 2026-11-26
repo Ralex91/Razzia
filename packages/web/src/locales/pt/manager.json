@@ -1,0 +1,52 @@
+{
+  "configurationsTitle": "Configurações",
+  "logout": "Sair",
+  "passwordPlaceholder": "Senha",
+  "quizz": {
+    "create": "Criar quiz",
+    "delete": "Excluir quiz",
+    "deleteConfirm": "Tem certeza de que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleted": "Quiz excluído",
+    "export": "Exportar quiz como JSON",
+    "import": "Importar quiz de JSON",
+    "none": "Nenhum quiz criado ainda",
+    "notFound": "Nenhum quiz encontrado",
+    "pleaseCreate": "Crie um quiz primeiro",
+    "pleaseSelect": "Selecione um quiz",
+    "startGame": "Iniciar partida",
+    "edit": "Editar quiz"
+  },
+  "result": {
+    "delete": "Excluir resultado",
+    "deleteConfirm": "Excluir o resultado de \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "deleted": "Resultado excluído",
+    "noAnswer": "Sem resposta",
+    "none": "Ainda não há resultados. Conclua uma partida para ver os relatórios aqui",
+    "paginationOf": " de ",
+    "stats": {
+      "correctAnswers": "Respostas corretas",
+      "playersAnswered": "Jogadores que responderam"
+    },
+    "table": {
+      "answered": "Respondeu",
+      "correct": " Corretas",
+      "correctIncorrect": "Corretas / Incorretas",
+      "incorrect": " Incorretas",
+      "player": "Jogador",
+      "points": "Pontos"
+    },
+    "playerCount": "{{count}} jogador(es)",
+    "timeLimitSuffix": "s de limite de tempo",
+    "estimation": {
+      "answered": "Respondeu",
+      "withinMargin": "{{value}} ± {{margin}}",
+      "outsideMargin": "Fora da margem",
+      "average": "Resposta média: {{value}}"
+    }
+  },
+  "tabs": {
+    "play": "Jogar",
+    "quizz": "Quizzes",
+    "results": "Resultados"
+  }
+}
